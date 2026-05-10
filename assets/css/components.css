@@ -144,7 +144,7 @@
   align-items: center;
   gap: 1.5rem;
   overflow-x: auto;
-  padding: 0.5rem 0 2.5rem; /* Más espacio debajo de categorías */
+  padding: 0.5rem 0 0.75rem; /* Espacio reducido bajo categorías */
   scrollbar-width: none;
 }
 
@@ -290,7 +290,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  padding-block: 2rem;
+  padding-block: 1.5rem; /* Reducido de 2rem */
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   margin-bottom: 0; /* Eliminado espacio excesivo */
@@ -319,7 +319,7 @@
 
 /* ── ESPECIALIDADES GRID ──────────────────────────────────── */
 #especialidades {
-  padding-top: 3rem; /* Reducido para evitar el vacío oscuro */
+  padding-top: 0; /* Eliminado espacio para que esté pegado a los beneficios */
 }
 
 .specialties-grid {
