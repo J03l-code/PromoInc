@@ -98,7 +98,6 @@ function navigateTo(section) {
   const el = document.getElementById(`section-${section}`);
   if (el) el.classList.remove('hidden');
   console.log('Navigated to:', section);
-}
 
   document.querySelectorAll(`[data-section="${section}"]`).forEach(n => n.classList.add('active'));
   document.getElementById('page-title').textContent = {
