@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromoInc — Panel de Administración</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="./css/admin.css?v=1.0">
+</head>
+<body>
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 42 42" fill="none">
+        <rect width="42" height="42" rx="9" fill="#161a1f" stroke="#252a31" stroke-width="1.5"/>
+        <path d="M13 29L21 13L29 29" stroke="#E83E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17 21H25" stroke="#00BCFF" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Promo<em>Inc</em></span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item" data-section="products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Productos
+      </a>
+      <a href="#" class="nav-item" data-section="categories">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Categorías
+      </a>
+      <a href="#" class="nav-item" data-section="quotes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Cotizaciones
+        <span class="badge" id="badge-quotes">0</span>
+      </a>
+      <a href="#" class="nav-item" data-section="users" id="nav-users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Usuarios
+      </a>
+      <a href="#" class="nav-item" data-section="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Configuración
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="user-name">Administrador</div>
+          <div class="user-role" id="user-role">superadmin</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="btn-logout" title="Cerrar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="page-title" id="page-title">Dashboard</h1>
+      <div class="topbar-actions">
+        <a href="../index.html" target="_blank" class="btn btn-ghost btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Ver sitio
+        </a>
+      </div>
+    </header>
+
+    <!-- ── SECTION: DASHBOARD ── -->
+    <section class="section" id="section-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <div class="stat-data"><span class="stat-value" id="stat-products">—</span><span class="stat-label">Productos</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="stat-data"><span class="stat-value" id="stat-categories">—</span><span class="stat-label">Categorías</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="stat-data"><span class="stat-value" id="stat-quotes">—</span><span class="stat-label">Cotizaciones nuevas</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="stat-data"><span class="stat-value" id="stat-stock">—</span><span class="stat-label">Unidades en stock</span></div>
+        </div>
+      </div>
+
+      <div class="recent-grid">
+        <div class="card">
+          <div class="card-header"><h3>Últimas Cotizaciones</h3><a href="#" class="link" data-section="quotes">Ver todas</a></div>
+          <div id="recent-quotes-list" class="recent-list"><div class="empty-state">Cargando...</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Productos Destacados</h3><a href="#" class="link" data-section="products">Gestionar</a></div>
+          <div id="recent-products-list" class="recent-list"><div class="empty-state">Cargando...</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SECTION: PRODUCTS ── -->
+    <section class="section hidden" id="section-products">
+      <div class="section-header">
+        <h2>Gestión de Productos</h2>
+        <button class="btn btn-primary" id="btn-new-product">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo Producto
+        </button>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="search-products" placeholder="Buscar por nombre o SKU..." class="search-input">
+        <select id="filter-category" class="select-input"><option value="">Todas las categorías</option></select>
+        <select id="filter-active" class="select-input">
+          <option value="">Todos los estados</option>
+          <option value="1">Activos</option>
+          <option value="0">Inactivos</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table" id="products-table">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre / SKU</th>
+              <th>Categoría</th>
+              <th>Precio desde</th>
+              <th>Stock</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody"><tr><td colspan="7" class="loading-row">Cargando productos...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="products-pagination"></div>
+    </section>
+
+    <!-- ── SECTION: CATEGORIES ── -->
+    <section class="section hidden" id="section-categories">
+      <div class="section-header">
+        <h2>Categorías</h2>
+        <button class="btn btn-primary" id="btn-new-category">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nueva Categoría
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr><th>Nombre</th><th>Slug</th><th>Icono</th><th>Productos</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="categories-tbody"><tr><td colspan="7" class="loading-row">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── SECTION: QUOTES ── -->
+    <section class="section hidden" id="section-quotes">
+      <div class="section-header">
+        <h2>Cotizaciones</h2>
+        <div class="filter-tabs" id="quotes-tabs">
+          <button class="tab-btn active" data-status="">Todas</button>
+          <button class="tab-btn" data-status="new">Nuevas <span class="badge" id="tab-badge-new">0</span></button>
+          <button class="tab-btn" data-status="read">Leídas</button>
+          <button class="tab-btn" data-status="responded">Respondidas</button>
+          <button class="tab-btn" data-status="closed">Cerradas</button>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead><tr><th>Empresa</th><th>Contacto</th><th>Email</th><th>Producto</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead>
+          <tbody id="quotes-tbody"><tr><td colspan="7" class="loading-row">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── SECTION: USERS ── -->
+    <section class="section hidden" id="section-users">
+      <div class="section-header">
+        <h2>Usuarios Admin</h2>
+        <button class="btn btn-primary" id="btn-new-user">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo Usuario
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Último acceso</th><th>Estado</th><th>Acciones</th></tr></thead>
+          <tbody id="users-tbody"><tr><td colspan="6" class="loading-row">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── SECTION: SETTINGS ── -->
+    <section class="section hidden" id="section-settings">
+      <div class="section-header"><h2>Configuración del Sitio</h2></div>
+      <div class="settings-grid">
+        <div class="card">
+          <div class="card-header"><h3>Información General</h3></div>
+          <div class="card-body">
+            <form id="settings-form">
+              <div class="form-grid">
+                <div class="form-group"><label>Nombre del sitio</label><input type="text" name="site_name"></div>
+                <div class="form-group"><label>Email de contacto</label><input type="email" name="site_email"></div>
+                <div class="form-group"><label>Teléfono</label><input type="text" name="site_phone"></div>
+                <div class="form-group"><label>WhatsApp (número sin +)</label><input type="text" name="whatsapp"></div>
+                <div class="form-group"><label>Instagram (usuario)</label><input type="text" name="instagram"></div>
+                <div class="form-group"><label>Facebook (usuario)</label><input type="text" name="facebook"></div>
+                <div class="form-group col-span-2"><label>Dirección</label><input type="text" name="site_address"></div>
+                <div class="form-group col-span-2"><label>Título del Hero</label><input type="text" name="hero_title"></div>
+                <div class="form-group col-span-2"><label>Subtítulo del Hero</label><input type="text" name="hero_subtitle"></div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3>Cambiar mi contraseña</h3></div>
+          <div class="card-body">
+            <form id="password-form">
+              <div class="form-group"><label>Contraseña actual</label><input type="password" name="current_password" required></div>
+              <div class="form-group"><label>Nueva contraseña</label><input type="password" name="new_password" required minlength="8"></div>
+              <div class="form-group"><label>Confirmar contraseña</label><input type="password" name="confirm_password" required></div>
+              <div class="form-actions"><button type="submit" class="btn btn-primary">Actualizar contraseña</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── MODAL: PRODUCTO ───────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-product">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-product-title">Nuevo Producto</h3>
+        <button class="modal-close" data-close="modal-product">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form">
+          <input type="hidden" name="id" id="product-id">
+          <div class="form-grid">
+            <div class="form-group"><label>Nombre *</label><input type="text" name="name" id="product-name" required></div>
+            <div class="form-group"><label>SKU *</label><input type="text" name="sku" id="product-sku" required></div>
+            <div class="form-group"><label>Categoría *</label><select name="category_id" id="product-category" required><option value="">Seleccionar...</option></select></div>
+            <div class="form-group"><label>Precio desde ($)</label><input type="number" name="price_from" id="product-price" step="0.01" min="0"></div>
+            <div class="form-group"><label>Cantidad mínima</label><input type="number" name="min_quantity" id="product-minqty" value="10" min="1"></div>
+            <div class="form-group"><label>Stock inicial</label><input type="number" name="stock_quantity" id="product-stock" value="0" min="0"></div>
+            <div class="form-group col-span-2"><label>Descripción</label><textarea name="description" id="product-desc" rows="3"></textarea></div>
+            <div class="form-group col-span-2">
+              <label>Imagen del producto</label>
+              <div class="upload-zone" id="upload-zone">
+                <input type="file" id="img-upload" accept="image/jpeg,image/png,image/webp" class="hidden">
+                <div class="upload-preview hidden" id="upload-preview">
+                  <img id="preview-img" src="" alt="Preview">
+                  <button type="button" class="remove-img" id="remove-img">✕</button>
+                </div>
+                <div class="upload-placeholder" id="upload-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span>Arrastra una imagen o <strong>haz clic para subir</strong></span>
+                  <em>JPG, PNG o WebP — máx. 5 MB</em>
+                </div>
+              </div>
+              <input type="hidden" name="image_webp" id="product-image">
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="customizable" id="product-custom" value="1" checked>
+                <span>¿Personalizable?</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="featured" id="product-featured" value="1">
+                <span>¿Destacado?</span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-product">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-product">Guardar Producto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: CATEGORÍA ──────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-category">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-category-title">Nueva Categoría</h3>
+        <button class="modal-close" data-close="modal-category">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="category-form">
+          <input type="hidden" name="id" id="category-id">
+          <div class="form-group"><label>Nombre *</label><input type="text" name="name" id="category-name" required></div>
+          <div class="form-group"><label>Icono (nombre Feather)</label><input type="text" name="icon" id="category-icon" placeholder="tag, coffee, cpu..."></div>
+          <div class="form-group"><label>Orden de aparición</label><input type="number" name="sort_order" id="category-order" value="0" min="0"></div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="active" id="category-active" value="1" checked>
+              <span>Activa</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-category">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-category">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: USUARIO ────────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-user">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-user-title">Nuevo Usuario</h3>
+        <button class="modal-close" data-close="modal-user">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="user-form">
+          <input type="hidden" name="id" id="user-id">
+          <div class="form-group"><label>Nombre completo *</label><input type="text" name="name" id="user-name-input" required></div>
+          <div class="form-group"><label>Email *</label><input type="email" name="email" id="user-email" required></div>
+          <div class="form-group"><label>Contraseña <span id="pass-hint">(requerida)</span></label><input type="password" name="password" id="user-password" minlength="8"></div>
+          <div class="form-group">
+            <label>Rol</label>
+            <select name="role" id="user-role-select">
+              <option value="editor">Editor</option>
+              <option value="admin">Admin</option>
+              <option value="superadmin">Superadmin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="active" id="user-active" value="1" checked>
+              <span>Usuario activo</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-user">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-user">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: COTIZACIÓN DETALLE ─────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-quote">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Detalle de Cotización</h3>
+        <button class="modal-close" data-close="modal-quote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="quote-detail"></div>
+      <div class="modal-footer">
+        <select id="quote-status-select" class="select-input">
+          <option value="new">Nueva</option>
+          <option value="read">Leída</option>
+          <option value="responded">Respondida</option>
+          <option value="closed">Cerrada</option>
+        </select>
+        <button class="btn btn-primary" id="btn-save-quote-status">Actualizar estado</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOAST ─────────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="./js/admin.js?v=1.0"></script>
+</body>
+</html>

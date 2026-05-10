@@ -5,7 +5,8 @@
  * POST /api/upload.php   multipart/form-data  field: "image"
  */
 
-require_once 'config.php';
+require_once 'middleware.php';
+requireAuth();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonError(405, 'Solo se permiten peticiones POST');
