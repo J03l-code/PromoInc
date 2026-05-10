@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ── Google Fonts ─────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ── Variables CSS ───────────────────────────────────────── */
 :root {
@@ -33,7 +33,7 @@
   --shadow-glow:   0 0 40px rgba(0,188,255,0.15);
 
   /* Tipografía */
-  --font-display:  'Syne', sans-serif;
+  --font-display:  'Inter', sans-serif;
   --font-body:     'Inter', sans-serif;
 
   /* Espaciado */
@@ -106,20 +106,20 @@ input, textarea, select { font: inherit; }
 /* ── Tipografía ──────────────────────────────────────────── */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
-.display-1 { font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; }
-.display-2 { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; }
+.display-1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; }
+.display-2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; }
 .section-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
   margin-bottom: 0.5rem;
 }
 .section-subtitle {
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
   color: var(--text-muted);
   font-weight: 300;
   max-width: 600px;
@@ -146,8 +146,8 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-full);
   font-family: var(--font-body);
   font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   transition: all var(--duration-base) var(--ease-smooth);
   position: relative;
   overflow: hidden;
@@ -193,7 +193,7 @@ h1, h2, h3, h4 {
 .btn-cyan {
   background: var(--accent-cyan);
   color: var(--bg-primary);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .btn-cyan:hover {
@@ -225,10 +225,10 @@ h1, h2, h3, h4 {
   gap: 0.3rem;
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
 }
 
 .badge-stock {
@@ -321,7 +321,7 @@ h1, h2, h3, h4 {
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   margin-bottom: 0.35rem;
   color: var(--text-primary);
@@ -385,9 +385,9 @@ h1, h2, h3, h4 {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   color: var(--accent-pink);
   margin-bottom: 0.75rem;
 }
