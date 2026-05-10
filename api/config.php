@@ -5,9 +5,9 @@
  */
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'promoinc_db');
-define('DB_USER', 'root');        // Cambiar en producción
-define('DB_PASS', '');            // Cambiar en producción
+define('DB_NAME', 'u434851126_promoincdb');
+define('DB_USER', 'u434851126_promoinc_usr');        // Cambiar en producción
+define('DB_PASS', 'Promoinc2026!');            // Cambiar en producción
 define('DB_CHARSET', 'utf8mb4');
 
 define('UPLOAD_DIR', __DIR__ . '/../assets/images/');
@@ -26,15 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // ── Conexión PDO ──────────────────────────────────────────────
-function getDB(): PDO {
+function getDB(): PDO
+{
     static $pdo = null;
     if ($pdo === null) {
         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
+                PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la base de datos');
@@ -44,18 +45,21 @@ function getDB(): PDO {
 }
 
 // ── Helpers de respuesta ──────────────────────────────────────
-function jsonSuccess(array $data, int $code = 200): void {
+function jsonSuccess(array $data, int $code = 200): void
+{
     http_response_code($code);
     echo json_encode(['success' => true, 'data' => $data], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-function jsonError(int $code, string $message): void {
+function jsonError(int $code, string $message): void
+{
     http_response_code($code);
     echo json_encode(['success' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-function sanitize(string $input): string {
+function sanitize(string $input): string
+{
     return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
 }
