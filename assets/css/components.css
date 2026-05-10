@@ -144,7 +144,7 @@
   align-items: center;
   gap: 1.5rem;
   overflow-x: auto;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0 1.5rem; /* Aumentado padding inferior */
   scrollbar-width: none;
 }
 
@@ -190,8 +190,8 @@
 
 /* ── HERO BENTO GRID ──────────────────────────────────────── */
 .hero-bento {
-  padding-top: 160px; /* offset navbar */
-  margin-bottom: 2rem;
+  padding-top: 180px; /* Aumentado por logo más grande */
+  margin-bottom: 1rem;
 }
 
 .bento-grid {
@@ -293,7 +293,7 @@
   padding-block: 2rem;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  margin-bottom: 2rem;
+  margin-bottom: 0; /* Eliminado espacio excesivo */
 }
 
 .feature-item {
@@ -318,6 +318,10 @@
 }
 
 /* ── ESPECIALIDADES GRID ──────────────────────────────────── */
+#especialidades {
+  padding-top: 3rem; /* Reducido para evitar el vacío oscuro */
+}
+
 .specialties-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
