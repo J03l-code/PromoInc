@@ -154,24 +154,28 @@ function updateAdminProduct(PDO $db): void {
               name         = :name,
               description  = :description,
               price_from   = :price_from,
-              image_webp   = CASE WHEN :image_webp != '' THEN :image_webp ELSE image_webp END,
+              image_webp   = CASE WHEN :image_webp_cond != '' THEN :image_webp_val ELSE image_webp END,
               min_quantity = :min_quantity,
               customizable = :customizable,
               featured     = :featured,
               active       = :active
             WHERE id = :id
         ");
+        
+        $imageWebp = sanitize($data['image_webp'] ?? '');
+        
         $stmt->execute([
-            ':category_id'  => (int)$data['category_id'],
-            ':name'         => sanitize($data['name']),
-            ':description'  => sanitize($data['description'] ?? ''),
-            ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
-            ':image_webp'   => sanitize($data['image_webp'] ?? ''),
-            ':min_quantity' => (int)($data['min_quantity'] ?? 10),
-            ':customizable' => (int)($data['customizable'] ?? 1),
-            ':featured'     => (int)($data['featured'] ?? 0),
-            ':active'       => (int)($data['active'] ?? 1),
-            ':id'           => (int)$data['id'],
+            ':category_id'     => (int)$data['category_id'],
+            ':name'            => sanitize($data['name']),
+            ':description'     => sanitize($data['description'] ?? ''),
+            ':price_from'      => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
+            ':image_webp_cond' => $imageWebp,
+            ':image_webp_val'  => $imageWebp,
+            ':min_quantity'    => (int)($data['min_quantity'] ?? 10),
+            ':customizable'    => (int)($data['customizable'] ?? 1),
+            ':featured'        => (int)($data['featured'] ?? 0),
+            ':active'          => (int)($data['active'] ?? 1),
+            ':id'              => (int)$data['id'],
         ]);
 
         // Actualizar precios por volumen
