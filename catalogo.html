@@ -5,26 +5,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo | PromoInc — Artículos Promocionales</title>
-  <meta name="description" content="Explora nuestro catálogo completo de artículos promocionales. Tecnología, oficina, confecciones y más.">
+  <meta name="description"
+    content="Explora nuestro catálogo completo de artículos promocionales. Tecnología, oficina, confecciones y más.">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=2.1">
-  <link rel="stylesheet" href="assets/css/components.css?v=2.5">
-  <link rel="stylesheet" href="assets/css/animations.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/main.css?v=2.6">
+  <link rel="stylesheet" href="assets/css/components.css?v=2.6">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.6">
   <style>
-    .catalog-header { padding: 180px 0 60px; background: linear-gradient(to bottom, var(--bg-surface), var(--bg-body)); border-bottom: 1px solid var(--border); }
-    .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 40px; margin-top: 40px; }
-    .sidebar-filters { position: sticky; top: 100px; height: fit-content; }
-    .filter-group { margin-bottom: 30px; }
-    .filter-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: var(--text-primary); display: flex; items-center; justify-between; }
-    .filter-list { display: flex; flex-direction: column; gap: 10px; }
-    .filter-item { display: flex; items-center; gap: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.95rem; transition: var(--transition); }
-    .filter-item:hover, .filter-item.active { color: var(--accent-cyan); }
-    .filter-item input { accent-color: var(--accent-cyan); cursor: pointer; }
-    
+    .catalog-header {
+      padding: 180px 0 60px;
+      background: linear-gradient(to bottom, var(--bg-surface), var(--bg-body));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .sidebar-filters {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .filter-group {
+      margin-bottom: 30px;
+    }
+
+    .filter-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .filter-item:hover,
+    .filter-item.active {
+      color: var(--accent-cyan);
+    }
+
+    .filter-item input {
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
     @media (max-width: 992px) {
-      .catalog-layout { grid-template-columns: 1fr; }
-      .sidebar-filters { display: none; } /* Mobile filters could be a drawer */
+      .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-filters {
+        display: none;
+      }
+
+      /* Mobile filters could be a drawer */
     }
   </style>
 </head>
@@ -40,11 +98,19 @@
         <div class="navbar-search">
           <input type="text" id="catalog-search" placeholder="¿Qué estás buscando hoy?" aria-label="Buscar">
           <button type="button" id="btn-search-catalog">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </button>
         </div>
         <div class="navbar-actions-top">
-          <a href="#" class="nav-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>Carrito</span></a>
+          <a href="#" class="nav-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg><span>Carrito</span></a>
           <button id="navbar-toggle" class="navbar-toggle"><span></span><span></span><span></span></button>
         </div>
       </div>
@@ -87,7 +153,8 @@
       <section class="catalog-content">
         <div class="flex items-center justify-between" style="margin-bottom: 20px;">
           <div id="results-count" class="text-muted">Mostrando todos los productos</div>
-          <select id="sort-products" class="btn btn-outline btn-sm" style="background:transparent; border-color:var(--border); color:var(--text-primary)">
+          <select id="sort-products" class="btn btn-outline btn-sm"
+            style="background:transparent; border-color:var(--border); color:var(--text-primary)">
             <option value="featured">Destacados primero</option>
             <option value="price_asc">Precio: Menor a Mayor</option>
             <option value="price_desc">Precio: Mayor a Menor</option>
@@ -207,4 +274,5 @@
 
   <script src="assets/js/main.js?v=2.3"></script>
 </body>
+
 </html>
