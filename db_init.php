@@ -4,8 +4,8 @@ $db = getDB();
 
 try {
     $sql = "CREATE TABLE IF NOT EXISTS product_prices (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        product_id INT NOT NULL,
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        product_id INT UNSIGNED NOT NULL,
         min_qty INT NOT NULL,
         price DECIMAL(10,2) NOT NULL,
         FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
