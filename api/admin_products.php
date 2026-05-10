@@ -142,7 +142,7 @@ function updateAdminProduct(PDO $db): void {
           name         = :name,
           description  = :description,
           price_from   = :price_from,
-          image_webp   = :image_webp,
+          image_webp   = CASE WHEN :image_webp != '' THEN :image_webp ELSE image_webp END,
           min_quantity = :min_quantity,
           customizable = :customizable,
           featured     = :featured,

@@ -360,7 +360,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     name:          document.getElementById('product-name').value.trim(),
     description:   document.getElementById('product-desc').value.trim(),
     price_from:    document.getElementById('product-price').value || null,
-    image_webp:    document.getElementById('product-image').value,
+    image_webp:    document.getElementById('product-image').value || '',
     min_quantity:  parseInt(document.getElementById('product-minqty').value) || 10,
     stock_quantity:parseInt(document.getElementById('product-stock').value)  || 0,
     customizable:  document.getElementById('product-custom').checked ? 1 : 0,
