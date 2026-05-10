@@ -11,12 +11,25 @@ const LIMIT = 20;
 
 // ── UTILIDADES ────────────────────────────────────────────────
 async function api(endpoint, method = 'GET', body = null) {
+  let finalMethod = method;
+  let finalBody   = body;
+
+  // Emulación de métodos vía POST para máxima compatibilidad con servidores compartidos
+  if (method === 'PUT' || method === 'DELETE') {
+    finalMethod = 'POST';
+    finalBody = { ...body, _method: method };
+  }
+
   const opts = {
-    method,
+    method: finalMethod,
     headers: { 'Content-Type': 'application/json' },
     credentials: 'same-origin',
   };
-  if (body && method !== 'GET') opts.body = JSON.stringify(body);
+
+  if (finalBody && finalMethod !== 'GET') {
+    opts.body = JSON.stringify(finalBody);
+  }
+
   const res = await fetch(`${API}/${endpoint}`, opts);
   return res.json();
 }

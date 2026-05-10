@@ -15,7 +15,13 @@ $db     = getDB();
 
 switch ($method) {
     case 'GET':    getCategories($db);    break;
-    case 'POST':   createCategory($db);   break;
+    case 'POST':
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $action = $data['_method'] ?? 'POST';
+        if ($action === 'PUT') updateCategory($db);
+        elseif ($action === 'DELETE') deleteCategory($db);
+        else createCategory($db);
+        break;
     case 'PUT':    updateCategory($db);   break;
     case 'DELETE': deleteCategory($db);   break;
     default:       jsonError(405, 'Método no permitido');

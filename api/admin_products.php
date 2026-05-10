@@ -16,7 +16,14 @@ $db     = getDB();
 
 switch ($method) {
     case 'GET':    getAdminProducts($db);    break;
-    case 'POST':   createAdminProduct($db);  break;
+    case 'POST':
+        // Permitir emulación de PUT/DELETE vía POST para compatibilidad
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $action = $data['_method'] ?? 'POST';
+        if ($action === 'PUT') updateAdminProduct($db);
+        elseif ($action === 'DELETE') deleteAdminProduct($db);
+        else createAdminProduct($db);
+        break;
     case 'PUT':    updateAdminProduct($db);  break;
     case 'DELETE': deleteAdminProduct($db);  break;
     default:       jsonError(405, 'Método no permitido');
