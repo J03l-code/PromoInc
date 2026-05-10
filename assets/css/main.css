@@ -266,6 +266,15 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 6px var(--accent-gold);
 }
 
+.badge-nostock {
+  color: #dc3545;
+}
+
+.badge-nostock::before {
+  background: #dc3545;
+  box-shadow: 0 0 6px #dc3545;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.5); }

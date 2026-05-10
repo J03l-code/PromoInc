@@ -355,12 +355,12 @@ function renderProducts(grid, products, append = false) {
         }
       </div>
       <div class="card-body">
-        <div class="card-badges">
-          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge" style="background:rgba(220,53,69,0.1);color:#dc3545;border-color:rgba(220,53,69,0.3)">Sin Stock</span>'}
-          ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
-        </div>
         <h3 class="card-title">${p.name}</h3>
         <p class="card-sku">${p.sku}</p>
+        <div class="card-badges" style="margin-bottom: 0.75rem;">
+          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
+          ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
+        </div>
         <div class="flex items-center justify-between">
           <div>
             <p class="card-price">Desde <strong>$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
