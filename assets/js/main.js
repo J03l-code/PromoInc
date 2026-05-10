@@ -343,31 +343,30 @@ function renderProducts(grid, products, append = false) {
   
   const html = products.map(p => {
     const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
-    const cleanName = (p.name || '').replace(/"/g, '&quot;');
     return `
-    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2.6'" style="cursor: pointer;">
-      <div class="card-body" style="padding-bottom: 0;">
-        <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1rem;">${p.name}</h3>
-        <p class="card-sku" style="margin-bottom: 1rem; font-size: 0.75rem;">${p.sku}</p>
-      </div>
-      <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21;">
+    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2'" style="cursor: pointer;">
+      <div class="card-img-wrapper">
         ${imgUrl 
-          ? `<img src="${imgUrl}" alt="${cleanName}" class="card-img" style="width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-             <div class="img-placeholder" style="display:none; text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${cleanName}</span></div>`
-          : `<div class="img-placeholder" style="text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${cleanName}</span></div>`
+          ? `
+            <img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="img-placeholder" style="display:none; text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${p.name.replace(/"/g, '&quot;')}</span></div>
+            `
+          : `<div class="img-placeholder" style="text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${p.name.replace(/"/g, '&quot;')}</span></div>`
         }
       </div>
-      <div class="card-body" style="padding-top: 1rem;">
+      <div class="card-body">
+        <h3 class="card-title">${p.name}</h3>
+        <p class="card-sku">${p.sku}</p>
         <div class="card-badges" style="margin-bottom: 0.75rem;">
           ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
           ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
         </div>
         <div class="flex items-center justify-between">
           <div>
-            <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
-            <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
+            <p class="card-price">Desde <strong>$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
+            <p class="card-min">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
-          <a href="producto.html?id=${p.id}&v=2.6" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
+          <a href="producto.html?id=${p.id}&v=2" class="btn btn-secondary btn-sm">Cotizar</a>
         </div>
       </div>
     </article>`;
