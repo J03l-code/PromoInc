@@ -34,14 +34,16 @@
   text-decoration: none;
 }
 
-.navbar-logo-icon {
-  width: 40px;
-  height: 40px;
+.navbar-logo img {
+  height: 110px; /* Tamaño mucho más grande */
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .navbar-logo-text {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 2rem; /* Aumento también por si se usa texto */
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
