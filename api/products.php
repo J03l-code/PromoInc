@@ -59,6 +59,11 @@ function getProducts(PDO $db): void {
         $stmtStock->execute([$product['id']]);
         $product['variants'] = $stmtStock->fetchAll();
 
+        // Precios por volumen
+        $stmtPrices = $db->prepare("SELECT min_qty, price FROM product_prices WHERE product_id = ? ORDER BY min_qty ASC");
+        $stmtPrices->execute([$product['id']]);
+        $product['volume_prices'] = $stmtPrices->fetchAll();
+
         jsonSuccess($product);
     }
 

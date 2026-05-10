@@ -303,8 +303,28 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('upload-preview').classList.add('hidden');
   document.getElementById('product-image').value = '';
   populateCategorySelects(true);
+  document.getElementById('price-tiers-container').innerHTML = ''; // Limpiar tiers
   openModal('modal-product');
 });
+
+// Manejo de escalas de precios
+document.getElementById('btn-add-tier').addEventListener('click', () => {
+  addPriceTier();
+});
+
+function addPriceTier(qty = '', price = '') {
+  const container = document.getElementById('price-tiers-container');
+  const div = document.createElement('div');
+  div.className = 'price-tier-row';
+  div.style = 'display: flex; gap: 10px; align-items: center;';
+  div.innerHTML = `
+    <input type="number" placeholder="Cant. Mínima" value="${qty}" class="tier-qty" style="flex: 1" min="1">
+    <input type="number" placeholder="Precio Unit." value="${price}" class="tier-price" style="flex: 1" step="0.01" min="0">
+    <button type="button" class="btn-icon danger remove-tier" style="padding: 5px">✕</button>
+  `;
+  div.querySelector('.remove-tier').addEventListener('click', () => div.remove());
+  container.appendChild(div);
+}
 
 // Upload de imagen
 const uploadZone = document.getElementById('upload-zone');
@@ -366,6 +386,10 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     customizable:  document.getElementById('product-custom').checked ? 1 : 0,
     featured:      document.getElementById('product-featured').checked ? 1 : 0,
     active: 1,
+    volume_prices: Array.from(document.querySelectorAll('.price-tier-row')).map(row => ({
+      min_qty: parseInt(row.querySelector('.tier-qty').value),
+      price:   parseFloat(row.querySelector('.tier-price').value)
+    })).filter(p => !isNaN(p.min_qty) && !isNaN(p.price))
   };
   if (id) payload.id = parseInt(id);
   const method   = id ? 'PUT' : 'POST';
@@ -396,6 +420,13 @@ async function editProduct(id) {
   document.getElementById('product-featured').checked= !!parseInt(p.featured);
   document.getElementById('product-image').value    = p.image_webp || '';
   document.getElementById('product-category').value = p.category_id;
+  
+  // Renderizar tiers de precio
+  const tiersContainer = document.getElementById('price-tiers-container');
+  tiersContainer.innerHTML = '';
+  if (p.volume_prices && p.volume_prices.length) {
+    p.volume_prices.forEach(t => addPriceTier(t.min_qty, t.price));
+  }
   if (p.image_webp) {
     document.getElementById('preview-img').src = `../assets/images/${p.image_webp}`;
     document.getElementById('upload-placeholder').classList.add('hidden');

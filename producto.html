@@ -7,32 +7,94 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=1.7">
-  <link rel="stylesheet" href="assets/css/components.css?v=1.7">
-  <link rel="stylesheet" href="assets/css/animations.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/main.css?v=1.8">
+  <link rel="stylesheet" href="assets/css/components.css?v=1.8">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.8">
   <style>
     .product-detail { padding: 140px 0 80px; }
-    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
     .product-gallery { position: sticky; top: 120px; }
-    .main-image-container { aspect-ratio: 1; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 20px; }
-    .main-image-container img { width: 100%; height: 100%; object-fit: contain; }
     
-    .product-info h1 { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
-    .product-sku { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
-    .product-price-box { background: rgba(0,255,240,0.03); border: 1px solid rgba(0,255,240,0.1); padding: 25px; border-radius: 15px; margin-bottom: 30px; }
-    .price-main { font-size: 2rem; font-weight: 800; color: var(--accent-cyan); display: block; }
-    .price-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .main-image-container { 
+      aspect-ratio: 1; 
+      background: var(--bg-surface); 
+      border: 1px solid var(--border); 
+      border-radius: 24px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      overflow: hidden; 
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .main-image-container:hover { border-color: var(--accent-cyan); box-shadow: var(--shadow-glow-cyan); }
+    .main-image-container img { width: 90%; height: 90%; object-fit: contain; }
     
-    .product-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
-    .meta-item { background: var(--bg-surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
-    .meta-label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
-    .meta-value { font-weight: 600; font-size: 1rem; color: var(--text-primary); }
+    .gallery-thumbs { display: flex; gap: 15px; }
+    .thumb { width: 80px; height: 80px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-surface); cursor: pointer; padding: 10px; }
+    .thumb.active { border-color: var(--accent-cyan); }
+    .thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+    .breadcrumbs { margin-bottom: 2rem; font-size: 0.9rem; display: flex; gap: 10px; color: var(--text-muted); }
+    .breadcrumbs a { color: var(--text-muted); }
+    .breadcrumbs a:hover { color: var(--accent-cyan); }
+
+    .product-info h1 { font-family: var(--font-display); font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+    .product-description-short { color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; }
     
-    .product-desc { line-height: 1.8; color: var(--text-muted); margin-bottom: 40px; }
-    
+    .stock-status { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem; }
+    .stock-dot { width: 8px; height: 8px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+
+    .calc-box { 
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px; 
+      padding: 35px; 
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .calc-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(0, 255, 240, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .calc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .calc-label { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .calc-value { font-size: 1.8rem; font-weight: 800; }
+    .price-unit { color: var(--text-primary); }
+    .price-total { color: var(--accent-cyan); }
+
+    .qty-selector { display: flex; align-items: center; background: var(--bg-body); border: 1px solid var(--border); border-radius: 12px; padding: 5px; width: fit-content; }
+    .qty-btn { width: 40px; height: 40px; border-radius: 8px; border: none; background: transparent; color: var(--text-primary); cursor: pointer; font-size: 1.2rem; display: flex; items-center; justify-center; transition: var(--transition); }
+    .qty-btn:hover { background: var(--bg-surface); color: var(--accent-cyan); }
+    .qty-input { width: 60px; border: none; background: transparent; text-align: center; color: var(--text-primary); font-weight: 700; font-size: 1.1rem; }
+    .qty-input::-webkit-inner-spin-button { display: none; }
+
+    .discount-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+    .discount-table th { text-align: left; padding: 12px; color: var(--text-muted); font-weight: 500; border-bottom: 1px solid var(--border); }
+    .discount-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+    .discount-table tr:last-child td { border-bottom: none; }
+    .discount-table .highlight { color: var(--accent-cyan); font-weight: 600; }
+    .discount-table .saving { color: #00ff88; font-size: 0.8rem; }
+
+    .specs-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+    .spec-item { display: flex; flex-direction: column; }
+    .spec-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    .spec-value { font-weight: 600; color: var(--text-primary); }
+
     @media (max-width: 992px) {
       .detail-grid { grid-template-columns: 1fr; gap: 40px; }
       .product-gallery { position: static; }
+      .product-info h1 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -43,7 +105,7 @@
     <div class="navbar-top">
       <div class="container navbar-top-inner">
         <a href="index.html" class="navbar-logo">
-          <img src="assets/images/Logo promoink.png" alt="PromoInc Logo" style="height: 40px; width: auto; object-fit: contain;">
+          <img src="assets/images/Logo promoink.png" alt="PromoInc Logo" style="height: 42px; width: auto; object-fit: contain;">
         </a>
         <div class="navbar-actions-top">
            <a href="catalogo.html" class="btn btn-ghost btn-sm">Volver al catálogo</a>
@@ -53,13 +115,15 @@
   </header>
 
   <main class="container product-detail">
-    <div id="product-content" class="detail-grid reveal">
+    <div id="product-content">
       <!-- Loading State -->
-      <div class="skeleton" style="height:500px"></div>
-      <div>
-        <div class="skeleton" style="height:40px; width:70%; margin-bottom:20px"></div>
-        <div class="skeleton" style="height:200px; margin-bottom:20px"></div>
-        <div class="skeleton" style="height:100px"></div>
+      <div class="detail-grid">
+         <div class="skeleton" style="height:500px; border-radius:24px"></div>
+         <div>
+            <div class="skeleton" style="height:40px; width:70%; margin-bottom:20px"></div>
+            <div class="skeleton" style="height:100px; margin-bottom:30px"></div>
+            <div class="skeleton" style="height:250px"></div>
+         </div>
       </div>
     </div>
   </main>
@@ -72,6 +136,8 @@
 
   <script src="assets/js/main.js?v=1.8"></script>
   <script>
+    let currentProduct = null;
+
     document.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('id');
@@ -81,56 +147,8 @@
         const res = await fetch(`api/products.php?id=${productId}`);
         const json = await res.json();
         if (json.success) {
-          const p = json.data;
-          document.title = `${p.name} | PromoInc`;
-          
-          const svgProduct = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
-          const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
-
-          document.getElementById('product-content').innerHTML = `
-            <div class="product-gallery">
-              <div class="main-image-container">
-                ${imgUrl 
-                  ? `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='${svgProduct}'">`
-                  : svgProduct
-                }
-              </div>
-            </div>
-            <div class="product-info">
-              <span class="badge badge-featured" style="margin-bottom:1rem">${p.category_name}</span>
-              <h1>${p.name}</h1>
-              <p class="product-sku">SKU: ${p.sku}</p>
-              
-              <div class="product-price-box">
-                <span class="price-label">Desde</span>
-                <span class="price-main">$${parseFloat(p.price_from).toFixed(2)}</span>
-                <p class="text-muted" style="font-size:0.8rem; margin-top:5px">Incluye un color de estampado / Mínimo ${p.min_quantity} unidades</p>
-              </div>
-
-              <div class="product-meta">
-                <div class="meta-item">
-                  <span class="meta-label">Disponibilidad</span>
-                  <span class="meta-value" style="color:var(--accent-cyan)">${p.total_stock} unidades</span>
-                </div>
-                <div class="meta-item">
-                  <span class="meta-label">Personalizable</span>
-                  <span class="meta-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</span>
-                </div>
-              </div>
-
-              <div class="product-desc">
-                <h3 style="color:var(--text-primary); margin-bottom:1rem; font-size:1.1rem">Descripción</h3>
-                <p>${p.description || 'No hay descripción disponible para este producto.'}</p>
-              </div>
-
-              <div class="flex gap-4">
-                <a href="https://wa.me/593987654321?text=Hola, quiero cotizar el producto: ${p.name} (SKU: ${p.sku})" target="_blank" class="btn btn-primary btn-lg" style="flex:1; justify-content:center">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:10px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L22 4l-1.5 6.5z"/></svg>
-                  Cotizar por WhatsApp
-                </a>
-              </div>
-            </div>
-          `;
+          currentProduct = json.data;
+          renderProductDetail();
         } else {
           window.location.href = 'catalogo.html';
         }
@@ -139,6 +157,163 @@
         window.location.href = 'catalogo.html';
       }
     });
+
+    function renderProductDetail() {
+      const p = currentProduct;
+      document.title = `${p.name} | PromoInc`;
+      
+      const svgPlaceholder = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
+      const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
+
+      // Ordenar precios por volumen
+      const prices = p.volume_prices || [];
+      const basePrice = parseFloat(p.price_from);
+
+      document.getElementById('product-content').innerHTML = `
+        <nav class="breadcrumbs">
+          <a href="index.html">Inicio</a> / <a href="catalogo.html">Catálogo</a> / <span style="color:var(--text-primary)">${p.name}</span>
+        </nav>
+
+        <div class="detail-grid reveal">
+          <div class="product-gallery">
+            <div class="main-image-container" id="main-image">
+              ${imgUrl 
+                ? `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='${svgPlaceholder}'">`
+                : svgPlaceholder
+              }
+            </div>
+            <div class="gallery-thumbs">
+               <div class="thumb active">${imgUrl ? `<img src="${imgUrl}">` : svgPlaceholder}</div>
+            </div>
+          </div>
+
+          <div class="product-info">
+            <div class="stock-status">
+               <div class="stock-dot"></div>
+               <span style="color:#00ff88">Stock disponible: ${p.total_stock} unidades</span>
+            </div>
+            
+            <h1>${p.name}</h1>
+            <p class="product-description-short">${p.description || 'Producto premium personalizable con el logo de tu empresa.'}</p>
+            
+            <div class="calc-box">
+               <div class="calc-row">
+                  <div>
+                    <span class="calc-label">Cantidad</span>
+                    <div class="qty-selector" style="margin-top:10px">
+                       <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                       <input type="number" id="qty-input" class="qty-input" value="${p.min_quantity}" min="${p.min_quantity}" onchange="calculatePrices()">
+                       <button class="qty-btn" onclick="updateQty(1)">+</button>
+                    </div>
+                  </div>
+                  <div style="text-align:right">
+                    <span class="calc-label">Precio Unit.</span>
+                    <div class="calc-value price-unit" id="unit-price-display">$0.00</div>
+                  </div>
+               </div>
+               
+               <div class="calc-row" style="margin-bottom:0; padding-top:20px; border-top:1px solid var(--border)">
+                  <span class="calc-label" style="font-weight:700; color:var(--text-primary)">Subtotal Estimado</span>
+                  <div class="calc-value price-total" id="total-price-display">$0.00</div>
+               </div>
+               <p class="text-muted" style="font-size:0.75rem; margin-top:15px; text-align:center">Precios referenciales para artículos con un logo a 1 color.</p>
+            </div>
+
+            <a href="#" id="wa-quote-btn" target="_blank" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-bottom:30px; height:60px; font-size:1.1rem">
+               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:12px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L22 4l-1.5 6.5z"/></svg>
+               Solicitar Cotización Formal
+            </a>
+
+            ${prices.length > 0 ? `
+              <div style="margin-bottom:40px">
+                <h3 style="font-size:1.1rem; margin-bottom:1.5rem">Escala de Descuentos</h3>
+                <table class="discount-table">
+                   <thead>
+                     <tr>
+                       <th>Cantidad</th>
+                       <th>Precio Unit.</th>
+                       <th>Ahorro</th>
+                       <th>Subtotal</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     ${prices.map(tier => {
+                        const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
+                        return `
+                          <tr>
+                            <td>${tier.min_qty}+ unidades</td>
+                            <td class="highlight">$${parseFloat(tier.price).toFixed(2)}</td>
+                            <td><span class="saving">-${discount}%</span></td>
+                            <td>$${(tier.min_qty * tier.price).toLocaleString()}</td>
+                          </tr>
+                        `;
+                     }).join('')}
+                   </tbody>
+                </table>
+              </div>
+            ` : ''}
+
+            <div class="specs-list">
+               <div class="spec-item">
+                  <span class="spec-label">SKU</span>
+                  <span class="spec-value">${p.sku}</span>
+               </div>
+               <div class="spec-item">
+                  <span class="spec-label">Categoría</span>
+                  <span class="spec-value">${p.category_name}</span>
+               </div>
+               <div class="spec-item">
+                  <span class="spec-label">Personalizable</span>
+                  <span class="spec-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</span>
+               </div>
+               <div class="spec-item">
+                  <span class="spec-label">Muestras</span>
+                  <span class="spec-value">Disponibles</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      calculatePrices();
+    }
+
+    function updateQty(delta) {
+      const input = document.getElementById('qty-input');
+      let val = parseInt(input.value) + delta;
+      if (val < parseInt(input.min)) val = parseInt(input.min);
+      input.value = val;
+      calculatePrices();
+    }
+
+    function calculatePrices() {
+      const qty = parseInt(document.getElementById('qty-input').value);
+      const p = currentProduct;
+      let unitPrice = parseFloat(p.price_from);
+      
+      // Encontrar el mejor precio según la cantidad
+      if (p.volume_prices && p.volume_prices.length) {
+        const applicableTier = [...p.volume_prices]
+          .sort((a, b) => b.min_qty - a.min_qty)
+          .find(t => qty >= t.min_qty);
+        if (applicableTier) unitPrice = parseFloat(applicableTier.price);
+      }
+      
+      const subtotal = qty * unitPrice;
+      
+      document.getElementById('unit-price-display').textContent = `$${unitPrice.toFixed(2)}`;
+      document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      
+      // Update WA Link
+      const waBtn = document.getElementById('wa-quote-btn');
+      const waNumber = window.siteWhatsapp || '593987654321';
+      const text = `Hola PromoInc, me interesa cotizar:
+Producto: ${p.name}
+SKU: ${p.sku}
+Cantidad: ${qty} unidades
+Precio Ref: $${unitPrice.toFixed(2)} c/u`;
+      waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+    }
   </script>
 </body>
 </html>

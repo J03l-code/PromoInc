@@ -121,6 +121,11 @@ function createAdminProduct(PDO $db): void {
 
     $productId = (int)$db->lastInsertId();
 
+    // Guardar precios por volumen si existen
+    if (!empty($data['volume_prices']) && is_array($data['volume_prices'])) {
+        saveVolumePrices($db, $productId, $data['volume_prices']);
+    }
+
     // Guardar variantes de stock si se enviaron
     if (!empty($data['stock']) && is_array($data['stock'])) {
         saveStock($db, $productId, $data['stock']);
@@ -158,9 +163,14 @@ function updateAdminProduct(PDO $db): void {
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
         ':customizable' => (int)($data['customizable'] ?? 1),
         ':featured'     => (int)($data['featured'] ?? 0),
-        ':active'       => (int)($data['active'] ?? 1),
+        ':active'       => (int)$data['active'] ?? 1,
         ':id'           => (int)$data['id'],
     ]);
+
+    // Actualizar precios por volumen
+    if (isset($data['volume_prices']) && is_array($data['volume_prices'])) {
+        saveVolumePrices($db, (int)$data['id'], $data['volume_prices']);
+    }
 
     if (!empty($data['stock']) && is_array($data['stock'])) {
         saveStock($db, (int)$data['id'], $data['stock']);
