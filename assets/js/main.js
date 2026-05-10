@@ -109,61 +109,109 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Load featured products
+  // Load all dynamic data
+  loadSiteSettings();
+  loadDynamicCategories();
   loadFeaturedProducts();
 });
+
+async function loadSiteSettings() {
+  try {
+    const res = await fetch('api/settings.php');
+    const json = await res.json();
+    if (json.success) {
+      const s = json.data;
+      if (s.hero_title) {
+        const titleEl = document.querySelector('.hero-bento h1');
+        if (titleEl) titleEl.innerHTML = s.hero_title.replace('merchandising', `<span class="text-pink glitch" data-text="merchandising">merchandising</span>`);
+      }
+      if (s.hero_subtitle) {
+        const subEl = document.querySelector('.hero-bento .text-muted');
+        if (subEl) subEl.textContent = s.hero_subtitle;
+      }
+      // Actualizar links de contacto si existen
+      if (s.whatsapp) {
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = `https://wa.me/${s.whatsapp}`);
+      }
+    }
+  } catch (err) { console.error('Error loading settings:', err); }
+}
+
+async function loadDynamicCategories() {
+  const nav = document.querySelector('.nav-categories');
+  if (!nav) return;
+
+  try {
+    const res = await fetch('api/categories.php');
+    const json = await res.json();
+    if (json.success && json.data.length) {
+      nav.innerHTML = json.data.map(cat => `
+        <div class="nav-item-dropdown">
+          <a href="catalogo.html?category=${cat.id}">
+            ${cat.name} ${cat.children ? '<svg viewBox="0 0 24 24" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>' : ''}
+          </a>
+          ${cat.children ? `
+            <div class="dropdown-menu">
+              ${cat.children.map(child => `<a href="catalogo.html?category=${child.id}">${child.name}</a>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `).join('') + '<a href="#" class="nav-link-ofertas">Ofertas</a>';
+    }
+  } catch (err) { console.error('Error loading categories:', err); }
+}
 
 async function loadFeaturedProducts() {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
 
-  // Static demo data (used when DB not connected)
-  const demoProducts = [
-    { id:1, name:'USB Metálica Elegance', sku:'TE-001', price_from:2.50, category_name:'Tecnología', total_stock:430, featured:1 },
-    { id:2, name:'Bolígrafo Executive Pro', sku:'BOL-001', price_from:1.20, category_name:'Escritura', total_stock:850, featured:1 },
-    { id:3, name:'Camiseta Polo Corporate', sku:'CAM-001', price_from:4.80, category_name:'Confecciones', total_stock:530, featured:1 },
-    { id:4, name:'Termo Acero Inox 500ml', sku:'MU-001', price_from:6.50, category_name:'Tomatodos', total_stock:275, featured:1 },
-    { id:5, name:'Set Ejecutivo Premium', sku:'OF-001', price_from:12.00, category_name:'Oficina', total_stock:75, featured:1 },
-    { id:6, name:'Tote Bag Ecológico', sku:'EC-001', price_from:1.80, category_name:'Ecología', total_stock:700, featured:1 },
-    { id:7, name:'Llavero Metálico Láser', sku:'LL-001', price_from:0.85, category_name:'Llaveros', total_stock:1050, featured:1 },
-    { id:8, name:'Power Bank 10000mAh', sku:'TE-002', price_from:8.90, category_name:'Tecnología', total_stock:160, featured:1 },
-  ];
-
   try {
     const res = await fetch('api/products.php?featured=1&limit=8');
     const json = await res.json();
-    renderProducts(grid, json.success ? json.data.items : demoProducts);
-  } catch {
-    renderProducts(grid, demoProducts);
+    if (json.success && json.data.items.length) {
+      renderProducts(grid, json.data.items);
+    } else {
+      grid.innerHTML = '<div class="empty-state">No hay productos destacados por ahora.</div>';
+    }
+  } catch (err) {
+    console.error('Error loading products:', err);
+    grid.innerHTML = '<div class="empty-state">No se pudieron cargar los productos</div>';
   }
 }
 
 function renderProducts(grid, products) {
-  const svgProduct = `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
-  grid.innerHTML = products.map(p => `
+  const svgProduct = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
+  
+  grid.innerHTML = products.map(p => {
+    const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
+    return `
     <article class="card reveal" data-id="${p.id}">
       <div class="card-img-wrapper">
-        <div class="img-placeholder">${svgProduct}<span>${p.category_name}</span></div>
+        ${imgUrl 
+          ? `<img src="${imgUrl}" alt="${p.name}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'>${svgProduct}</div>'">`
+          : `<div class="img-placeholder">${svgProduct}<span>${p.category_name || 'Producto'}</span></div>`
+        }
         <div class="card-img-overlay">
           <a href="producto.html?id=${p.id}" class="btn btn-primary btn-sm w-full" style="justify-content:center">Ver Detalle</a>
         </div>
       </div>
       <div class="card-body">
         <div class="card-badges">
-          ${p.total_stock > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge" style="background:rgba(220,53,69,0.1);color:#dc3545;border-color:rgba(220,53,69,0.3)">Sin Stock</span>'}
-          ${p.featured ? '<span class="badge badge-featured">Destacado</span>' : ''}
+          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge" style="background:rgba(220,53,69,0.1);color:#dc3545;border-color:rgba(220,53,69,0.3)">Sin Stock</span>'}
+          ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
         </div>
         <h3 class="card-title">${p.name}</h3>
         <p class="card-sku">${p.sku}</p>
         <div class="flex items-center justify-between">
           <div>
-            <p class="card-price">Desde <strong>$${parseFloat(p.price_from).toFixed(2)}</strong></p>
-            <p class="card-min">Mín. 10 unidades</p>
+            <p class="card-price">Desde <strong>$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
+            <p class="card-min">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
           <a href="producto.html?id=${p.id}" class="btn btn-secondary btn-sm">Cotizar</a>
         </div>
       </div>
-    </article>`).join('');
+    </article>`;
+  }).join('');
 
   // Re-observe new elements
   const io = new IntersectionObserver((entries) => {

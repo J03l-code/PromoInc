@@ -14,6 +14,12 @@ require_once 'config.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $db     = getDB();
 
+// Proteger métodos de escritura
+if (in_array($method, ['POST', 'PUT', 'DELETE'])) {
+    require_once 'middleware.php';
+    checkAuth(); // Solo administradores pueden modificar
+}
+
 switch ($method) {
     case 'GET':
         getProducts($db);

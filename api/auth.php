@@ -10,12 +10,13 @@ require_once 'config.php';
 
 // Iniciar sesión PHP de forma segura
 if (session_status() === PHP_SESSION_NONE) {
+    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
     session_set_cookie_params([
         'lifetime' => 28800,       // 8 horas
         'path'     => '/',
-        'secure'   => false,       // Cambiar a true en producción con HTTPS
+        'secure'   => $isSecure,
         'httponly' => true,
-        'samesite' => 'Strict',
+        'samesite' => 'Lax',       // Lax es más compatible para redirecciones
     ]);
     session_start();
 }
