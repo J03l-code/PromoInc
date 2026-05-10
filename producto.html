@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando Producto... | PromoInc</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/components.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.7">
+  <style>
+    .product-detail { padding: 140px 0 80px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .product-gallery { position: sticky; top: 120px; }
+    .main-image-container { aspect-ratio: 1; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 20px; }
+    .main-image-container img { width: 100%; height: 100%; object-fit: contain; }
+    
+    .product-info h1 { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .product-sku { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .product-price-box { background: rgba(0,255,240,0.03); border: 1px solid rgba(0,255,240,0.1); padding: 25px; border-radius: 15px; margin-bottom: 30px; }
+    .price-main { font-size: 2rem; font-weight: 800; color: var(--accent-cyan); display: block; }
+    .price-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    
+    .product-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+    .meta-item { background: var(--bg-surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
+    .meta-label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
+    .meta-value { font-weight: 600; font-size: 1rem; color: var(--text-primary); }
+    
+    .product-desc { line-height: 1.8; color: var(--text-muted); margin-bottom: 40px; }
+    
+    @media (max-width: 992px) {
+      .detail-grid { grid-template-columns: 1fr; gap: 40px; }
+      .product-gallery { position: static; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header id="navbar" class="navbar-ecommerce">
+    <div class="navbar-top">
+      <div class="container navbar-top-inner">
+        <a href="index.html" class="navbar-logo">
+          <svg class="navbar-logo-icon" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="8" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5" />
+            <path d="M12 28L20 12L28 28" stroke="var(--accent-pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20H24" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <span class="navbar-logo-text" style="color:var(--text-primary)">Promo<span style="color:var(--accent-cyan)">Inc</span></span>
+        </a>
+        <div class="navbar-actions-top">
+           <a href="catalogo.html" class="btn btn-ghost btn-sm">Volver al catálogo</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container product-detail">
+    <div id="product-content" class="detail-grid reveal">
+      <!-- Loading State -->
+      <div class="skeleton" style="height:500px"></div>
+      <div>
+        <div class="skeleton" style="height:40px; width:70%; margin-bottom:20px"></div>
+        <div class="skeleton" style="height:200px; margin-bottom:20px"></div>
+        <div class="skeleton" style="height:100px"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2024 PromoInc Artículos Promocionales. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=1.7"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      if (!productId) { window.location.href = 'catalogo.html'; return; }
+
+      try {
+        const res = await fetch(`api/products.php?id=${productId}`);
+        const json = await res.json();
+        if (json.success) {
+          const p = json.data;
+          document.title = `${p.name} | PromoInc`;
+          
+          const svgProduct = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
+          const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
+
+          document.getElementById('product-content').innerHTML = `
+            <div class="product-gallery">
+              <div class="main-image-container">
+                ${imgUrl 
+                  ? `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='${svgProduct}'">`
+                  : svgProduct
+                }
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="badge badge-featured" style="margin-bottom:1rem">${p.category_name}</span>
+              <h1>${p.name}</h1>
+              <p class="product-sku">SKU: ${p.sku}</p>
+              
+              <div class="product-price-box">
+                <span class="price-label">Desde</span>
+                <span class="price-main">$${parseFloat(p.price_from).toFixed(2)}</span>
+                <p class="text-muted" style="font-size:0.8rem; margin-top:5px">Incluye un color de estampado / Mínimo ${p.min_quantity} unidades</p>
+              </div>
+
+              <div class="product-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Disponibilidad</span>
+                  <span class="meta-value" style="color:var(--accent-cyan)">${p.total_stock} unidades</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Personalizable</span>
+                  <span class="meta-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</span>
+                </div>
+              </div>
+
+              <div class="product-desc">
+                <h3 style="color:var(--text-primary); margin-bottom:1rem; font-size:1.1rem">Descripción</h3>
+                <p>${p.description || 'No hay descripción disponible para este producto.'}</p>
+              </div>
+
+              <div class="flex gap-4">
+                <a href="https://wa.me/593987654321?text=Hola, quiero cotizar el producto: ${p.name} (SKU: ${p.sku})" target="_blank" class="btn btn-primary btn-lg" style="flex:1; justify-content:center">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:10px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L22 4l-1.5 6.5z"/></svg>
+                  Cotizar por WhatsApp
+                </a>
+              </div>
+            </div>
+          `;
+        } else {
+          window.location.href = 'catalogo.html';
+        }
+      } catch (err) {
+        console.error(err);
+        window.location.href = 'catalogo.html';
+      }
+    });
+  </script>
+</body>
+</html>

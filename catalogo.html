@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo | PromoInc — Artículos Promocionales</title>
+  <meta name="description" content="Explora nuestro catálogo completo de artículos promocionales. Tecnología, oficina, confecciones y más.">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/components.css?v=1.7">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.7">
+  <style>
+    .catalog-header { padding: 120px 0 60px; background: linear-gradient(to bottom, var(--bg-surface), var(--bg-body)); border-bottom: 1px solid var(--border); }
+    .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 40px; margin-top: 40px; }
+    .sidebar-filters { position: sticky; top: 100px; height: fit-content; }
+    .filter-group { margin-bottom: 30px; }
+    .filter-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: var(--text-primary); display: flex; items-center; justify-between; }
+    .filter-list { display: flex; flex-direction: column; gap: 10px; }
+    .filter-item { display: flex; items-center; gap: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.95rem; transition: var(--transition); }
+    .filter-item:hover, .filter-item.active { color: var(--accent-cyan); }
+    .filter-item input { accent-color: var(--accent-cyan); cursor: pointer; }
+    
+    @media (max-width: 992px) {
+      .catalog-layout { grid-template-columns: 1fr; }
+      .sidebar-filters { display: none; } /* Mobile filters could be a drawer */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar (Misma que index) -->
+  <header id="navbar" class="navbar-ecommerce">
+    <div class="navbar-top">
+      <div class="container navbar-top-inner">
+        <a href="index.html" class="navbar-logo">
+          <svg class="navbar-logo-icon" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="8" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1.5" />
+            <path d="M12 28L20 12L28 28" stroke="var(--accent-pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 20H24" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <span class="navbar-logo-text" style="color:var(--text-primary)">Promo<span style="color:var(--accent-cyan)">Inc</span></span>
+        </a>
+        <div class="navbar-search">
+          <input type="text" id="catalog-search" placeholder="¿Qué estás buscando hoy?" aria-label="Buscar">
+          <button type="button" id="btn-search-catalog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
+        <div class="navbar-actions-top">
+          <a href="#" class="nav-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>Carrito</span></a>
+          <button id="navbar-toggle" class="navbar-toggle"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-bottom">
+      <div class="container">
+        <nav class="nav-categories">
+          <!-- Dinámico -->
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container catalog-header">
+    <div class="reveal">
+      <h1 class="display-1">Nuestro <span class="text-cyan">Catálogo</span></h1>
+      <p class="text-muted">Más de 500 productos personalizables para potenciar tu marca.</p>
+    </div>
+
+    <div class="catalog-layout">
+      <!-- Filtros Sidebar -->
+      <aside class="sidebar-filters reveal reveal-delay-1">
+        <div class="filter-group">
+          <h3 class="filter-title">Categorías</h3>
+          <div class="filter-list" id="filter-categories-list">
+            <div class="filter-item active" data-cat="all">Todas las categorías</div>
+            <!-- Dinámico -->
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-title">Disponibilidad</h3>
+          <div class="filter-list">
+            <label class="filter-item"><input type="checkbox" id="filter-stock"> Solo con stock disponible</label>
+            <label class="filter-item"><input type="checkbox" id="filter-featured"> Productos destacados</label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Grid de Productos -->
+      <section class="catalog-content">
+        <div class="flex items-center justify-between" style="margin-bottom: 20px;">
+          <div id="results-count" class="text-muted">Mostrando todos los productos</div>
+          <select id="sort-products" class="btn btn-outline btn-sm" style="background:transparent; border-color:var(--border); color:var(--text-primary)">
+            <option value="featured">Destacados primero</option>
+            <option value="price_asc">Precio: Menor a Mayor</option>
+            <option value="price_desc">Precio: Mayor a Menor</option>
+            <option value="new">Novedades</option>
+          </select>
+        </div>
+
+        <div id="catalog-grid" class="products-grid">
+          <!-- Esqueletos -->
+          <div class="card skeleton" style="height:380px"></div>
+          <div class="card skeleton" style="height:380px"></div>
+          <div class="card skeleton" style="height:380px"></div>
+          <div class="card skeleton" style="height:380px"></div>
+        </div>
+
+        <div class="flex justify-center" style="margin-top: 50px;">
+          <button id="btn-load-more" class="btn btn-secondary hidden">Cargar más productos</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer (Mismo que index) -->
+  <footer class="footer">
+    <!-- ... similar footer ... -->
+    <div class="container footer-bottom">
+      <p>&copy; 2024 PromoInc Artículos Promocionales. Todos los derechos reservados.</p>
+      <a href="admin/login.html" class="admin-access">Acceso Admin</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=1.7"></script>
+</body>
+</html>
