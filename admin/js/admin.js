@@ -97,6 +97,8 @@ function navigateTo(section) {
 
   const el = document.getElementById(`section-${section}`);
   if (el) el.classList.remove('hidden');
+  console.log('Navigated to:', section);
+}
 
   document.querySelectorAll(`[data-section="${section}"]`).forEach(n => n.classList.add('active'));
   document.getElementById('page-title').textContent = {
@@ -265,23 +267,28 @@ async function loadProducts() {
 }
 
 async function populateCategorySelects(force = false) {
-  if (force || !allCategories.length) {
-    const res = await api('admin_categories.php');
-    if (res.success) allCategories = res.data;
-  }
-  
-  const filterSel   = document.getElementById('filter-category');
-  const productSel  = document.getElementById('product-category');
-  
-  const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
-  
-  if (filterSel) {
-    const first = filterSel.options[0]?.outerHTML || '<option value="">Todas las categorías</option>';
-    filterSel.innerHTML = first + options;
-  }
-  if (productSel) {
-    const first = productSel.options[0]?.outerHTML || '<option value="">Seleccionar categoría...</option>';
-    productSel.innerHTML = first + options;
+  try {
+    if (force || !allCategories.length) {
+      const res = await api('admin_categories.php');
+      if (res.success) allCategories = res.data;
+    }
+    
+    const filterSel   = document.getElementById('filter-category');
+    const productSel  = document.getElementById('product-category');
+    
+    const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
+    
+    if (filterSel) {
+      const first = filterSel.options[0]?.outerHTML || '<option value="">Todas las categorías</option>';
+      filterSel.innerHTML = first + options;
+    }
+    if (productSel) {
+      const first = productSel.options[0]?.outerHTML || '<option value="">Seleccionar categoría...</option>';
+      productSel.innerHTML = first + options;
+    }
+    console.log('Category selects populated');
+  } catch (err) {
+    console.error('Error populating categories:', err);
   }
 }
 
@@ -308,9 +315,15 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
 });
 
 // Manejo de escalas de precios
-document.getElementById('btn-add-tier').addEventListener('click', () => {
-  addPriceTier();
-});
+const btnAddTier = document.getElementById('btn-add-tier');
+if (btnAddTier) {
+  btnAddTier.addEventListener('click', () => {
+    console.log('Add tier clicked');
+    addPriceTier();
+  });
+} else {
+  console.error('Button btn-add-tier not found');
+}
 
 function addPriceTier(qty = '', price = '') {
   const container = document.getElementById('price-tiers-container');
@@ -405,7 +418,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
 });
 
 async function editProduct(id) {
-  populateCategorySelects(true);
+  await populateCategorySelects(true);
   const res = await api(`admin_products.php?id=${id}`);
   if (!res.success) { toast('Error al cargar producto', 'error'); return; }
   const p = res.data;

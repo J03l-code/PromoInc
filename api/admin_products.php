@@ -45,6 +45,12 @@ function getAdminProducts(PDO $db): void {
         $stmtStock = $db->prepare("SELECT variant, quantity FROM stock WHERE product_id = ? ORDER BY variant");
         $stmtStock->execute([$product['id']]);
         $product['stock'] = $stmtStock->fetchAll();
+
+        // Precios por volumen
+        $stmtPrices = $db->prepare("SELECT min_qty, price FROM product_prices WHERE product_id = ? ORDER BY min_qty ASC");
+        $stmtPrices->execute([$product['id']]);
+        $product['volume_prices'] = $stmtPrices->fetchAll();
+
         jsonSuccess($product);
     }
 
@@ -224,3 +230,14 @@ function makeSlug(string $text, PDO $db): string {
     } while ($exists);
     return $s;
 }
+
+function saveVolumePrices(PDO $db, int $productId, array $prices): void {
+    $db->prepare("DELETE FROM product_prices WHERE product_id = ?")->execute([$productId]);
+    $stmt = $db->prepare("INSERT INTO product_prices (product_id, min_qty, price) VALUES (?, ?, ?)");
+    foreach ($prices as $p) {
+        if (!empty($p['min_qty']) && !empty($p['price'])) {
+            $stmt->execute([$productId, (int)$p['min_qty'], (float)$p['price']]);
+        }
+    }
+}
+?>
