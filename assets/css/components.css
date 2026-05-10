@@ -15,7 +15,7 @@
 }
 
 .navbar-top {
-  padding: 1rem 0;
+  padding: 0.4rem 0; /* Espacio reducido entre búsqueda y categorías */
   border-bottom: 1px solid var(--border);
 }
 
@@ -144,7 +144,7 @@
   align-items: center;
   gap: 1.5rem;
   overflow-x: auto;
-  padding: 0.75rem 0 1.5rem; /* Aumentado padding inferior */
+  padding: 0.5rem 0 2.5rem; /* Más espacio debajo de categorías */
   scrollbar-width: none;
 }
 
@@ -190,7 +190,7 @@
 
 /* ── HERO BENTO GRID ──────────────────────────────────────── */
 .hero-bento {
-  padding-top: 180px; /* Aumentado por logo más grande */
+  padding-top: 240px; /* Mucho más espacio arriba del texto merchandising */
   margin-bottom: 1rem;
 }
 
