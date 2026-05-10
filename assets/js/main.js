@@ -200,6 +200,21 @@ async function loadDynamicCategories() {
           });
         });
       }
+      // Categorías en Filtros Destacados (Home)
+      const featuredFilterBar = document.getElementById('featured-filter-bar');
+      if (featuredFilterBar) {
+        featuredFilterBar.innerHTML = '<button class="filter-btn active" data-cat="all">Todos</button>' +
+          json.data.map(c => `<button class="filter-btn" data-cat="${c.id}">${c.name}</button>`).join('');
+
+        featuredFilterBar.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            featuredFilterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const catId = btn.dataset.cat === 'all' ? '' : btn.dataset.cat;
+            loadFeaturedProducts(catId);
+          });
+        });
+      }
     }
   } catch (err) { console.error('Error loading categories:', err); }
 }
@@ -293,17 +308,22 @@ async function fetchCatalog(append = false) {
   } catch (err) { console.error('Error fetching catalog:', err); }
 }
 
-async function loadFeaturedProducts() {
+async function loadFeaturedProducts(categoryId = '') {
   const grid = document.getElementById('featured-grid');
   if (!grid) return;
 
+  grid.innerHTML = '<div class="card skeleton" style="height:380px"></div><div class="card skeleton" style="height:380px"></div>';
+
   try {
-    const res = await fetch('api/products.php?featured=1&limit=8');
+    let url = 'api/products.php?featured=1&limit=8';
+    if (categoryId) url += `&category=${categoryId}`;
+    
+    const res = await fetch(url);
     const json = await res.json();
     if (json.success && json.data.items.length) {
       renderProducts(grid, json.data.items);
     } else {
-      grid.innerHTML = '<div class="empty-state">No hay productos destacados por ahora.</div>';
+      grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No hay productos destacados en esta categoría por ahora.</div>';
     }
   } catch (err) {
     grid.innerHTML = '<div class="empty-state">No se pudieron cargar los productos</div>';
