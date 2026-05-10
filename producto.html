@@ -225,31 +225,37 @@
             </a>
 
             ${prices.length > 0 ? `
-              <div style="margin-bottom:40px">
-                <h3 style="font-size:1.1rem; margin-bottom:1.5rem">Escala de Descuentos</h3>
-                <table class="discount-table">
-                   <thead>
-                     <tr>
-                       <th>Cantidad</th>
-                       <th>Precio Unit.</th>
-                       <th>Ahorro</th>
-                       <th>Subtotal</th>
-                     </tr>
-                   </thead>
-                   <tbody>
-                     ${prices.map(tier => {
-                        const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
-                        return `
-                          <tr>
-                            <td>${tier.min_qty}+ unidades</td>
-                            <td class="highlight">$${parseFloat(tier.price).toFixed(2)}</td>
-                            <td><span class="saving">-${discount}%</span></td>
-                            <td>$${(tier.min_qty * tier.price).toLocaleString()}</td>
-                          </tr>
-                        `;
-                     }).join('')}
-                   </tbody>
-                </table>
+              <div class="discount-section" style="margin-bottom:40px; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+                <div style="padding:15px; background:var(--bg-secondary); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="document.getElementById('discount-table-body').classList.toggle('hidden')">
+                  <h3 style="font-size:1.05rem; margin:0; font-weight:600;">Ahorra más al comprar más</h3>
+                  <span style="color:var(--cyan); font-size:0.9rem;">Ocultar tabla de descuentos</span>
+                </div>
+                <div id="discount-table-body">
+                  <table class="discount-table" style="width:100%; border-collapse:collapse; text-align:left;">
+                     <thead style="background:#0f2b33; color:white;">
+                       <tr>
+                         <th style="padding:12px 15px; font-weight:600;">Cantidad</th>
+                         <th style="padding:12px 15px; font-weight:600;">Precio</th>
+                         <th style="padding:12px 15px; font-weight:600; color:#00ff88;">Desct</th>
+                         <th style="padding:12px 15px; font-weight:600;">Subtotal</th>
+                       </tr>
+                     </thead>
+                     <tbody style="background:var(--card-bg);">
+                       ${prices.map((tier, idx) => {
+                          const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
+                          const bg = idx % 2 === 0 ? 'background: rgba(255,255,255,0.03);' : '';
+                          return `
+                            <tr style="${bg} border-bottom:1px solid var(--border);">
+                              <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
+                              <td style="padding:12px 15px; font-weight:600;">$${parseFloat(tier.price).toFixed(2)}</td>
+                              <td style="padding:12px 15px; color:#00ff88;">${discount === 0 ? '0%' : `-${discount}%`}</td>
+                              <td style="padding:12px 15px;">$${(tier.min_qty * tier.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                            </tr>
+                          `;
+                       }).join('')}
+                     </tbody>
+                  </table>
+                </div>
               </div>
             ` : ''}
 

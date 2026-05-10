@@ -344,15 +344,12 @@ function renderProducts(grid, products, append = false) {
   const html = products.map(p => {
     const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
     return `
-    <article class="card reveal" data-id="${p.id}">
+    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2'" style="cursor: pointer;">
       <div class="card-img-wrapper">
         ${imgUrl 
-          ? `<img src="${imgUrl}" alt="${p.name}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'>${svgProduct}</div>'">`
-          : `<div class="img-placeholder">${svgProduct}<span>${p.category_name || 'Producto'}</span></div>`
+          ? `<img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'img-placeholder\\'>${svgProduct}</div>'">`
+          : `<div class="img-placeholder">${svgProduct}<span>${(p.category_name || 'Producto').replace(/"/g, '&quot;')}</span></div>`
         }
-        <div class="card-img-overlay">
-          <a href="producto.html?id=${p.id}" class="btn btn-primary btn-sm w-full" style="justify-content:center">Ver Detalle</a>
-        </div>
       </div>
       <div class="card-body">
         <div class="card-badges">
@@ -366,7 +363,7 @@ function renderProducts(grid, products, append = false) {
             <p class="card-price">Desde <strong>$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
             <p class="card-min">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
-          <a href="producto.html?id=${p.id}" class="btn btn-secondary btn-sm">Cotizar</a>
+          <a href="producto.html?id=${p.id}&v=2" class="btn btn-secondary btn-sm">Cotizar</a>
         </div>
       </div>
     </article>`;
