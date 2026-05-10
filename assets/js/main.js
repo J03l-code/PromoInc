@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Load all dynamic data
+  console.log('Main.js v1.8 initialized');
   loadSiteSettings();
   loadDynamicCategories();
   
@@ -165,6 +166,7 @@ async function loadDynamicCategories() {
   if (!nav) return;
 
   try {
+    console.log('Fetching dynamic categories...');
     const res = await fetch('api/categories.php');
     const json = await res.json();
     if (json.success && json.data.length) {
