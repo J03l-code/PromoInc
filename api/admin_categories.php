@@ -83,6 +83,7 @@ function deleteCategory(PDO $db): void {
         jsonError(409, 'La categoría tiene productos activos. Muévelos primero.');
     }
 
-    $db->prepare("UPDATE categories SET active = 0 WHERE id = ?")->execute([(int)$data['id']]);
+    // Borrado permanente
+    $db->prepare("DELETE FROM categories WHERE id = ?")->execute([(int)$data['id']]);
     jsonSuccess(['deleted' => true]);
 }

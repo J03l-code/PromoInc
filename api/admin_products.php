@@ -174,7 +174,12 @@ function deleteAdminProduct(PDO $db): void {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
-    $db->prepare("UPDATE products SET active = 0 WHERE id = ?")
+    // Borrado permanente
+    $db->prepare("DELETE FROM products WHERE id = ?")
+       ->execute([(int)$data['id']]);
+
+    // También limpiar el stock asociado
+    $db->prepare("DELETE FROM stock WHERE product_id = ?")
        ->execute([(int)$data['id']]);
 
     jsonSuccess(['deleted' => true]);

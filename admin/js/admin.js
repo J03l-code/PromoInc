@@ -264,16 +264,25 @@ async function loadProducts() {
   }
 }
 
-async function populateCategorySelects() {
-  if (!allCategories.length) {
+async function populateCategorySelects(force = false) {
+  if (force || !allCategories.length) {
     const res = await api('admin_categories.php');
     if (res.success) allCategories = res.data;
   }
+  
   const filterSel   = document.getElementById('filter-category');
   const productSel  = document.getElementById('product-category');
+  
   const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
-  if (filterSel  && filterSel.options.length < 2)  filterSel.innerHTML  += options;
-  if (productSel && productSel.options.length < 2)  productSel.innerHTML += options;
+  
+  if (filterSel) {
+    const first = filterSel.options[0]?.outerHTML || '<option value="">Todas las categorías</option>';
+    filterSel.innerHTML = first + options;
+  }
+  if (productSel) {
+    const first = productSel.options[0]?.outerHTML || '<option value="">Seleccionar categoría...</option>';
+    productSel.innerHTML = first + options;
+  }
 }
 
 // Búsqueda con debounce
@@ -293,7 +302,7 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('upload-placeholder').classList.remove('hidden');
   document.getElementById('upload-preview').classList.add('hidden');
   document.getElementById('product-image').value = '';
-  populateCategorySelects();
+  populateCategorySelects(true);
   openModal('modal-product');
 });
 
@@ -372,7 +381,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
 });
 
 async function editProduct(id) {
-  populateCategorySelects();
+  populateCategorySelects(true);
   const res = await api(`admin_products.php?id=${id}`);
   if (!res.success) { toast('Error al cargar producto', 'error'); return; }
   const p = res.data;
