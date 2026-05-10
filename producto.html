@@ -100,16 +100,44 @@
 </head>
 
 <body>
-  <!-- Navbar -->
   <header id="navbar" class="navbar-ecommerce">
     <div class="navbar-top">
       <div class="container navbar-top-inner">
+        
         <a href="index.html" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 70px; width: auto; object-fit: contain;">
         </a>
-        <div class="navbar-actions-top">
-           <a href="catalogo.html" class="btn btn-ghost btn-sm">Volver al catálogo</a>
+
+        <div class="navbar-search">
+          <input type="text" id="navbar-search-input" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
+          <button type="button" id="btn-navbar-search" aria-label="Botón buscar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
         </div>
+
+        <div class="navbar-actions-top">
+          <a href="#" class="nav-action-btn">
+            <div class="cart-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </div>
+            <span>Mi carrito</span>
+          </a>
+          <a href="#" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);">Iniciar sesión</a>
+          
+          <!-- Mobile Menu Toggle -->
+          <button id="navbar-toggle" class="navbar-toggle" aria-label="Menu" style="margin-left:0.5rem">
+            <span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="navbar-bottom">
+      <div class="container">
+        <nav class="nav-categories">
+          <!-- Dinámico -->
+        </nav>
       </div>
     </div>
   </header>
@@ -321,5 +349,6 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
       waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
     }
   </script>
+  <script src="assets/js/main.js?v=1.9"></script>
 </body>
 </html>
