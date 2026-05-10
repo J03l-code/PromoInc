@@ -148,13 +148,18 @@ function updateAdminProduct(PDO $db): void {
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     try {
+        $updateImage = '';
+        if (!empty($data['image_webp'])) {
+            $updateImage = "image_webp = :image_webp,";
+        }
+
         $stmt = $db->prepare("
             UPDATE products SET
               category_id  = :category_id,
               name         = :name,
               description  = :description,
               price_from   = :price_from,
-              image_webp   = CASE WHEN :image_webp_cond != '' THEN :image_webp_val ELSE image_webp END,
+              {$updateImage}
               min_quantity = :min_quantity,
               customizable = :customizable,
               featured     = :featured,
@@ -162,21 +167,23 @@ function updateAdminProduct(PDO $db): void {
             WHERE id = :id
         ");
         
-        $imageWebp = sanitize($data['image_webp'] ?? '');
+        $params = [
+            ':category_id'  => (int)$data['category_id'],
+            ':name'         => sanitize($data['name']),
+            ':description'  => sanitize($data['description'] ?? ''),
+            ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
+            ':min_quantity' => (int)($data['min_quantity'] ?? 10),
+            ':customizable' => (int)($data['customizable'] ?? 1),
+            ':featured'     => (int)($data['featured'] ?? 0),
+            ':active'       => (int)($data['active'] ?? 1),
+            ':id'           => (int)$data['id'],
+        ];
+
+        if (!empty($data['image_webp'])) {
+            $params[':image_webp'] = sanitize($data['image_webp']);
+        }
         
-        $stmt->execute([
-            ':category_id'     => (int)$data['category_id'],
-            ':name'            => sanitize($data['name']),
-            ':description'     => sanitize($data['description'] ?? ''),
-            ':price_from'      => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
-            ':image_webp_cond' => $imageWebp,
-            ':image_webp_val'  => $imageWebp,
-            ':min_quantity'    => (int)($data['min_quantity'] ?? 10),
-            ':customizable'    => (int)($data['customizable'] ?? 1),
-            ':featured'        => (int)($data['featured'] ?? 0),
-            ':active'          => (int)($data['active'] ?? 1),
-            ':id'              => (int)$data['id'],
-        ]);
+        $stmt->execute($params);
 
         // Actualizar precios por volumen
         if (isset($data['volume_prices']) && is_array($data['volume_prices'])) {
