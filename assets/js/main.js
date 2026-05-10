@@ -353,7 +353,7 @@ function renderProducts(grid, products, append = false) {
       </div>`;
       
     return `
-    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2.7'" style="cursor: pointer;">
+    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2.8'" style="cursor: pointer;">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
         ${imgUrl 
@@ -373,7 +373,7 @@ function renderProducts(grid, products, append = false) {
             <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
             <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
-          <a href="producto.html?id=${p.id}&v=2.7" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
+          <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
         </div>
       </div>
     </article>`;
