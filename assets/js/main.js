@@ -339,7 +339,7 @@ function renderProducts(grid, products, append = false) {
     return;
   }
 
-  const svgProduct = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
+  const svgProduct = `<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><rect x='2' y='7' width='20' height='14' rx='2' ry='2'/><path d='M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2'/></svg>`;
   
   const html = products.map(p => {
     const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
@@ -347,8 +347,11 @@ function renderProducts(grid, products, append = false) {
     <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2'" style="cursor: pointer;">
       <div class="card-img-wrapper">
         ${imgUrl 
-          ? `<img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'img-placeholder\\'>${svgProduct}</div>'">`
-          : `<div class="img-placeholder">${svgProduct}<span>${(p.category_name || 'Producto').replace(/"/g, '&quot;')}</span></div>`
+          ? `
+            <img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" class="card-img" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="img-placeholder" style="display:none; text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${p.name.replace(/"/g, '&quot;')}</span></div>
+            `
+          : `<div class="img-placeholder" style="text-align:center; padding:15px;">${svgProduct}<span style="font-size:0.85rem;">${p.name.replace(/"/g, '&quot;')}</span></div>`
         }
       </div>
       <div class="card-body">

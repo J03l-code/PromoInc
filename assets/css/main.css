@@ -222,42 +222,48 @@ h1, h2, h3, h4 {
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
+  gap: 0.35rem;
   font-size: 0.65rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  letter-spacing: 0.15em;
+  padding: 0;
+  background: transparent;
+  border: none;
 }
 
 .badge::before {
   content: '';
-  width: 5px; 
-  height: 5px;
+  width: 4px; 
+  height: 4px;
   border-radius: 50%;
+}
+
+.badge-stock {
+  color: var(--accent-cyan);
 }
 
 .badge-stock::before {
   background: var(--accent-cyan);
-  box-shadow: 0 0 8px var(--accent-cyan);
-  animation: pulse-dot 2.5s infinite var(--ease-smooth);
+  box-shadow: 0 0 6px var(--accent-cyan);
+}
+
+.badge-featured {
+  color: var(--accent-pink);
 }
 
 .badge-featured::before {
   background: var(--accent-pink);
-  box-shadow: 0 0 8px var(--accent-pink);
+  box-shadow: 0 0 6px var(--accent-pink);
+}
+
+.badge-gold {
+  color: var(--accent-gold);
 }
 
 .badge-gold::before {
   background: var(--accent-gold);
-  box-shadow: 0 0 8px var(--accent-gold);
+  box-shadow: 0 0 6px var(--accent-gold);
 }
 
 @keyframes pulse-dot {
