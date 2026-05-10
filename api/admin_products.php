@@ -156,6 +156,7 @@ function updateAdminProduct(PDO $db): void {
         $stmt = $db->prepare("
             UPDATE products SET
               category_id  = :category_id,
+              sku          = :sku,
               name         = :name,
               description  = :description,
               price_from   = :price_from,
@@ -169,6 +170,7 @@ function updateAdminProduct(PDO $db): void {
         
         $params = [
             ':category_id'  => (int)$data['category_id'],
+            ':sku'          => sanitize($data['sku']),
             ':name'         => sanitize($data['name']),
             ':description'  => sanitize($data['description'] ?? ''),
             ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
