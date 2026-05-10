@@ -4,11 +4,7 @@
 --  Ejecutar: mysql -u root -p < sql/schema.sql
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS promoinc_db
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE promoinc_db;
+-- NOTA: Importa este archivo en una base de datos ya creada.
 
 -- ── USUARIOS ADMIN ──────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS users (
