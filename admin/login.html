@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromoInc — Acceso Administrativo</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:        #0d0f12;
-      --surface:   #161a1f;
-      --border:    #252a31;
-      --muted:     #6c737e;
-      --text:      #f0f2f5;
-      --pink:      #E83E8C;
-      --cyan:      #00BCFF;
-      --gold:      #FFC107;
-      --radius:    12px;
-      --font:      'Inter', sans-serif;
+      --bg: #0d0f12;
+      --surface: #161a1f;
+      --border: #252a31;
+      --muted: #6c737e;
+      --text: #f0f2f5;
+      --pink: #E83E8C;
+      --cyan: #00BCFF;
+      --gold: #FFC107;
+      --radius: 12px;
+      --font: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
@@ -43,17 +50,42 @@
       pointer-events: none;
       opacity: 0.5;
     }
-    .orb-1 { width: 400px; height: 400px; background: var(--pink);   top: -100px; left: -100px; opacity: 0.08; }
-    .orb-2 { width: 350px; height: 350px; background: var(--cyan);   bottom: -80px; right: -80px; opacity: 0.07; }
-    .orb-3 { width: 200px; height: 200px; background: var(--gold);   top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.04; }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--pink);
+      top: -100px;
+      left: -100px;
+      opacity: 0.08;
+    }
+
+    .orb-2 {
+      width: 350px;
+      height: 350px;
+      background: var(--cyan);
+      bottom: -80px;
+      right: -80px;
+      opacity: 0.07;
+    }
+
+    .orb-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--gold);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.04;
+    }
 
     /* Líneas de cuadrícula */
     .grid-overlay {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
     }
@@ -67,7 +99,7 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 3rem 2.5rem;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
     /* Logo */
@@ -90,13 +122,15 @@
       line-height: 1;
     }
 
-    .logo-text span { color: var(--cyan); }
+    .logo-text span {
+      color: var(--cyan);
+    }
 
     .logo-badge {
       margin-left: auto;
       padding: 0.25rem 0.7rem;
-      background: rgba(232,62,140,0.1);
-      border: 1px solid rgba(232,62,140,0.25);
+      background: rgba(232, 62, 140, 0.1);
+      border: 1px solid rgba(232, 62, 140, 0.25);
       border-radius: 100px;
       font-size: 0.68rem;
       font-weight: 700;
@@ -106,20 +140,26 @@
     }
 
     /* Encabezado */
-    .login-header { margin-bottom: 2rem; }
+    .login-header {
+      margin-bottom: 2rem;
+    }
+
     .login-header h1 {
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 0.4rem;
     }
+
     .login-header p {
       font-size: 0.9rem;
       color: var(--muted);
     }
 
     /* Formulario */
-    .form-group { margin-bottom: 1.25rem; }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
 
     label {
       display: block;
@@ -135,7 +175,7 @@
     input[type="password"],
     input[type="text"] {
       width: 100%;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
       color: var(--text);
       border-radius: var(--radius);
@@ -148,14 +188,16 @@
 
     input:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(0,188,255,0.12);
+      box-shadow: 0 0 0 3px rgba(0, 188, 255, 0.12);
     }
 
     .input-wrap {
       position: relative;
     }
 
-    .input-wrap input { padding-right: 2.8rem; }
+    .input-wrap input {
+      padding-right: 2.8rem;
+    }
 
     .toggle-pass {
       position: absolute;
@@ -171,8 +213,15 @@
       padding: 0;
       transition: color 0.2s;
     }
-    .toggle-pass:hover { color: var(--text); }
-    .toggle-pass svg { width: 18px; height: 18px; }
+
+    .toggle-pass:hover {
+      color: var(--text);
+    }
+
+    .toggle-pass svg {
+      width: 18px;
+      height: 18px;
+    }
 
     .btn-login {
       width: 100%;
@@ -196,30 +245,48 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(255,255,255,0);
+      background: rgba(255, 255, 255, 0);
       transition: background 0.2s;
     }
 
-    .btn-login:hover::after  { background: rgba(255,255,255,0.06); }
-    .btn-login:active { transform: scale(0.99); }
-    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-login:hover::after {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-login:active {
+      transform: scale(0.99);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     /* Loading spinner en el botón */
     .btn-login .spinner {
       display: none;
       width: 18px;
       height: 18px;
-      border: 2px solid rgba(255,255,255,0.4);
+      border: 2px solid rgba(255, 255, 255, 0.4);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto;
     }
 
-    .btn-login.loading .btn-text { display: none; }
-    .btn-login.loading .spinner  { display: block; }
+    .btn-login.loading .btn-text {
+      display: none;
+    }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-login.loading .spinner {
+      display: block;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* Error toast */
     .alert {
@@ -233,16 +300,27 @@
       margin-bottom: 1.25rem;
       animation: slideDown 0.3s ease;
     }
+
     .alert.error {
-      background: rgba(220,53,69,0.12);
-      border: 1px solid rgba(220,53,69,0.3);
+      background: rgba(220, 53, 69, 0.12);
+      border: 1px solid rgba(220, 53, 69, 0.3);
       color: #ff6b7a;
     }
-    .alert.show { display: flex; }
+
+    .alert.show {
+      display: flex;
+    }
 
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Footer del card */
@@ -254,12 +332,30 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .login-footer svg { width: 14px; height: 14px; color: var(--muted); }
-    .login-footer span { font-size: 0.78rem; color: var(--muted); }
-    .login-footer a { color: var(--cyan); font-size: 0.78rem; text-decoration: none; }
-    .login-footer a:hover { text-decoration: underline; }
+
+    .login-footer svg {
+      width: 14px;
+      height: 14px;
+      color: var(--muted);
+    }
+
+    .login-footer span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .login-footer a {
+      color: var(--cyan);
+      font-size: 0.78rem;
+      text-decoration: none;
+    }
+
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
+
 <body>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
@@ -268,7 +364,8 @@
 
   <div class="login-card">
     <div class="login-logo">
-      <img src="../assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; object-fit: contain; margin-right: 10px;">
+      <img src="../assets/images/logo blanco (2).png" alt="PromoInc Logo"
+        style="height: 80px; width: auto; object-fit: contain; margin-right: 10px;">
       <span class="logo-badge">Admin</span>
     </div>
 
@@ -279,7 +376,9 @@
 
     <div class="alert error" id="alert-error">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
       </svg>
       <span id="alert-text">Credenciales incorrectas.</span>
     </div>
@@ -292,11 +391,12 @@
       <div class="form-group">
         <label for="password">Contraseña</label>
         <div class="input-wrap">
-          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password"
+            required>
           <button type="button" class="toggle-pass" id="toggle-pass" title="Mostrar/Ocultar contraseña">
             <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
           </button>
         </div>
@@ -309,8 +409,8 @@
 
     <div class="login-footer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
       </svg>
       <span>Acceso restringido.</span>
       <a href="../index.html">← Volver al sitio</a>
@@ -318,20 +418,20 @@
   </div>
 
   <script>
-    const form       = document.getElementById('login-form');
-    const btnLogin   = document.getElementById('btn-login');
-    const alertEl    = document.getElementById('alert-error');
-    const alertText  = document.getElementById('alert-text');
+    const form = document.getElementById('login-form');
+    const btnLogin = document.getElementById('btn-login');
+    const alertEl = document.getElementById('alert-error');
+    const alertText = document.getElementById('alert-text');
     const togglePass = document.getElementById('toggle-pass');
-    const passInput  = document.getElementById('password');
+    const passInput = document.getElementById('password');
 
     // Comprobar si ya hay sesión activa
     (async () => {
       try {
-        const res  = await fetch('../api/auth.php');
+        const res = await fetch('../api/auth.php');
         const json = await res.json();
         if (json.data?.loggedIn) window.location.href = 'index.html';
-      } catch (_) {}
+      } catch (_) { }
     })();
 
     // Toggle contraseña
@@ -356,7 +456,7 @@
       e.preventDefault();
       hideError();
 
-      const email    = document.getElementById('email').value.trim();
+      const email = document.getElementById('email').value.trim();
       const password = passInput.value;
 
       if (!email || !password) {
@@ -368,10 +468,10 @@
       btnLogin.disabled = true;
 
       try {
-        const res  = await fetch('../api/auth.php', {
-          method:  'POST',
+        const res = await fetch('../api/auth.php', {
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ action: 'login', email, password }),
+          body: JSON.stringify({ action: 'login', email, password }),
         });
         const json = await res.json();
 
@@ -389,4 +489,5 @@
     });
   </script>
 </body>
+
 </html>
