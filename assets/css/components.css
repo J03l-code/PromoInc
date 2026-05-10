@@ -318,61 +318,127 @@
 /* ── ESPECIALIDADES GRID ──────────────────────────────────── */
 .specialties-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
 }
 
 .specialty-card {
-  background: var(--bg-primary);
-  padding: 2.5rem 2rem;
+  background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
   position: relative;
-  transition: all var(--duration-base) var(--ease-smooth);
-  cursor: default;
+  transition: all 0.4s var(--ease-spring);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.specialty-card:nth-child(1),
+.specialty-card:nth-child(2) {
+  grid-column: span 3;
+}
+
+.specialty-card:nth-child(3),
+.specialty-card:nth-child(4),
+.specialty-card:nth-child(5) {
+  grid-column: span 2;
+}
+
+.specialty-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at top left, rgba(255,255,255,0.06), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
 }
 
 .specialty-card:hover {
-  background: var(--bg-surface);
-  z-index: 1;
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.specialty-card:hover::before {
+  opacity: 1;
 }
 
 .specialty-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: all var(--duration-base) var(--ease-smooth);
+  margin-bottom: 2rem;
+  transition: all var(--duration-base) var(--ease-spring);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .specialty-card:hover .specialty-icon {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.1) translateY(-5px);
 }
 
-.specialty-icon.pink { background: rgba(232,62,140,0.1); color: var(--accent-pink); }
-.specialty-icon.cyan { background: rgba(0,188,255,0.1);  color: var(--accent-cyan); }
-.specialty-icon.gold { background: rgba(255,193,7,0.1);  color: var(--accent-gold); }
+.specialty-icon.pink { color: var(--accent-pink); box-shadow: 0 10px 30px rgba(232,62,140,0.15); }
+.specialty-icon.cyan { color: var(--accent-cyan); box-shadow: 0 10px 30px rgba(0,188,255,0.15); }
+.specialty-icon.gold { color: var(--accent-gold); box-shadow: 0 10px 30px rgba(255,193,7,0.15); }
 
-.specialty-icon svg { width: 26px; height: 26px; stroke: currentColor; fill: none; }
+.specialty-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; }
 
 .specialty-title {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.specialty-description ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.specialty-description li {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: color 0.3s;
+}
+
+.specialty-description li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--text-subtle);
+  border-radius: 50%;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.specialty-card:hover .specialty-description li {
   color: var(--text-primary);
 }
 
-.specialty-description {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+.specialty-card:hover .specialty-description li::before {
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
 }
+
+.specialty-card:hover .specialty-icon.pink ~ .specialty-content .specialty-description li::before { color: var(--accent-pink); }
+.specialty-card:hover .specialty-icon.cyan ~ .specialty-content .specialty-description li::before { color: var(--accent-cyan); }
+.specialty-card:hover .specialty-icon.gold ~ .specialty-content .specialty-description li::before { color: var(--accent-gold); }
 
 /* ── SOCIAL PROOF ─────────────────────────────────────────── */
 .clients-section {
@@ -634,6 +700,7 @@
   
   .cta-band-inner { grid-template-columns: 1fr; }
   .specialties-grid { grid-template-columns: repeat(2, 1fr); }
+  .specialty-card:nth-child(n) { grid-column: span 1; }
   .clients-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
@@ -648,6 +715,7 @@
   .features-row { grid-template-columns: 1fr; }
   
   .specialties-grid { grid-template-columns: 1fr; }
+  .specialty-card:nth-child(n) { grid-column: span 1; }
   .clients-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr; }
   .cta-form-row { grid-template-columns: 1fr; }
