@@ -7,11 +7,11 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=2.6">
-  <link rel="stylesheet" href="assets/css/components.css?v=2.6">
-  <link rel="stylesheet" href="assets/css/animations.css?v=1.6">
+  <link rel="stylesheet" href="assets/css/main.css?v=2.8">
+  <link rel="stylesheet" href="assets/css/components.css?v=2.8">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.8">
   <style>
-    .product-detail { padding: 200px 0 80px; }
+    .product-detail { padding-top: 180px; padding-bottom: 80px; }
     .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
     .product-gallery { position: sticky; top: 120px; }
     
@@ -92,6 +92,7 @@
     .spec-value { font-weight: 600; color: var(--text-primary); }
 
     @media (max-width: 992px) {
+      .product-detail { padding-top: 220px; }
       .detail-grid { grid-template-columns: 1fr; gap: 40px; }
       .product-gallery { position: static; }
       .product-info h1 { font-size: 2rem; }
@@ -202,7 +203,7 @@
           <div class="product-gallery">
             <div class="main-image-container" id="main-image">
               ${imgUrl 
-                ? `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='${svgPlaceholder}'">`
+                ? `<img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" onerror="this.parentElement.innerHTML='${svgPlaceholder}'">`
                 : svgPlaceholder
               }
             </div>

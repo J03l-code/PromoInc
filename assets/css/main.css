@@ -519,7 +519,7 @@ textarea.form-control {
 .fab-whatsapp {
   position: fixed;
   bottom: 1.75rem;
-  left: 1.75rem;
+  right: 1.75rem;
   width: 56px;
   height: 56px;
   background: #25D366;

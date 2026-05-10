@@ -812,6 +812,13 @@
   .navbar-toggle { display: flex; }
   .nav-categories { display: none; }
   
+  .navbar-top-inner { flex-wrap: wrap; gap: 1rem; }
+  .navbar-logo { flex: 1; }
+  .navbar-logo img { height: 60px; } /* Reduce logo height on mobile */
+  .navbar-actions-top { order: 2; gap: 0.5rem; }
+  .navbar-search { order: 3; width: 100%; max-width: 100%; }
+
+  
   .bento-grid { grid-template-columns: 1fr; }
   .features-row { grid-template-columns: 1fr; }
   
