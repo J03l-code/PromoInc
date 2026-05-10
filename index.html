@@ -26,10 +26,25 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        let hasUnregistered = false;
+        for(let registration of registrations) {
+          registration.unregister();
+          hasUnregistered = true;
+        }
+        if (hasUnregistered) {
+          window.location.reload(true);
+        }
+      });
+    }
+  </script>
+
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=2.6">
-  <link rel="stylesheet" href="assets/css/components.css?v=2.6">
-  <link rel="stylesheet" href="assets/css/animations.css?v=1.6">
+  <link rel="stylesheet" href="assets/css/main.css?v=2.7">
+  <link rel="stylesheet" href="assets/css/components.css?v=2.7">
+  <link rel="stylesheet" href="assets/css/animations.css?v=1.7">
 </head>
 
 <body class="hovering">
