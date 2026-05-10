@@ -147,42 +147,52 @@ function updateAdminProduct(PDO $db): void {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
-    $stmt = $db->prepare("
-        UPDATE products SET
-          category_id  = :category_id,
-          name         = :name,
-          description  = :description,
-          price_from   = :price_from,
-          image_webp   = CASE WHEN :image_webp != '' THEN :image_webp ELSE image_webp END,
-          min_quantity = :min_quantity,
-          customizable = :customizable,
-          featured     = :featured,
-          active       = :active
-        WHERE id = :id
-    ");
-    $stmt->execute([
-        ':category_id'  => (int)$data['category_id'],
-        ':name'         => sanitize($data['name']),
-        ':description'  => sanitize($data['description'] ?? ''),
-        ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
-        ':image_webp'   => sanitize($data['image_webp'] ?? ''),
-        ':min_quantity' => (int)($data['min_quantity'] ?? 10),
-        ':customizable' => (int)($data['customizable'] ?? 1),
-        ':featured'     => (int)($data['featured'] ?? 0),
-        ':active'       => (int)$data['active'] ?? 1,
-        ':id'           => (int)$data['id'],
-    ]);
+    try {
+        $stmt = $db->prepare("
+            UPDATE products SET
+              category_id  = :category_id,
+              name         = :name,
+              description  = :description,
+              price_from   = :price_from,
+              image_webp   = CASE WHEN :image_webp != '' THEN :image_webp ELSE image_webp END,
+              min_quantity = :min_quantity,
+              customizable = :customizable,
+              featured     = :featured,
+              active       = :active
+            WHERE id = :id
+        ");
+        $stmt->execute([
+            ':category_id'  => (int)$data['category_id'],
+            ':name'         => sanitize($data['name']),
+            ':description'  => sanitize($data['description'] ?? ''),
+            ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
+            ':image_webp'   => sanitize($data['image_webp'] ?? ''),
+            ':min_quantity' => (int)($data['min_quantity'] ?? 10),
+            ':customizable' => (int)($data['customizable'] ?? 1),
+            ':featured'     => (int)($data['featured'] ?? 0),
+            ':active'       => (int)($data['active'] ?? 1),
+            ':id'           => (int)$data['id'],
+        ]);
 
-    // Actualizar precios por volumen
-    if (isset($data['volume_prices']) && is_array($data['volume_prices'])) {
-        saveVolumePrices($db, (int)$data['id'], $data['volume_prices']);
+        // Actualizar precios por volumen
+        if (isset($data['volume_prices']) && is_array($data['volume_prices'])) {
+            saveVolumePrices($db, (int)$data['id'], $data['volume_prices']);
+        }
+
+        // Actualizar stock
+        if (!empty($data['stock']) && is_array($data['stock'])) {
+            saveStock($db, (int)$data['id'], $data['stock']);
+        } else {
+            // Fallback si viene stock_quantity
+            if (isset($data['stock_quantity'])) {
+                saveStock($db, (int)$data['id'], [['variant' => 'Única', 'quantity' => (int)$data['stock_quantity']]]);
+            }
+        }
+
+        jsonSuccess(['updated' => true]);
+    } catch (PDOException $e) {
+        jsonError(500, 'Error al actualizar: ' . $e->getMessage());
     }
-
-    if (!empty($data['stock']) && is_array($data['stock'])) {
-        saveStock($db, (int)$data['id'], $data['stock']);
-    }
-
-    jsonSuccess(['updated' => true]);
 }
 
 // ── DELETE: Soft delete ───────────────────────────────────────
