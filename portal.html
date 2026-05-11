@@ -296,7 +296,14 @@
         loadLogos();
 
       } catch (err) {
-        window.location.href = 'login.html?no_redirect=1';
+        console.error('Auth Error:', err);
+        document.body.innerHTML = `<div style="padding:50px; text-align:center; color:white; background:#1a1a1a; height:100vh;">
+          <h2 style="color:#ff4d5e">Error de Autenticación</h2>
+          <p>El servidor dice: ${err.message}</p>
+          <p>Redirigiendo al login en 5 segundos...</p>
+          <a href="login.html" style="color:#00bcff">Volver al login ahora</a>
+        </div>`;
+        setTimeout(() => { window.location.href = 'login.html?no_redirect=1'; }, 5000);
       }
     });
 

@@ -82,9 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'last_login' => $u['last_login'],
                     'picture' => $_SESSION['user_picture'] ?? ''
                 ]]);
+            } else {
+                jsonError(401, 'Sesión activa pero usuario no encontrado en la base de datos (ID: ' . $_SESSION['user_id'] . ')');
             }
+        } else {
+            jsonError(401, 'No hay una sesión de usuario activa en el servidor');
         }
-        jsonError(401, 'No autenticado');
     }
 }
 
