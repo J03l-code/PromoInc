@@ -1,5 +1,25 @@
+# PromoInc — Configuración de Servidor Definitiva
+# Forzar el uso de archivos estáticos y PHP, ignorando Node/Next
+
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Si la petición es para una carpeta o archivo que existe, servirlo directamente
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Evitar que Next.js o rutas fantasmas tomen el control
+    # Si no es un archivo real, redirigir al index.html
+    RewriteRule ^ index.html [L]
+</IfModule>
+
 <IfModule mod_headers.c>
-    <FilesMatch "\.(html|htm)$">
+    # Forzar limpieza de caché en archivos HTML para ver cambios inmediatos
+    <FilesMatch "\.(html|htm|php)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
         Header set Pragma "no-cache"
         Header set Expires 0
