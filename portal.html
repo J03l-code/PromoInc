@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Portal B2B | PromoInc</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=17.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=17.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=18.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=18.0">
   <style>
     body { background: var(--bg-body); }
     .portal-header {
@@ -258,9 +258,9 @@
               <span id="portal-cart-total">$0.00</span>
             </div>
             <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
-              <a id="portal-wa-btn" href="#" target="_blank" class="btn btn-primary" style="flex:1; justify-content:center;">
+              <button onclick="CheckoutModal.open()" class="btn btn-primary" style="flex:1; justify-content:center;">
                 Continuar al pago vía WhatsApp
-              </a>
+              </button>
               <button onclick="clearPortalCart()" class="btn btn-outline" style="flex:1; justify-content:center;">Vaciar Carrito</button>
             </div>
           </div>
@@ -269,7 +269,8 @@
     </div>
   </main>
 
-  <script src="assets/js/cart.js?v=17.0"></script>
+  <script src="assets/js/cart.js?v=18.0"></script>
+  <script src="assets/js/checkout.js?v=18.0"></script>
   <script>
     let currentUser = null;
 
@@ -316,9 +317,6 @@
 
     function updatePortalCartBadge() {
       const count = CartManager.getCount();
-      const waBtn = document.getElementById('portal-wa-btn');
-      if (waBtn) waBtn.href = CartManager.getWhatsAppUrl();
-      
       const badge = document.getElementById('portal-cart-count');
       if (badge) {
         badge.textContent = count;
@@ -359,7 +357,7 @@
       document.getElementById('portal-cart-total').textContent =
         `$${total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
 
-      document.getElementById('portal-wa-btn').href = CartManager.getWhatsAppUrl();
+      // wa-btn is now handled by CheckoutModal.open()
     }
 
     async function clearPortalCart() {

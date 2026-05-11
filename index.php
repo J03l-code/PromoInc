@@ -32,9 +32,9 @@
   </script>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=17.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=17.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=17.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=18.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=18.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=18.0">
   <style>
     .hero-bento { padding-top: 150px; }
     @media (max-width: 992px) {
@@ -526,8 +526,8 @@
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/cart.js?v=17.0"></script>
-  <script src="assets/js/main.js?v=17.0"></script>
+  <script src="assets/js/cart.js?v=18.0"></script>
+  <script src="assets/js/main.js?v=18.0"></script>
 </body>
 
 </html>

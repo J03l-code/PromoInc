@@ -9,9 +9,9 @@
     content="Explora nuestro catálogo completo de artículos promocionales. Tecnología, oficina, confecciones y más.">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=17.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=17.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=17.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=18.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=18.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=18.0">
   <style>
     .catalog-header {
       padding-top: 180px;
@@ -185,7 +185,7 @@
         <span class="cart-total-label">Total estimado</span>
         <span class="cart-total-value" id="cart-total-value">$0.00</span>
       </div>
-      <a href="#" id="cart-wa-btn" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">Continuar al pago por WhatsApp</a>
+      <button onclick="CheckoutModal.open()" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">Continuar al pago por WhatsApp</button>
       <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;">Vaciar carrito</button>
     </div>
   </div>
@@ -338,8 +338,9 @@
     </svg>
   </a>
 
-  <script src="assets/js/cart.js?v=17.0"></script>
-  <script src="assets/js/main.js?v=17.0"></script>
+  <script src="assets/js/cart.js?v=18.0"></script>
+  <script src="assets/js/checkout.js?v=18.0"></script>
+  <script src="assets/js/main.js?v=18.0"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
@@ -380,7 +381,7 @@
       footer.style.display = 'block';
       document.getElementById('cart-total-value').textContent = '$' + CartManager.getTotal().toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
       document.getElementById('cart-login-notice').style.display = CartManager.isLoggedIn() ? 'none' : 'block';
-      document.getElementById('cart-wa-btn').href = CartManager.getWhatsAppUrl();
+      // wa-btn is now handled by CheckoutModal.open()
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
