@@ -6,6 +6,7 @@
   <title>Acceso Corporativo | PromoInc</title>
   <link rel="stylesheet" href="assets/css/main.css?v=2.8">
   <link rel="stylesheet" href="assets/css/components.css?v=2.8">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .auth-container {
       min-height: 100vh;
@@ -90,14 +91,15 @@
       </div>
       
       <div class="auth-tabs">
-        <div class="auth-tab active" onclick="switchTab('login')">Ingresar</div>
-        <div class="auth-tab" onclick="switchTab('register')">Registrar Empresa</div>
+        <div class="auth-tab active" onclick="switchTab('login')">Ingresar a B2B</div>
+        <div class="auth-tab" onclick="switchTab('google')">Usuarios</div>
       </div>
 
       <div id="alert-box" class="alert"></div>
 
-      <!-- Formulario Login -->
+      <!-- Formulario Login B2B -->
       <form id="form-login" onsubmit="handleLogin(event)">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Acceso exclusivo para empresas registradas por el administrador.</p>
         <div class="form-group">
           <label class="form-label">Correo Corporativo</label>
           <input type="email" id="login-email" class="form-control" required>
@@ -106,25 +108,30 @@
           <label class="form-label">Contraseña</label>
           <input type="password" id="login-password" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión B2B</button>
       </form>
 
-      <!-- Formulario Registro -->
-      <form id="form-register" style="display: none;" onsubmit="handleRegister(event)">
-        <div class="form-group">
-          <label class="form-label">Nombre de Empresa</label>
-          <input type="text" id="reg-name" class="form-control" required>
+      <!-- Google Login -->
+      <div id="form-google" style="display: none; text-align: center;">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Continúa con tu cuenta de Google para guardar tus cotizaciones y productos favoritos.</p>
+        
+        <!-- Contenedor del botón de Google -->
+        <div id="g_id_onload"
+             data-client_id="INSERTE_SU_CLIENT_ID_AQUI.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleGoogleLogin"
+             data-auto_prompt="false">
         </div>
-        <div class="form-group">
-          <label class="form-label">Correo Corporativo</label>
-          <input type="email" id="reg-email" class="form-control" required>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="continue_with"
+             data-size="large"
+             data-logo_alignment="left" style="display:flex; justify-content:center;">
         </div>
-        <div class="form-group">
-          <label class="form-label">Contraseña</label>
-          <input type="password" id="reg-password" class="form-control" required minlength="6">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Crear Cuenta B2B</button>
-      </form>
+      </div>
       
       <div style="text-align: center; margin-top: 20px;">
         <a href="index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: underline;">Volver a la tienda</a>
@@ -139,10 +146,10 @@
       
       if (tab === 'login') {
         document.getElementById('form-login').style.display = 'block';
-        document.getElementById('form-register').style.display = 'none';
+        document.getElementById('form-google').style.display = 'none';
       } else {
         document.getElementById('form-login').style.display = 'none';
-        document.getElementById('form-register').style.display = 'block';
+        document.getElementById('form-google').style.display = 'block';
       }
       document.getElementById('alert-box').style.display = 'none';
     }
@@ -176,37 +183,27 @@
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
-        btn.textContent = 'Iniciar Sesión';
+        btn.textContent = 'Iniciar Sesión B2B';
         btn.disabled = false;
       }
     }
 
-    async function handleRegister(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.textContent = 'Creando cuenta...';
-      btn.disabled = true;
-
+    // Google Auth Callback
+    async function handleGoogleLogin(response) {
       try {
-        const res = await fetch('api/auth_b2b.php?action=register', {
+        const res = await fetch('api/google_auth.php', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            name: document.getElementById('reg-name').value,
-            email: document.getElementById('reg-email').value,
-            password: document.getElementById('reg-password').value
-          })
+          body: JSON.stringify({ credential: response.credential })
         });
+        
         const data = await res.json();
         
-        if (!res.ok) throw new Error(data.error || 'Error al registrar');
+        if (!res.ok) throw new Error(data.error || 'Error al autenticar con Google');
         
-        showAlert('Cuenta creada con éxito. Redirigiendo...', false);
-        setTimeout(() => window.location.href = 'portal.html', 1500);
+        window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
-        btn.textContent = 'Crear Cuenta B2B';
-        btn.disabled = false;
       }
     }
   </script>
