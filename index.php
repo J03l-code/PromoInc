@@ -33,16 +33,32 @@ header("Expires: 0");
   <!-- Page Loader -->
   <div id="page-loader" class="page-loader">
     <div class="loader-bg-decor"></div>
-    
+
     <!-- Planetary Orbiting Icons -->
     <div class="loader-icons-orbit">
       <div class="orbit-ring orbit-1">
-        <div class="orbit-icon orbit-icon-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg></div>
-        <div class="orbit-icon orbit-icon-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div>
+        <div class="orbit-icon orbit-icon-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+          </svg></div>
+        <div class="orbit-icon orbit-icon-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+          </svg></div>
       </div>
       <div class="orbit-ring orbit-2">
-        <div class="orbit-icon orbit-icon-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg></div>
-        <div class="orbit-icon orbit-icon-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5v10a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M12 6V2"/></svg></div>
+        <div class="orbit-icon orbit-icon-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z" />
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          </svg></div>
+        <div class="orbit-icon orbit-icon-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a5 5 0 0 0-5 5v10a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z" />
+            <path d="M12 6V2" />
+          </svg></div>
       </div>
     </div>
 
@@ -60,7 +76,7 @@ header("Expires: 0");
   <header id="navbar" class="navbar-ecommerce">
     <div class="navbar-top">
       <div class="container navbar-top-inner">
-        
+
         <a href="index.php" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
         </a>
@@ -68,20 +84,30 @@ header("Expires: 0");
         <div class="navbar-search">
           <input type="text" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
           <button type="button" aria-label="Botón buscar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </button>
         </div>
 
         <div class="navbar-actions-top">
           <a href="#" class="nav-action-btn">
             <div class="cart-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
             </div>
             <span>Mi carrito</span>
           </a>
-          <a href="login.html" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);" id="auth-btn">Mi Portal</a>
+          <a href="login.html" class="btn btn-outline btn-sm"
+            style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);"
+            id="auth-btn">Mi Portal</a>
           <button id="navbar-toggle" class="navbar-toggle" aria-label="Menu" style="margin-left:0.5rem">
-            <span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
+            <span style="background:var(--text-primary)"></span><span
+              style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
           </button>
         </div>
 
@@ -91,16 +117,34 @@ header("Expires: 0");
     <div class="navbar-bottom">
       <div class="container">
         <nav class="nav-categories">
-          <a href="#">Día de la madre <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Oficina <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Tomatodos y Jarros <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Textil <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Bolsos <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Hogar <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Día de la madre <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Oficina <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Tomatodos y Jarros <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Textil <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Bolsos <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Hogar <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
           <a href="#">Llaveros</a>
-          <a href="#">Tecnología <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Ecológicos <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
-          <a href="#">Más categorías <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Tecnología <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Ecológicos <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
+          <a href="#">Más categorías <svg viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg></a>
           <a href="#" class="nav-link-ofertas">Ofertas</a>
         </nav>
       </div>
@@ -127,11 +171,26 @@ header("Expires: 0");
           </div>
           <div class="hero-proof-text">
             <div class="hero-stars">
-              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
             </div>
             <span>+2,000 empresas ya confiaron en nosotros</span>
           </div>
@@ -149,13 +208,16 @@ header("Expires: 0");
 
         <p class="hero-sub">
           Artículos promocionales personalizados con tu logo.<br>
-          Desde 25 unidades. Entrega nacional.
+          Desde 20 unidades. Entrega nacional.
         </p>
 
         <div class="hero-actions">
           <a href="catalogo.html" class="hero-btn-primary">
             Explorar catálogo
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </a>
           <a href="#cotizar" class="hero-btn-outline">
             Solicitar cotización
@@ -185,14 +247,20 @@ header("Expires: 0");
         <div class="hero-img-main">
           <img src="assets/images/hero-products-1.png" alt="Artículos promocionales personalizados — PromoInc">
           <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+              <line x1="7" y1="7" x2="7.01" y2="7" />
+            </svg>
             Personalización con tu logo
           </div>
         </div>
         <div class="hero-img-secondary">
           <img src="assets/images/hero-products-2.png" alt="Ropa corporativa y kit empresarial — PromoInc">
           <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z" />
+            </svg>
             Kits corporativos
           </div>
         </div>
@@ -207,7 +275,8 @@ header("Expires: 0");
       <div class="section-header text-center reveal">
         <span class="section-label">Lo que hacemos</span>
         <h2 class="display-2">Nuestros <span class="text-pink">Servicios</span></h2>
-        <p class="section-subtitle" style="margin: 1rem auto 0; max-width: 540px;">Todo lo que necesitas para llevar tu marca al siguiente nivel, bajo un mismo techo.</p>
+        <p class="section-subtitle" style="margin: 1rem auto 0; max-width: 540px;">Todo lo que necesitas para llevar tu
+          marca al siguiente nivel, bajo un mismo techo.</p>
       </div>
 
       <div class="svc-layout reveal">
@@ -216,12 +285,16 @@ header("Expires: 0");
           <div class="svc-featured-inner">
             <span class="svc-eyebrow">Servicio estrella</span>
             <h3>Personalización completa de artículos promocionales</h3>
-            <p>Vasos, termos, bolígrafos, textiles y más de 500 productos listos para llevar el logo de tu empresa. Trabajamos desde 25 unidades.</p>
+            <p>Vasos, termos, bolígrafos, textiles y más de 500 productos listos para llevar el logo de tu empresa.
+              Trabajamos desde 25 unidades.</p>
             <div class="svc-tags">
               <span>Vasos</span><span>Merch</span><span>Regalos</span><span>Material POP</span><span>Kits</span>
             </div>
             <a href="catalogo.html" class="svc-cta">Explorar catálogo
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </a>
           </div>
         </div>
@@ -267,32 +340,72 @@ header("Expires: 0");
       <p class="text-center text-muted"
         style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; font-weight: 600;">
         Confían en nuestra calidad</p>
-      
+
       <div class="logos-marquee">
         <div class="logos-track">
           <!-- Slide 1 -->
-          <div class="logo-item"><div class="client-logo-box">Corona</div></div>
-          <div class="logo-item"><div class="client-logo-box">Cerveceria Nacional</div></div>
-          <div class="logo-item"><div class="client-logo-box">Clínica Pasteur</div></div>
-          <div class="logo-item"><div class="client-logo-box">Cruz Azul</div></div>
-          <div class="logo-item"><div class="client-logo-box">Anderson School</div></div>
-          <div class="logo-item"><div class="client-logo-box">CES Educación</div></div>
-          <div class="logo-item"><div class="client-logo-box">La Roche Posay</div></div>
-          <div class="logo-item"><div class="client-logo-box">GCG Group</div></div>
-          <div class="logo-item"><div class="client-logo-box">ITSQMET</div></div>
-          <div class="logo-item"><div class="client-logo-box">Municipio de Quito</div></div>
-          
+          <div class="logo-item">
+            <div class="client-logo-box">Corona</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Cerveceria Nacional</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Clínica Pasteur</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Cruz Azul</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Anderson School</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">CES Educación</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">La Roche Posay</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">GCG Group</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">ITSQMET</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Municipio de Quito</div>
+          </div>
+
           <!-- Duplicado para loop infinito -->
-          <div class="logo-item"><div class="client-logo-box">Corona</div></div>
-          <div class="logo-item"><div class="client-logo-box">Cerveceria Nacional</div></div>
-          <div class="logo-item"><div class="client-logo-box">Clínica Pasteur</div></div>
-          <div class="logo-item"><div class="client-logo-box">Cruz Azul</div></div>
-          <div class="logo-item"><div class="client-logo-box">Anderson School</div></div>
-          <div class="logo-item"><div class="client-logo-box">CES Educación</div></div>
-          <div class="logo-item"><div class="client-logo-box">La Roche Posay</div></div>
-          <div class="logo-item"><div class="client-logo-box">GCG Group</div></div>
-          <div class="logo-item"><div class="client-logo-box">ITSQMET</div></div>
-          <div class="logo-item"><div class="client-logo-box">Municipio de Quito</div></div>
+          <div class="logo-item">
+            <div class="client-logo-box">Corona</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Cerveceria Nacional</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Clínica Pasteur</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Cruz Azul</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Anderson School</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">CES Educación</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">La Roche Posay</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">GCG Group</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">ITSQMET</div>
+          </div>
+          <div class="logo-item">
+            <div class="client-logo-box">Municipio de Quito</div>
+          </div>
         </div>
       </div>
     </div>
@@ -446,7 +559,8 @@ header("Expires: 0");
 
         <div>
           <h4 class="footer-heading">Servicios</h4>
-          <div style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+          <div
+            style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
             <div class="footer-service-group">
               <strong style="color: #fff; display: block; margin-bottom: 2px;">Personalización</strong>
               <span>Vasos, Merch, Regalos, Logo</span>
