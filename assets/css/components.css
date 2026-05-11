@@ -317,172 +317,171 @@
   color: var(--text-primary);
 }
 
-/* ── ESPECIALIDADES GRID ──────────────────────────────────── */
+/* ── SERVICIOS — LAYOUT EDITORIAL ─────────────────────────── */
 #especialidades {
-  padding-top: 0; /* Eliminado espacio para que esté pegado a los beneficios */
+  padding-top: 0;
 }
 
-.specialties-grid {
+.svc-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
 }
 
-.specialty-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 3.5rem 2.5rem 2.5rem;
-  transition: all 0.4s var(--ease-smooth);
+/* — Featured card (left) — */
+.svc-featured {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(232,62,140,0.08) 0%, rgba(0,188,255,0.04) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.svc-featured-inner {
+  padding: 3rem 2.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.specialty-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--accent-pink);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s var(--ease-smooth);
-}
-
-.specialty-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-8px);
-  background: linear-gradient(145deg, var(--bg-surface), rgba(255,255,255,0.02));
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.specialty-card:hover::before {
-  transform: scaleX(1);
-}
-
-/* Colores de acento dinámicos */
-.specialty-card:has(.cyan)::before { background: var(--accent-cyan); }
-.specialty-card:has(.gold)::before { background: var(--accent-gold); }
-
-.specialty-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: all 0.4s var(--ease-smooth);
-  position: relative;
 }
 
-.specialty-icon::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  background: currentColor;
-  border-radius: inherit;
-  opacity: 0;
-  filter: blur(15px);
-  transition: opacity 0.4s ease;
-  z-index: -1;
-}
-
-.specialty-icon.pink { color: var(--accent-pink); }
-.specialty-icon.cyan { color: var(--accent-cyan); }
-.specialty-icon.gold { color: var(--accent-gold); }
-
-.specialty-card:hover .specialty-icon {
-  background: var(--bg-primary);
-  border-color: currentColor;
-  transform: scale(1.1);
-}
-
-.specialty-card:hover .specialty-icon::after {
-  opacity: 0.15;
-}
-
-.specialty-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
-
-.specialty-title {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+.svc-eyebrow {
+  font-size: 0.7rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-pink);
   margin-bottom: 1.25rem;
-  color: var(--text-primary);
+  display: block;
 }
 
-.specialty-description {
+.svc-featured h3 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.svc-featured p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: 2rem;
 }
 
-.specialty-description ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.specialty-description li {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  transition: color 0.3s ease;
-}
-
-.specialty-card:hover .specialty-description li {
-  color: var(--text-primary);
-}
-
-.specialty-description li::before {
-  content: '→';
-  font-size: 0.8rem;
-  color: var(--border);
+.svc-tags span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-secondary);
   transition: all 0.3s ease;
 }
 
-.specialty-card:hover .specialty-description li::before {
-  color: inherit;
-  transform: translateX(3px);
+.svc-tags span:hover {
+  border-color: var(--accent-pink);
+  color: var(--accent-pink);
+  background: rgba(232,62,140,0.08);
 }
 
-.specialty-footer {
-  margin-top: auto;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.specialty-link {
-  font-size: 0.85rem;
+.svc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: gap 0.3s ease;
+  transition: gap 0.3s ease, color 0.3s ease;
 }
 
-.specialty-link:hover {
-  gap: 0.75rem;
+.svc-cta:hover {
+  gap: 1rem;
   color: var(--accent-pink);
 }
 
-.specialty-card:has(.cyan) .specialty-link:hover { color: var(--accent-cyan); }
-.specialty-card:has(.gold) .specialty-link:hover { color: var(--accent-gold); }
+/* — Service list (right) — */
+.svc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.svc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.35s ease;
+}
+
+.svc-item:first-child {
+  padding-top: 0.5rem;
+}
+
+.svc-item:last-child {
+  border-bottom: none;
+}
+
+.svc-item:hover {
+  padding-left: 0.75rem;
+}
+
+.svc-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-pink);
+  opacity: 0.5;
+  flex-shrink: 0;
+  min-width: 36px;
+  transition: opacity 0.3s ease;
+}
+
+.svc-item:hover .svc-num {
+  opacity: 1;
+}
+
+.svc-item-body h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.svc-item-body p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* — Responsive — */
+@media (max-width: 768px) {
+  .svc-layout {
+    grid-template-columns: 1fr;
+  }
+  .svc-featured-inner {
+    padding: 2rem 1.5rem;
+  }
+  .svc-featured h3 {
+    font-size: 1.4rem;
+  }
+}
 
 /* ── CLIENT CAROUSEL (LOGO MARQUEE) ─────────────────────── */
 .logos-marquee {

@@ -13,7 +13,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css?v=21.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=21.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=24.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=21.0">
   <style>
     .hero-bento { padding-top: 150px; }
@@ -159,100 +159,59 @@
     </div>
   </section>
 
-  <!-- Especialidades -->
+  <!-- Servicios -->
   <section id="especialidades" class="section">
     <div class="container">
       <div class="section-header text-center reveal">
-        <span class="section-label">Nuestra Experiencia</span>
-        <h2 class="display-2">Servicios <span class="text-pink">Corporativos</span></h2>
-        <p class="section-subtitle" style="margin: 1rem auto 0;">Dominamos las técnicas más avanzadas de personalización
-          para que tu marca destaque con la máxima calidad y precisión.</p>
+        <span class="section-label">Lo que hacemos</span>
+        <h2 class="display-2">Nuestros <span class="text-pink">Servicios</span></h2>
+        <p class="section-subtitle" style="margin: 1rem auto 0; max-width: 540px;">Todo lo que necesitas para llevar tu marca al siguiente nivel, bajo un mismo techo.</p>
       </div>
 
-      <div class="specialties-grid stagger-children">
-        <!-- Servicio 1 -->
-        <div class="specialty-card">
-          <div class="specialty-icon pink icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="1.5" /><circle cx="12" cy="7" r="4" stroke-width="1.5" /></svg></div>
-          <div class="specialty-content">
-            <h3 class="specialty-title">Personalización de Artículos</h3>
-            <div class="specialty-description">
-              <ul>
-                <li>Vasos personalizados</li>
-                <li>Merch corporativo</li>
-                <li>Regalos empresariales</li>
-                <li>Artículos con logo</li>
-              </ul>
+      <div class="svc-layout reveal">
+        <!-- Columna izquierda: Servicio principal destacado -->
+        <div class="svc-featured">
+          <div class="svc-featured-inner">
+            <span class="svc-eyebrow">Servicio estrella</span>
+            <h3>Personalización completa de artículos promocionales</h3>
+            <p>Vasos, termos, bolígrafos, textiles y más de 500 productos listos para llevar el logo de tu empresa. Trabajamos desde 25 unidades.</p>
+            <div class="svc-tags">
+              <span>Vasos</span><span>Merch</span><span>Regalos</span><span>Material POP</span><span>Kits</span>
             </div>
-            <div class="specialty-footer">
-              <a href="catalogo.html" class="specialty-link">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
-            </div>
+            <a href="catalogo.html" class="svc-cta">Explorar catálogo
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
           </div>
         </div>
-        <!-- Servicio 2 -->
-        <div class="specialty-card">
-          <div class="specialty-icon cyan icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-width="1.5" /></svg></div>
-          <div class="specialty-content">
-            <h3 class="specialty-title">Impresión y Estampado</h3>
-            <div class="specialty-description">
-              <ul>
-                <li>Sublimación y DTF</li>
-                <li>Vinil textil e Impresión UV</li>
-                <li>Estampado del cliente</li>
-              </ul>
-            </div>
-            <div class="specialty-footer">
-              <a href="catalogo.html" class="specialty-link">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+
+        <!-- Columna derecha: Lista de servicios -->
+        <div class="svc-list">
+          <div class="svc-item">
+            <div class="svc-num">01</div>
+            <div class="svc-item-body">
+              <h4>Impresión y estampado</h4>
+              <p>Sublimación, DTF, vinil textil, impresión UV y estampado sobre productos del cliente.</p>
             </div>
           </div>
-        </div>
-        <!-- Servicio 3 -->
-        <div class="specialty-card">
-          <div class="specialty-icon gold icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke-width="1.5" /><line x1="7" y1="7" x2="7.01" y2="7" stroke-width="2" /></svg></div>
-          <div class="specialty-content">
-            <h3 class="specialty-title">Etiquetado y Branding</h3>
-            <div class="specialty-description">
-              <ul>
-                <li>Colocación de stickers</li>
-                <li>Branding de empaques</li>
-                <li>Aplicación manual de etiquetas</li>
-              </ul>
-            </div>
-            <div class="specialty-footer">
-              <a href="catalogo.html" class="specialty-link">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <div class="svc-item">
+            <div class="svc-num" style="color: var(--accent-cyan);">02</div>
+            <div class="svc-item-body">
+              <h4>Etiquetado y branding</h4>
+              <p>Stickers, etiquetado de packaging, branding de empaques y aplicación manual.</p>
             </div>
           </div>
-        </div>
-        <!-- Servicio 4 -->
-        <div class="specialty-card">
-          <div class="specialty-icon pink icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="1.5" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="1.5" /></svg></div>
-          <div class="specialty-content">
-            <h3 class="specialty-title">Producción para Empresas</h3>
-            <div class="specialty-description">
-              <ul>
-                <li>Producción por volumen</li>
-                <li>Personalización corporativa</li>
-                <li>Kits empresariales</li>
-              </ul>
-            </div>
-            <div class="specialty-footer">
-              <a href="catalogo.html" class="specialty-link">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <div class="svc-item">
+            <div class="svc-num" style="color: var(--accent-gold);">03</div>
+            <div class="svc-item-body">
+              <h4>Producción corporativa</h4>
+              <p>Volumen, personalización masiva, kits empresariales y material POP a medida.</p>
             </div>
           </div>
-        </div>
-        <!-- Servicio 5 -->
-        <div class="specialty-card">
-          <div class="specialty-icon cyan icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-width="1.5" /></svg></div>
-          <div class="specialty-content">
-            <h3 class="specialty-title">Servicios a Emprendedores</h3>
-            <div class="specialty-description">
-              <ul>
-                <li>Producción pequeña y mediana</li>
-                <li>Personalización bajo pedido</li>
-                <li>Apoyo para marcas nuevas</li>
-              </ul>
-            </div>
-            <div class="specialty-footer">
-              <a href="catalogo.html" class="specialty-link">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <div class="svc-item">
+            <div class="svc-num" style="color: #a78bfa;">04</div>
+            <div class="svc-item-body">
+              <h4>Apoyo a emprendedores</h4>
+              <p>Producción pequeña y mediana, personalización bajo pedido y asesoría para marcas nuevas.</p>
             </div>
           </div>
         </div>
