@@ -101,9 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.success) {
         window.showToast('¡Cotización enviada! Te contactamos en 24h.', 'success');
         qForm.reset();
-      } else throw new Error(data.error);
+      } else throw new Error(data.error || 'Error desconocido');
     } catch(err) {
-      window.showToast('Error al enviar. Intente de nuevo.', 'error');
+      window.showToast(err.message, 'error');
     } finally {
       btn.disabled = false; btn.textContent = 'Solicitar Cotización';
     }

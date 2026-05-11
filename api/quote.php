@@ -43,11 +43,11 @@ try {
     ]);
 
     $quoteId = (int)$db->lastInsertId();
-} catch (PDOException $e) {
+} catch (\Throwable $e) {
     $code = $e->getCode();
     
-    // 42S02: Base table or view not found
-    if ($code == '42S02') {
+    // Si es un error de PDO y es 42S02 (Table not found)
+    if ($e instanceof PDOException && $code == '42S02') {
         $db->exec("CREATE TABLE IF NOT EXISTS quotes (
             id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             company      VARCHAR(255) NOT NULL,
@@ -62,31 +62,32 @@ try {
         
         // Re-intentar la inserción ahora que la tabla existe
         $stmt->execute([
-            ':company'       => sanitize($data['company']),
-            ':contact_name'  => sanitize($data['contact_name']),
+            ':company'       => sanitize((string)$data['company']),
+            ':contact_name'  => sanitize((string)$data['contact_name']),
             ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
-            ':phone'         => sanitize($data['phone'] ?? ''),
+            ':phone'         => sanitize((string)($data['phone'] ?? '')),
             ':products_json' => json_encode($data['products'] ?? []),
-            ':message'       => sanitize($data['message'] ?? ''),
+            ':message'       => sanitize((string)($data['message'] ?? '')),
         ]);
         $quoteId = (int)$db->lastInsertId();
     } 
-    // 42S22: Column not found
-    else if ($code == '42S22') {
+    // Si es un error de PDO y es 42S22 (Column not found)
+    else if ($e instanceof PDOException && $code == '42S22') {
         $stmt = $db->prepare("
             INSERT INTO quotes (company, contact_name, email, phone, message)
             VALUES (:company, :contact_name, :email, :phone, :message)
         ");
         $stmt->execute([
-            ':company'       => sanitize($data['company']),
-            ':contact_name'  => sanitize($data['contact_name']),
+            ':company'       => sanitize((string)$data['company']),
+            ':contact_name'  => sanitize((string)$data['contact_name']),
             ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
-            ':phone'         => sanitize($data['phone'] ?? ''),
-            ':message'       => sanitize($data['message'] ?? ''),
+            ':phone'         => sanitize((string)($data['phone'] ?? '')),
+            ':message'       => sanitize((string)($data['message'] ?? '')),
         ]);
         $quoteId = (int)$db->lastInsertId();
     } else {
-        jsonError(500, "Error BD: " . mb_convert_encoding($e->getMessage(), 'UTF-8', 'auto'));
+        // Enviar el error real al cliente para debug
+        jsonError(500, "Error Interno: " . $e->getMessage() . " en la linea " . $e->getLine());
     }
 }
 
