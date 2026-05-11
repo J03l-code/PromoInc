@@ -201,23 +201,10 @@ async function loadSiteSettings() {
     if (json.success) {
       const s = json.data;
       
-      // Hero Title
-      if (s.hero_title) {
-        const titleEl = document.querySelector('.hero-bento h1') || document.querySelector('.catalog-header h1');
-        if (titleEl) {
-          let html = s.hero_title;
-          if (html.toLowerCase().includes('merchandising')) {
-            html = html.replace(/merchandising/gi, (m) => `<span class="text-pink glitch" data-text="${m}">${m}</span>`);
-          }
-          titleEl.innerHTML = html;
-        }
-      }
-      
-      // Hero Subtitle
-      if (s.hero_subtitle) {
-        const subEl = document.querySelector('.hero-bento .text-muted') || document.querySelector('.catalog-header .text-muted');
-        if (subEl) subEl.textContent = s.hero_subtitle;
-      }
+      // Hero Title & Subtitle are defined directly in HTML (not overridden by DB)
+      // to preserve the animated rotating words effect.
+      // If you need to update these, edit index.php or catalogo.html directly.
+
       
       // WhatsApp
       if (s.whatsapp) {
