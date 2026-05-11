@@ -241,6 +241,9 @@
                   <span class="calc-label" style="font-weight:700; color:var(--text-primary)">Subtotal Estimado</span>
                   <div class="calc-value price-total" id="total-price-display">$0.00</div>
                </div>
+               <div id="savings-display" style="display:none; text-align:right; color:#00ff88; font-size:0.95rem; margin-top:12px; font-weight:700;">
+                 ✨ ¡Ahorras <span id="savings-amount">$0.00</span> al comprar esta cantidad!
+               </div>
                <p class="text-muted" style="font-size:0.75rem; margin-top:15px; text-align:center">Precios referenciales para artículos con un logo a 1 color.</p>
             </div>
 
@@ -306,6 +309,33 @@
         </div>
       `;
       
+      // SEO Schema.org
+      let schemaScript = document.getElementById('product-schema');
+      if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.id = 'product-schema';
+        document.head.appendChild(schemaScript);
+      }
+      const schemaData = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": p.name,
+        "image": imgUrl ? "https://promoinc.jiyanedesign.com/" + imgUrl : "",
+        "description": p.description || "Producto premium personalizable",
+        "sku": p.sku,
+        "offers": {
+          "@type": "AggregateOffer",
+          "url": window.location.href,
+          "priceCurrency": "USD",
+          "lowPrice": p.volume_prices && p.volume_prices.length ? Math.min(...p.volume_prices.map(t => t.price)) : p.price_from,
+          "highPrice": p.price_from,
+          "offerCount": p.volume_prices ? p.volume_prices.length + 1 : 1,
+          "availability": parseInt(p.total_stock) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+        }
+      };
+      schemaScript.textContent = JSON.stringify(schemaData);
+      
       calculatePrices();
     }
 
@@ -334,6 +364,19 @@
       
       document.getElementById('unit-price-display').textContent = `$${unitPrice.toFixed(2)}`;
       document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      
+      const basePrice = parseFloat(p.price_from);
+      let savings = 0;
+      if (unitPrice < basePrice) {
+        savings = (basePrice - unitPrice) * qty;
+      }
+      const savingsDiv = document.getElementById('savings-display');
+      if (savings > 0) {
+        document.getElementById('savings-amount').textContent = `$${savings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        savingsDiv.style.display = 'block';
+      } else {
+        savingsDiv.style.display = 'none';
+      }
       
       // Update WA Link
       const waBtn = document.getElementById('wa-quote-btn');
