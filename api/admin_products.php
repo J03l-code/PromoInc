@@ -18,7 +18,7 @@ switch ($method) {
     case 'GET':    getAdminProducts($db);    break;
     case 'POST':
         // Permitir emulación de PUT/DELETE vía POST para compatibilidad
-        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
         $action = $data['_method'] ?? 'POST';
         if ($action === 'PUT') updateAdminProduct($db);
         elseif ($action === 'DELETE') deleteAdminProduct($db);
@@ -97,7 +97,7 @@ function getAdminProducts(PDO $db): void {
 
 // ── POST: Crear ───────────────────────────────────────────────
 function createAdminProduct(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
 
     $required = ['category_id', 'sku', 'name'];
     foreach ($required as $f) {
@@ -144,7 +144,7 @@ function createAdminProduct(PDO $db): void {
 
 // ── PUT: Actualizar ───────────────────────────────────────────
 function updateAdminProduct(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     try {
@@ -210,7 +210,7 @@ function updateAdminProduct(PDO $db): void {
 
 // ── DELETE: Soft delete ───────────────────────────────────────
 function deleteAdminProduct(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     // Borrado permanente

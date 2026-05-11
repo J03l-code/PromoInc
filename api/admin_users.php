@@ -27,7 +27,7 @@ function getUsers(PDO $db): void {
 }
 
 function createUser(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['email']) || empty($data['password']) || empty($data['name'])) {
         jsonError(422, 'Nombre, email y contraseña son requeridos');
     }
@@ -44,7 +44,7 @@ function createUser(PDO $db): void {
 }
 
 function updateUser(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     $sets = [];
@@ -67,7 +67,7 @@ function updateUser(PDO $db): void {
 }
 
 function deleteUser(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     // No eliminar al propio usuario logueado

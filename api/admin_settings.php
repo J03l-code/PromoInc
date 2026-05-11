@@ -19,8 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (!$data) jsonError(400, 'Datos inválidos');
+    
+    // Quitar _method si existe (viene de la emulación de admin.js)
+    unset($data['_method']);
 
     $stmt = $db->prepare("INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)");
     foreach ($data as $key => $value) {

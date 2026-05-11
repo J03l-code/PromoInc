@@ -25,6 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// ── Método Overriding (Emulación de PUT/DELETE vía POST) ──────
+// El admin.js envía { _method: 'PUT' } dentro del JSON vía POST.
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rawInput = file_get_contents('php://input');
+    $inputData = json_decode($rawInput, true);
+    if (isset($inputData['_method'])) {
+        $emulated = strtoupper($inputData['_method']);
+        if (in_array($emulated, ['PUT', 'DELETE'])) {
+            $_SERVER['REQUEST_METHOD'] = $emulated;
+            // Guardamos el input decodificado para evitar re-decodificarlo en los controllers
+            $GLOBALS['_POST_JSON'] = $inputData;
+        }
+    }
+}
+
 // ── Conexión PDO ──────────────────────────────────────────────
 function getDB(): PDO
 {

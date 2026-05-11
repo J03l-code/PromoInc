@@ -16,7 +16,7 @@ $db     = getDB();
 switch ($method) {
     case 'GET':    getCategories($db);    break;
     case 'POST':
-        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
         $action = $data['_method'] ?? 'POST';
         if ($action === 'PUT') updateCategory($db);
         elseif ($action === 'DELETE') deleteCategory($db);
@@ -38,7 +38,7 @@ function getCategories(PDO $db): void {
 }
 
 function createCategory(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['name'])) jsonError(422, 'Nombre requerido');
 
     $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $data['name'])), '-'));
@@ -55,7 +55,7 @@ function createCategory(PDO $db): void {
 }
 
 function updateCategory(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     $stmt = $db->prepare("
@@ -73,7 +73,7 @@ function updateCategory(PDO $db): void {
 }
 
 function deleteCategory(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     // Verificar si tiene productos activos

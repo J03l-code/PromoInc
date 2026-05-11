@@ -50,7 +50,7 @@ function getQuotes(PDO $db): void {
 }
 
 function updateQuote(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     $validStatuses = ['new', 'read', 'responded', 'closed'];
@@ -61,7 +61,7 @@ function updateQuote(PDO $db): void {
 }
 
 function deleteQuote(PDO $db): void {
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
     $db->prepare("DELETE FROM quotes WHERE id = ?")->execute([(int)$data['id']]);
     jsonSuccess(['deleted' => true]);
