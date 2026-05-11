@@ -59,6 +59,7 @@ try {
     }
     
     // Iniciar sesión
+    session_regenerate_id(true);
     $_SESSION['user_id'] = $userId;
     $_SESSION['user_role'] = $userRole;
     $_SESSION['user_name'] = $name;

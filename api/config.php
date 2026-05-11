@@ -5,11 +5,17 @@
  */
 
 // ── Inicialización de Sesión Global ───────────────────────────
+// ── Inicialización de Sesión Global ───────────────────────────
 if (session_status() === PHP_SESSION_NONE) {
+    $isSecure = false;
+    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') $isSecure = true;
+    elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') $isSecure = true;
+
     session_set_cookie_params([
         'lifetime' => 28800,
         'path' => '/',
-        'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'),
+        'domain' => '', // Dinámico
+        'secure' => $isSecure,
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
