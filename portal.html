@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/css/main.css?v=2.8">
   <link rel="stylesheet" href="assets/css/components.css?v=2.8">
   <style>
+    body { background: var(--bg-body); }
     .portal-header {
       padding: 120px 0 40px;
       background: var(--bg-surface);
@@ -14,7 +15,7 @@
     }
     .portal-grid {
       display: grid;
-      grid-template-columns: 250px 1fr;
+      grid-template-columns: 240px 1fr;
       gap: 30px;
       margin-top: 40px;
       margin-bottom: 80px;
@@ -22,74 +23,145 @@
     .portal-sidebar {
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 20px;
       height: fit-content;
+      position: sticky;
+      top: 120px;
     }
     .portal-nav-item {
-      display: block;
-      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
       color: var(--text-muted);
-      border-radius: 8px;
-      margin-bottom: 5px;
+      border-radius: 10px;
+      margin-bottom: 4px;
       cursor: pointer;
-      transition: var(--duration-fast);
+      transition: var(--transition);
+      font-size: 0.95rem;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
     }
     .portal-nav-item:hover, .portal-nav-item.active {
       background: rgba(0, 188, 255, 0.1);
       color: var(--accent-cyan);
     }
+    .portal-section { display: none; }
+    .portal-section.active { display: block; }
+    .section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 24px;
+    }
+    .section-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    /* User info */
+    .user-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .info-field label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .info-field span { font-weight: 600; color: var(--text-primary); font-size: 1rem; }
+    .role-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .role-client { background: rgba(0,188,255,0.15); color: var(--accent-cyan); }
+    .role-admin { background: rgba(255,200,0,0.15); color: #ffc800; }
+    /* Logo grid */
     .logo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
       margin-top: 20px;
     }
     .logo-card {
-      background: var(--bg-surface);
+      background: var(--bg-body);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 15px;
       text-align: center;
       position: relative;
+      transition: var(--transition);
     }
+    .logo-card:hover { border-color: var(--accent-cyan); }
     .logo-card img {
       max-width: 100%;
       height: 80px;
       object-fit: contain;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
+    .logo-card p { font-size: 0.72rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .btn-delete-logo {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: rgba(232, 62, 140, 0.2);
+      position: absolute; top: 6px; right: 6px;
+      background: rgba(232, 62, 140, 0.15);
       color: var(--accent-pink);
-      border: none;
-      width: 24px;
-      height: 24px;
+      border: none; width: 22px; height: 22px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.9rem; line-height: 1;
+      transition: var(--transition);
     }
+    .btn-delete-logo:hover { background: rgba(232,62,140,0.4); }
+    /* Cart in portal */
+    .cart-portal-item {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-portal-item:last-child { border-bottom: none; }
+    .cart-portal-img {
+      width: 60px; height: 60px;
+      border-radius: 10px;
+      background: var(--bg-body); border: 1px solid var(--border);
+      object-fit: contain; padding: 5px; flex-shrink: 0;
+    }
+    .cart-portal-info { flex: 1; }
+    .cart-portal-name { font-weight: 600; font-size: 0.95rem; }
+    .cart-portal-sku { color: var(--text-muted); font-size: 0.8rem; margin: 2px 0; }
+    .cart-portal-price { color: var(--accent-cyan); font-weight: 700; }
+    .cart-summary-total {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .cart-summary-total span:last-child { color: var(--accent-cyan); font-size: 1.5rem; }
     @media (max-width: 768px) {
       .portal-grid { grid-template-columns: 1fr; }
+      .portal-sidebar { position: static; }
+      .user-info-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar E-commerce (simplificado para portal) -->
   <header id="navbar" class="navbar-ecommerce">
     <div class="navbar-top">
       <div class="container navbar-top-inner" style="justify-content: space-between;">
         <a href="index.html" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
         </a>
-        <div class="navbar-actions-top">
-          <a href="catalogo.html" class="btn btn-outline btn-sm" style="margin-right: 10px;">Ir a la Tienda</a>
+        <div class="navbar-actions-top" style="gap: 10px;">
+          <a href="catalogo.html" class="btn btn-outline btn-sm">Ir a la Tienda</a>
           <button onclick="logout()" class="btn btn-primary btn-sm">Cerrar Sesión</button>
         </div>
       </div>
@@ -98,102 +170,235 @@
 
   <div class="portal-header">
     <div class="container">
+      <p style="color: var(--accent-cyan); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Portal Corporativo</p>
       <h1 class="display-2">Bienvenido, <span id="user-name" class="text-cyan">...</span></h1>
-      <p class="text-muted">Gestiona tus archivos de marca y cotizaciones.</p>
+      <p class="text-muted">Gestiona tu marca, tus logos y tu carrito de productos.</p>
     </div>
   </div>
 
   <main class="container portal-grid">
+    <!-- Sidebar -->
     <aside class="portal-sidebar">
-      <a class="portal-nav-item active">Mis Logos</a>
-      <a class="portal-nav-item" style="opacity:0.5; cursor:not-allowed;">Historial de Pedidos</a>
-      <a class="portal-nav-item" style="opacity:0.5; cursor:not-allowed;">Mis Datos</a>
+      <button class="portal-nav-item active" onclick="showSection('mis-datos')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Mis Datos
+      </button>
+      <button class="portal-nav-item" onclick="showSection('mis-logos')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Mis Logos
+      </button>
+      <button class="portal-nav-item" onclick="showSection('mi-carrito')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Mi Carrito <span id="portal-cart-count" style="margin-left:auto; background:var(--accent-cyan); color:#000; border-radius:10px; padding:1px 7px; font-size:0.75rem; font-weight:700; display:none;"></span>
+      </button>
     </aside>
 
-    <section class="portal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="font-family: var(--font-display); font-size: 1.5rem;">Mis Archivos de Marca</h2>
-        <label for="logo-upload" class="btn btn-primary btn-sm" style="cursor: pointer;">
-          Subir Nuevo Logo
-        </label>
-        <input type="file" id="logo-upload" accept=".png, .svg" style="display:none;" onchange="uploadLogo(event)">
+    <!-- Main Content -->
+    <div>
+      <!-- MIS DATOS -->
+      <div class="portal-section active" id="section-mis-datos">
+        <div class="section-card">
+          <h3>Información de Cuenta</h3>
+          <div class="user-info-grid">
+            <div class="info-field">
+              <label>Nombre / Empresa</label>
+              <span id="detail-name">—</span>
+            </div>
+            <div class="info-field">
+              <label>Correo</label>
+              <span id="detail-email">—</span>
+            </div>
+            <div class="info-field">
+              <label>Rol</label>
+              <span id="detail-role">—</span>
+            </div>
+            <div class="info-field">
+              <label>Último acceso</label>
+              <span id="detail-login">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="section-card" style="background: linear-gradient(135deg, rgba(0,188,255,0.08), rgba(0,188,255,0.02)); border-color: rgba(0,188,255,0.25);">
+          <h3 style="color: var(--accent-cyan);">Accesos Rápidos</h3>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="catalogo.html" class="btn btn-outline btn-sm">Ver Catálogo Completo</a>
+            <button onclick="showSection('mis-logos')" class="btn btn-outline btn-sm">Subir Logo</button>
+            <button onclick="showSection('mi-carrito')" class="btn btn-primary btn-sm">Ver mi Carrito</button>
+          </div>
+        </div>
       </div>
 
-      <p class="text-muted" style="font-size: 0.9rem;">Sube tus logos en formato PNG sin fondo o SVG para usarlos rápidamente en el visualizador 3D de nuestros productos.</p>
-
-      <div class="logo-grid" id="logo-grid">
-        <!-- Logos cargados dinámicamente -->
-        <p style="grid-column: 1/-1; color: var(--text-muted); text-align:center; padding: 40px;">Cargando tus logos...</p>
+      <!-- MIS LOGOS -->
+      <div class="portal-section" id="section-mis-logos">
+        <div class="section-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <h3 style="margin-bottom:0;">Mis Archivos de Marca</h3>
+            <label for="logo-upload" class="btn btn-primary btn-sm" style="cursor:pointer;">
+              + Subir Logo
+            </label>
+            <input type="file" id="logo-upload" accept=".png,.svg" style="display:none;" onchange="uploadLogo(event)">
+          </div>
+          <p class="text-muted" style="font-size:0.85rem; margin-bottom:0;">Sube logos PNG sin fondo o SVG para usarlos en el visualizador de productos.</p>
+          <div class="logo-grid" id="logo-grid">
+            <p style="grid-column:1/-1; color:var(--text-muted); text-align:center; padding:40px;">Cargando logos...</p>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <!-- MI CARRITO -->
+      <div class="portal-section" id="section-mi-carrito">
+        <div class="section-card">
+          <h3>Mi Carrito Guardado</h3>
+          <div id="portal-cart-items">
+            <p class="text-muted" style="text-align:center; padding:40px;">Cargando carrito...</p>
+          </div>
+          <div id="portal-cart-footer" style="display:none;">
+            <div class="cart-summary-total">
+              <span>Total Estimado</span>
+              <span id="portal-cart-total">$0.00</span>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+              <a id="portal-wa-btn" href="#" target="_blank" class="btn btn-primary" style="flex:1; justify-content:center;">
+                Solicitar Cotización vía WhatsApp
+              </a>
+              <button onclick="clearPortalCart()" class="btn btn-outline" style="flex:1; justify-content:center;">Vaciar Carrito</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
+  <script src="assets/js/cart.js?v=1.0"></script>
   <script>
+    let currentUser = null;
+
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        // Verificar sesión
         const res = await fetch('api/auth_b2b.php?action=me');
         if (!res.ok) throw new Error('No auth');
         const data = await res.json();
-        document.getElementById('user-name').textContent = data.user.name;
-        
+        currentUser = data.user;
+
+        document.getElementById('user-name').textContent = currentUser.name;
+        document.getElementById('detail-name').textContent = currentUser.name;
+        document.getElementById('detail-email').textContent = currentUser.email || '—';
+        const roleLabel = currentUser.role === 'client' ? 'Cliente B2B' : currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+        const roleCls = currentUser.role === 'client' ? 'role-client' : 'role-admin';
+        document.getElementById('detail-role').innerHTML = `<span class="role-badge ${roleCls}">${roleLabel}</span>`;
+        document.getElementById('detail-login').textContent = currentUser.last_login ? new Date(currentUser.last_login).toLocaleDateString('es-EC') : 'Este es tu primer acceso';
+
+        // Init cart
+        await CartManager.init(updatePortalCartBadge);
+        loadPortalCart();
+
+        // Load logos
         loadLogos();
+
       } catch (err) {
         window.location.href = 'login.html';
       }
     });
+
+    function showSection(name) {
+      document.querySelectorAll('.portal-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.portal-nav-item').forEach(b => b.classList.remove('active'));
+      document.getElementById(`section-${name}`).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    function updatePortalCartBadge() {
+      const count = CartManager.getCount();
+      const badge = document.getElementById('portal-cart-count');
+      if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'inline' : 'none';
+      }
+    }
+
+    function loadPortalCart() {
+      const items = CartManager.getItems();
+      const container = document.getElementById('portal-cart-items');
+      const footer = document.getElementById('portal-cart-footer');
+
+      if (!items || items.length === 0) {
+        container.innerHTML = `<p class="text-muted" style="text-align:center; padding:40px;">Tu carrito está vacío. <a href="catalogo.html" style="color:var(--accent-cyan);">Explorar catálogo</a></p>`;
+        footer.style.display = 'none';
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        const imgSrc = item.image_webp ? `assets/images/${item.image_webp}` : '';
+        const subtotal = (item.unit_price * item.quantity).toFixed(2);
+        return `<div class="cart-portal-item">
+          ${imgSrc ? `<img class="cart-portal-img" src="${imgSrc}" alt="${item.name}">` : '<div class="cart-portal-img"></div>'}
+          <div class="cart-portal-info">
+            <div class="cart-portal-name">${item.name}</div>
+            <div class="cart-portal-sku">SKU: ${item.sku}</div>
+            <div class="cart-portal-price">$${subtotal} <span style="color:var(--text-muted); font-weight:400; font-size:0.85rem;">(${item.quantity} × $${item.unit_price.toFixed(2)})</span></div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="color:var(--accent-pink); border-color:rgba(232,62,140,0.3);"
+            onclick="CartManager.removeItem(${item.product_id}).then(() => { updatePortalCartBadge(); loadPortalCart(); })">
+            Eliminar
+          </button>
+        </div>`;
+      }).join('');
+
+      footer.style.display = 'block';
+      const total = CartManager.getTotal();
+      document.getElementById('portal-cart-total').textContent =
+        `$${total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+
+      const waNumber = '593989398005';
+      const txt = `Hola PromoInc, deseo cotizar:\n${items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${total.toFixed(2)}`;
+      document.getElementById('portal-wa-btn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(txt)}`;
+    }
+
+    async function clearPortalCart() {
+      if (!confirm('¿Vaciar todo el carrito?')) return;
+      await CartManager.clear();
+      updatePortalCartBadge();
+      loadPortalCart();
+    }
 
     async function logout() {
       await fetch('api/auth_b2b.php?action=logout');
       window.location.href = 'index.html';
     }
 
+    /* ── Logos ── */
     async function loadLogos() {
       const grid = document.getElementById('logo-grid');
       try {
         const res = await fetch('api/user_logos.php');
         const data = await res.json();
-        
-        if (data.logos.length === 0) {
-          grid.innerHTML = '<p style="grid-column: 1/-1; color: var(--text-muted); text-align:center; padding: 40px; background:var(--bg-surface); border-radius:12px;">Aún no tienes logos guardados. Sube tu primer logo para empezar.</p>';
+
+        if (!data.logos || data.logos.length === 0) {
+          grid.innerHTML = '<p style="grid-column:1/-1; color:var(--text-muted); text-align:center; padding:40px;">Aún no tienes logos. Sube tu primer logo.</p>';
           return;
         }
 
         grid.innerHTML = data.logos.map(logo => `
           <div class="logo-card">
-            <button class="btn-delete-logo" onclick="deleteLogo(${logo.id})" title="Eliminar">&times;</button>
+            <button class="btn-delete-logo" onclick="deleteLogo(${logo.id})" title="Eliminar">×</button>
             <img src="assets/images/user_logos/${logo.filename}" alt="Logo">
-            <p style="font-size: 0.75rem; color: var(--text-muted); overflow:hidden; text-overflow:ellipsis;">${logo.filename}</p>
+            <p>${logo.filename}</p>
           </div>
         `).join('');
       } catch (err) {
-        grid.innerHTML = '<p style="color: red;">Error al cargar logos</p>';
+        grid.innerHTML = '<p style="color:var(--accent-pink);">Error al cargar logos.</p>';
       }
     }
 
     async function uploadLogo(e) {
       const file = e.target.files[0];
       if (!file) return;
-
       const formData = new FormData();
       formData.append('logo', file);
-
       try {
-        // Notificar subiendo
-        const grid = document.getElementById('logo-grid');
-        grid.insertAdjacentHTML('afterbegin', '<div class="logo-card" id="temp-loading"><p>Subiendo...</p></div>');
-
-        const res = await fetch('api/user_logos.php', {
-          method: 'POST',
-          body: formData
-        });
-        
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.error || 'Error al subir');
-        }
-        
-        // Recargar
+        document.getElementById('logo-grid').insertAdjacentHTML('afterbegin', '<div class="logo-card" id="temp-loading" style="display:flex;align-items:center;justify-content:center;">Subiendo...</div>');
+        const res = await fetch('api/user_logos.php', { method: 'POST', body: formData });
+        if (!res.ok) { const err = await res.json(); throw new Error(err.error || 'Error'); }
         e.target.value = '';
         loadLogos();
       } catch (err) {
@@ -203,20 +408,9 @@
     }
 
     async function deleteLogo(id) {
-      if (!confirm('¿Seguro que deseas eliminar este logo?')) return;
-      
-      try {
-        const res = await fetch('api/user_logos.php', {
-          method: 'DELETE',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({id})
-        });
-        
-        if (!res.ok) throw new Error('Error al eliminar');
-        loadLogos();
-      } catch (err) {
-        alert(err.message);
-      }
+      if (!confirm('¿Eliminar este logo?')) return;
+      const res = await fetch('api/user_logos.php', { method: 'DELETE', headers: {'Content-Type':'application/json'}, body: JSON.stringify({id}) });
+      if (res.ok) loadLogos();
     }
   </script>
 </body>

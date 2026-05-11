@@ -68,10 +68,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     if ($action === 'me') {
         if (isset($_SESSION['user_id'])) {
-            jsonSuccess(['user' => ['name' => $_SESSION['user_name'], 'role' => $_SESSION['user_role']]]);
-        } else {
-            jsonError(401, 'No autenticado');
+            $db = getDB();
+            $stmt = $db->prepare("SELECT id, name, email, role, last_login FROM users WHERE id = ?");
+            $stmt->execute([$_SESSION['user_id']]);
+            $u = $stmt->fetch();
+            if ($u) {
+                jsonSuccess(['user' => [
+                    'name' => $u['name'],
+                    'email' => $u['email'],
+                    'role' => $u['role'],
+                    'last_login' => $u['last_login']
+                ]]);
+            }
         }
+        jsonError(401, 'No autenticado');
     }
 }
 
