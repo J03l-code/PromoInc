@@ -8,8 +8,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 28800,
-        'path'     => '/',
-        'secure'   => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'),
+        'path' => '/',
+        'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -17,8 +17,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'u434851126_promoincdb');
-define('DB_USER', 'u434851126_promoinc_usr');        // Cambiar en producción
+define('DB_NAME', 'u434851126_promoincec');
+define('DB_USER', 'u434851126_promoinc_u');        // Cambiar en producción
 define('DB_PASS', 'Promoinc2026!');            // Cambiar en producción
 define('DB_CHARSET', 'utf8mb4');
 
@@ -70,7 +70,7 @@ function getDB(): PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
-            
+
             // Auto-crear tabla product_prices si no existe para evitar fallos de guardado
             $pdo->exec("CREATE TABLE IF NOT EXISTS product_prices (
                 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
