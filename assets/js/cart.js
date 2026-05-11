@@ -8,10 +8,18 @@ const CartManager = (() => {
   let _isLoggedIn = false;
   let _items = [];         // [{product_id, name, sku, quantity, unit_price, image_webp}]
   let _onChangeCallback = null;
+  let _waNumber = '593989398005'; // Default fallback
 
   /* ── Inicialización ──────────────────────────────── */
   async function init(onChangeCallback) {
     _onChangeCallback = onChangeCallback;
+    
+    // Fetch WhatsApp number from settings
+    fetch('api/public_settings.php?key=whatsapp_number')
+      .then(r => r.json())
+      .then(d => { if(d.success) _waNumber = d.data.value; })
+      .catch(() => {});
+
     try {
       const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
       if (res.ok) {
@@ -127,10 +135,17 @@ const CartManager = (() => {
   function getCount() { return _items.reduce((s, i) => s + i.quantity, 0); }
   function getTotal() { return _items.reduce((s, i) => s + (i.unit_price * i.quantity), 0); }
   function isLoggedIn() { return _isLoggedIn; }
+  
+  function getWhatsAppUrl() {
+    const total = getTotal();
+    const itemsText = _items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price * i.quantity).toFixed(2)}`).join('\n');
+    const msg = `Hola PromoInc, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: $${total.toFixed(2)}`;
+    return `https://wa.me/${_waNumber}?text=${encodeURIComponent(msg)}`;
+  }
 
   function _notify() {
     if (_onChangeCallback) _onChangeCallback(_items);
   }
 
-  return { init, addItem, removeItem, clear, getItems, getCount, getTotal, isLoggedIn };
+  return { init, addItem, removeItem, clear, getItems, getCount, getTotal, isLoggedIn, getWhatsAppUrl };
 })();
