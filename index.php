@@ -443,18 +443,34 @@
             <li><a href="catalogo.html?cat=tomatodos" class="footer-link">Tomatodos y Termos</a></li>
             <li><a href="catalogo.html?cat=confecciones" class="footer-link">Confecciones</a></li>
             <li><a href="catalogo.html?cat=ecologia" class="footer-link">Línea Ecológica</a></li>
+            <li><a href="catalogo.html" class="footer-link">Ver Catálogo Completo</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="footer-heading">Servicios</h4>
-          <ul class="footer-links">
-            <li><a href="#" class="footer-link">Importación Directa</a></li>
-            <li><a href="#" class="footer-link">Grabado Láser YAG</a></li>
-            <li><a href="#" class="footer-link">Impresión UV Full Color</a></li>
-            <li><a href="#" class="footer-link">Serigrafía Corporativa</a></li>
-            <li><a href="#" class="footer-link">Empaques Especiales</a></li>
-          </ul>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+            <div class="footer-service-group">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Personalización</strong>
+              <span>Vasos, Merch, Regalos, Logo</span>
+            </div>
+            <div class="footer-service-group">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Impresión y Estampado</strong>
+              <span>Sublimación, DTF, Vinil, UV</span>
+            </div>
+            <div class="footer-service-group">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Branding y Packaging</strong>
+              <span>Etiquetas, Packaging, Stickers</span>
+            </div>
+            <div class="footer-service-group">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Corporativo y Volumen</strong>
+              <span>Material POP, Kits, Producción</span>
+            </div>
+            <div class="footer-service-group">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Emprendedores</strong>
+              <span>Pequeña/Mediana producción</span>
+            </div>
+          </div>
         </div>
 
         <div>
