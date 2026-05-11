@@ -27,21 +27,40 @@ if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
 
 $db = getDB();
 
-$stmt = $db->prepare("
-    INSERT INTO quotes (company, contact_name, email, phone, products_json, message)
-    VALUES (:company, :contact_name, :email, :phone, :products_json, :message)
-");
+try {
+    $stmt = $db->prepare("
+        INSERT INTO quotes (company, contact_name, email, phone, products_json, message)
+        VALUES (:company, :contact_name, :email, :phone, :products_json, :message)
+    ");
 
-$stmt->execute([
-    ':company'       => sanitize($data['company']),
-    ':contact_name'  => sanitize($data['contact_name']),
-    ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
-    ':phone'         => sanitize($data['phone'] ?? ''),
-    ':products_json' => json_encode($data['products'] ?? []),
-    ':message'       => sanitize($data['message'] ?? ''),
-]);
+    $stmt->execute([
+        ':company'       => sanitize($data['company']),
+        ':contact_name'  => sanitize($data['contact_name']),
+        ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
+        ':phone'         => sanitize($data['phone'] ?? ''),
+        ':products_json' => json_encode($data['products'] ?? []),
+        ':message'       => sanitize($data['message'] ?? ''),
+    ]);
 
-$quoteId = (int)$db->lastInsertId();
+    $quoteId = (int)$db->lastInsertId();
+} catch (PDOException $e) {
+    if ($e->getCode() == '42S22') {
+        $stmt = $db->prepare("
+            INSERT INTO quotes (company, contact_name, email, phone, message)
+            VALUES (:company, :contact_name, :email, :phone, :message)
+        ");
+        $stmt->execute([
+            ':company'       => sanitize($data['company']),
+            ':contact_name'  => sanitize($data['contact_name']),
+            ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
+            ':phone'         => sanitize($data['phone'] ?? ''),
+            ':message'       => sanitize($data['message'] ?? ''),
+        ]);
+        $quoteId = (int)$db->lastInsertId();
+    } else {
+        jsonError(500, "Error BD: " . $e->getMessage());
+    }
+}
 
 // Envío de email (opcional — requiere configuración SMTP)
 // sendQuoteEmail($data, $quoteId);

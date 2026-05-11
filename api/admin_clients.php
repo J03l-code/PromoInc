@@ -40,7 +40,7 @@ if ($method === 'GET') {
             u.id, 
             u.name, 
             u.email, 
-            u.phone,
+            COALESCE(u.phone, MAX(o.customer_phone)) as phone,
             u.created_at,
             COUNT(o.id) as total_orders,
             MAX(o.created_at) as last_order_date
