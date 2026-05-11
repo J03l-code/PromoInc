@@ -70,16 +70,6 @@ function getDB(): PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
-
-            // Auto-crear tabla product_prices si no existe para evitar fallos de guardado
-            $pdo->exec("CREATE TABLE IF NOT EXISTS product_prices (
-                id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                product_id INT UNSIGNED NOT NULL,
-                min_qty INT NOT NULL,
-                price DECIMAL(10,2) NOT NULL,
-                FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
-
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
         }
