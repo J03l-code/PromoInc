@@ -74,15 +74,24 @@ try {
         } 
         // Si es un error de PDO y es 42S22 (Column not found)
         else if ($e instanceof PDOException && $code == '42S22') {
+            // Añadir las columnas faltantes una por una (ignorando si ya existen)
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN company VARCHAR(255)"); } catch(\Throwable $ex) {}
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN contact_name VARCHAR(255)"); } catch(\Throwable $ex) {}
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN email VARCHAR(255)"); } catch(\Throwable $ex) {}
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN phone VARCHAR(50)"); } catch(\Throwable $ex) {}
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN message TEXT"); } catch(\Throwable $ex) {}
+            try { $db->exec("ALTER TABLE quotes ADD COLUMN products_json JSON"); } catch(\Throwable $ex) {}
+            
             $stmt = $db->prepare("
-                INSERT INTO quotes (company, contact_name, email, phone, message)
-                VALUES (:company, :contact_name, :email, :phone, :message)
+                INSERT INTO quotes (company, contact_name, email, phone, products_json, message)
+                VALUES (:company, :contact_name, :email, :phone, :products_json, :message)
             ");
             $stmt->execute([
                 ':company'       => sanitize((string)$data['company']),
                 ':contact_name'  => sanitize((string)$data['contact_name']),
                 ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
                 ':phone'         => sanitize((string)($data['phone'] ?? '')),
+                ':products_json' => json_encode($data['products'] ?? []),
                 ':message'       => sanitize((string)($data['message'] ?? '')),
             ]);
             $quoteId = (int)$db->lastInsertId();
@@ -91,7 +100,7 @@ try {
             jsonError(500, "Error Interno: " . $e->getMessage() . " en la linea " . $e->getLine());
         }
     } catch (\Throwable $innerError) {
-        jsonError(500, "Fatal Error de Recuperación: " . $innerError->getMessage());
+        jsonError(500, "Error fatal de la BD: " . $innerError->getMessage());
     }
 }
 
