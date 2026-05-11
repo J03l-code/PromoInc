@@ -12,9 +12,9 @@
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=26.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=26.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=26.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=27.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=27.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=27.0">
 
 </head>
 
@@ -87,7 +87,6 @@
 
   <!-- ═══ HERO SECTION ═══════════════════════════════════════ -->
   <section class="hero-main">
-    <!-- Minimal background -->
     <div class="hero-bg">
       <div class="hero-bg-glow"></div>
       <div class="hero-bg-lines"></div>
@@ -95,7 +94,7 @@
     </div>
 
     <div class="container hero-content">
-      <!-- Left column: Editorial headline -->
+      <!-- Left column: Rotating headline -->
       <div class="hero-left reveal">
         <div class="hero-social-proof">
           <div class="hero-avatars">
@@ -117,22 +116,27 @@
         </div>
 
         <h1 class="hero-headline">
-          Dale identidad<br>
-          a tu marca con <em>merchandising</em>
+          Tu marca en cada<br>
+          <span class="hero-word-rotate">
+            <span class="hero-word active">producto</span>
+            <span class="hero-word">regalo</span>
+            <span class="hero-word">evento</span>
+            <span class="hero-word">detalle</span>
+          </span>
         </h1>
 
         <p class="hero-sub">
-          Artículos promocionales personalizados con tu logo desde 25 unidades.
-          Precios directos de fábrica y entrega a nivel nacional.
+          Artículos promocionales personalizados con tu logo.<br>
+          Desde 25 unidades. Precios directos de fábrica. Entrega nacional.
         </p>
 
         <div class="hero-actions">
           <a href="catalogo.html" class="hero-btn-primary">
-            Ver catálogo completo
+            Explorar catálogo
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
-          <a href="https://wa.me/593XXXXXXXXX" class="hero-btn-outline">
-            Hablar con un asesor
+          <a href="#cotizar" class="hero-btn-outline">
+            Solicitar cotización
           </a>
         </div>
 
@@ -154,41 +158,28 @@
         </div>
       </div>
 
-      <!-- Right column: Category quick-links (StaplesPromo style) -->
-      <div class="hero-cats reveal reveal-delay-2">
-        <p class="hero-cats-label">Explorar por categoría</p>
-        <div class="hero-cats-grid">
-          <a href="catalogo.html?cat=textil" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
-            Textil & Ropa
-          </a>
-          <a href="catalogo.html?cat=tomatodos" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l1 9H7L8 2z"/><path d="M7 11c0 4.97 4.03 9 9 9v0"/><path d="M7 11H4a1 1 0 00-1 1v1a7 7 0 007 7h0"/></svg>
-            Tomatodos & Termos
-          </a>
-          <a href="catalogo.html?cat=tecnologia" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Tecnología
-          </a>
-          <a href="catalogo.html?cat=oficina" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            Bolígrafos & Oficina
-          </a>
-          <a href="catalogo.html?cat=bolsos" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-            Bolsos & Mochilas
-          </a>
-          <a href="catalogo.html?cat=ecologico" class="hero-cat-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Línea Ecológica
-          </a>
+      <!-- Right column: Product images showcase -->
+      <div class="hero-imgs reveal reveal-delay-2">
+        <div class="hero-img-main">
+          <img src="assets/images/hero-products-1.png" alt="Artículos promocionales personalizados — PromoInc">
+          <div class="hero-img-tag">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Personalización con tu logo
+          </div>
         </div>
-        <a href="catalogo.html" class="hero-cats-all">Ver todos los productos →</a>
+        <div class="hero-img-secondary">
+          <img src="assets/images/hero-products-2.png" alt="Ropa corporativa y kit empresarial — PromoInc">
+          <div class="hero-img-tag">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+            Kits corporativos
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Servicios -->
+
   <section id="especialidades" class="section">
     <div class="container">
       <div class="section-header text-center reveal">
