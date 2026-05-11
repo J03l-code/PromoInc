@@ -160,7 +160,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // Check if already logged in
+      // Check if already logged in (skip if we just came from a portal failure)
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('no_redirect')) return;
+
       try {
         const res = await fetch('api/auth_b2b.php?action=me');
         if (res.ok) {
