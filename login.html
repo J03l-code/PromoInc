@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Corporativo | PromoInc</title>
+  <link rel="stylesheet" href="assets/css/main.css?v=2.8">
+  <link rel="stylesheet" href="assets/css/components.css?v=2.8">
+  <style>
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-body);
+      padding: 20px;
+    }
+    .auth-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: var(--shadow-card);
+    }
+    .auth-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .auth-logo img {
+      height: 60px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      transition: var(--duration-fast);
+    }
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+      outline: none;
+    }
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+    }
+    .auth-tab.active {
+      color: var(--accent-cyan);
+      border-bottom-color: var(--accent-cyan);
+    }
+    .alert {
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .alert-error { background: rgba(232, 62, 140, 0.1); color: var(--accent-pink); border: 1px solid rgba(232, 62, 140, 0.2); }
+    .alert-success { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.2); }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <a href="index.html"><img src="assets/images/logo blanco (2).png" alt="PromoInc"></a>
+      </div>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login')">Ingresar</div>
+        <div class="auth-tab" onclick="switchTab('register')">Registrar Empresa</div>
+      </div>
+
+      <div id="alert-box" class="alert"></div>
+
+      <!-- Formulario Login -->
+      <form id="form-login" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Correo Corporativo</label>
+          <input type="email" id="login-email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" id="login-password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión</button>
+      </form>
+
+      <!-- Formulario Registro -->
+      <form id="form-register" style="display: none;" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">Nombre de Empresa</label>
+          <input type="text" id="reg-name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo Corporativo</label>
+          <input type="email" id="reg-email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" id="reg-password" class="form-control" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Crear Cuenta B2B</button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: underline;">Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      if (tab === 'login') {
+        document.getElementById('form-login').style.display = 'block';
+        document.getElementById('form-register').style.display = 'none';
+      } else {
+        document.getElementById('form-login').style.display = 'none';
+        document.getElementById('form-register').style.display = 'block';
+      }
+      document.getElementById('alert-box').style.display = 'none';
+    }
+
+    function showAlert(msg, isError) {
+      const box = document.getElementById('alert-box');
+      box.textContent = msg;
+      box.className = 'alert ' + (isError ? 'alert-error' : 'alert-success');
+      box.style.display = 'block';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Iniciando...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('api/auth_b2b.php?action=login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            email: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value
+          })
+        });
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || 'Error de autenticación');
+        
+        window.location.href = 'portal.html';
+      } catch (err) {
+        showAlert(err.message, true);
+        btn.textContent = 'Iniciar Sesión';
+        btn.disabled = false;
+      }
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Creando cuenta...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('api/auth_b2b.php?action=register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name: document.getElementById('reg-name').value,
+            email: document.getElementById('reg-email').value,
+            password: document.getElementById('reg-password').value
+          })
+        });
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || 'Error al registrar');
+        
+        showAlert('Cuenta creada con éxito. Redirigiendo...', false);
+        setTimeout(() => window.location.href = 'portal.html', 1500);
+      } catch (err) {
+        showAlert(err.message, true);
+        btn.textContent = 'Crear Cuenta B2B';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

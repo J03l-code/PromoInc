@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
   name          VARCHAR(120)     NOT NULL,
   email         VARCHAR(180)     NOT NULL UNIQUE,
   password_hash VARCHAR(255)     NOT NULL,
-  role          ENUM('superadmin','admin','editor') NOT NULL DEFAULT 'editor',
+  role          ENUM('superadmin','admin','editor','client') NOT NULL DEFAULT 'client',
   active        TINYINT(1)       NOT NULL DEFAULT 1,
   last_login    DATETIME         NULL,
   created_at    DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -25,6 +25,17 @@ INSERT IGNORE INTO users (name, email, password_hash, role) VALUES
   ('Administrador', 'admin@promoinc.com',
    '$2y$12$uB6TqJGFkdlHy3sG5tJxouLSRaQOy/fSDjFijNwWZtRjvRYmhJNHm',
    'superadmin');
+
+-- ── LOGOS DE CLIENTES (B2B) ─────────────────────────────────
+CREATE TABLE IF NOT EXISTS user_logos (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id     INT UNSIGNED NOT NULL,
+  filename    VARCHAR(255) NOT NULL,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_user (user_id),
+  CONSTRAINT fk_user_logos FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ── CATEGORÍAS ──────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS categories (

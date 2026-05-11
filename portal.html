@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Portal B2B | PromoInc</title>
+  <link rel="stylesheet" href="assets/css/main.css?v=2.8">
+  <link rel="stylesheet" href="assets/css/components.css?v=2.8">
+  <style>
+    .portal-header {
+      padding: 120px 0 40px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+      margin-top: 40px;
+      margin-bottom: 80px;
+    }
+    .portal-sidebar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      height: fit-content;
+    }
+    .portal-nav-item {
+      display: block;
+      padding: 10px 15px;
+      color: var(--text-muted);
+      border-radius: 8px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: var(--duration-fast);
+    }
+    .portal-nav-item:hover, .portal-nav-item.active {
+      background: rgba(0, 188, 255, 0.1);
+      color: var(--accent-cyan);
+    }
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .logo-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+    .logo-card img {
+      max-width: 100%;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .btn-delete-logo {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(232, 62, 140, 0.2);
+      color: var(--accent-pink);
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .portal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar E-commerce (simplificado para portal) -->
+  <header id="navbar" class="navbar-ecommerce">
+    <div class="navbar-top">
+      <div class="container navbar-top-inner" style="justify-content: space-between;">
+        <a href="index.html" class="navbar-logo">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
+        </a>
+        <div class="navbar-actions-top">
+          <a href="catalogo.html" class="btn btn-outline btn-sm" style="margin-right: 10px;">Ir a la Tienda</a>
+          <button onclick="logout()" class="btn btn-primary btn-sm">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="portal-header">
+    <div class="container">
+      <h1 class="display-2">Bienvenido, <span id="user-name" class="text-cyan">...</span></h1>
+      <p class="text-muted">Gestiona tus archivos de marca y cotizaciones.</p>
+    </div>
+  </div>
+
+  <main class="container portal-grid">
+    <aside class="portal-sidebar">
+      <a class="portal-nav-item active">Mis Logos</a>
+      <a class="portal-nav-item" style="opacity:0.5; cursor:not-allowed;">Historial de Pedidos</a>
+      <a class="portal-nav-item" style="opacity:0.5; cursor:not-allowed;">Mis Datos</a>
+    </aside>
+
+    <section class="portal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-family: var(--font-display); font-size: 1.5rem;">Mis Archivos de Marca</h2>
+        <label for="logo-upload" class="btn btn-primary btn-sm" style="cursor: pointer;">
+          Subir Nuevo Logo
+        </label>
+        <input type="file" id="logo-upload" accept=".png, .svg" style="display:none;" onchange="uploadLogo(event)">
+      </div>
+
+      <p class="text-muted" style="font-size: 0.9rem;">Sube tus logos en formato PNG sin fondo o SVG para usarlos rápidamente en el visualizador 3D de nuestros productos.</p>
+
+      <div class="logo-grid" id="logo-grid">
+        <!-- Logos cargados dinámicamente -->
+        <p style="grid-column: 1/-1; color: var(--text-muted); text-align:center; padding: 40px;">Cargando tus logos...</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Verificar sesión
+        const res = await fetch('api/auth_b2b.php?action=me');
+        if (!res.ok) throw new Error('No auth');
+        const data = await res.json();
+        document.getElementById('user-name').textContent = data.user.name;
+        
+        loadLogos();
+      } catch (err) {
+        window.location.href = 'login.html';
+      }
+    });
+
+    async function logout() {
+      await fetch('api/auth_b2b.php?action=logout');
+      window.location.href = 'index.html';
+    }
+
+    async function loadLogos() {
+      const grid = document.getElementById('logo-grid');
+      try {
+        const res = await fetch('api/user_logos.php');
+        const data = await res.json();
+        
+        if (data.logos.length === 0) {
+          grid.innerHTML = '<p style="grid-column: 1/-1; color: var(--text-muted); text-align:center; padding: 40px; background:var(--bg-surface); border-radius:12px;">Aún no tienes logos guardados. Sube tu primer logo para empezar.</p>';
+          return;
+        }
+
+        grid.innerHTML = data.logos.map(logo => `
+          <div class="logo-card">
+            <button class="btn-delete-logo" onclick="deleteLogo(${logo.id})" title="Eliminar">&times;</button>
+            <img src="assets/images/user_logos/${logo.filename}" alt="Logo">
+            <p style="font-size: 0.75rem; color: var(--text-muted); overflow:hidden; text-overflow:ellipsis;">${logo.filename}</p>
+          </div>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = '<p style="color: red;">Error al cargar logos</p>';
+      }
+    }
+
+    async function uploadLogo(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('logo', file);
+
+      try {
+        // Notificar subiendo
+        const grid = document.getElementById('logo-grid');
+        grid.insertAdjacentHTML('afterbegin', '<div class="logo-card" id="temp-loading"><p>Subiendo...</p></div>');
+
+        const res = await fetch('api/user_logos.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Error al subir');
+        }
+        
+        // Recargar
+        e.target.value = '';
+        loadLogos();
+      } catch (err) {
+        alert(err.message);
+        document.getElementById('temp-loading')?.remove();
+      }
+    }
+
+    async function deleteLogo(id) {
+      if (!confirm('¿Seguro que deseas eliminar este logo?')) return;
+      
+      try {
+        const res = await fetch('api/user_logos.php', {
+          method: 'DELETE',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({id})
+        });
+        
+        if (!res.ok) throw new Error('Error al eliminar');
+        loadLogos();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+  </script>
+</body>
+</html>

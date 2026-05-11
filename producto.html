@@ -123,7 +123,7 @@
             </div>
             <span>Mi carrito</span>
           </a>
-          <a href="#" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);">Iniciar sesión</a>
+          <a href="login.html" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);" id="auth-btn">Mi Portal</a>
           
           <!-- Mobile Menu Toggle -->
           <button id="navbar-toggle" class="navbar-toggle" aria-label="Menu" style="margin-left:0.5rem">
@@ -201,14 +201,28 @@
 
         <div class="detail-grid">
           <div class="product-gallery">
-            <div class="main-image-container" id="main-image">
+            <div class="main-image-container" id="main-image" style="position: relative;">
               ${imgUrl 
                 ? `<img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" onerror="this.parentElement.innerHTML='${svgPlaceholder}'">`
                 : svgPlaceholder
               }
+              <!-- Contenedor del logo overlay (Mockup) -->
+              <div id="mockup-overlay" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); cursor:move; resize:both; overflow:hidden; min-width:50px; min-height:50px; border:1px dashed rgba(0,188,255,0.5); z-index:10; background:transparent; mix-blend-mode: multiply;">
+                 <img id="mockup-img" src="" style="width:100%; height:100%; object-fit:contain; pointer-events:none;">
+              </div>
             </div>
-            <div class="gallery-thumbs">
+            <div class="gallery-thumbs" style="margin-bottom: 20px;">
                <div class="thumb active">${imgUrl ? `<img src="${imgUrl}">` : svgPlaceholder}</div>
+            </div>
+            
+            <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:15px; text-align:center;">
+               <h4 style="font-size:0.9rem; margin-bottom:10px; color:var(--text-primary);">¿Cómo se verá tu marca?</h4>
+               <label for="mockup-upload" class="btn btn-outline btn-sm" style="width:100%; justify-content:center; cursor:pointer;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Subir mi Logo (PNG/SVG)
+               </label>
+               <input type="file" id="mockup-upload" accept=".png, .svg" style="display:none;" onchange="handleMockupUpload(event)">
+               <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Arrastra para mover el logo sobre el producto.</p>
             </div>
           </div>
 
@@ -336,8 +350,60 @@
       };
       schemaScript.textContent = JSON.stringify(schemaData);
       
+      // Mockup Draggable Logic
+      const overlay = document.getElementById('mockup-overlay');
+      let isDragging = false;
+      let startX, startY, initialTop, initialLeft;
+
+      overlay.addEventListener('mousedown', (e) => {
+        const rect = overlay.getBoundingClientRect();
+        if (e.clientX > rect.right - 15 && e.clientY > rect.bottom - 15) return;
+        
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        if (overlay.style.transform.includes('translate')) {
+           overlay.style.top = overlay.offsetTop + 'px';
+           overlay.style.left = overlay.offsetLeft + 'px';
+           overlay.style.transform = 'none';
+        }
+        initialTop = parseInt(overlay.style.top || 0, 10);
+        initialLeft = parseInt(overlay.style.left || 0, 10);
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        overlay.style.top = (initialTop + dy) + 'px';
+        overlay.style.left = (initialLeft + dx) + 'px';
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+      
       calculatePrices();
     }
+
+    window.handleMockupUpload = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+         const overlay = document.getElementById('mockup-overlay');
+         const img = document.getElementById('mockup-img');
+         img.src = event.target.result;
+         overlay.style.display = 'block';
+         overlay.style.top = '50%';
+         overlay.style.left = '50%';
+         overlay.style.transform = 'translate(-50%, -50%)';
+         overlay.style.width = '150px';
+         overlay.style.height = '150px';
+      };
+      reader.readAsDataURL(file);
+    };
 
     function updateQty(delta) {
       const input = document.getElementById('qty-input');
