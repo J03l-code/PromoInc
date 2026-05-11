@@ -154,14 +154,35 @@ async function updateAuthUI() {
       portalBtn.style.border = 'none';
       
       if (user.picture) {
-        portalBtn.innerHTML = `<div class="profile-avatar"><img src="${user.picture}" alt="${user.name}"></div>`;
+        portalBtn.innerHTML = `
+          <div class="profile-avatar-container">
+            <div class="profile-avatar"><img src="${user.picture}" alt="${user.name}"></div>
+            <div class="profile-dropdown">
+              <div class="profile-info">
+                <strong>${user.name}</strong>
+                <span>${user.email}</span>
+              </div>
+              <a href="portal.html" class="dropdown-item">Mi Dashboard</a>
+              <button onclick="logout()" class="dropdown-item logout-btn">Cerrar Sesión</button>
+            </div>
+          </div>`;
       } else {
         portalBtn.innerHTML = `
-          <div class="profile-avatar icon-glow-cyan">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+          <div class="profile-avatar-container">
+            <div class="profile-avatar icon-glow-cyan">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <div class="profile-dropdown">
+              <div class="profile-info">
+                <strong>${user.name}</strong>
+                <span>${user.email}</span>
+              </div>
+              <a href="portal.html" class="dropdown-item">Mi Dashboard</a>
+              <button onclick="logout()" class="dropdown-item logout-btn">Cerrar Sesión</button>
+            </div>
           </div>`;
       }
     } else {
@@ -542,3 +563,15 @@ window.quickAddToCart = async function(event, productId, name, sku, price, image
     openCart();
   }
 };
+
+async function logout() {
+  try {
+    const res = await fetch('api/auth_b2b.php?action=logout', { credentials: 'include' });
+    if (res.ok) {
+      window.location.href = 'login.html';
+    }
+  } catch (err) {
+    console.error('Logout failed', err);
+    window.location.href = 'login.html';
+  }
+}

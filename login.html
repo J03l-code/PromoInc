@@ -133,6 +133,7 @@
 
     async function handleGoogleLogin(response) {
       showAlert('Autenticando...', false);
+      console.log('Google Response received');
       try {
         const res = await fetch('api/google_auth.php', {
           method: 'POST',
@@ -140,11 +141,22 @@
           credentials: 'include',
           body: JSON.stringify({ credential: response.credential })
         });
-        const data = await res.json();
+        
+        const text = await res.text();
+        console.log('Server response:', text);
+        
+        let data;
+        try { data = JSON.parse(text); } catch(e) { throw new Error('Error interno del servidor (Invalid JSON)'); }
+
         if (!res.ok) throw new Error(data.error || 'Error de autenticación');
+        
+        showAlert('¡Éxito! Redirigiendo...', false);
         window.location.href = 'portal.html';
       } catch (err) {
-        showAlert(err.message, true);
+        console.error('Login error:', err);
+        showAlert('Error: ' + err.message, true);
+        // Fallback for visual confirmation
+        alert('Error de inicio de sesión: ' + err.message);
       }
     }
   </script>

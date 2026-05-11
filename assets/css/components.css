@@ -882,3 +882,68 @@
 .icon-glow-cyan {
   color: var(--accent-cyan);
 }
+
+/* ── Profile Dropdown ────────────────────────────────────────── */
+.profile-avatar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 220px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  padding: 15px;
+  margin-top: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s var(--ease-spring);
+  z-index: 1000;
+}
+
+.profile-avatar-container:hover .profile-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.profile-info {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.profile-info strong { display: block; font-size: 0.95rem; color: var(--text-primary); text-align: left; }
+.profile-info span { display: block; font-size: 0.8rem; color: var(--text-muted); text-align: left; }
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--accent-cyan);
+}
+
+.logout-btn:hover {
+  color: #ff4d5e;
+  background: rgba(255, 77, 94, 0.05);
+}
