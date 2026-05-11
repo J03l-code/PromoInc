@@ -5,46 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromoInc | Artículos Promocionales Corporativos de Alto Impacto</title>
-  <meta name="description" content="Expertos en merchandising corporativo de lujo. Importación directa, personalización premium y logística nacional en Ecuador. Potenciamos tu marca con excelencia.">
-  <link rel="canonical" href="https://promoinc.jiyanedesign.com/" />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://promoinc.jiyanedesign.com/">
-  <meta property="og:title" content="PromoInc | Artículos Promocionales Corporativos">
-  <meta property="og:description" content="Merchandising corporativo de lujo y artículos promocionales exclusivos.">
-  <meta property="og:image" content="https://promoinc.jiyanedesign.com/assets/images/logo%20blanco%20(2).png">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://promoinc.jiyanedesign.com/">
-  <meta property="twitter:title" content="PromoInc | Artículos Promocionales Corporativos">
-  <meta property="twitter:description" content="Merchandising corporativo de lujo y artículos promocionales exclusivos.">
-  <meta property="twitter:image" content="https://promoinc.jiyanedesign.com/assets/images/logo%20blanco%20(2).png">
-
+  <meta name="description"
+    content="Plataforma líder en artículos promocionales y corporativos. Regalos empresariales de alta gama, merchandising y productos personalizables.">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        let hasUnregistered = false;
-        for(let registration of registrations) {
-          registration.unregister();
-          hasUnregistered = true;
-        }
-        if (hasUnregistered) {
-          window.location.reload(true);
-        }
-      });
-    }
-  </script>
-
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=2.8">
-  <link rel="stylesheet" href="assets/css/components.css?v=2.8">
-  <link rel="stylesheet" href="assets/css/animations.css?v=1.8">
+  <link rel="stylesheet" href="assets/css/main.css?v=10.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=10.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=10.0">
   <style>
     .hero-bento { padding-top: 150px; }
     @media (max-width: 992px) {
@@ -79,8 +49,8 @@
         </a>
 
         <div class="navbar-search">
-          <input type="text" id="navbar-search-input" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
-          <button type="button" id="btn-navbar-search" aria-label="Botón buscar">
+          <input type="text" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
+          <button type="button" aria-label="Botón buscar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
         </div>
@@ -104,7 +74,17 @@
     <div class="navbar-bottom">
       <div class="container">
         <nav class="nav-categories">
-          <!-- Dinámico -->
+          <a href="#">Día de la madre <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Oficina <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Tomatodos y Jarros <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Textil <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Bolsos <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Hogar <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Llaveros</a>
+          <a href="#">Tecnología <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Ecológicos <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#">Más categorías <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <a href="#" class="nav-link-ofertas">Ofertas</a>
         </nav>
       </div>
     </div>
@@ -285,7 +265,7 @@
     <div class="container">
       <p class="text-center text-muted"
         style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; font-weight: 600;">
-        Confían en nuestra excelencia</p>
+        Confían en nuestra calidad</p>
       
       <div class="logos-marquee">
         <div class="logos-track">
@@ -328,9 +308,12 @@
         <a href="catalogo.html" class="btn btn-secondary reveal">Ver Todo el Catálogo</a>
       </div>
 
-      <div class="products-filter-bar reveal" id="featured-filter-bar">
-        <button class="filter-btn active" data-cat="all">Todos</button>
-        <!-- Dinámico vía main.js -->
+      <div class="products-filter-bar reveal">
+        <button class="filter-btn active">Todos</button>
+        <button class="filter-btn">Tecnología</button>
+        <button class="filter-btn">Escritura</button>
+        <button class="filter-btn">Tomatodos</button>
+        <button class="filter-btn">Ecología</button>
       </div>
 
       <!-- El contenedor se llenará vía main.js -->
@@ -431,7 +414,8 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; margin-bottom: 1.5rem;">
+          <div style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: #fff;">Promo<span
+              style="color: var(--accent-pink)">Inc</span>.</div>
           <p>Potenciamos la presencia de tu marca a través de artículos promocionales corporativos de la más alta
             calidad. Importación directa y producción a medida.</p>
           <div class="footer-social">
@@ -522,7 +506,7 @@
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=2.4"></script>
+  <script src="assets/js/main.js?v=10.0"></script>
 </body>
 
 </html>
