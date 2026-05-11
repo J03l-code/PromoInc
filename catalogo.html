@@ -84,13 +84,38 @@
       .catalog-layout {
         grid-template-columns: 1fr;
       }
-
       .sidebar-filters {
         display: none;
       }
-
-      /* Mobile filters could be a drawer */
     }
+
+    /* ── CART SIDEBAR ──────────────────────────────── */
+    .cart-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:2000; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+    .cart-overlay.open { opacity:1; pointer-events:all; }
+    .cart-panel { position:fixed; top:0; right:-420px; width:420px; max-width:100vw; height:100%; background:var(--bg-surface); border-left:1px solid var(--border); z-index:2001; display:flex; flex-direction:column; transition:right 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:-20px 0 60px rgba(0,0,0,0.4); }
+    .cart-panel.open { right:0; }
+    .cart-panel-header { padding:24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .cart-panel-header h3 { font-family:var(--font-display); font-size:1.3rem; }
+    .cart-close-btn { width:36px; height:36px; border:1px solid var(--border); border-radius:8px; background:transparent; color:var(--text-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--transition); }
+    .cart-close-btn:hover { background:var(--bg-body); color:var(--text-primary); }
+    .cart-items-list { flex:1; overflow-y:auto; padding:20px; }
+    .cart-item { display:flex; gap:15px; align-items:flex-start; padding:15px 0; border-bottom:1px solid var(--border); }
+    .cart-item-img { width:70px; height:70px; border-radius:10px; background:var(--bg-body); border:1px solid var(--border); object-fit:contain; flex-shrink:0; padding:5px; }
+    .cart-item-info { flex:1; }
+    .cart-item-name { font-weight:600; font-size:0.95rem; margin-bottom:4px; }
+    .cart-item-sku { color:var(--text-muted); font-size:0.8rem; margin-bottom:6px; }
+    .cart-item-price { color:var(--accent-cyan); font-weight:700; }
+    .cart-item-qty { font-size:0.82rem; color:var(--text-muted); }
+    .cart-item-remove { background:none; border:none; color:var(--text-muted); cursor:pointer; padding:4px; border-radius:6px; transition:var(--transition); }
+    .cart-item-remove:hover { color:var(--accent-pink); background:rgba(232,62,140,0.1); }
+    .cart-panel-footer { padding:20px 24px; border-top:1px solid var(--border); background:var(--bg-body); }
+    .cart-total-row { display:flex; justify-content:space-between; margin-bottom:15px; }
+    .cart-total-label { color:var(--text-muted); }
+    .cart-total-value { font-weight:800; font-size:1.4rem; color:var(--accent-cyan); }
+    .cart-count-badge { position:absolute; top:-6px; right:-6px; background:var(--accent-cyan); color:#000; border-radius:50%; width:18px; height:18px; font-size:0.7rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .nav-action-btn { position:relative; }
+    .cart-empty-msg { text-align:center; padding:60px 20px; color:var(--text-muted); }
+    .cart-login-notice { background:rgba(0,188,255,0.1); border:1px solid rgba(0,188,255,0.2); border-radius:10px; padding:12px 15px; font-size:0.85rem; color:var(--accent-cyan); margin-bottom:15px; text-align:center; }
   </style>
 </head>
 
@@ -112,12 +137,18 @@
           </button>
         </div>
         <div class="navbar-actions-top">
-          <a href="#" class="nav-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg><span>Carrito</span></a>
+          <a href="#" class="nav-action-btn" id="cart-btn" onclick="event.preventDefault(); openCart()" style="cursor:pointer;">
+            <div style="position:relative;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              <span id="cart-badge" class="cart-count-badge" style="display:none;"></span>
+            </div>
+            <span>Carrito</span>
+          </a>
+          <a href="login.html" id="auth-btn" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);">Mi Portal</a>
           <button id="navbar-toggle" class="navbar-toggle"><span></span><span></span><span></span></button>
         </div>
       </div>
@@ -130,6 +161,34 @@
       </div>
     </div>
   </header>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-panel-header">
+      <h3>🛒 Mi Carrito</h3>
+      <button class="cart-close-btn" onclick="closeCart()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items-list" id="cart-items-list">
+      <div class="cart-empty-msg">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:15px;opacity:0.3"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="cart-panel-footer" id="cart-footer" style="display:none">
+      <div id="cart-login-notice" class="cart-login-notice" style="display:none">
+        <a href="login.html" style="color:var(--accent-cyan);font-weight:600;">Inicia sesión</a> para guardar permanentemente.
+      </div>
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total estimado</span>
+        <span class="cart-total-value" id="cart-total-value">$0.00</span>
+      </div>
+      <a href="#" id="cart-wa-btn" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">Cotizar todo vía WhatsApp</a>
+      <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline" style="width:100%;justify-content:center;font-size:0.85rem;">Vaciar carrito</button>
+    </div>
+  </div>
 
   <main class="container catalog-header">
     <div class="reveal">
@@ -279,7 +338,63 @@
     </svg>
   </a>
 
+  <script src="assets/js/cart.js?v=1.0"></script>
   <script src="assets/js/main.js?v=2.3"></script>
+  <script>
+    function openCart() {
+      document.getElementById('cart-panel').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cart-panel').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function renderCart(items) {
+      const list = document.getElementById('cart-items-list');
+      const footer = document.getElementById('cart-footer');
+      const badge = document.getElementById('cart-badge');
+      const count = CartManager.getCount();
+      if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+      if (!items || items.length === 0) {
+        list.innerHTML = '<div class="cart-empty-msg"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:15px;opacity:0.3"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Tu carrito está vacío</p></div>';
+        footer.style.display = 'none'; return;
+      }
+      list.innerHTML = items.map(item => {
+        const imgSrc = item.image_webp ? `assets/images/${item.image_webp}` : '';
+        const subtotal = (item.unit_price * item.quantity).toFixed(2);
+        return `<div class="cart-item">
+          ${imgSrc ? `<img class="cart-item-img" src="${imgSrc}" alt="${item.name}">` : '<div class="cart-item-img"></div>'}
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-sku">SKU: ${item.sku}</div>
+            <div class="cart-item-qty">${item.quantity} × $${item.unit_price.toFixed(2)}</div>
+            <div class="cart-item-price">$${subtotal}</div>
+          </div>
+          <button class="cart-item-remove" onclick="CartManager.removeItem(${item.product_id}).then(renderCart)">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>`;
+      }).join('');
+      footer.style.display = 'block';
+      document.getElementById('cart-total-value').textContent = '$' + CartManager.getTotal().toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+      document.getElementById('cart-login-notice').style.display = CartManager.isLoggedIn() ? 'none' : 'block';
+      const waNumber = '593989398005';
+      document.getElementById('cart-wa-btn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola PromoInc, deseo cotizar:\n' + items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n') + `\n\nTotal: $${CartManager.getTotal().toFixed(2)}`)}` ;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await CartManager.init(renderCart);
+      // Smart auth button
+      try {
+        const res = await fetch('api/auth_b2b.php?action=me');
+        const btn = document.getElementById('auth-btn');
+        if (res.ok) { btn.href = 'portal.html'; btn.textContent = 'Mi Portal'; }
+        else { btn.href = 'login.html'; btn.textContent = 'Iniciar Sesión'; }
+      } catch { /* keep default */ }
+    });
+  </script>
 </body>
 
 </html>

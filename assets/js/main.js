@@ -368,12 +368,30 @@ function renderProducts(grid, products, append = false) {
           ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
           ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between" style="gap: 8px;">
           <div>
             <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
             <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
-          <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
+          <div style="display:flex; gap:6px; align-items:center;" onclick="event.stopPropagation()">
+            <button
+              title="Agregar al carrito"
+              onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${parseFloat(p.price_from||0).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
+              style="
+                width:36px; height:36px; border-radius:8px; border: none; cursor:pointer;
+                background: linear-gradient(135deg, #e83e8c, #c0185a);
+                color: #fff; display:flex; align-items:center; justify-content:center;
+                box-shadow: 0 4px 15px rgba(232,62,140,0.4);
+                transition: transform 0.15s, box-shadow 0.15s;
+                flex-shrink: 0;
+              "
+              onmouseenter="this.style.transform='scale(1.12)'; this.style.boxShadow='0 6px 20px rgba(232,62,140,0.6)'"
+              onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(232,62,140,0.4)'"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </button>
+            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
+          </div>
         </div>
       </div>
     </article>`;
@@ -388,3 +406,42 @@ function renderProducts(grid, products, append = false) {
   }, { threshold: 0.1 });
   grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
+
+/* ── Quick Add to Cart (from product cards) ──────────────── */
+window.quickAddToCart = async function(event, productId, name, sku, price, imageWebp, minQty) {
+  event.stopPropagation();
+  const btn = event.currentTarget;
+
+  // Animate button
+  btn.style.transform = 'scale(0.85)';
+  btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+  setTimeout(() => {
+    btn.style.transform = 'scale(1)';
+    btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
+  }, 1200);
+
+  if (typeof CartManager === 'undefined') {
+    // Fallback: redirect to product page
+    window.location.href = `producto.html?id=${productId}&v=2.8`;
+    return;
+  }
+
+  await CartManager.addItem({
+    product_id: productId,
+    name: name,
+    sku: sku,
+    quantity: parseInt(minQty),
+    unit_price: parseFloat(price),
+    image_webp: imageWebp,
+    min_quantity: parseInt(minQty)
+  });
+
+  // Trigger re-render if renderCart exists on this page
+  if (typeof renderCart === 'function') {
+    renderCart(CartManager.getItems());
+  }
+  // Open cart if openCart exists
+  if (typeof openCart === 'function') {
+    openCart();
+  }
+};
