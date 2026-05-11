@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('page-loader');
   if (loader) setTimeout(() => loader.classList.add('hidden'), 1400);
 
+  // Hero word rotation
+  const heroWords = document.querySelectorAll('.hero-word');
+  if (heroWords.length > 1) {
+    let currentWord = 0;
+    setInterval(() => {
+      heroWords[currentWord].classList.remove('active');
+      currentWord = (currentWord + 1) % heroWords.length;
+      heroWords[currentWord].classList.add('active');
+    }, 2500);
+  }
+
   // Navbar scroll
   const navbar = document.getElementById('navbar');
   const onScroll = () => {

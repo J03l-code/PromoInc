@@ -13,14 +13,9 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css?v=21.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=24.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=25.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=21.0">
-  <style>
-    .hero-bento { padding-top: 150px; }
-    @media (max-width: 992px) {
-      .hero-bento { padding-top: 220px; }
-    }
-  </style>
+
 </head>
 
 <body class="hovering">
@@ -90,71 +85,86 @@
     </div>
   </header>
 
-  <!-- Hero Bento Section -->
-  <section class="hero-bento container section">
-    <div class="bento-grid">
-      
-      <div class="bento-item bento-img-1 reveal">
-        <!-- Placeholder para la libreta -->
-        <div class="placeholder-img" style="background:#2C3034">
-          <span style="color:#555">Imagen Libreta</span>
-        </div>
-      </div>
-      
-      <div class="bento-item bento-img-2 reveal reveal-delay-1">
-        <!-- Placeholder multi-productos verdes -->
-        <div class="placeholder-img" style="background:#2C3034">
-          <span style="color:#555">Imagen Set Oficina</span>
-        </div>
-      </div>
-      
-      <div class="bento-item bento-img-tall reveal reveal-delay-2">
-        <!-- Placeholder termo central -->
-        <div class="placeholder-img" style="background:#2C3034">
-          <span style="color:#555">Imagen Termo "Tu logo"</span>
-        </div>
-      </div>
-
-      <div class="bento-item bento-text reveal reveal-delay-3">
-        <h1 class="display-2" style="margin-bottom:1rem">Así se compra <span class="text-cyan">merchandising</span></h1>
-        <p style="margin-bottom:2rem; font-size:1.05rem; color:var(--text-muted);">Explora productos, revisa precios, compra en minutos o coordina con un asesor si lo necesitas, todo en un solo lugar.</p>
-        <a href="catalogo.html" class="btn btn-primary btn-lg" style="background-color: var(--accent-cyan); color: #fff; width: fit-content;">Explorar catálogo</a>
-      </div>
-
-      <div class="bento-item bento-promo reveal reveal-delay-4">
-        <div class="placeholder-img" style="background:#2C3034"><span style="color:#555">Día del padre</span></div>
-        <div class="bento-badge" style="background:#0F3460">Día del padre</div>
-      </div>
-
-      <div class="bento-item bento-promo reveal reveal-delay-5">
-        <div class="placeholder-img" style="background:#2C3034"><span style="color:#555">Día de la madre</span></div>
-        <div class="bento-badge" style="background:#E83E8C">Día de la madre</div>
-      </div>
-
-      <div class="bento-item bento-promo reveal reveal-delay-6">
-        <div class="placeholder-img" style="background:#2C3034"><span style="color:#555">Mundial 2026</span></div>
-        <div class="bento-badge" style="background:#FFC107; color:#212529">Mundial 2026</div>
-      </div>
-
+  <!-- ═══ HERO SECTION ═══════════════════════════════════════ -->
+  <section class="hero-main">
+    <!-- Animated background -->
+    <div class="hero-bg">
+      <div class="hero-gradient-orb hero-orb-1"></div>
+      <div class="hero-gradient-orb hero-orb-2"></div>
+      <div class="hero-gradient-orb hero-orb-3"></div>
+      <div class="hero-grid-overlay"></div>
     </div>
 
-    <!-- Features Row -->
-    <div class="features-row reveal reveal-delay-6">
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <span>Stock en tiempo real</span>
+    <div class="container hero-content">
+      <div class="hero-badge reveal">
+        <span class="hero-badge-dot"></span>
+        Más de 500 productos disponibles
       </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-        <span>Descuentos por volumen</span>
+
+      <h1 class="hero-headline reveal">
+        Tu marca en cada<br>
+        <span class="hero-word-rotate">
+          <span class="hero-word active">producto</span>
+          <span class="hero-word">regalo</span>
+          <span class="hero-word">evento</span>
+          <span class="hero-word">detalle</span>
+        </span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Artículos promocionales personalizados con tu logo.<br class="hide-mobile">
+        Desde 25 unidades. Precios directos de fábrica. Entrega nacional.
+      </p>
+
+      <div class="hero-actions reveal">
+        <a href="catalogo.html" class="hero-btn-primary">
+          Explorar catálogo
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#cotizar" class="hero-btn-outline">
+          Solicitar cotización
+        </a>
       </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        <span>Asesoría personalizada</span>
+
+      <div class="hero-stats reveal">
+        <div class="hero-stat">
+          <span class="hero-stat-num">12+</span>
+          <span class="hero-stat-label">Años de experiencia</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">500+</span>
+          <span class="hero-stat-label">Productos en catálogo</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">2k+</span>
+          <span class="hero-stat-label">Empresas confían en nosotros</span>
+        </div>
       </div>
-      <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span>Entregas a nivel nacional</span>
+    </div>
+
+    <!-- Features bar -->
+    <div class="hero-features-bar">
+      <div class="container">
+        <div class="hero-features-inner">
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>Stock en tiempo real</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+            <span>Descuentos por volumen</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <span>Asesoría personalizada</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Entrega a nivel nacional</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -477,7 +487,7 @@
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=24.0"></script>
+  <script src="assets/js/main.js?v=25.0"></script>
 </body>
 
 </html>
