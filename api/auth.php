@@ -70,12 +70,14 @@ if ($method === 'POST') {
         $db->prepare("UPDATE users SET last_login = NOW() WHERE id = ?")
            ->execute([$user['id']]);
 
-        // Crear sesión
+        // Re-open session to write (was closed in config.php to prevent 504)
+        session_start();
         session_regenerate_id(true);
         $_SESSION['user_id']    = $user['id'];
         $_SESSION['user_name']  = $user['name'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_role']  = $user['role'];
+        session_write_close();
 
         jsonSuccess([
             'loggedIn' => true,

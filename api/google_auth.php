@@ -58,11 +58,12 @@ try {
         $db->prepare("UPDATE users SET last_login = NOW() WHERE id = ?")->execute([$userId]);
     }
     
-    // Iniciar sesión
+    // Re-open session to write (it was closed immediately in config.php)
+    session_start();
     session_regenerate_id(true);
-    $_SESSION['user_id'] = $userId;
-    $_SESSION['user_role'] = $userRole;
-    $_SESSION['user_name'] = $name;
+    $_SESSION['user_id']      = $userId;
+    $_SESSION['user_role']    = $userRole;
+    $_SESSION['user_name']    = $name;
     $_SESSION['user_picture'] = $payload['picture'] ?? '';
     session_write_close();
     
