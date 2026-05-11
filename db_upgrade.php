@@ -37,6 +37,20 @@ try {
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
     echo "Tabla 'orders' creada o verificada.<br>";
+    
+    // Crear tabla quotes
+    $db->exec("CREATE TABLE IF NOT EXISTS quotes (
+        id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        company      VARCHAR(255) NOT NULL,
+        contact_name VARCHAR(255) NOT NULL,
+        email        VARCHAR(255) NOT NULL,
+        phone        VARCHAR(50),
+        message      TEXT,
+        products_json JSON,
+        status       ENUM('new','read','responded','closed') DEFAULT 'new',
+        created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+    echo "Tabla 'quotes' creada o verificada.<br>";
 
     echo "<h2 style='color:green'>Migración completada exitosamente!</h2>";
 
