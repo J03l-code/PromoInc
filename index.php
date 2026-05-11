@@ -518,7 +518,7 @@
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=22.0"></script>
+  <script src="assets/js/main.js?v=24.0"></script>
 </body>
 
 </html>
