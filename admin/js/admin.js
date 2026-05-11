@@ -815,6 +815,10 @@ async function loadClients() {
       </td>
     </tr>
   `).join('');
+  } catch (err) {
+    console.error(err);
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color:var(--accent-pink)">Error: ${err.message}</td></tr>`;
+  }
 }
 
 async function viewClient(id) {
@@ -842,10 +846,6 @@ async function viewClient(id) {
   }
   
   openModal('modal-client');
-  } catch (err) {
-    console.error(err);
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color:var(--accent-pink)">Error: ${err.message}</td></tr>`;
-  }
 }
 
 // ── CONFIGURACIÓN ─────────────────────────────────────────────
