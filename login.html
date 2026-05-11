@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
       background: var(--bg-body);
       padding: 20px;
     }
+
     .auth-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
@@ -25,23 +27,28 @@
       max-width: 450px;
       box-shadow: var(--shadow-card);
     }
+
     .auth-logo {
       display: flex;
       justify-content: center;
       margin-bottom: 30px;
     }
+
     .auth-logo img {
       height: 60px;
     }
+
     .form-group {
       margin-bottom: 20px;
     }
+
     .form-label {
       display: block;
       margin-bottom: 8px;
       color: var(--text-muted);
       font-size: 0.9rem;
     }
+
     .form-control {
       width: 100%;
       padding: 12px 15px;
@@ -51,15 +58,18 @@
       color: var(--text-primary);
       transition: var(--duration-fast);
     }
+
     .form-control:focus {
       border-color: var(--accent-cyan);
       outline: none;
     }
+
     .auth-tabs {
       display: flex;
       margin-bottom: 20px;
       border-bottom: 1px solid var(--border);
     }
+
     .auth-tab {
       flex: 1;
       text-align: center;
@@ -68,10 +78,12 @@
       color: var(--text-muted);
       border-bottom: 2px solid transparent;
     }
+
     .auth-tab.active {
       color: var(--accent-cyan);
       border-bottom-color: var(--accent-cyan);
     }
+
     .alert {
       padding: 10px 15px;
       border-radius: 8px;
@@ -79,17 +91,28 @@
       font-size: 0.9rem;
       display: none;
     }
-    .alert-error { background: rgba(232, 62, 140, 0.1); color: var(--accent-pink); border: 1px solid rgba(232, 62, 140, 0.2); }
-    .alert-success { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.2); }
+
+    .alert-error {
+      background: rgba(232, 62, 140, 0.1);
+      color: var(--accent-pink);
+      border: 1px solid rgba(232, 62, 140, 0.2);
+    }
+
+    .alert-success {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+    }
   </style>
 </head>
+
 <body>
   <div class="auth-container">
     <div class="auth-card">
       <div class="auth-logo">
         <a href="index.html"><img src="assets/images/logo blanco (2).png" alt="PromoInc"></a>
       </div>
-      
+
       <div class="auth-tabs">
         <div class="auth-tab active" onclick="switchTab('login')">Ingresar a B2B</div>
         <div class="auth-tab" onclick="switchTab('google')">Usuarios</div>
@@ -99,7 +122,8 @@
 
       <!-- Formulario Login B2B -->
       <form id="form-login" onsubmit="handleLogin(event)">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Acceso exclusivo para empresas registradas por el administrador.</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Acceso
+          exclusivo para empresas registradas por el administrador.</p>
         <div class="form-group">
           <label class="form-label">Correo Corporativo</label>
           <input type="email" id="login-email" class="form-control" required>
@@ -108,33 +132,28 @@
           <label class="form-label">Contraseña</label>
           <input type="password" id="login-password" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión B2B</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión
+          B2B</button>
       </form>
 
       <!-- Google Login -->
       <div id="form-google" style="display: none; text-align: center;">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Continúa con tu cuenta de Google para guardar tus cotizaciones y productos favoritos.</p>
-        
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Continúa con tu cuenta de Google
+          para guardar tus cotizaciones y productos favoritos.</p>
+
         <!-- Contenedor del botón de Google -->
-        <div id="g_id_onload"
-             data-client_id="INSERTE_SU_CLIENT_ID_AQUI.apps.googleusercontent.com"
-             data-context="signin"
-             data-ux_mode="popup"
-             data-callback="handleGoogleLogin"
-             data-auto_prompt="false">
+        <div id="g_id_onload" data-client_id="360954059404-4gr9qhvao165puul959ckve1trqes62f.apps.googleusercontent.com"
+          data-context="signin" data-ux_mode="popup" data-callback="handleGoogleLogin" data-auto_prompt="false">
         </div>
-        <div class="g_id_signin"
-             data-type="standard"
-             data-shape="rectangular"
-             data-theme="outline"
-             data-text="continue_with"
-             data-size="large"
-             data-logo_alignment="left" style="display:flex; justify-content:center;">
+        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+          data-text="continue_with" data-size="large" data-logo_alignment="left"
+          style="display:flex; justify-content:center;">
         </div>
       </div>
-      
+
       <div style="text-align: center; margin-top: 20px;">
-        <a href="index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: underline;">Volver a la tienda</a>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: underline;">Volver a
+          la tienda</a>
       </div>
     </div>
   </div>
@@ -143,7 +162,7 @@
     function switchTab(tab) {
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
       event.target.classList.add('active');
-      
+
       if (tab === 'login') {
         document.getElementById('form-login').style.display = 'block';
         document.getElementById('form-google').style.display = 'none';
@@ -170,16 +189,16 @@
       try {
         const res = await fetch('api/auth_b2b.php?action=login', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: document.getElementById('login-email').value,
             password: document.getElementById('login-password').value
           })
         });
         const data = await res.json();
-        
+
         if (!res.ok) throw new Error(data.error || 'Error de autenticación');
-        
+
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
@@ -193,14 +212,14 @@
       try {
         const res = await fetch('api/google_auth.php', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ credential: response.credential })
         });
-        
+
         const data = await res.json();
-        
+
         if (!res.ok) throw new Error(data.error || 'Error al autenticar con Google');
-        
+
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
@@ -208,4 +227,5 @@
     }
   </script>
 </body>
+
 </html>
