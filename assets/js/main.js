@@ -289,6 +289,14 @@ async function loadDynamicCategories() {
         </div>
       `).join('') + '<a href="#" class="nav-link-ofertas">Ofertas</a>';
 
+      // Categorías en Footer
+      const footerNav = document.getElementById('footer-categories');
+      if (footerNav) {
+        footerNav.innerHTML = json.data.map(cat => `
+          <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
+        `).join('') + `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
+      }
+
       // Categorías en Sidebar de Catálogo
       const filterList = document.getElementById('filter-categories-list');
       if (filterList) {
