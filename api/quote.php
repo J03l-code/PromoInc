@@ -44,7 +44,35 @@ try {
 
     $quoteId = (int)$db->lastInsertId();
 } catch (PDOException $e) {
-    if ($e->getCode() == '42S22') {
+    $code = $e->getCode();
+    
+    // 42S02: Base table or view not found
+    if ($code == '42S02') {
+        $db->exec("CREATE TABLE IF NOT EXISTS quotes (
+            id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            company      VARCHAR(255) NOT NULL,
+            contact_name VARCHAR(255) NOT NULL,
+            email        VARCHAR(255) NOT NULL,
+            phone        VARCHAR(50),
+            message      TEXT,
+            products_json JSON,
+            status       ENUM('new','read','responded','closed') DEFAULT 'new',
+            created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+        
+        // Re-intentar la inserción ahora que la tabla existe
+        $stmt->execute([
+            ':company'       => sanitize($data['company']),
+            ':contact_name'  => sanitize($data['contact_name']),
+            ':email'         => filter_var($data['email'], FILTER_SANITIZE_EMAIL),
+            ':phone'         => sanitize($data['phone'] ?? ''),
+            ':products_json' => json_encode($data['products'] ?? []),
+            ':message'       => sanitize($data['message'] ?? ''),
+        ]);
+        $quoteId = (int)$db->lastInsertId();
+    } 
+    // 42S22: Column not found
+    else if ($code == '42S22') {
         $stmt = $db->prepare("
             INSERT INTO quotes (company, contact_name, email, phone, message)
             VALUES (:company, :contact_name, :email, :phone, :message)
@@ -58,7 +86,7 @@ try {
         ]);
         $quoteId = (int)$db->lastInsertId();
     } else {
-        jsonError(500, "Error BD: " . $e->getMessage());
+        jsonError(500, "Error BD: " . mb_convert_encoding($e->getMessage(), 'UTF-8', 'auto'));
     }
 }
 
