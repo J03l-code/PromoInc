@@ -27,9 +27,15 @@ define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5 MB
 define('WEBP_QUALITY', 85);
 
 // ── CORS (ajustar en producción al dominio real) ──────────────
-header('Access-Control-Allow-Origin: *');
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (!$origin && isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    $origin = "$protocol://" . $_SERVER['HTTP_HOST'];
+}
+header("Access-Control-Allow-Origin: $origin");
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

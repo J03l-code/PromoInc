@@ -165,7 +165,7 @@
       if (params.has('no_redirect')) return;
 
       try {
-        const res = await fetch('api/auth_b2b.php?action=me');
+        const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
         if (res.ok) {
           window.location.href = 'portal.html';
         }
@@ -208,6 +208,8 @@
         const res = await fetch('api/auth_b2b.php?action=login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          cache: 'no-cache',
           body: JSON.stringify({
             email: document.getElementById('login-email').value,
             password: document.getElementById('login-password').value
@@ -232,6 +234,7 @@
         const res = await fetch('api/google_auth.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({ credential: response.credential })
         });
 

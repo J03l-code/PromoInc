@@ -142,7 +142,7 @@ async function updateAuthUI() {
   if (!portalBtn) return;
   
   try {
-    const res = await fetch('api/auth_b2b.php?action=me');
+    const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
     if (res.ok) {
       const data = await res.json();
       portalBtn.href = 'portal.html';

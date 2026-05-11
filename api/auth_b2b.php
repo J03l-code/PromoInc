@@ -67,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     
     if ($action === 'me') {
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Pragma: no-cache');
         if (isset($_SESSION['user_id'])) {
             $db = getDB();
             $stmt = $db->prepare("SELECT id, name, email, role, last_login FROM users WHERE id = ?");

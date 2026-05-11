@@ -13,7 +13,7 @@ const CartManager = (() => {
   async function init(onChangeCallback) {
     _onChangeCallback = onChangeCallback;
     try {
-      const res = await fetch('api/auth_b2b.php?action=me');
+      const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
       if (res.ok) {
         _isLoggedIn = true;
         await _loadFromServer();

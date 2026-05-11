@@ -275,7 +275,7 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        const res = await fetch('api/auth_b2b.php?action=me');
+        const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
         if (!res.ok) throw new Error('No auth');
         const data = await res.json();
         currentUser = data.user;
