@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Portal B2B | PromoInc</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=10.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=10.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=11.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=11.0">
   <style>
     body { background: var(--bg-body); }
     .portal-header {
@@ -278,7 +278,6 @@
         const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
         if (!res.ok) throw new Error('No auth');
         const data = await res.json();
-        // El helper jsonSuccess envuelve todo en una propiedad 'data'
         currentUser = data.data.user;
 
         document.getElementById('user-name').textContent = currentUser.name;
@@ -371,6 +370,7 @@
 
     async function logout() {
       await fetch('api/auth_b2b.php?action=logout');
+      localStorage.removeItem('cart_items'); // Limpiar local también
       window.location.href = 'index.php';
     }
 
@@ -380,13 +380,14 @@
       try {
         const res = await fetch('api/user_logos.php');
         const data = await res.json();
+        const logos = data.data.logos || [];
 
-        if (!data.logos || data.logos.length === 0) {
+        if (logos.length === 0) {
           grid.innerHTML = '<p style="grid-column:1/-1; color:var(--text-muted); text-align:center; padding:40px;">Aún no tienes logos. Sube tu primer logo.</p>';
           return;
         }
 
-        grid.innerHTML = data.logos.map(logo => `
+        grid.innerHTML = logos.map(logo => `
           <div class="logo-card">
             <button class="btn-delete-logo" onclick="deleteLogo(${logo.id})" title="Eliminar">×</button>
             <img src="assets/images/user_logos/${logo.filename}" alt="Logo">

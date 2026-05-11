@@ -16,7 +16,18 @@ const CartManager = (() => {
       const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
       if (res.ok) {
         _isLoggedIn = true;
-        await _loadFromServer();
+        const localItems = JSON.parse(localStorage.getItem('cart_items') || '[]');
+        if (localItems.length > 0) {
+          await _loadFromServer();
+          if (_items.length === 0) {
+            for (const item of localItems) {
+              await addItem(item);
+            }
+            localStorage.removeItem('cart_items');
+          }
+        } else {
+          await _loadFromServer();
+        }
       } else {
         _isLoggedIn = false;
         _loadFromLocal();
