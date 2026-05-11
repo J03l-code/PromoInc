@@ -269,7 +269,7 @@
     </div>
   </main>
 
-  <script src="assets/js/cart.js?v=10.0"></script>
+  <script src="assets/js/cart.js?v=11.0"></script>
   <script>
     let currentUser = null;
 
@@ -356,15 +356,22 @@
       document.getElementById('portal-cart-total').textContent =
         `$${total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
 
-      // Obtener WhatsApp dinámico
+      // Obtener WhatsApp dinámico (con fallback)
+      const defaultWA = '593989398005';
+      const items = CartManager.getItems();
+      const txt = `Hola PromoInc, deseo cotizar mi pedido:\n${items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${total.toFixed(2)}`;
+      const waBtn = document.getElementById('portal-wa-btn');
+      
+      waBtn.href = `https://wa.me/${defaultWA}?text=${encodeURIComponent(txt)}`;
+
       fetch('api/public_settings.php?key=whatsapp_number')
         .then(r => r.json())
         .then(data => {
-           const waNumber = data.data.value || '593989398005';
-           const items = CartManager.getItems();
-           const txt = `Hola PromoInc, deseo cotizar mi pedido:\n${items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${total.toFixed(2)}`;
-           document.getElementById('portal-wa-btn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(txt)}`;
-        });
+           if (data.success && data.data.value) {
+             waBtn.href = `https://wa.me/${data.data.value}?text=${encodeURIComponent(txt)}`;
+           }
+        })
+        .catch(err => console.warn('Usando WhatsApp por defecto', err));
     }
 
     async function clearPortalCart() {
