@@ -22,8 +22,14 @@
 
     @media (max-width: 992px) {
       .catalog-header { padding-top: 240px; }
+      .catalog-header-content { text-align: center; padding-left: 0; }
       .catalog-layout { grid-template-columns: 1fr; gap: 30px; }
       .sidebar-filters { position: static; margin-bottom: 20px; }
+    }
+
+    .catalog-header-content {
+      text-align: left;
+      padding-left: 320px;
     }
 
     .catalog-layout {
@@ -191,7 +197,7 @@
   </div>
 
   <main class="container catalog-header">
-    <div class="reveal" style="text-align: center;">
+    <div class="reveal catalog-header-content">
       <h1 class="hero-headline" style="font-size: clamp(2.5rem, 5vw, 4rem);">
         Aquí encuentras todo:
         <span class="hero-word-rotate" style="min-width: 320px; text-align: left;">
