@@ -1079,6 +1079,14 @@
   color: #ff4d5e; font-size: 0.88rem;
 }
 
+/* Saved data notice */
+.co-saved-notice {
+  background: rgba(37,211,102,0.08);
+  border: 1px solid rgba(37,211,102,0.25);
+  border-radius: 10px; padding: 11px 16px;
+  color: #25d366; font-size: 0.85rem;
+}
+
 /* Footer */
 .co-footer {
   border-top: 1px solid var(--border);
