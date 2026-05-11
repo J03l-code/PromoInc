@@ -14,4 +14,23 @@ echo "-----------\n";
 echo "HTTPS: " . ($_SERVER['HTTPS'] ?? 'OFF') . "\n";
 echo "X-Forwarded-Proto: " . ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'NONE') . "\n";
 echo "Cookie: " . ($_SERVER['HTTP_COOKIE'] ?? 'NONE') . "\n";
+
+echo "\nDATABASE INFO\n";
+echo "-------------\n";
+try {
+    $db = getDB();
+    echo "Connection: SUCCESS\n";
+    if (isset($_SESSION['user_id'])) {
+        $stmt = $db->prepare("SELECT id, name FROM users WHERE id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        $u = $stmt->fetch();
+        if ($u) {
+            echo "User found in DB: YES (Name: " . $u['name'] . ")\n";
+        } else {
+            echo "User found in DB: NO (ID " . $_SESSION['user_id'] . " not in users table)\n";
+        }
+    }
+} catch (Exception $e) {
+    echo "Connection: FAILED (" . $e->getMessage() . ")\n";
+}
 ?>
