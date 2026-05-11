@@ -34,7 +34,8 @@ const CartManager = (() => {
       const res = await fetch('api/cart.php');
       if (res.ok) {
         const data = await res.json();
-        _items = data.items.map(i => ({
+        const items = data.data || [];
+        _items = items.map(i => ({
           product_id: i.product_id,
           name: i.name,
           sku: i.sku,

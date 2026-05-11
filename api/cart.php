@@ -40,7 +40,7 @@ if ($method === 'GET') {
     ");
     $stmt->execute([$userId]);
     $items = $stmt->fetchAll();
-    jsonSuccess(['items' => $items, 'total' => count($items)]);
+    jsonSuccess($items);
 }
 
 // POST — agregar o actualizar ítem
@@ -60,7 +60,7 @@ if ($method === 'POST') {
     }
 
     // Verificar que el producto exista
-    $pStmt = $db->prepare("SELECT id FROM products WHERE id = ? AND active = 1");
+    $pStmt = $db->prepare("SELECT id FROM products WHERE id = ?");
     $pStmt->execute([$productId]);
     if (!$pStmt->fetch()) {
         jsonError(404, 'Producto no encontrado');
