@@ -122,20 +122,18 @@ header("Expires: 0");
         </div>
 
         <h1 class="hero-headline">
-          Así se compra <em>merchandising</em><br>
-          <span style="font-size: 0.75em; display: block; margin-top: 0.2em;">
-            Tu marca en cada
-            <span class="hero-word-rotate" style="min-width: 250px;">
-              <span class="hero-word active">evento</span>
-              <span class="hero-word">producto</span>
-              <span class="hero-word">regalo</span>
-              <span class="hero-word">detalle</span>
-            </span>
+          Tu marca en cada<br>
+          <span class="hero-word-rotate">
+            <span class="hero-word active">evento</span>
+            <span class="hero-word">producto</span>
+            <span class="hero-word">regalo</span>
+            <span class="hero-word">detalle</span>
           </span>
         </h1>
 
         <p class="hero-sub">
-          Explora productos, revisa precios, compra en minutos.
+          Artículos promocionales personalizados con tu logo.<br>
+          Desde 25 unidades. Entrega nacional.
         </p>
 
         <div class="hero-actions">
