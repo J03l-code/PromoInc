@@ -386,13 +386,6 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
       await CartManager.init(renderCart);
-      // Smart auth button
-      try {
-        const res = await fetch('api/auth_b2b.php?action=me');
-        const btn = document.getElementById('auth-btn');
-        if (res.ok) { btn.href = 'portal.html'; btn.textContent = 'Mi Portal'; }
-        else { btn.href = 'login.html'; btn.textContent = 'Iniciar Sesión'; }
-      } catch { /* keep default */ }
     });
   </script>
 </body>

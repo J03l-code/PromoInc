@@ -79,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'name' => $u['name'],
                     'email' => $u['email'],
                     'role' => $u['role'],
-                    'last_login' => $u['last_login']
+                    'last_login' => $u['last_login'],
+                    'picture' => $_SESSION['user_picture'] ?? ''
                 ]]);
             }
         }

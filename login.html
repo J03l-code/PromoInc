@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso Corporativo | PromoInc</title>
+  <title>Iniciar Sesión | PromoInc</title>
   <link rel="stylesheet" href="assets/css/main.css?v=10.0">
   <link rel="stylesheet" href="assets/css/components.css?v=10.0">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -14,94 +14,62 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-body);
+      background: var(--bg-primary);
       padding: 20px;
     }
 
     .auth-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 24px;
       padding: 40px;
+      border-radius: 24px;
       width: 100%;
-      max-width: 450px;
-      box-shadow: var(--shadow-card);
+      max-width: 400px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      text-align: center;
     }
 
     .auth-logo {
-      display: flex;
-      justify-content: center;
       margin-bottom: 30px;
     }
 
     .auth-logo img {
-      height: 60px;
+      height: 45px;
     }
 
-    .form-group {
-      margin-bottom: 20px;
+    .auth-header h1 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: var(--text-primary);
     }
 
-    .form-label {
-      display: block;
-      margin-bottom: 8px;
+    .auth-header p {
       color: var(--text-muted);
       font-size: 0.9rem;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 12px 15px;
-      background: var(--bg-body);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      transition: var(--duration-fast);
-    }
-
-    .form-control:focus {
-      border-color: var(--accent-cyan);
-      outline: none;
-    }
-
-    .auth-tabs {
-      display: flex;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .auth-tab {
-      flex: 1;
-      text-align: center;
-      padding: 10px;
-      cursor: pointer;
-      color: var(--text-muted);
-      border-bottom: 2px solid transparent;
-    }
-
-    .auth-tab.active {
-      color: var(--accent-cyan);
-      border-bottom-color: var(--accent-cyan);
+      margin-bottom: 30px;
     }
 
     .alert {
-      padding: 10px 15px;
+      padding: 12px;
       border-radius: 8px;
       margin-bottom: 20px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: none;
     }
 
-    .alert-error {
-      background: rgba(232, 62, 140, 0.1);
-      color: var(--accent-pink);
-      border: 1px solid rgba(232, 62, 140, 0.2);
-    }
+    .alert-error { background: rgba(220, 53, 69, 0.1); color: #ff4d5e; border: 1px solid rgba(220, 53, 69, 0.2); }
+    .alert-success { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.2); }
 
-    .alert-success {
-      background: rgba(0, 255, 136, 0.1);
-      color: #00ff88;
-      border: 1px solid rgba(0, 255, 136, 0.2);
+    .b2b-cta {
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .b2b-cta p {
+      font-size: 0.85rem;
+      color: var(--text-subtle);
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -113,54 +81,38 @@
         <a href="index.php"><img src="assets/images/logo blanco (2).png" alt="PromoInc"></a>
       </div>
 
-      <div class="auth-tabs">
-        <div class="auth-tab active" onclick="switchTab('login')">Ingresar a B2B</div>
-        <div class="auth-tab" onclick="switchTab('google')">Usuarios</div>
+      <div class="auth-header">
+        <h1>Bienvenido</h1>
+        <p>Inicia sesión para guardar tus productos favoritos y gestionar tus cotizaciones.</p>
       </div>
 
       <div id="alert-box" class="alert"></div>
 
-      <!-- Formulario Login B2B -->
-      <form id="form-login" onsubmit="handleLogin(event)">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Acceso
-          exclusivo para empresas registradas por el administrador.</p>
-        <div class="form-group">
-          <label class="form-label">Correo Corporativo</label>
-          <input type="email" id="login-email" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Contraseña</label>
-          <input type="password" id="login-password" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Iniciar Sesión
-          B2B</button>
-      </form>
-
       <!-- Google Login -->
-      <div id="form-google" style="display: none; text-align: center;">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Continúa con tu cuenta de Google
-          para guardar tus cotizaciones y productos favoritos.</p>
-
-        <!-- Contenedor del botón de Google -->
+      <div style="display: flex; justify-content: center; margin-bottom: 20px;">
         <div id="g_id_onload" data-client_id="360954059404-4gr9qhvao165puul959ckve1trqes62f.apps.googleusercontent.com"
           data-context="signin" data-ux_mode="popup" data-callback="handleGoogleLogin" data-auto_prompt="false">
         </div>
-        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-          data-text="continue_with" data-size="large" data-logo_alignment="left"
-          style="display:flex; justify-content:center;">
+        <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black"
+          data-text="continue_with" data-size="large" data-logo_alignment="left" style="width: 100%;">
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="index.php" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: underline;">Volver a
-          la tienda</a>
+      <div class="b2b-cta">
+        <p>¿Eres una empresa con acceso exclusivo?</p>
+        <a href="login_b2b.html" class="btn btn-secondary" style="width: 100%; justify-content: center; border-color: var(--accent-pink); color: var(--accent-pink);">
+          Acceso a Empresas
+        </a>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <a href="index.php" style="color: var(--text-subtle); font-size: 0.8rem; text-decoration: underline;">Volver a la tienda</a>
       </div>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // Check if already logged in (skip if we just came from a portal failure)
       const params = new URLSearchParams(window.location.search);
       if (params.has('no_redirect')) return;
 
@@ -169,26 +121,8 @@
         if (res.ok) {
           window.location.href = 'portal.html';
         }
-      } catch (err) {
-        console.log('No active session');
-      }
+      } catch (err) {}
     });
-
-    function switchTab(tab) {
-      const tabs = document.querySelectorAll('.auth-tab');
-      tabs.forEach(t => t.classList.remove('active'));
-      
-      if (tab === 'login') {
-        tabs[0].classList.add('active');
-        document.getElementById('form-login').style.display = 'block';
-        document.getElementById('form-google').style.display = 'none';
-      } else {
-        tabs[1].classList.add('active');
-        document.getElementById('form-login').style.display = 'none';
-        document.getElementById('form-google').style.display = 'block';
-      }
-      document.getElementById('alert-box').style.display = 'none';
-    }
 
     function showAlert(msg, isError) {
       const box = document.getElementById('alert-box');
@@ -197,39 +131,8 @@
       box.style.display = 'block';
     }
 
-    async function handleLogin(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      const originalText = btn.textContent;
-      btn.textContent = 'Iniciando...';
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('api/auth_b2b.php?action=login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          cache: 'no-cache',
-          body: JSON.stringify({
-            email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value
-          })
-        });
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(data.error || 'Error de autenticación');
-
-        window.location.href = 'portal.html';
-      } catch (err) {
-        showAlert(err.message, true);
-        btn.textContent = originalText;
-        btn.disabled = false;
-      }
-    }
-
-    // Google Auth Callback
     async function handleGoogleLogin(response) {
-      showAlert('Autenticando con Google...', false);
+      showAlert('Autenticando...', false);
       try {
         const res = await fetch('api/google_auth.php', {
           method: 'POST',
@@ -237,12 +140,8 @@
           credentials: 'include',
           body: JSON.stringify({ credential: response.credential })
         });
-
         const data = await res.json();
-
-        if (!res.ok) throw new Error(data.error || 'Error al autenticar con Google');
-
-        // Success! Redirect to portal
+        if (!res.ok) throw new Error(data.error || 'Error de autenticación');
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);

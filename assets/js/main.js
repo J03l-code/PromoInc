@@ -145,14 +145,32 @@ async function updateAuthUI() {
     const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
     if (res.ok) {
       const data = await res.json();
+      const user = data.user;
+      
       portalBtn.href = 'portal.html';
-      portalBtn.textContent = 'Mi Portal';
-      // If it's a mobile nav item or similar
-      const span = portalBtn.querySelector('span');
-      if (span) span.textContent = 'Mi Portal';
+      portalBtn.classList.add('profile-link');
+      portalBtn.style.padding = '0';
+      portalBtn.style.background = 'transparent';
+      portalBtn.style.border = 'none';
+      
+      if (user.picture) {
+        portalBtn.innerHTML = `<div class="profile-avatar"><img src="${user.picture}" alt="${user.name}"></div>`;
+      } else {
+        portalBtn.innerHTML = `
+          <div class="profile-avatar icon-glow-cyan">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>`;
+      }
     } else {
       portalBtn.href = 'login.html';
-      if (portalBtn.textContent.includes('Portal')) portalBtn.textContent = 'Iniciar Sesión';
+      portalBtn.innerHTML = 'Mi Portal';
+      portalBtn.classList.remove('profile-link');
+      portalBtn.style.padding = '';
+      portalBtn.style.background = '';
+      portalBtn.style.border = '';
     }
   } catch (err) {
     console.log('Auth check failed');

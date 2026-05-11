@@ -333,17 +333,7 @@
       });
 
       // Smart 'Mi Portal' button — check session
-      try {
-        const res = await fetch('api/auth_b2b.php?action=me');
-        const authBtn = document.getElementById('auth-btn');
-        if (res.ok) {
-          authBtn.href = 'portal.html';
-          authBtn.textContent = 'Mi Portal';
-        } else {
-          authBtn.href = 'login.html';
-          authBtn.textContent = 'Iniciar Sesión';
-        }
-      } catch { /* keep default */ }
+      // (Centralizado en main.js)
 
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('id');

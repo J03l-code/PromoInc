@@ -62,6 +62,7 @@ try {
     $_SESSION['user_id'] = $userId;
     $_SESSION['user_role'] = $userRole;
     $_SESSION['user_name'] = $name;
+    $_SESSION['user_picture'] = $payload['picture'] ?? '';
     
     jsonSuccess(['message' => 'Autenticación con Google exitosa', 'user' => ['name' => $name]]);
 } catch (PDOException $e) {
