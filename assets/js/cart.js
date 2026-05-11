@@ -8,7 +8,7 @@ const CartManager = (() => {
   let _isLoggedIn = false;
   let _items = [];         // [{product_id, name, sku, quantity, unit_price, image_webp}]
   let _onChangeCallback = null;
-  let _waNumber = '593989398005'; // Default fallback
+  let _waNumber = '593987827215'; // Default fallback
 
   /* ── Inicialización ──────────────────────────────── */
   async function init(onChangeCallback) {
