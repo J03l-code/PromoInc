@@ -356,9 +356,15 @@
       document.getElementById('portal-cart-total').textContent =
         `$${total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
 
-      const waNumber = '593989398005';
-      const txt = `Hola PromoInc, deseo cotizar:\n${items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${total.toFixed(2)}`;
-      document.getElementById('portal-wa-btn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(txt)}`;
+      // Obtener WhatsApp dinámico
+      fetch('api/public_settings.php?key=whatsapp_number')
+        .then(r => r.json())
+        .then(data => {
+           const waNumber = data.data.value || '593989398005';
+           const items = CartManager.getItems();
+           const txt = `Hola PromoInc, deseo cotizar mi pedido:\n${items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price*i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${total.toFixed(2)}`;
+           document.getElementById('portal-wa-btn').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(txt)}`;
+        });
     }
 
     async function clearPortalCart() {

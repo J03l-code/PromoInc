@@ -64,7 +64,16 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-    echo "Tabla user_logos verificada.<br>";
+    // 6. Tabla de Configuración (Settings)
+    $db->exec("CREATE TABLE IF NOT EXISTS settings (
+        `key` VARCHAR(100) PRIMARY KEY,
+        `value` TEXT,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+    
+    // Insertar defaults si no existen
+    $db->exec("INSERT IGNORE INTO settings (`key`, `value`) VALUES ('whatsapp_number', '593989398005')");
+    echo "Tabla settings verificada.<br>";
 
     echo "<h3>Base de datos inicializada correctamente.</h3>";
 
