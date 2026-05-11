@@ -12,9 +12,9 @@
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=27.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=27.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=27.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=28.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=28.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=28.0">
 
 </head>
 
@@ -116,11 +116,12 @@
         </div>
 
         <h1 class="hero-headline">
-          Tu marca en cada<br>
+          Tu marca en<br>
+          cada<br>
           <span class="hero-word-rotate">
-            <span class="hero-word active">producto</span>
+            <span class="hero-word active">evento</span>
+            <span class="hero-word">producto</span>
             <span class="hero-word">regalo</span>
-            <span class="hero-word">evento</span>
             <span class="hero-word">detalle</span>
           </span>
         </h1>
