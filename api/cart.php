@@ -16,7 +16,7 @@ function ensureCartTable(PDO $db): void {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 }
 
-session_start();
+
 
 if (!isset($_SESSION['user_id'])) {
     jsonError(401, 'No autenticado');

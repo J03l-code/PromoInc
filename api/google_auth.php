@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-session_start();
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonError(405, 'Método no permitido');

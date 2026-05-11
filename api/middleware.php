@@ -6,17 +6,6 @@
 
 require_once __DIR__ . '/config.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params([
-        'lifetime' => 28800,
-        'path'     => '/',
-        'secure'   => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'),
-        'httponly' => true,
-        'samesite' => 'Lax',
-    ]);
-    session_start();
-}
-
 function requireAuth(): void {
     if (empty($_SESSION['user_id'])) {
         http_response_code(401);
