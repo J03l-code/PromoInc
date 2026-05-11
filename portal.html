@@ -278,7 +278,8 @@
         const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
         if (!res.ok) throw new Error('No auth');
         const data = await res.json();
-        currentUser = data.user;
+        // El helper jsonSuccess envuelve todo en una propiedad 'data'
+        currentUser = data.data.user;
 
         document.getElementById('user-name').textContent = currentUser.name;
         document.getElementById('detail-name').textContent = currentUser.name;

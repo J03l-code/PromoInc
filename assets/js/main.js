@@ -145,7 +145,7 @@ async function updateAuthUI() {
     const res = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
     if (res.ok) {
       const data = await res.json();
-      const user = data.user;
+      const user = data.data.user;
       
       portalBtn.href = 'portal.html';
       portalBtn.classList.add('profile-link');
