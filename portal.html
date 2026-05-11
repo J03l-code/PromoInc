@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Portal B2B | PromoInc</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=19.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=19.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=20.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=20.0">
   <style>
     body { background: var(--bg-body); }
     .portal-header {
@@ -183,6 +183,16 @@
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         Mis Datos
       </button>
+      <button class="portal-nav-item" onclick="showSection('mis-pedidos')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Mis Pedidos
+      </button>
       <button class="portal-nav-item" onclick="showSection('mis-logos')">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         Mis Logos
@@ -228,6 +238,29 @@
         </div>
       </div>
 
+      <!-- MIS PEDIDOS -->
+      <div class="portal-section" id="section-mis-pedidos">
+        <div class="section-card">
+          <h3>Historial de Pedidos</h3>
+          <p class="text-muted" style="font-size:0.85rem; margin-bottom:15px;">Aquí puedes ver el estado de todos tus pedidos enviados por WhatsApp.</p>
+          <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+            <table style="width:100%; border-collapse:collapse; text-align:left;">
+              <thead style="background:var(--bg-elevated); border-bottom:1px solid var(--border);">
+                <tr>
+                  <th style="padding:12px 15px; font-weight:600; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase;">Nro. Pedido</th>
+                  <th style="padding:12px 15px; font-weight:600; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase;">Fecha</th>
+                  <th style="padding:12px 15px; font-weight:600; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase;">Total</th>
+                  <th style="padding:12px 15px; font-weight:600; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase;">Estado</th>
+                </tr>
+              </thead>
+              <tbody id="portal-orders-tbody">
+                <tr><td colspan="4" style="padding:20px; text-align:center; color:var(--text-muted);">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- MIS LOGOS -->
       <div class="portal-section" id="section-mis-logos">
         <div class="section-card">
@@ -269,8 +302,8 @@
     </div>
   </main>
 
-  <script src="assets/js/cart.js?v=19.0"></script>
-  <script src="assets/js/checkout.js?v=19.0"></script>
+  <script src="assets/js/cart.js?v=20.0"></script>
+  <script src="assets/js/checkout.js?v=20.0"></script>
   <script>
     let currentUser = null;
 
@@ -293,8 +326,9 @@
         await CartManager.init(updatePortalCartBadge);
         loadPortalCart();
 
-        // Load logos
+        // Load logos and orders
         loadLogos();
+        loadPortalOrders();
 
       } catch (err) {
         console.error('Auth Error:', err);
@@ -419,6 +453,42 @@
       if (!confirm('¿Eliminar este logo?')) return;
       const res = await fetch('api/user_logos.php', { method: 'DELETE', headers: {'Content-Type':'application/json'}, body: JSON.stringify({id}) });
       if (res.ok) loadLogos();
+    }
+
+    // ── ORDERS ──────────────────────────────────────────────────────────
+    async function loadPortalOrders() {
+      try {
+        const res = await fetch('api/orders.php?user=me');
+        const d = await res.json();
+        const tbody = document.getElementById('portal-orders-tbody');
+        if (!d.success || !d.data.orders || d.data.orders.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="padding:20px; text-align:center; color:var(--text-muted);">No tienes pedidos registrados.</td></tr>';
+          return;
+        }
+
+        const map = {
+          pending: '<span style="color:#eab308;font-weight:600;">🟡 Pendiente</span>',
+          confirmed: '<span style="color:#0ea5e9;font-weight:600;">🔵 Confirmado</span>',
+          processing: '<span style="color:#f97316;font-weight:600;">🟠 En Proceso</span>',
+          shipped: '<span style="color:#a855f7;font-weight:600;">🟣 Enviado</span>',
+          delivered: '<span style="color:#22c55e;font-weight:600;">🟢 Entregado</span>',
+          cancelled: '<span style="color:#ef4444;font-weight:600;">🔴 Cancelado</span>'
+        };
+
+        tbody.innerHTML = d.data.orders.map(o => `
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:15px; font-weight:600;">${o.order_number}</td>
+            <td style="padding:15px;">${new Date(o.created_at).toLocaleDateString('es-CO')}</td>
+            <td style="padding:15px; font-weight:600; color:var(--accent-cyan);">$${parseFloat(o.total).toFixed(2)}</td>
+            <td style="padding:15px;">
+              ${map[o.status] || o.status}
+              ${o.status_note ? `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">${o.status_note}</div>` : ''}
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error('Error cargando pedidos', e);
+      }
     }
   </script>
 </body>

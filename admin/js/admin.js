@@ -109,7 +109,8 @@ function navigateTo(section) {
   document.getElementById('sidebar').classList.remove('open');
 
   const loaders = { dashboard: loadDashboard, products: loadProducts,
-    categories: loadCategories, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings };
+    categories: loadCategories, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
+    orders: loadOrders, clients: loadClients };
   loaders[section]?.();
 }
 
@@ -685,6 +686,156 @@ async function deleteUser(id, name) {
   const res = await api('admin_users.php', 'DELETE', { id });
   if (res.success) { toast('Usuario eliminado', 'success'); loadUsers(); }
   else toast(res.error || 'Error al eliminar', 'error');
+}
+
+// ── ORDERS ────────────────────────────────────────────────────
+let ordersPage = 1;
+async function loadOrders() {
+  const search = document.getElementById('search-orders').value;
+  const status = document.getElementById('filter-order-status').value;
+  
+  const res = await api(`admin_orders.php?page=${ordersPage}&search=${encodeURIComponent(search)}&status=${status}`);
+  if (!res.success) { toast('Error al cargar pedidos', 'error'); return; }
+  
+  const tbody = document.getElementById('orders-tbody');
+  if (res.data.orders.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No se encontraron pedidos</td></tr>';
+    document.getElementById('orders-pagination').innerHTML = '';
+    return;
+  }
+  
+  tbody.innerHTML = res.data.orders.map(o => `
+    <tr>
+      <td style="font-weight:600;">${escHtml(o.order_number)}</td>
+      <td>${fmtDate(o.created_at)}</td>
+      <td>${escHtml(o.customer_name)}</td>
+      <td>${escHtml(o.customer_phone)}<br><small style="color:var(--text-muted)">${escHtml(o.customer_email || '')}</small></td>
+      <td style="font-weight:600;color:var(--accent-cyan);">${fmtCurrency(o.total)}</td>
+      <td><span class="status-badge" style="background:var(--bg-elevated); border:1px solid var(--border);">${escHtml(o.status)}</span></td>
+      <td>
+        <button class="btn-icon" onclick="viewOrder(${o.id})" title="Ver Detalles">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+
+  // Paginación básica
+  const totalPages = Math.ceil(res.data.total / 50);
+  let pageHTML = '';
+  if (totalPages > 1) {
+    if (ordersPage > 1) pageHTML += `<button class="btn btn-outline btn-sm" onclick="ordersPage--; loadOrders()">Ant</button>`;
+    pageHTML += `<span>Página ${ordersPage} de ${totalPages}</span>`;
+    if (ordersPage < totalPages) pageHTML += `<button class="btn btn-outline btn-sm" onclick="ordersPage++; loadOrders()">Sig</button>`;
+  }
+  document.getElementById('orders-pagination').innerHTML = pageHTML;
+}
+
+document.getElementById('search-orders').addEventListener('input', () => { ordersPage = 1; loadOrders(); });
+document.getElementById('filter-order-status').addEventListener('change', () => { ordersPage = 1; loadOrders(); });
+
+async function viewOrder(id) {
+  const res = await api(`admin_orders.php?id=${id}`);
+  if (!res.success) { toast('Error al cargar pedido', 'error'); return; }
+  
+  const o = res.data.order;
+  document.getElementById('mo-order-id').value = o.id;
+  document.getElementById('modal-order-title').textContent = `Pedido: ${o.order_number}`;
+  
+  document.getElementById('mo-customer-name').textContent = o.customer_name;
+  document.getElementById('mo-customer-phone').textContent = o.customer_phone;
+  document.getElementById('mo-customer-email').textContent = o.customer_email || 'Sin correo';
+  document.getElementById('mo-customer-company').textContent = o.customer_company || 'Sin empresa';
+  
+  document.getElementById('mo-delivery-address').textContent = o.delivery_address;
+  document.getElementById('mo-delivery-city').textContent = o.delivery_city;
+  document.getElementById('mo-delivery-notes').textContent = o.delivery_notes || 'Sin indicaciones especiales';
+  
+  const tbody = document.getElementById('mo-items-tbody');
+  tbody.innerHTML = (o.items || []).map(i => `
+    <tr>
+      <td>${escHtml(i.name)}</td>
+      <td>${i.quantity}</td>
+      <td>${fmtCurrency(i.unit_price)}</td>
+      <td style="font-weight:600;">${fmtCurrency(i.unit_price * i.quantity)}</td>
+    </tr>
+  `).join('');
+  document.getElementById('mo-total').textContent = fmtCurrency(o.total);
+  
+  document.getElementById('mo-order-status').value = o.status;
+  document.getElementById('mo-order-note').value = o.status_note || '';
+  
+  openModal('modal-order');
+}
+
+document.getElementById('order-status-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('mo-order-id').value;
+  const status = document.getElementById('mo-order-status').value;
+  const note = document.getElementById('mo-order-note').value.trim();
+  
+  const res = await api('admin_orders.php', 'PUT', { id, status, status_note: note });
+  if (res.success) {
+    toast('Estado actualizado', 'success');
+    closeModal('modal-order');
+    loadOrders();
+  } else {
+    toast(res.error || 'Error al actualizar', 'error');
+  }
+});
+
+// ── CLIENTS ───────────────────────────────────────────────────
+async function loadClients() {
+  const res = await api('admin_clients.php');
+  if (!res.success) { toast('Error al cargar clientes', 'error'); return; }
+  
+  const tbody = document.getElementById('clients-tbody');
+  if (res.data.clients.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No se encontraron clientes</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = res.data.clients.map(c => `
+    <tr>
+      <td style="font-weight:600;">${escHtml(c.name)}</td>
+      <td>${escHtml(c.email)}</td>
+      <td>${escHtml(c.phone || '—')}</td>
+      <td><span class="badge" style="background:var(--accent-cyan); color:#000;">${c.total_orders || 0}</span></td>
+      <td>${fmtDate(c.last_order_date || c.created_at)}</td>
+      <td>
+        <button class="btn-icon" onclick="viewClient(${c.id})" title="Ver Perfil">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function viewClient(id) {
+  const res = await api(`admin_clients.php?id=${id}`);
+  if (!res.success) { toast('Error al cargar cliente', 'error'); return; }
+  
+  const c = res.data.client;
+  document.getElementById('mc-initial').textContent = (c.name || '?').charAt(0).toUpperCase();
+  document.getElementById('mc-name').textContent = c.name;
+  document.getElementById('mc-contact').textContent = `${c.email} • ${c.phone || 'Sin teléfono'}`;
+  document.getElementById('mc-joined').textContent = `Cliente desde: ${fmtDate(c.created_at)}`;
+  
+  const tbody = document.getElementById('mc-orders-tbody');
+  if (!c.orders || c.orders.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No tiene pedidos registrados</td></tr>';
+  } else {
+    tbody.innerHTML = c.orders.map(o => `
+      <tr>
+        <td style="font-weight:600;">${escHtml(o.order_number)}</td>
+        <td>${fmtDate(o.created_at)}</td>
+        <td>${fmtCurrency(o.total)}</td>
+        <td>${escHtml(o.status)}</td>
+      </tr>
+    `).join('');
+  }
+  
+  openModal('modal-client');
 }
 
 // ── CONFIGURACIÓN ─────────────────────────────────────────────

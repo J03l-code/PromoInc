@@ -232,7 +232,42 @@ const CheckoutModal = (() => {
       if (d.success && d.data.value) waNumber = d.data.value;
     } catch (_) {}
 
-    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+    // 💾 Guardar el pedido en la base de datos
+    let orderNumber = '';
+    try {
+      const orderData = {
+        customer_name: name,
+        customer_phone: phone,
+        customer_email: email,
+        customer_company: company,
+        delivery_address: address,
+        delivery_city: city,
+        delivery_notes: notes,
+        items: items,
+        total: total
+      };
+
+      const res = await fetch('api/orders.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+      const data = await res.json();
+      if (data.success && data.data && data.data.order_number) {
+        orderNumber = data.data.order_number;
+      }
+    } catch (e) {
+      console.error('Error al guardar el pedido en la BD:', e);
+      // No bloqueamos el flujo de WhatsApp si falla la BD
+    }
+
+    // Insertar el número de pedido al inicio del mensaje si se generó
+    let finalMsg = msg;
+    if (orderNumber) {
+      finalMsg = msg.replace('🛒 *NUEVO PEDIDO — PromoInc*', `🛒 *NUEVO PEDIDO — PromoInc*\n🔖 *Pedido #:* ${orderNumber}`);
+    }
+
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(finalMsg)}`;
 
     btn.disabled = false;
     btn.innerHTML = `${WA_ICON} Enviar pedido por WhatsApp`;
