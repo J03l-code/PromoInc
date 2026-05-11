@@ -10,31 +10,11 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  
-  <!-- SCRIPT NUCLEAR: Elimina Service Workers de Next.js/PWA que bloquean la web -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(regs) {
-        for(let reg of regs) { reg.unregister(); console.log('SW Cleaned'); }
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (let name of names) caches.delete(name);
-      });
-    }
-    // Si estamos en la raíz y hay un SW molestando, esto ayudará a limpiar
-    window.onload = function() {
-      if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-         // No hacer nada aquí, ya estamos en index.php o redireccionados
-      }
-    };
-  </script>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=19.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=19.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=19.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=21.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=21.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=21.0">
   <style>
     .hero-bento { padding-top: 150px; }
     @media (max-width: 992px) {
@@ -526,8 +506,7 @@
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/cart.js?v=19.0"></script>
-  <script src="assets/js/main.js?v=19.0"></script>
+  <script src="assets/js/main.js?v=22.0"></script>
 </body>
 
 </html>

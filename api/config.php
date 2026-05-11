@@ -92,14 +92,14 @@ function getDB(): PDO
 function jsonSuccess(array $data, int $code = 200): void
 {
     http_response_code($code);
-    echo json_encode(['success' => true, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['success' => true, 'data' => $data], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     exit;
 }
 
 function jsonError(int $code, string $message): void
 {
     http_response_code($code);
-    echo json_encode(['success' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['success' => false, 'error' => $message], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     exit;
 }
 
