@@ -87,18 +87,32 @@
 
   <!-- ═══ HERO SECTION ═══════════════════════════════════════ -->
   <section class="hero-main">
-    <!-- Animated background -->
+    <!-- Background: professional geometric -->
     <div class="hero-bg">
-      <div class="hero-gradient-orb hero-orb-1"></div>
-      <div class="hero-gradient-orb hero-orb-2"></div>
-      <div class="hero-gradient-orb hero-orb-3"></div>
-      <div class="hero-grid-overlay"></div>
+      <div class="hero-bg-glow"></div>
+      <div class="hero-bg-lines"></div>
+      <div class="hero-bg-noise"></div>
     </div>
 
     <div class="container hero-content">
-      <div class="hero-badge reveal">
-        <span class="hero-badge-dot"></span>
-        Más de 500 productos disponibles
+      <!-- Social proof badge -->
+      <div class="hero-social-proof reveal">
+        <div class="hero-avatars">
+          <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#c0185a);">C</div>
+          <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#0080aa);">M</div>
+          <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#7c3aed);">A</div>
+          <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#d97706);">E</div>
+        </div>
+        <div class="hero-proof-text">
+          <div class="hero-stars">
+            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <span>+2,000 empresas ya confiaron en nosotros</span>
+        </div>
       </div>
 
       <h1 class="hero-headline reveal">
