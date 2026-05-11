@@ -286,12 +286,13 @@ body.hovering .cursor-ring {
 
 .loader-bar {
   width: 280px;
-  height: 5px;
-  background: rgba(255,255,255,0.05);
+  height: 6px;
+  background: rgba(255,255,255,0.15); /* Más visible */
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
   position: relative;
+  margin-top: 1rem;
 }
 
 .loader-bar-fill {

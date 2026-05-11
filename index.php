@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=29.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=29.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=29.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=40.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=40.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=40.0">
 
 </head>
 
@@ -192,7 +192,7 @@ header("Expires: 0");
                   d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
-            <span>+2,000 empresas ya confiaron en nosotros</span>
+            <span>+100 empresas ya confiaron en nosotros</span>
           </div>
         </div>
 
@@ -226,7 +226,7 @@ header("Expires: 0");
 
         <div class="hero-stats">
           <div class="hero-stat">
-            <span class="hero-stat-num">12+</span>
+            <span class="hero-stat-num">5+</span>
             <span class="hero-stat-label">Años en el mercado</span>
           </div>
           <div class="hero-stat-divider"></div>
@@ -236,7 +236,7 @@ header("Expires: 0");
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="hero-stat-num">2k+</span>
+            <span class="hero-stat-num">100+</span>
             <span class="hero-stat-label">Empresas atendidas</span>
           </div>
         </div>
