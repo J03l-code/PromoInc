@@ -125,16 +125,39 @@ document.addEventListener('DOMContentLoaded', () => {
     navSearchBtn.addEventListener('click', doSearch);
     navSearchInp.addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
   }
-  
+
+  // Auth UI sync
+  updateAuthUI();
+
+  // Page specific init
   if (document.getElementById('catalog-grid')) {
     initCatalog();
-  } else {
+  } else if (!document.getElementById('product-detail-container') && !window.location.pathname.includes('portal.html') && !window.location.pathname.includes('login.html')) {
     loadFeaturedProducts();
   }
 });
 
-// Cache for categories
-let catalogCategories = [];
+async function updateAuthUI() {
+  const portalBtn = document.getElementById('auth-btn') || document.querySelector('a[href="login.html"]');
+  if (!portalBtn) return;
+  
+  try {
+    const res = await fetch('api/auth_b2b.php?action=me');
+    if (res.ok) {
+      const data = await res.json();
+      portalBtn.href = 'portal.html';
+      portalBtn.textContent = 'Mi Portal';
+      // If it's a mobile nav item or similar
+      const span = portalBtn.querySelector('span');
+      if (span) span.textContent = 'Mi Portal';
+    } else {
+      portalBtn.href = 'login.html';
+      if (portalBtn.textContent.includes('Portal')) portalBtn.textContent = 'Iniciar Sesión';
+    }
+  } catch (err) {
+    console.log('Auth check failed');
+  }
+}
 
 async function loadSiteSettings() {
   try {
@@ -142,20 +165,76 @@ async function loadSiteSettings() {
     const json = await res.json();
     if (json.success) {
       const s = json.data;
+      
+      // Hero Title
       if (s.hero_title) {
-        const titleEl = document.querySelector('.hero-bento h1');
-        if (titleEl) titleEl.innerHTML = s.hero_title.replace('merchandising', `<span class="text-pink glitch" data-text="merchandising">merchandising</span>`);
+        const titleEl = document.querySelector('.hero-bento h1') || document.querySelector('.catalog-header h1');
+        if (titleEl) {
+          let html = s.hero_title;
+          if (html.toLowerCase().includes('merchandising')) {
+            html = html.replace(/merchandising/gi, (m) => `<span class="text-pink glitch" data-text="${m}">${m}</span>`);
+          }
+          titleEl.innerHTML = html;
+        }
       }
+      
+      // Hero Subtitle
       if (s.hero_subtitle) {
-        const subEl = document.querySelector('.hero-bento .text-muted');
+        const subEl = document.querySelector('.hero-bento .text-muted') || document.querySelector('.catalog-header .text-muted');
         if (subEl) subEl.textContent = s.hero_subtitle;
       }
+      
+      // WhatsApp
       if (s.whatsapp) {
         window.siteWhatsapp = s.whatsapp;
         document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
-          const text = a.href.split('text=')[1] || '';
-          a.href = `https://wa.me/${s.whatsapp}?text=${text}`;
+          try {
+            const url = new URL(a.href);
+            const text = url.searchParams.get('text') || '';
+            a.href = `https://wa.me/${s.whatsapp}?text=${encodeURIComponent(text)}`;
+          } catch(e) {
+            a.href = `https://wa.me/${s.whatsapp}`;
+          }
         });
+        const waDisplay = document.querySelector('.footer-contact-item svg path[d*="M22 16.92"]')?.parentElement?.nextElementSibling;
+        if (waDisplay) {
+           const lines = waDisplay.innerHTML.split('<br>');
+           if (lines.length > 1) {
+             lines[1] = `+${s.whatsapp}`;
+             waDisplay.innerHTML = lines.join('<br>');
+           } else {
+             waDisplay.textContent = `+${s.whatsapp}`;
+           }
+        }
+      }
+
+      // Site Name
+      if (s.site_name) {
+        document.title = document.title.replace('PromoInc', s.site_name);
+        const copyright = document.querySelector('.footer-bottom p');
+        if (copyright) copyright.innerHTML = `&copy; ${new Date().getFullYear()} ${s.site_name}. Todos los derechos reservados.`;
+      }
+
+      // Contact Email
+      if (s.site_email) {
+        const emailEl = document.querySelector('.footer-contact-item svg polyline[points*="22,6"]')?.parentElement?.nextElementSibling;
+        if (emailEl) emailEl.textContent = s.site_email;
+      }
+
+      // Address
+      if (s.site_address) {
+        const addrEl = document.querySelector('.footer-contact-item svg path[d*="M21 10c0 7"]')?.parentElement?.nextElementSibling;
+        if (addrEl) addrEl.textContent = s.site_address;
+      }
+
+      // Social Media
+      if (s.instagram) {
+        const insta = document.querySelector('a.social-btn svg rect')?.parentElement;
+        if (insta) insta.href = `https://instagram.com/${s.instagram}`;
+      }
+      if (s.facebook) {
+        const fb = document.querySelector('a.social-btn svg path[d*="M18 2h-3"]')?.parentElement;
+        if (fb) fb.href = `https://facebook.com/${s.facebook}`;
       }
     }
   } catch (err) { console.error('Error loading settings:', err); }

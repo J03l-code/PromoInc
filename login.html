@@ -159,14 +159,28 @@
   </div>
 
   <script>
-    function switchTab(tab) {
-      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check if already logged in
+      try {
+        const res = await fetch('api/auth_b2b.php?action=me');
+        if (res.ok) {
+          window.location.href = 'portal.html';
+        }
+      } catch (err) {
+        console.log('No active session');
+      }
+    });
 
+    function switchTab(tab) {
+      const tabs = document.querySelectorAll('.auth-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      
       if (tab === 'login') {
+        tabs[0].classList.add('active');
         document.getElementById('form-login').style.display = 'block';
         document.getElementById('form-google').style.display = 'none';
       } else {
+        tabs[1].classList.add('active');
         document.getElementById('form-login').style.display = 'none';
         document.getElementById('form-google').style.display = 'block';
       }
@@ -183,6 +197,7 @@
     async function handleLogin(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button');
+      const originalText = btn.textContent;
       btn.textContent = 'Iniciando...';
       btn.disabled = true;
 
@@ -202,13 +217,14 @@
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
-        btn.textContent = 'Iniciar Sesión B2B';
+        btn.textContent = originalText;
         btn.disabled = false;
       }
     }
 
     // Google Auth Callback
     async function handleGoogleLogin(response) {
+      showAlert('Autenticando con Google...', false);
       try {
         const res = await fetch('api/google_auth.php', {
           method: 'POST',
@@ -220,6 +236,7 @@
 
         if (!res.ok) throw new Error(data.error || 'Error al autenticar con Google');
 
+        // Success! Redirect to portal
         window.location.href = 'portal.html';
       } catch (err) {
         showAlert(err.message, true);
