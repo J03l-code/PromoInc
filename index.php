@@ -12,9 +12,9 @@
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=21.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=25.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=21.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=26.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=26.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=26.0">
 
 </head>
 
@@ -87,7 +87,7 @@
 
   <!-- ═══ HERO SECTION ═══════════════════════════════════════ -->
   <section class="hero-main">
-    <!-- Background: professional geometric -->
+    <!-- Minimal background -->
     <div class="hero-bg">
       <div class="hero-bg-glow"></div>
       <div class="hero-bg-lines"></div>
@@ -95,90 +95,95 @@
     </div>
 
     <div class="container hero-content">
-      <!-- Social proof badge -->
-      <div class="hero-social-proof reveal">
-        <div class="hero-avatars">
-          <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#c0185a);">C</div>
-          <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#0080aa);">M</div>
-          <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#7c3aed);">A</div>
-          <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#d97706);">E</div>
-        </div>
-        <div class="hero-proof-text">
-          <div class="hero-stars">
-            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <!-- Left column: Editorial headline -->
+      <div class="hero-left reveal">
+        <div class="hero-social-proof">
+          <div class="hero-avatars">
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#c0185a);">C</div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#0080aa);">M</div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#7c3aed);">A</div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#d97706);">E</div>
           </div>
-          <span>+2,000 empresas ya confiaron en nosotros</span>
+          <div class="hero-proof-text">
+            <div class="hero-stars">
+              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <span>+2,000 empresas ya confiaron en nosotros</span>
+          </div>
+        </div>
+
+        <h1 class="hero-headline">
+          Dale identidad<br>
+          a tu marca con <em>merchandising</em>
+        </h1>
+
+        <p class="hero-sub">
+          Artículos promocionales personalizados con tu logo desde 25 unidades.
+          Precios directos de fábrica y entrega a nivel nacional.
+        </p>
+
+        <div class="hero-actions">
+          <a href="catalogo.html" class="hero-btn-primary">
+            Ver catálogo completo
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="https://wa.me/593XXXXXXXXX" class="hero-btn-outline">
+            Hablar con un asesor
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num">12+</span>
+            <span class="hero-stat-label">Años en el mercado</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">500+</span>
+            <span class="hero-stat-label">Productos disponibles</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">2k+</span>
+            <span class="hero-stat-label">Empresas atendidas</span>
+          </div>
         </div>
       </div>
 
-      <h1 class="hero-headline reveal">
-        Tu marca en cada<br>
-        <span class="hero-word-rotate">
-          <span class="hero-word active">producto</span>
-          <span class="hero-word">regalo</span>
-          <span class="hero-word">evento</span>
-          <span class="hero-word">detalle</span>
-        </span>
-      </h1>
-
-      <p class="hero-sub reveal">
-        Artículos promocionales personalizados con tu logo.<br class="hide-mobile">
-        Desde 25 unidades. Precios directos de fábrica. Entrega nacional.
-      </p>
-
-      <div class="hero-actions reveal">
-        <a href="catalogo.html" class="hero-btn-primary">
-          Explorar catálogo
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="#cotizar" class="hero-btn-outline">
-          Solicitar cotización
-        </a>
-      </div>
-
-      <div class="hero-stats reveal">
-        <div class="hero-stat">
-          <span class="hero-stat-num">12+</span>
-          <span class="hero-stat-label">Años de experiencia</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">500+</span>
-          <span class="hero-stat-label">Productos en catálogo</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">2k+</span>
-          <span class="hero-stat-label">Empresas confían en nosotros</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Features bar -->
-    <div class="hero-features-bar">
-      <div class="container">
-        <div class="hero-features-inner">
-          <div class="hero-feature">
+      <!-- Right column: Category quick-links (StaplesPromo style) -->
+      <div class="hero-cats reveal reveal-delay-2">
+        <p class="hero-cats-label">Explorar por categoría</p>
+        <div class="hero-cats-grid">
+          <a href="catalogo.html?cat=textil" class="hero-cat-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+            Textil & Ropa
+          </a>
+          <a href="catalogo.html?cat=tomatodos" class="hero-cat-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l1 9H7L8 2z"/><path d="M7 11c0 4.97 4.03 9 9 9v0"/><path d="M7 11H4a1 1 0 00-1 1v1a7 7 0 007 7h0"/></svg>
+            Tomatodos & Termos
+          </a>
+          <a href="catalogo.html?cat=tecnologia" class="hero-cat-tile">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <span>Stock en tiempo real</span>
-          </div>
-          <div class="hero-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-            <span>Descuentos por volumen</span>
-          </div>
-          <div class="hero-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            <span>Asesoría personalizada</span>
-          </div>
-          <div class="hero-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            <span>Entrega a nivel nacional</span>
-          </div>
+            Tecnología
+          </a>
+          <a href="catalogo.html?cat=oficina" class="hero-cat-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Bolígrafos & Oficina
+          </a>
+          <a href="catalogo.html?cat=bolsos" class="hero-cat-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Bolsos & Mochilas
+          </a>
+          <a href="catalogo.html?cat=ecologico" class="hero-cat-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Línea Ecológica
+          </a>
         </div>
+        <a href="catalogo.html" class="hero-cats-all">Ver todos los productos →</a>
       </div>
     </div>
   </section>
