@@ -157,7 +157,7 @@
   <header id="navbar" class="navbar-ecommerce">
     <div class="navbar-top">
       <div class="container navbar-top-inner" style="justify-content: space-between;">
-        <a href="index.html" class="navbar-logo">
+        <a href="index.php" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
         </a>
         <div class="navbar-actions-top" style="gap: 10px;">
@@ -363,7 +363,7 @@
 
     async function logout() {
       await fetch('api/auth_b2b.php?action=logout');
-      window.location.href = 'index.html';
+      window.location.href = 'index.php';
     }
 
     /* ── Logos ── */

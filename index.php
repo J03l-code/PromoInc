@@ -44,7 +44,7 @@
     <div class="navbar-top">
       <div class="container navbar-top-inner">
         
-        <a href="index.html" class="navbar-logo">
+        <a href="index.php" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
         </a>
 
