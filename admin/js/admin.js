@@ -102,7 +102,8 @@ function navigateTo(section) {
   document.querySelectorAll(`[data-section="${section}"]`).forEach(n => n.classList.add('active'));
   document.getElementById('page-title').textContent = {
     dashboard: 'Dashboard', products: 'Productos', categories: 'Categorías',
-    quotes: 'Cotizaciones', users: 'Usuarios', settings: 'Configuración',
+    quotes: 'Cotizaciones', users: 'Administradores', settings: 'Configuración',
+    orders: 'Gestión de Pedidos', clients: 'Directorio de Clientes'
   }[section] || section;
 
   // Cerrar sidebar en mobile
@@ -691,14 +692,15 @@ async function deleteUser(id, name) {
 // ── ORDERS ────────────────────────────────────────────────────
 let ordersPage = 1;
 async function loadOrders() {
-  const search = document.getElementById('search-orders').value;
-  const status = document.getElementById('filter-order-status').value;
-  
-  const res = await api(`admin_orders.php?page=${ordersPage}&search=${encodeURIComponent(search)}&status=${status}`);
-  if (!res.success) { toast('Error al cargar pedidos', 'error'); return; }
-  
   const tbody = document.getElementById('orders-tbody');
-  if (res.data.orders.length === 0) {
+  try {
+    const search = document.getElementById('search-orders').value;
+    const status = document.getElementById('filter-order-status').value;
+    
+    const res = await api(`admin_orders.php?page=${ordersPage}&search=${encodeURIComponent(search)}&status=${status}`);
+    if (!res.success) throw new Error(res.error || 'Error desconocido');
+    
+    if (res.data.orders.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No se encontraron pedidos</td></tr>';
     document.getElementById('orders-pagination').innerHTML = '';
     return;
@@ -729,6 +731,10 @@ async function loadOrders() {
     if (ordersPage < totalPages) pageHTML += `<button class="btn btn-outline btn-sm" onclick="ordersPage++; loadOrders()">Sig</button>`;
   }
   document.getElementById('orders-pagination').innerHTML = pageHTML;
+  } catch (err) {
+    console.error(err);
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state" style="color:var(--accent-pink)">Error: ${err.message}. Asegúrate de haber corrido db_upgrade.php</td></tr>`;
+  }
 }
 
 document.getElementById('search-orders').addEventListener('input', () => { ordersPage = 1; loadOrders(); });
@@ -786,10 +792,10 @@ document.getElementById('order-status-form').addEventListener('submit', async e 
 
 // ── CLIENTS ───────────────────────────────────────────────────
 async function loadClients() {
-  const res = await api('admin_clients.php');
-  if (!res.success) { toast('Error al cargar clientes', 'error'); return; }
-  
   const tbody = document.getElementById('clients-tbody');
+  try {
+    const res = await api('admin_clients.php');
+    if (!res.success) throw new Error(res.error || 'Error desconocido');
   if (res.data.clients.length === 0) {
     tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No se encontraron clientes</td></tr>';
     return;
@@ -836,6 +842,10 @@ async function viewClient(id) {
   }
   
   openModal('modal-client');
+  } catch (err) {
+    console.error(err);
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color:var(--accent-pink)">Error: ${err.message}</td></tr>`;
+  }
 }
 
 // ── CONFIGURACIÓN ─────────────────────────────────────────────
