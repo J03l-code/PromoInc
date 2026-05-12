@@ -11,7 +11,7 @@ const CheckoutModal = (() => {
 
   // ── Guardar / Cargar datos ────────────────────────────────
   function _save(data) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (_) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (_) { }
   }
 
   function _load() {
@@ -145,13 +145,13 @@ const CheckoutModal = (() => {
         .then(d => {
           if (d.success && d.data.user) {
             const u = d.data.user;
-            const nameEl  = document.getElementById('co-name');
+            const nameEl = document.getElementById('co-name');
             const emailEl = document.getElementById('co-email');
             // Solo rellenar si aún están vacíos (localStorage tiene prioridad)
-            if (nameEl  && !nameEl.value  && u.name)  nameEl.value  = u.name;
+            if (nameEl && !nameEl.value && u.name) nameEl.value = u.name;
             if (emailEl && !emailEl.value && u.email) emailEl.value = u.email;
           }
-        }).catch(() => {});
+        }).catch(() => { });
     }
 
     document.getElementById('checkout-overlay').classList.add('open');
@@ -162,9 +162,9 @@ const CheckoutModal = (() => {
   // ── Cerrar Modal ──────────────────────────────────────────
   function close() {
     const overlay = document.getElementById('checkout-overlay');
-    const modal   = document.getElementById('checkout-modal');
+    const modal = document.getElementById('checkout-modal');
     if (overlay) overlay.classList.remove('open');
-    if (modal)   modal.classList.remove('open');
+    if (modal) modal.classList.remove('open');
     document.body.style.overflow = '';
   }
 
@@ -175,13 +175,13 @@ const CheckoutModal = (() => {
     const errorEl = document.getElementById('co-error');
     errorEl.style.display = 'none';
 
-    const name    = document.getElementById('co-name').value.trim();
-    const phone   = document.getElementById('co-phone').value.trim();
-    const email   = document.getElementById('co-email').value.trim();
+    const name = document.getElementById('co-name').value.trim();
+    const phone = document.getElementById('co-phone').value.trim();
+    const email = document.getElementById('co-email').value.trim();
     const address = document.getElementById('co-address').value.trim();
-    const city    = document.getElementById('co-city').value.trim();
+    const city = document.getElementById('co-city').value.trim();
     const company = document.getElementById('co-company').value.trim();
-    const notes   = document.getElementById('co-notes').value.trim();
+    const notes = document.getElementById('co-notes').value.trim();
 
     if (!name || !phone || !address || !city) {
       errorEl.textContent = '⚠️ Por favor completa los campos obligatorios (marcados con *).';
@@ -210,7 +210,7 @@ const CheckoutModal = (() => {
       '📋 *Datos del Cliente:*',
       `  👤 Nombre: ${name}`,
       `  📞 Teléfono: ${phone}`,
-      email   ? `  📧 Email: ${email}`     : null,
+      email ? `  📧 Email: ${email}` : null,
       company ? `  🏢 Empresa: ${company}` : null,
       '',
       '🚚 *Datos de Entrega:*',
@@ -230,7 +230,7 @@ const CheckoutModal = (() => {
       const r = await fetch('api/public_settings.php?key=whatsapp');
       const d = await r.json();
       if (d.success && d.data.value) waNumber = d.data.value.replace(/\D/g, '');
-    } catch (_) {}
+    } catch (_) { }
 
     // 💾 Guardar el pedido en la base de datos
     let orderNumber = '';
