@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=52.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=52.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=52.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=53.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=53.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=53.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -162,13 +162,29 @@ header("Expires: 0");
       font-weight: 800;
       color: #fff;
       line-height: 1.1;
+      text-align: left !important;
+    }
+    .hero-word-rotate {
+      position: relative;
+      display: block;
+      height: 1.2em;
     }
     .hero-word {
-      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 15px rgba(232, 62, 140, 0.2));
+      filter: drop-shadow(0 0 20px rgba(232, 62, 140, 0.25));
+    }
+    .hero-word.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     /* Social Proof Refined */
@@ -609,10 +625,15 @@ header("Expires: 0");
           </div>
         </div>
 
-        <!-- UPDATE_52.0_VERIFIED -->
-        <h1 class="hero-headline" style="text-align: left !important; align-items: flex-start !important; display: block !important; font-size: clamp(4rem, 7vw, 6.5rem) !important; letter-spacing: -0.05em !important;">
-          <span style="color: #fff; display: block; margin-bottom: 0px;">Creamos</span>
-          <span style="background: linear-gradient(135deg, #E83E8C, #00BCFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; filter: drop-shadow(0 0 20px rgba(232, 62, 140, 0.25)); line-height: 1;">Diseño</span>
+        <!-- UPDATE_53.0_VERIFIED -->
+        <h1 class="hero-headline" style="font-size: clamp(4rem, 7vw, 6.2rem) !important; letter-spacing: -0.05em !important; display: block !important;">
+          <span style="display: block; margin-bottom: 0px;">Creamos</span>
+          <span class="hero-word-rotate">
+            <span class="hero-word active">Impacto</span>
+            <span class="hero-word">Marca</span>
+            <span class="hero-word">Diseño</span>
+            <span class="hero-word">Calidad</span>
+          </span>
         </h1>
 
         <div style="margin: 2.5rem 0; max-width: 520px; border-left: 3px solid #E83E8C; padding-left: 28px; text-align: left !important;">
