@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=50.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=50.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=50.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=51.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=51.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=51.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -609,26 +609,27 @@ header("Expires: 0");
           </div>
         </div>
 
-        <h1 class="hero-headline">
-          Creamos<br>
-          <span class="hero-word">Diseño</span>
+        <!-- UPDATE_51.0_VERIFIED -->
+        <h1 class="hero-headline" style="text-align: left !important; align-items: flex-start !important; display: block !important;">
+          <span style="color: #fff; display: block; margin-bottom: 5px;">Creamos</span>
+          <span style="background: linear-gradient(135deg, #E83E8C, #00BCFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; filter: drop-shadow(0 0 15px rgba(232, 62, 140, 0.3));">Diseño</span>
         </h1>
 
-        <div style="margin: 2rem 0; max-width: 420px; border-left: 3px solid var(--accent-pink); padding-left: 20px;">
-          <p style="color: var(--text-secondary); font-size: 1.15rem; line-height: 1.6;">
+        <div style="margin: 2.5rem 0; max-width: 460px; border-left: 4px solid #E83E8C; padding-left: 24px; text-align: left !important;">
+          <p style="color: #c1c5cd; font-size: 1.2rem; line-height: 1.7; margin: 0;">
             Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle, desde 20 unidades.
           </p>
         </div>
 
-        <div class="hero-actions" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
-          <a href="catalogo.html" class="hero-btn-primary">
+        <div class="hero-actions" style="display: flex; flex-direction: column; align-items: flex-start !important; gap: 20px; justify-content: flex-start !important;">
+          <a href="catalogo.html" class="hero-btn-primary" style="background: linear-gradient(135deg, #E83E8C, #c4306f) !important; color: #fff !important; box-shadow: 0 10px 30px rgba(232, 62, 140, 0.5) !important; padding: 1.2rem 2.5rem !important; border-radius: 16px !important; display: inline-flex !important; align-items: center; gap: 12px; text-decoration: none; font-weight: 800;">
             Explorar Colección
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <a href="#cotizar" class="hero-btn-outline">
+          <a href="#cotizar" class="hero-btn-outline" style="border: 1px solid rgba(255,255,255,0.15) !important; background: rgba(255,255,255,0.04) !important; backdrop-filter: blur(12px) !important; padding: 1.1rem 2.2rem !important; border-radius: 16px !important; color: #fff !important; font-weight: 700; text-decoration: none;">
             Planificar Proyecto
           </a>
         </div>
