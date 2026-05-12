@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=46.1">
-  <link rel="stylesheet" href="assets/css/components.css?v=46.1">
-  <link rel="stylesheet" href="assets/css/animations.css?v=46.1">
+  <link rel="stylesheet" href="assets/css/main.css?v=46.2">
+  <link rel="stylesheet" href="assets/css/components.css?v=46.2">
+  <link rel="stylesheet" href="assets/css/animations.css?v=46.2">
   <style>
     .product-detail { padding-top: 180px; padding-bottom: 80px; }
     .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
@@ -256,9 +256,9 @@
 
 
 
-  <script src="assets/js/cart.js?v=46.1"></script>
-  <script src="assets/js/checkout.js?v=46.1"></script>
-  <script src="assets/js/main.js?v=46.1"></script>
+  <script src="assets/js/cart.js?v=46.2"></script>
+  <script src="assets/js/checkout.js?v=46.2"></script>
+  <script src="assets/js/main.js?v=46.2"></script>
   <script>
     let currentProduct = null;
 
@@ -405,7 +405,10 @@
           <div class="product-gallery">
             <div class="main-image-container" id="main-image" style="position: relative;">
               ${imgUrl 
-                ? `<img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" onerror="this.parentElement.innerHTML='${svgPlaceholder}'">`
+                ? `
+                  <img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="img-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">${svgPlaceholder}</div>
+                `
                 : svgPlaceholder
               }
               <!-- Contenedor del logo overlay (Mockup) -->
@@ -818,6 +821,6 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
     </svg>
   </a>
 
-  <script src="assets/js/main.js?v=46.1"></script>
+  <script src="assets/js/main.js?v=46.2"></script>
 </body>
 </html>
