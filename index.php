@@ -18,10 +18,188 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=49.1">
-  <link rel="stylesheet" href="assets/css/components.css?v=49.1">
-  <link rel="stylesheet" href="assets/css/animations.css?v=49.1">
+  <link rel="stylesheet" href="assets/css/main.css?v=49.2">
+  <link rel="stylesheet" href="assets/css/components.css?v=49.2">
+  <link rel="stylesheet" href="assets/css/animations.css?v=49.2">
   
+  <style>
+    /* ── CART SIDEBAR ──────────────────────────────────────────────── */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .cart-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 420px;
+      max-width: 100vw;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      z-index: 2001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .cart-panel.open {
+      right: 0;
+    }
+
+    .cart-panel-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-panel-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+    }
+
+    .cart-close-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .cart-close-btn:hover {
+      background: var(--bg-body);
+      color: var(--text-primary);
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      object-fit: contain;
+      flex-shrink: 0;
+      padding: 5px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-price {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .cart-item-qty {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .cart-item-remove:hover {
+      color: var(--accent-pink);
+      background: rgba(232, 62, 140, 0.1);
+    }
+
+    .cart-panel-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-body);
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .cart-total-label {
+      color: var(--text-muted);
+    }
+
+    .cart-total-value {
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--accent-cyan);
+    }
+
+    .cart-count-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--accent-cyan);
+      color: #000;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-action-btn {
+      position: relative;
+    }
+
+    .cart-empty-msg {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+  </style>
+
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
 
@@ -627,9 +805,9 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/cart.js?v=49.1"></script>
-  <script src="assets/js/checkout.js?v=49.1"></script>
-  <script src="assets/js/main.js?v=49.1"></script>
+  <script src="assets/js/cart.js?v=49.2"></script>
+  <script src="assets/js/checkout.js?v=49.2"></script>
+  <script src="assets/js/main.js?v=49.2"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
