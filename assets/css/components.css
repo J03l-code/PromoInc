@@ -15,7 +15,7 @@
 }
 
 .navbar-top {
-  padding: 0.4rem 0 0.1rem 0; /* Espacio mínimo abajo para el logo grande */
+  padding: 0.1rem 0 0 0; /* Sin espacio abajo para logo gigante */
   border-bottom: 1px solid var(--border);
 }
 
@@ -35,10 +35,11 @@
 }
 
 .navbar-logo img {
-  height: 165px; /* Aumento a 1.5x (110 * 1.5) */
+  height: 220px; /* Tamaño 2x (110 * 2) */
   width: auto;
   object-fit: contain;
   display: block;
+  margin-bottom: -5px; /* Pull down slightly to touch border */
 }
 
 .navbar-logo-text {
