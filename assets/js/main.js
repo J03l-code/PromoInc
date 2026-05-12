@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '57.0';
+const VERSION = '58.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
@@ -7,8 +7,9 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
     event.preventDefault();
     event.stopPropagation();
   }
+  
   if (typeof CartManager !== 'undefined') {
-    CartManager.addItem({
+    const product = {
       product_id: id,
       name: name,
       sku: sku,
@@ -16,10 +17,23 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
       image_webp: image,
       quantity: parseInt(minQty) || 10,
       min_quantity: parseInt(minQty) || 10
-    }).then(() => {
-      if (typeof openCart === 'function') openCart();
-      if (typeof showToast === 'function') showToast(`Agregado: ${name}`);
-    });
+    };
+
+    CartManager.addItem(product).then(() => {
+      // Force update UI
+      if (window.CartUI && typeof window.CartUI.open === 'function') {
+        window.CartUI.open();
+      } else if (typeof openCart === 'function') {
+        openCart();
+      }
+      
+      // Global toast notification
+      if (typeof showToast === 'function') {
+        showToast(`Agregado: ${name}`);
+      } else {
+        alert(`${name} agregado al carrito`);
+      }
+    }).catch(err => console.error('Error adding to cart:', err));
   } else {
     console.error('CartManager not found');
   }

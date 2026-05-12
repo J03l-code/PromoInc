@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=57.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=57.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=57.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=58.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=58.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=58.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -179,7 +179,7 @@ header("Expires: 0");
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 20px rgba(232, 62, 140, 0.25));
+      filter: none !important;
     }
     .hero-word.active {
       opacity: 1;
@@ -625,8 +625,8 @@ header("Expires: 0");
           </div>
         </div>
 
-        <!-- UPDATE_53.0_VERIFIED -->
-        <h1 class="hero-headline" style="font-size: clamp(4rem, 7vw, 6.2rem) !important; letter-spacing: -0.05em !important; display: block !important;">
+        <!-- UPDATE_58.0_VERIFIED -->
+        <h1 class="hero-headline" style="font-size: clamp(4rem, 7vw, 6.2rem) !important; letter-spacing: -0.05em !important; display: block !important; margin-top: 2rem;">
           <span style="display: block; margin-bottom: 0px;">Creamos</span>
           <span class="hero-word-rotate">
             <span class="hero-word active">Impacto</span>
