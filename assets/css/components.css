@@ -662,7 +662,7 @@
 
 @media (max-width: 640px) {
   .hero-main {
-    padding-top: 240px;
+    padding-top: 230px;
   }
 
   .hero-headline {
@@ -1061,7 +1061,7 @@
 
 /* — Responsive — */
   .hero-main {
-    padding-top: 240px;
+    padding-top: 230px;
     min-height: auto;
     padding-bottom: 2rem;
   }
@@ -1707,9 +1707,9 @@
     width: auto; 
     display: flex;
     justify-content: flex-start; 
-    margin-bottom: -1.5rem; 
-    margin-top: -15px;
-    margin-left: -10px; /* Desplazado 10px a la izquierda */
+    margin-bottom: -1.75rem; 
+    margin-top: -25px;
+    margin-left: -5px; /* Movido 5px a la derecha desde el anterior -10px */
     order: 1;
   }
   .navbar-logo img { 
@@ -1720,14 +1720,14 @@
   .navbar-actions-top { 
     position: absolute;
     right: 1rem;
-    top: 1rem;
+    top: 0.5rem; /* Ajustado para nivelar con el logo elevado */
     gap: 0.75rem; 
     order: 2;
   }
   .navbar-search { 
     width: 100%; 
     max-width: 100%; 
-    margin-top: -2.5rem; /* Subido al máximo para eliminar espacio */
+    margin-top: -3.2rem; /* Subido aún más para eliminar todo espacio */
     order: 3;
     padding-bottom: 0.5rem;
   }
@@ -1736,7 +1736,7 @@
   .navbar-toggle { display: flex; }
   .nav-categories, .navbar-bottom { display: none !important; }
   
-  .hero-main { padding-top: 240px; } 
+  .hero-main { padding-top: 230px; } 
   .bento-grid { grid-template-columns: 1fr; }
 
   .bento-grid {
