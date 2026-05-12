@@ -39,7 +39,7 @@
   width: auto;
   object-fit: contain;
   display: block;
-  margin-bottom: -5px; /* Pull down slightly to touch border */
+  margin-bottom: -25px; /* Pull down more to reduce gap by half */
 }
 
 .navbar-logo-text {

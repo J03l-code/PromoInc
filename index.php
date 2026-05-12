@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=47.1">
-  <link rel="stylesheet" href="assets/css/components.css?v=47.1">
-  <link rel="stylesheet" href="assets/css/animations.css?v=47.1">
+  <link rel="stylesheet" href="assets/css/main.css?v=47.2">
+  <link rel="stylesheet" href="assets/css/components.css?v=47.2">
+  <link rel="stylesheet" href="assets/css/animations.css?v=47.2">
   
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -568,7 +568,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=47.1"></script>
+  <script src="assets/js/main.js?v=47.2"></script>
 </body>
 
 </html>
