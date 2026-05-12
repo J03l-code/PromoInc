@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=53.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=53.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=53.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=56.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=56.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=56.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -608,10 +608,10 @@ header("Expires: 0");
       <div class="hero-left reveal">
         <div class="hero-social-proof">
           <div class="hero-avatars">
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#ff8eb3)"></div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#80e1ff)"></div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#c4b5fd)"></div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#fde68a)"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#e83e8c,#ff8eb3)"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#00bcff,#80e1ff)"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#a78bfa,#c4b5fd)"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#fbbf24,#fde68a)"></div>
           </div>
           <div class="hero-proof-text" style="display:flex; align-items:center; gap:8px;">
             <div class="hero-stars" style="display:flex; gap:2px;">
@@ -673,20 +673,21 @@ header("Expires: 0");
         </div>
       </div>
 
-      <!-- Right column: Product images showcase -->
-      <div class="hero-imgs reveal reveal-delay-2">
-        <div class="hero-img-main">
-          <img src="assets/images/hero-products-1.png" alt="Personalización con tu logo" style="width:100%; height:auto;">
-          <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent-pink)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            Personalización con tu logo
+      <!-- Right column: Images Stacked Perfectly -->
+      <div class="hero-right reveal" style="display: flex; flex-direction: column; gap: 15px; align-items: flex-end; justify-content: center; height: 100%;">
+        <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+          <img src="assets/images/hero_1.webp" alt="Merchandising" style="width: 100%; height: auto; display: block;">
+          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 8px 18px; border-radius: 100px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.15);">
+            <span style="color: #ff8eb3; font-size: 1rem;">❤</span>
+            <span style="color: #fff; font-size: 0.85rem; font-weight: 700;">Personalización con tu logo</span>
           </div>
         </div>
-        <div class="hero-img-secondary">
-          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" style="width:100%; height:auto;">
-          <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent-cyan)"><path d="M20 7h-4V5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 5h4v2h-4V5z"/></svg>
-            Kits corporativos
+        
+        <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+          <img src="assets/images/hero_2.webp" alt="Kits corporativos" style="width: 100%; height: auto; display: block;">
+          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 8px 18px; border-radius: 100px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.15);">
+            <span style="color: #00bcff; font-size: 1rem;">💼</span>
+            <span style="color: #fff; font-size: 0.85rem; font-weight: 700;">Kits corporativos</span>
           </div>
         </div>
       </div>

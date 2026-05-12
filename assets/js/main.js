@@ -1,5 +1,26 @@
 /* PromoInc — main.js */
-const VERSION = '53.0';
+const VERSION = '56.0';
+
+// Global function for adding to cart quickly from the Home page
+window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
+  event.stopPropagation();
+  if (typeof CartManager !== 'undefined') {
+    CartManager.addItem({
+      product_id: id,
+      name: name,
+      sku: sku,
+      unit_price: parseFloat(price),
+      image_webp: image,
+      quantity: parseInt(minQty) || 10,
+      min_quantity: parseInt(minQty) || 10
+    }).then(() => {
+      if (typeof openCart === 'function') openCart();
+      if (typeof showToast === 'function') showToast(`Agregado: ${name}`);
+    });
+  } else {
+    console.error('CartManager not found');
+  }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   
