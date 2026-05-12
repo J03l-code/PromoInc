@@ -43,6 +43,14 @@
         </svg>
         Categorías
       </a>
+      <a href="#" class="nav-item" data-section="brands">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Marcas
+      </a>
       <a href="#" class="nav-item" data-section="orders">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -259,6 +267,36 @@
             <tr>
               <td colspan="7" class="loading-row">Cargando...</td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── SECTION: BRANDS ── -->
+    <section class="section hidden" id="section-brands">
+      <div class="section-header">
+        <h2>Marcas de Clientes</h2>
+        <button class="btn btn-primary" onclick="openBrandModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nueva Marca
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre</th>
+              <th>Orden</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="brands-tbody">
+            <tr><td colspan="5" class="loading-row">Cargando...</td></tr>
           </tbody>
         </table>
       </div>
@@ -740,6 +778,51 @@
   <div class="toast-container" id="toast-container"></div>
 
   <script src="./js/admin.js?v=23.0"></script>
+  <!-- ── MODAL: MARCA ──────────────────────────────────────── -->
+  <div class="modal-overlay hidden" id="modal-brand">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-brand-title">Nueva Marca</h3>
+        <button class="modal-close" data-close="modal-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="brand-form">
+          <input type="hidden" name="id" id="brand-id">
+          <div class="form-group"><label>Nombre de la Empresa *</label><input type="text" name="name" id="brand-name" required></div>
+          <div class="form-group"><label>Orden de aparición</label><input type="number" name="sort_order" id="brand-order" value="0" min="0"></div>
+          
+          <div class="form-group">
+            <label>Logo de la Marca</label>
+            <div class="upload-zone" id="brand-upload-zone">
+              <input type="file" id="brand-img-upload" accept="image/jpeg,image/png,image/webp" class="hidden">
+              <div class="upload-preview hidden" id="brand-upload-preview">
+                <img id="brand-preview-img" src="" alt="Preview">
+                <button type="button" class="remove-img" id="brand-remove-img">✕</button>
+              </div>
+              <div class="upload-placeholder" id="brand-upload-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Sube el logo de la marca</span>
+              </div>
+            </div>
+            <input type="hidden" name="filename" id="brand-image">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-brand">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-brand">Guardar Marca</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

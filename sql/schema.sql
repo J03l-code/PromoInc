@@ -130,3 +130,13 @@ INSERT IGNORE INTO settings (`key`, `value`) VALUES
   ('facebook',       'promoinc'),
   ('hero_title',     'Así se compra merchandising'),
   ('hero_subtitle',  'Explora productos, revisa precios, compra en minutos.');
+-- ── LOGOS DE MARCAS (Trusted Brands) ────────────────────────
+CREATE TABLE IF NOT EXISTS brand_logos (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name        VARCHAR(120) NOT NULL,
+  filename    VARCHAR(255) NOT NULL,
+  sort_order  INT          NOT NULL DEFAULT 0,
+  active      TINYINT(1)   NOT NULL DEFAULT 1,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

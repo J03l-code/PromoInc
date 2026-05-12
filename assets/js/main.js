@@ -76,9 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Ticker duplicate
-  const track = document.querySelector('.ticker-track');
-  if (track) track.innerHTML += track.innerHTML;
+  // Dynamic Brands Ticker
+  const track = document.querySelector('.logos-track');
+  if (track) {
+    fetch('api/public_brand_logos.php')
+      .then(res => res.json())
+      .then(res => {
+        if (res.success && res.data.length > 0) {
+          track.innerHTML = res.data.map(b => `
+            <div class="logo-item">
+              <div class="client-logo-box">
+                <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.7; height: 32px; transition: opacity 0.3s; object-fit: contain;">
+              </div>
+            </div>
+          `).join('');
+          // Duplicar para el efecto infinito si hay suficientes elementos
+          if (res.data.length > 5) {
+            track.innerHTML += track.innerHTML;
+          }
+        }
+      })
+      .catch(err => console.error('Error loading brands:', err));
+  }
 
   // Toast helper
   window.showToast = (msg, type = 'success') => {
@@ -499,7 +518,7 @@ function renderProducts(grid, products, append = false) {
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             </button>
-            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.4rem 0.75rem; font-size: 0.75rem;">Cotizar</a>
+            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Cotizar</a>
           </div>
         </div>
       </div>

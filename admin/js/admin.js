@@ -110,7 +110,7 @@ function navigateTo(section) {
   document.getElementById('sidebar').classList.remove('open');
 
   const loaders = { dashboard: loadDashboard, products: loadProducts,
-    categories: loadCategories, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
+    categories: loadCategories, brands: loadBrands, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
     orders: loadOrders, clients: loadClients };
   loaders[section]?.();
 }
@@ -887,3 +887,94 @@ document.getElementById('password-form').addEventListener('submit', async e => {
   populateCategorySelects();
   navigateTo('dashboard');
 })();
+
+// ── MARCAS ───────────────────────────────────────────────────
+async function loadBrands() {
+  const res = await api('admin_brand_logos.php');
+  const tbody = document.getElementById('brands-tbody');
+  if (!res.success) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Error al cargar marcas</td></tr>'; return; }
+  
+  const items = res.data;
+  if (!items.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No hay marcas registradas</td></tr>'; return; }
+
+  tbody.innerHTML = items.map(b => `
+    <tr>
+      <td><img src="../assets/images/${b.filename}" style="height:32px; filter:brightness(0) invert(1); opacity:0.7"></td>
+      <td style="font-weight:600">${escHtml(b.name)}</td>
+      <td>${b.sort_order}</td>
+      <td style="color:var(--muted); font-size:0.8rem">${fmtDate(b.created_at)}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="deleteBrand(${b.id}, '${escHtml(b.name)}')">Eliminar</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openBrandModal() {
+  document.getElementById('brand-form').reset();
+  document.getElementById('brand-id').value = '';
+  document.getElementById('brand-image').value = '';
+  document.getElementById('brand-preview-img').src = '';
+  document.getElementById('brand-upload-preview').classList.add('hidden');
+  document.getElementById('brand-upload-placeholder').classList.remove('hidden');
+  document.getElementById('modal-brand-title').textContent = 'Nueva Marca';
+  openModal('modal-brand');
+}
+
+async function deleteBrand(id, name) {
+  if (!confirm(`¿Eliminar la marca "${name}"?`)) return;
+  const res = await api('admin_brand_logos.php', 'DELETE', { id });
+  if (res.success) { toast('Marca eliminada', 'success'); loadBrands(); }
+  else toast(res.error || 'Error al eliminar', 'error');
+}
+
+document.getElementById('btn-save-brand')?.addEventListener('click', async () => {
+  const payload = {
+    name:       document.getElementById('brand-name').value.trim(),
+    sort_order: parseInt(document.getElementById('brand-order').value) || 0,
+    filename:   document.getElementById('brand-image').value,
+  };
+  if (!payload.name) { toast('El nombre es requerido', 'error'); return; }
+  if (!payload.filename) { toast('El logo es requerido', 'error'); return; }
+
+  const res = await api('admin_brand_logos.php', 'POST', payload);
+  if (res.success) {
+    toast('Marca guardada', 'success');
+    closeModal('modal-brand');
+    loadBrands();
+  } else toast(res.error || 'Error al guardar', 'error');
+});
+
+// Upload logic for brands
+const brandUploadZone = document.getElementById('brand-upload-zone');
+const brandImgInput   = document.getElementById('brand-img-upload');
+
+brandUploadZone?.addEventListener('click', () => brandImgInput.click());
+brandImgInput?.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (file) handleBrandUpload(file);
+});
+
+async function handleBrandUpload(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  
+  try {
+    const res = await fetch(`${API}/upload.php`, { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('brand-image').value = data.filename;
+      document.getElementById('brand-preview-img').src = `../assets/images/${data.filename}`;
+      document.getElementById('brand-upload-preview').classList.remove('hidden');
+      document.getElementById('brand-upload-placeholder').classList.add('hidden');
+    } else toast(data.error || 'Error al subir', 'error');
+  } catch (err) { toast('Error de conexión', 'error'); }
+}
+
+document.getElementById('brand-remove-img')?.addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('brand-image').value = '';
+  document.getElementById('brand-preview-img').src = '';
+  document.getElementById('brand-upload-preview').classList.add('hidden');
+  document.getElementById('brand-upload-placeholder').classList.remove('hidden');
+});

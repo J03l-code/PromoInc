@@ -336,7 +336,7 @@ h4, h5, .ui-heading {
 .card:hover .card-img-overlay { opacity: 1; }
 
 .card-body {
-  padding: 1.15rem;
+  padding: 1.25rem;
 }
 
 .card-badges {
