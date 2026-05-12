@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '44.0';
+const VERSION = '44.1';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -92,9 +92,16 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
           `).join('');
-          // Duplicar para el efecto infinito si hay suficientes elementos
+          
+          // Efecto infinito o centrado dependiendo de la cantidad
           if (res.data.length > 5) {
-            track.innerHTML += track.innerHTML;
+            track.innerHTML += track.innerHTML; // Duplicar para el loop
+          } else {
+            // Si hay pocas marcas, quitar animación y centrarlas
+            track.style.animation = 'none';
+            track.style.justifyContent = 'center';
+            track.style.width = '100%';
+            track.style.flexWrap = 'wrap';
           }
         }
       })
