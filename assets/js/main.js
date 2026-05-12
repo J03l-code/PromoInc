@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '59.0';
+const VERSION = '60.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
@@ -19,25 +19,23 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
       min_quantity: parseInt(minQty) || 10
     };
 
-    CartManager.addItem(product).then(() => {
-      // Force update UI
-      if (window.CartUI && typeof window.CartUI.open === 'function') {
-        window.CartUI.open();
-      } else if (typeof openCart === 'function') {
-        openCart();
-      }
-      
-      // Global toast notification
-      if (typeof showToast === 'function') {
-        showToast(`Agregado: ${name}`);
-      } else {
-        alert(`${name} agregado al carrito`);
-      }
-    }).catch(err => console.error('Error adding to cart:', err));
+    // Instant local update for better UX
+    CartManager.addItem(product);
+    
+    // UI Updates
+    if (window.CartUI && typeof window.CartUI.open === 'function') {
+      window.CartUI.open();
+    } else if (typeof openCart === 'function') {
+      openCart();
+    }
+    
+    if (typeof showToast === 'function') {
+      showToast(`Agregado: ${name}`);
+    }
   } else {
     console.error('CartManager not found');
   }
-};
+};};
 
 document.addEventListener('DOMContentLoaded', () => {
   

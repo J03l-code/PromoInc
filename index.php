@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=58.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=58.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=58.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=60.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=60.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=60.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -606,7 +606,7 @@ header("Expires: 0");
     <div class="container hero-content">
       <!-- Left column: Rotating headline -->
       <div class="hero-left reveal">
-        <div class="hero-social-proof">
+        <div class="hero-social-proof" style="margin-top: 5rem; margin-bottom: 2rem;">
           <div class="hero-avatars">
             <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#e83e8c,#ff8eb3)"></div>
             <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#00bcff,#80e1ff)"></div>
