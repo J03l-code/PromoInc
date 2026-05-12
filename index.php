@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=42.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=42.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=42.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=43.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=43.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=43.0">
 
 </head>
 
@@ -483,7 +483,7 @@ header("Expires: 0");
       </div>
 
       <div class="card reveal reveal-delay-2"
-        style="padding: 2.5rem; background: var(--bg-primary); box-shadow: var(--shadow-glow);">
+        style="padding: 1.15rem; background: var(--bg-primary); box-shadow: var(--shadow-glow);">
         <form id="quote-form" class="cta-form">
           <div class="cta-form-row">
             <div class="form-group">

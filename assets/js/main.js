@@ -477,8 +477,8 @@ function renderProducts(grid, products, append = false) {
           ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
           ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
         </div>
-        <div class="flex items-center justify-between" style="gap: 8px;">
-          <div>
+        <div class="flex items-center justify-between" style="gap: 8px; flex-wrap: wrap;">
+          <div style="min-width: fit-content;">
             <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
             <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
@@ -487,7 +487,7 @@ function renderProducts(grid, products, append = false) {
               title="Agregar al carrito"
               onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${parseFloat(p.price_from||0).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
               style="
-                width:36px; height:36px; border-radius:8px; border: none; cursor:pointer;
+                width:34px; height:34px; border-radius:8px; border: none; cursor:pointer;
                 background: linear-gradient(135deg, #e83e8c, #c0185a);
                 color: #fff; display:flex; align-items:center; justify-content:center;
                 box-shadow: 0 4px 15px rgba(232,62,140,0.4);
@@ -499,7 +499,7 @@ function renderProducts(grid, products, append = false) {
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             </button>
-            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Cotizar</a>
+            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.4rem 0.75rem; font-size: 0.75rem;">Cotizar</a>
           </div>
         </div>
       </div>
