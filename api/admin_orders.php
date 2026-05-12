@@ -85,4 +85,12 @@ if ($method === 'PUT') {
     jsonSuccess(['updated' => true]);
 }
 
+if ($method === 'DELETE') {
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
+    if (empty($data['id'])) jsonError(400, 'ID de pedido requerido');
+
+    $db->prepare("DELETE FROM orders WHERE id = ?")->execute([(int)$data['id']]);
+    jsonSuccess(['deleted' => true]);
+}
+
 jsonError(405, 'Método no permitido');

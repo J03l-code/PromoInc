@@ -191,7 +191,7 @@ async function loadDashboard() {
   if (recentQ.success && recentQ.data.items.length) {
     ql.innerHTML = recentQ.data.items.map(q => `
       <div class="recent-item">
-        <div><div class="recent-name">${escHtml(q.company)}</div><div class="recent-sub">${escHtml(q.contact)}</div></div>
+        <div><div class="recent-name">${escHtml(q.company)}</div><div class="recent-sub">${escHtml(q.contact_name || q.contact)}</div></div>
         <div>${statusBadge(q.status)}</div>
       </div>`).join('');
   } else {
@@ -574,13 +574,14 @@ async function loadQuotes(status = currentQuoteStatus) {
   tbody.innerHTML = items.map(q => `
     <tr>
       <td style="font-weight:600;font-size:0.88rem">${escHtml(q.company)}</td>
-      <td style="font-size:0.84rem">${escHtml(q.contact)}</td>
+      <td style="font-size:0.84rem">${escHtml(q.contact_name || q.contact)}</td>
       <td style="font-size:0.84rem"><a href="mailto:${escHtml(q.email)}" style="color:var(--cyan)">${escHtml(q.email)}</a></td>
       <td style="font-size:0.82rem;color:var(--muted)">${escHtml(q.product_ref || '—')}</td>
       <td style="font-size:0.8rem;color:var(--muted)">${fmtDate(q.created_at)}</td>
       <td>${statusBadge(q.status)}</td>
-      <td>
+      <td style="display:flex; gap:0.5rem;">
         <button class="btn btn-ghost btn-sm" onclick="viewQuote(${q.id})">Ver</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--accent-pink)" onclick="deleteQuote(${q.id})">Eliminar</button>
       </td>
     </tr>`).join('');
 }
@@ -601,7 +602,7 @@ async function viewQuote(id) {
   currentQuoteId = id;
   document.getElementById('quote-detail').innerHTML = `
     <div class="quote-field"><label>Empresa</label><p>${escHtml(q.company)}</p></div>
-    <div class="quote-field"><label>Contacto</label><p>${escHtml(q.contact)}</p></div>
+    <div class="quote-field"><label>Contacto</label><p>${escHtml(q.contact_name || q.contact)}</p></div>
     <div class="quote-field"><label>Email</label><p><a href="mailto:${escHtml(q.email)}" style="color:var(--cyan)">${escHtml(q.email)}</a></p></div>
     <div class="quote-field"><label>Teléfono</label><p>${escHtml(q.phone || '—')}</p></div>
     <div class="quote-field"><label>Producto de interés</label><p>${escHtml(q.product_ref || '—')}</p></div>
@@ -731,9 +732,12 @@ async function loadOrders() {
       <td>${escHtml(o.customer_phone)}<br><small style="color:var(--text-muted)">${escHtml(o.customer_email || '')}</small></td>
       <td style="font-weight:600;color:var(--accent-cyan);">${fmtCurrency(o.total)}</td>
       <td><span class="status-badge" style="background:var(--bg-elevated); border:1px solid var(--border);">${escHtml(o.status)}</span></td>
-      <td>
+      <td style="display:flex; gap:0.5rem;">
         <button class="btn-icon" onclick="viewOrder(${o.id})" title="Ver Detalles">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button class="btn-icon" style="color:var(--accent-pink)" onclick="deleteOrder(${o.id})" title="Eliminar Pedido">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
         </button>
       </td>
     </tr>
@@ -1026,3 +1030,22 @@ document.getElementById('brand-remove-img')?.addEventListener('click', e => {
   document.getElementById('brand-upload-preview').classList.add('hidden');
   document.getElementById('brand-upload-placeholder').classList.remove('hidden');
 });
+
+// ── ELIMINACIÓN (Quotes & Orders) ───────────────────────────
+async function deleteQuote(id) {
+  if (!confirm('¿Estás seguro de eliminar esta cotización? Esta acción no se puede deshacer.')) return;
+  const res = await api('admin_quotes.php', 'DELETE', { id });
+  if (res.success) {
+    toast('Cotización eliminada');
+    loadQuotes();
+  } else toast(res.error || 'Error al eliminar', 'error');
+}
+
+async function deleteOrder(id) {
+  if (!confirm('¿Estás seguro de eliminar este pedido? Se eliminará permanentemente del sistema y del portal del cliente.')) return;
+  const res = await api('admin_orders.php', 'DELETE', { id });
+  if (res.success) {
+    toast('Pedido eliminado correctamente');
+    loadOrders();
+  } else toast(res.error || 'Error al eliminar', 'error');
+}
