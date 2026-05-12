@@ -284,6 +284,15 @@ h4, h5, .ui-heading {
   box-shadow: 0 0 6px #dc3545;
 }
 
+.badge-customizable {
+  color: #10b981;
+}
+
+.badge-customizable::before {
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.5); }

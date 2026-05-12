@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '45.8';
+const VERSION = '45.9';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -502,10 +502,10 @@ function renderProducts(grid, products, append = false) {
       </div>
       <div class="card-body">
         ${!isProductPage ? `<h3 class="card-title">${p.name}</h3><p class="card-sku">${p.sku}</p>` : ''}
-        <div class="card-badges" style="margin-bottom: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
-          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">● Stock Disponible</span>' : '<span class="badge badge-nostock">● Sin Stock</span>'}
-          ${parseInt(p.featured) ? '<span class="badge badge-featured">● Destacado</span>' : ''}
-          ${parseInt(p.customizable) ? '<span class="badge" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); padding:3px 8px; border-radius:20px; font-size:0.68rem; font-weight:700; letter-spacing:0.04em;">✓ Personalizable</span>' : ''}
+        <div class="card-badges" style="margin-bottom: 0.75rem; display: flex; flex-wrap: wrap; gap: 8px;">
+          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
+          ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
+          ${parseInt(p.customizable) ? '<span class="badge badge-customizable">Personalizable</span>' : ''}
         </div>
         <div style="margin-bottom: 0.75rem;">
           <p class="card-price" style="font-size: 0.78rem; margin-bottom: 2px;">Desde</p>
