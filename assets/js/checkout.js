@@ -123,13 +123,13 @@ const CheckoutModal = (() => {
     summary.innerHTML = items.map(i => `
       <div class="co-item">
         <span class="co-item-name">${i.name}</span>
-        <span class="co-item-detail">${i.quantity} × $${i.unit_price.toFixed(2)}</span>
-        <span class="co-item-sub">$${(i.unit_price * i.quantity).toFixed(2)}</span>
+        <span class="co-item-detail">${i.quantity} × MX$${i.unit_price.toFixed(2)}</span>
+        <span class="co-item-sub">MX$${(i.unit_price * i.quantity).toFixed(2)}</span>
       </div>
     `).join('');
 
     const total = CartManager.getTotal();
-    document.getElementById('co-total').textContent = '$' + total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('co-total').textContent = 'MX$' + total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     // 1️⃣ Cargar datos guardados en localStorage
     const saved = _load();
@@ -201,7 +201,7 @@ const CheckoutModal = (() => {
     const total = CartManager.getTotal();
 
     const itemsText = items.map(i =>
-      `  • ${i.name} (x${i.quantity}) → $${(i.unit_price * i.quantity).toFixed(2)}`
+      `  • ${i.name} (x${i.quantity}) → MX$${(i.unit_price * i.quantity).toFixed(2)}`
     ).join('\n');
 
     const msg = [
@@ -221,7 +221,7 @@ const CheckoutModal = (() => {
       '🛍️ *Productos:*',
       itemsText,
       '',
-      `💰 *Total: $${total.toFixed(2)}*`,
+      `💰 *Total: MX$${total.toFixed(2)}*`,
     ].filter(l => l !== null).join('\n');
 
     // Obtener número desde la API (dinámico)

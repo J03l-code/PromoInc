@@ -138,8 +138,8 @@ const CartManager = (() => {
   
   function getWhatsAppUrl() {
     const total = getTotal();
-    const itemsText = _items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price * i.quantity).toFixed(2)}`).join('\n');
-    const msg = `Hola PromoInc, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: $${total.toFixed(2)}`;
+    const itemsText = _items.map(i => `• ${i.name} (x${i.quantity}) - MX$${(i.unit_price * i.quantity).toFixed(2)}`).join('\n');
+    const msg = `Hola PromoInc, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: MX$${total.toFixed(2)}`;
     return `https://wa.me/${_waNumber}?text=${encodeURIComponent(msg)}`;
   }
 

@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '45.4';
+const VERSION = '45.7';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -508,7 +508,7 @@ function renderProducts(grid, products, append = false) {
         </div>
         <div class="flex items-center justify-between" style="gap: 8px; flex-wrap: wrap;">
           <div style="min-width: fit-content;">
-            <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
+            <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">MX$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
             <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
           </div>
           <div style="display:flex; gap:6px; align-items:center;" onclick="event.stopPropagation()">

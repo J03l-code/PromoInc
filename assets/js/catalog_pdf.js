@@ -27,9 +27,9 @@
 
   function fmt(price) {
     if (!price || parseFloat(price) <= 0) return 'Consultar';
-    return '$' + parseFloat(price).toLocaleString('es-MX', {
+    return 'MX$' + parseFloat(price).toLocaleString('es-MX', {
       minimumFractionDigits: 2, maximumFractionDigits: 2
-    }) + ' MXN';
+    });
   }
 
   function trunc(text, n) {
@@ -44,25 +44,33 @@
   }
 
   /**
-   * Carga una imagen desde URL y la convierte a base64
-   * Maneja CORS silenciosamente
+   * Carga una imagen desde URL, la renderiza en un <canvas> con fondo blanco
+   * (para eliminar la transparencia de los PNG) y la devuelve como base64 JPEG.
    */
   async function imgToB64(url) {
     if (!url) return null;
-    try {
-      // Intentar con fetch directo
-      const res = await fetch(url, { cache: 'force-cache' });
-      if (!res.ok) return null;
-      const blob = await res.blob();
-      return await new Promise((resolve) => {
-        const r = new FileReader();
-        r.onload = () => resolve(r.result);
-        r.onerror = () => resolve(null);
-        r.readAsDataURL(blob);
-      });
-    } catch {
-      return null;
-    }
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width  = img.naturalWidth  || 400;
+          canvas.height = img.naturalHeight || 400;
+          const ctx = canvas.getContext('2d');
+          // Fondo blanco — elimina el canal alfa de los PNG
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+          resolve(canvas.toDataURL('image/jpeg', 0.88));
+        } catch {
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      // Evitar caché CORS añadiendo timestamp
+      img.src = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    });
   }
 
   /**
