@@ -746,7 +746,7 @@
     async function addToCart() {
       if (!currentProduct) return;
       const qty = parseInt(document.getElementById('qty-input').value);
-      const unitPrice = parseFloat(document.getElementById('unit-price-display').textContent.replace('$', ''));
+      const unitPrice = parseFloat(document.getElementById('unit-price-display').getAttribute('data-price') || currentProduct.price_from);
       const p = currentProduct;
       await CartManager.addItem({
         product_id: p.id,
@@ -1202,7 +1202,9 @@
         return parseFloat(p.price_from);
       })();
 
-      document.getElementById('unit-price-display').innerHTML = `
+      const displayEl = document.getElementById('unit-price-display');
+      displayEl.setAttribute('data-price', unitPrice);
+      displayEl.innerHTML = `
         <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
           ${isSale ? `
             <div style="display:flex; align-items:center; gap:8px;">
