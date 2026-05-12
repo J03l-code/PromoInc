@@ -574,6 +574,17 @@
                 <span>¿Destacado?</span>
               </label>
             </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="on_sale" id="product-onsale" value="1">
+                <span>¿En Oferta?</span>
+              </label>
+            </div>
+            <div class="form-group col-span-2" id="sale-price-group" style="display:none; background:rgba(0,188,255,0.05); padding:1rem; border-radius:var(--radius-md); border:1px dashed var(--accent-cyan);">
+              <label style="color:var(--accent-cyan); font-weight:700;">Precio de Oferta ($) *</label>
+              <input type="number" name="sale_price" id="product-sale-price" step="0.01" min="0" placeholder="Ej: 5.99">
+              <div id="sale-discount-info" style="margin-top:8px; font-size:0.85rem; font-weight:600; color:var(--accent-pink);"></div>
+            </div>
           </div>
         </form>
       </div>
@@ -838,7 +849,7 @@
 
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="./js/admin.js?v=47.4"></script>
+  <script src="./js/admin.js?v=47.7"></script>
 </body>
 
 </html>

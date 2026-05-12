@@ -327,10 +327,36 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('upload-placeholder').classList.remove('hidden');
   document.getElementById('upload-preview').classList.add('hidden');
   document.getElementById('product-image').value = '';
+  document.getElementById('product-onsale').checked = false;
+  document.getElementById('sale-price-group').style.display = 'none';
+  document.getElementById('product-sale-price').value = '';
+  document.getElementById('sale-discount-info').textContent = '';
   populateCategorySelects(true);
   document.getElementById('price-tiers-container').innerHTML = ''; // Limpiar tiers
   openModal('modal-product');
 });
+
+// Lógica de Ofertas
+document.getElementById('product-onsale').addEventListener('change', e => {
+  document.getElementById('sale-price-group').style.display = e.target.checked ? 'block' : 'none';
+  calculateDiscount();
+});
+
+document.getElementById('product-price').addEventListener('input', calculateDiscount);
+document.getElementById('product-sale-price').addEventListener('input', calculateDiscount);
+
+function calculateDiscount() {
+  const price = parseFloat(document.getElementById('product-price').value);
+  const salePrice = parseFloat(document.getElementById('product-sale-price').value);
+  const info = document.getElementById('sale-discount-info');
+  
+  if (price > 0 && salePrice > 0 && salePrice < price) {
+    const disc = Math.round(((price - salePrice) / price) * 100);
+    info.textContent = `Ahorro del ${disc}% configurado automáticamente`;
+  } else {
+    info.textContent = '';
+  }
+}
 
 // Manejo de escalas de precios
 const btnAddTier = document.getElementById('btn-add-tier');
@@ -416,6 +442,8 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     stock_quantity:parseInt(document.getElementById('product-stock').value)  || 0,
     customizable:  document.getElementById('product-custom').checked ? 1 : 0,
     featured:      document.getElementById('product-featured').checked ? 1 : 0,
+    on_sale:       document.getElementById('product-onsale').checked ? 1 : 0,
+    sale_price:    document.getElementById('product-onsale').checked ? (parseFloat(document.getElementById('product-sale-price').value) || null) : null,
     active: 1,
     volume_prices: Array.from(document.querySelectorAll('.price-tier-row')).map(row => ({
       min_qty: parseInt(row.querySelector('.tier-qty').value),
@@ -449,6 +477,14 @@ async function editProduct(id) {
   document.getElementById('product-stock').value    = p.stock?.[0]?.quantity || 0;
   document.getElementById('product-custom').checked  = !!parseInt(p.customizable);
   document.getElementById('product-featured').checked= !!parseInt(p.featured);
+  
+  // Ofertas
+  const onSale = !!parseInt(p.on_sale);
+  document.getElementById('product-onsale').checked = onSale;
+  document.getElementById('sale-price-group').style.display = onSale ? 'block' : 'none';
+  document.getElementById('product-sale-price').value = p.sale_price || '';
+  calculateDiscount();
+
   document.getElementById('product-image').value    = p.image_webp || '';
   document.getElementById('product-category').value = p.category_id;
   

@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '47.6';
+const VERSION = '47.7';
 
 document.addEventListener('DOMContentLoaded', () => {
   
@@ -230,7 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initCatalog();
   } else if (!document.getElementById('product-detail-container') && !window.location.pathname.includes('portal.html') && !window.location.pathname.includes('login.html')) {
     loadFeaturedProducts();
+    loadSaleProducts();
   }
+  
+  // Link Ofertas
+  document.querySelector('.nav-link-ofertas')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'catalogo.html?on_sale=1';
+  });
 });
 
 async function updateAuthUI() {
@@ -428,6 +435,11 @@ function initCatalog() {
     const sInput = document.getElementById('catalog-search');
     if (sInput) sInput.value = params.get('search');
   }
+  if (params.get('on_sale')) {
+    currentFilters.on_sale = true;
+    const saleToggle = document.getElementById('filter-onsale');
+    if (saleToggle) saleToggle.checked = true;
+  }
 
   // Events
   document.getElementById('btn-search-catalog')?.addEventListener('click', () => {
@@ -446,6 +458,10 @@ function initCatalog() {
   });
   document.getElementById('filter-featured')?.addEventListener('change', (e) => {
     currentFilters.featured = e.target.checked;
+    reloadCatalog();
+  });
+  document.getElementById('filter-onsale')?.addEventListener('change', (e) => {
+    currentFilters.on_sale = e.target.checked;
     reloadCatalog();
   });
   document.getElementById('sort-products')?.addEventListener('change', (e) => {
@@ -473,6 +489,7 @@ async function fetchCatalog(append = false) {
   if (currentFilters.search) url += `&search=${encodeURIComponent(currentFilters.search)}`;
   if (currentFilters.stock) url += `&in_stock=1`;
   if (currentFilters.featured) url += `&featured=1`;
+  if (currentFilters.on_sale) url += `&on_sale=1`;
   
   const sortMap = { 
     'featured': '&sort=featured&dir=DESC',
@@ -526,6 +543,26 @@ async function loadFeaturedProducts(categoryId = '') {
   }
 }
 
+async function loadSaleProducts() {
+  const grid = document.getElementById('offers-grid');
+  if (!grid) return;
+
+  grid.innerHTML = '<div class="card skeleton" style="height:380px"></div><div class="card skeleton" style="height:380px"></div>';
+
+  try {
+    const res = await fetch('api/products.php?on_sale=1&limit=4');
+    const json = await res.json();
+    if (json.success && json.data.items.length) {
+      renderProducts(grid, json.data.items);
+    } else {
+      // Si no hay ofertas, ocultamos la sección completa
+      document.getElementById('ofertas-section')?.classList.add('hidden');
+    }
+  } catch (err) {
+    console.error('Error loading offers:', err);
+  }
+}
+
 function renderProducts(grid, products, append = false) {
   if (!grid) return;
   if (!append && !products.length) {
@@ -550,6 +587,7 @@ function renderProducts(grid, products, append = false) {
     <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
+        ${parseInt(p.on_sale) ? `<div class="discount-floating-badge">-${p.sale_discount}%</div>` : ''}
         ${imgUrl 
           ? `<img src="${imgUrl}" alt="${cleanName}" class="card-img" style="width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
              <div class="img-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; gap:10px;">${svgProduct}<span style="font-size:0.85rem;">${cleanName}</span></div>`
@@ -559,13 +597,18 @@ function renderProducts(grid, products, append = false) {
       <div class="card-body">
         ${!isProductPage ? `<h3 class="card-title">${p.name}</h3><p class="card-sku">${p.sku}</p>` : ''}
         <div class="card-badges" style="margin-bottom: 0.75rem; display: flex; flex-wrap: wrap; gap: 8px;">
+          ${parseInt(p.on_sale) ? `<span class="badge badge-sale">Oferta -${p.sale_discount}%</span>` : ''}
           ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
           ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
           ${parseInt(p.customizable) ? '<span class="badge badge-customizable">Personalizable</span>' : ''}
         </div>
         <div style="margin-bottom: 0.75rem;">
           <p class="card-price" style="font-size: 0.78rem; margin-bottom: 2px;">Desde</p>
-          <strong style="font-size: 1.35rem; color: var(--accent-gold); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>
+          ${parseInt(p.on_sale) && p.sale_price 
+            ? `<span class="price-original">$${parseFloat(p.price_from || 0).toFixed(2)}</span>
+               <strong style="font-size: 1.35rem; color: var(--accent-pink); font-family: var(--font-display);">$${parseFloat(p.sale_price).toFixed(2)}</strong>`
+            : `<strong style="font-size: 1.35rem; color: var(--accent-gold); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>`
+          }
           <p class="card-min" style="font-size: 0.7rem; margin-top: 2px;">Mín. ${p.min_quantity || 10} unidades</p>
         </div>
         <div style="display:flex; gap:8px; align-items:center;" onclick="event.stopPropagation()">

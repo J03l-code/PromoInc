@@ -293,6 +293,47 @@ h4, h5, .ui-heading {
   box-shadow: 0 0 6px #10b981;
 }
 
+.badge-sale {
+  color: #ff3366;
+  font-weight: 700;
+  background: rgba(255, 51, 102, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.badge-sale::before {
+  background: #ff3366;
+  box-shadow: 0 0 8px #ff3366;
+}
+
+.price-original {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-right: 8px;
+  font-weight: 400;
+}
+
+.discount-floating-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent-pink);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  z-index: 5;
+  box-shadow: var(--shadow-glow-pink);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.5); }

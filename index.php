@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=47.6">
-  <link rel="stylesheet" href="assets/css/components.css?v=47.6">
-  <link rel="stylesheet" href="assets/css/animations.css?v=47.6">
+  <link rel="stylesheet" href="assets/css/main.css?v=47.7">
+  <link rel="stylesheet" href="assets/css/components.css?v=47.7">
+  <link rel="stylesheet" href="assets/css/animations.css?v=47.7">
   
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -350,6 +350,27 @@ header("Expires: 0");
     </div>
   </section>
 
+  <!-- ═══ OFERTAS ESPECIALES ══════════════════════════════════════ -->
+  <section class="section" id="ofertas-section" style="background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="flex items-center justify-between" style="margin-bottom: 2.5rem;">
+        <div class="reveal">
+          <h2 class="display-2">Ofertas <span class="text-pink glitch" data-text="Relámpago">Relámpago</span></h2>
+          <p class="section-subtitle">Aprovecha descuentos exclusivos por tiempo limitado.</p>
+        </div>
+        <a href="catalogo.html?on_sale=1" class="btn btn-outline reveal">Ver todas las ofertas</a>
+      </div>
+      
+      <div id="offers-grid" class="products-grid">
+        <!-- Se llena con loadSaleProducts() -->
+        <div class="card skeleton" style="height: 380px;"></div>
+        <div class="card skeleton" style="height: 380px;"></div>
+        <div class="card skeleton" style="height: 380px;"></div>
+        <div class="card skeleton" style="height: 380px;"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Productos Destacados -->
   <section class="products-section section" id="productos">
     <div class="container">
@@ -568,7 +589,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=47.6"></script>
+  <script src="assets/js/main.js?v=47.7"></script>
 </body>
 
 </html>

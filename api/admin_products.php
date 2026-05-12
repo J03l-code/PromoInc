@@ -108,10 +108,19 @@ function createAdminProduct(PDO $db): void {
 
     $stmt = $db->prepare("
         INSERT INTO products
-          (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, customizable, featured, active)
+          (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, customizable, featured, on_sale, sale_price, sale_discount, active)
         VALUES
-          (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :customizable, :featured, 1)
+          (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :customizable, :featured, :on_sale, :sale_price, :sale_discount, 1)
     ");
+    
+    $onSale = (int)($data['on_sale'] ?? 0);
+    $salePrice = is_numeric($data['sale_price'] ?? null) ? (float)$data['sale_price'] : null;
+    $discount = 0;
+    if ($onSale && $salePrice && !empty($data['price_from'])) {
+        $price = (float)$data['price_from'];
+        if ($price > 0) $discount = (int)round((($price - $salePrice) / $price) * 100);
+    }
+
     $stmt->execute([
         ':category_id'  => (int)$data['category_id'],
         ':sku'          => sanitize($data['sku']),
@@ -123,6 +132,9 @@ function createAdminProduct(PDO $db): void {
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
         ':customizable' => (int)($data['customizable'] ?? 1),
         ':featured'     => (int)($data['featured'] ?? 0),
+        ':on_sale'      => $onSale,
+        ':sale_price'   => $salePrice,
+        ':sale_discount'=> $discount,
     ]);
 
     $productId = (int)$db->lastInsertId();
@@ -164,6 +176,9 @@ function updateAdminProduct(PDO $db): void {
               min_quantity = :min_quantity,
               customizable = :customizable,
               featured     = :featured,
+              on_sale      = :on_sale,
+              sale_price   = :sale_price,
+              sale_discount = :sale_discount,
               active       = :active
             WHERE id = :id
         ");
@@ -177,9 +192,17 @@ function updateAdminProduct(PDO $db): void {
             ':min_quantity' => (int)($data['min_quantity'] ?? 10),
             ':customizable' => (int)($data['customizable'] ?? 1),
             ':featured'     => (int)($data['featured'] ?? 0),
+            ':on_sale'      => (int)($data['on_sale'] ?? 0),
+            ':sale_price'   => is_numeric($data['sale_price'] ?? null) ? (float)$data['sale_price'] : null,
+            ':sale_discount'=> 0, // Calculado abajo
             ':active'       => (int)($data['active'] ?? 1),
             ':id'           => (int)$data['id'],
         ];
+
+        if ($params[':on_sale'] && $params[':sale_price'] && $params[':price_from']) {
+            $price = (float)$params[':price_from'];
+            if ($price > 0) $params[':sale_discount'] = (int)round((($price - (float)$params[':sale_price']) / $price) * 100);
+        }
 
         if (!empty($data['image_webp'])) {
             $params[':image_webp'] = sanitize($data['image_webp']);

@@ -80,6 +80,10 @@ function getProducts(PDO $db): void {
         $where[]  = 'p.featured = 1';
     }
 
+    if (!empty($_GET['on_sale'])) {
+        $where[]  = 'p.on_sale = 1';
+    }
+
     if (!empty($_GET['search'])) {
         $where[]  = 'MATCH(p.name, p.description) AGAINST(? IN BOOLEAN MODE)';
         $params[] = sanitize($_GET['search']) . '*';
@@ -98,7 +102,7 @@ function getProducts(PDO $db): void {
 
     $stmt = $db->prepare("
         SELECT p.id, p.sku, p.name, p.slug, p.price_from, p.image_webp,
-               p.min_quantity, p.customizable, p.featured,
+               p.min_quantity, p.customizable, p.featured, p.on_sale, p.sale_price, p.sale_discount,
                c.name AS category_name,
                COALESCE(SUM(s.quantity), 0) AS total_stock
         FROM products p
