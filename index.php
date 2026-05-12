@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=60.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=60.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=60.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=61.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=61.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=61.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -677,17 +677,15 @@ header("Expires: 0");
       <div class="hero-right reveal" style="display: flex; flex-direction: column; gap: 15px; align-items: flex-end; justify-content: center; height: 100%;">
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
           <img src="assets/images/hero-products-1.png" alt="Merchandising" style="width: 100%; height: auto; display: block;">
-          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 8px 18px; border-radius: 100px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.15);">
-            <span style="color: #ff8eb3; font-size: 1rem;">❤</span>
-            <span style="color: #fff; font-size: 0.85rem; font-weight: 700;">Personalización con tu logo</span>
+          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
+            <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Personalización con tu logo</span>
           </div>
         </div>
         
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
           <img src="assets/images/hero-products-2.png" alt="Kits corporativos" style="width: 100%; height: auto; display: block;">
-          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 8px 18px; border-radius: 100px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.15);">
-            <span style="color: #00bcff; font-size: 1rem;">💼</span>
-            <span style="color: #fff; font-size: 0.85rem; font-weight: 700;">Kits corporativos</span>
+          <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
+            <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Kits corporativos</span>
           </div>
         </div>
       </div>
