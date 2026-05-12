@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=41.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=41.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=41.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=42.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=42.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=42.0">
 
 </head>
 
