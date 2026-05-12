@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=47.8">
-  <link rel="stylesheet" href="assets/css/components.css?v=47.8">
-  <link rel="stylesheet" href="assets/css/animations.css?v=47.8">
+  <link rel="stylesheet" href="assets/css/main.css?v=47.9">
+  <link rel="stylesheet" href="assets/css/components.css?v=47.9">
+  <link rel="stylesheet" href="assets/css/animations.css?v=47.9">
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <style>
     .product-detail { padding-top: 260px; padding-bottom: 80px; }
@@ -184,7 +184,7 @@
         </div>
 
         <div class="navbar-actions-top">
-          <a href="#" class="nav-action-btn">
+          <a href="javascript:void(0)" onclick="openCart()" class="nav-action-btn" id="cart-btn-nav">
             <div class="cart-icon" style="position:relative;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
               <span id="cart-badge" class="cart-count-badge" style="display:none;"></span>
@@ -198,10 +198,8 @@
             <span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
           </button>
         </div>
-
       </div>
     </div>
-
     <div class="navbar-bottom">
       <div class="container">
         <nav class="nav-categories">
@@ -210,6 +208,32 @@
       </div>
     </div>
   </header>
+
+  <!-- Menú Móvil Overlay -->
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="index.php" class="navbar-logo">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; margin:0;">
+      </a>
+      <button id="mobile-menu-close" class="btn-close-menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-menu-body">
+      <nav class="mobile-nav-list">
+        <a href="index.php" class="mobile-nav-link">Inicio</a>
+        <a href="catalogo.html" class="mobile-nav-link">Catálogo Completo</a>
+        <a href="catalogo.html?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
+        <div class="mobile-nav-divider">Categorías</div>
+        <div id="mobile-categories-list">
+          <!-- Dinámico -->
+        </div>
+      </nav>
+      <div class="mobile-menu-footer">
+        <a href="login.html" class="btn btn-primary w-full justify-center" id="mobile-portal-btn">Mi Portal Corporativo</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ── CART SIDEBAR ──────────────────────────────────── -->
   <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
@@ -257,9 +281,9 @@
 
 
 
-  <script src="assets/js/cart.js?v=47.8"></script>
-  <script src="assets/js/checkout.js?v=47.8"></script>
-  <script src="assets/js/main.js?v=47.8"></script>
+  <script src="assets/js/cart.js?v=47.9"></script>
+  <script src="assets/js/checkout.js?v=47.9"></script>
+  <script src="assets/js/main.js?v=47.9"></script>
   <script>
     let currentProduct = null;
 

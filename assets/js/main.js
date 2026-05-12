@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '47.8';
+const VERSION = '47.9';
 
 document.addEventListener('DOMContentLoaded', () => {
   
@@ -44,12 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Hamburger
+  // Hamburger & Mobile Menu
   const toggle = document.getElementById('navbar-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-  toggle?.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    mobileMenu?.classList.toggle('open');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  
+  const openMobileMenu = () => {
+    toggle?.classList.add('open');
+    mobileMenu?.classList.add('open');
+    document.body.style.overflow = 'hidden'; // Lock scroll
+  };
+
+  const closeMobileMenu = () => {
+    toggle?.classList.remove('open');
+    mobileMenu?.classList.remove('open');
+    document.body.style.overflow = ''; // Unlock scroll
+  };
+
+  toggle?.addEventListener('click', openMobileMenu);
+  mobileMenuClose?.addEventListener('click', closeMobileMenu);
+  
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
   });
 
   // Reveal on scroll
@@ -210,17 +227,17 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSiteSettings();
   loadDynamicCategories();
   
-  // Navbar search event
-  const navSearchBtn = document.getElementById('btn-navbar-search');
-  const navSearchInp = document.getElementById('navbar-search-input');
-  if (navSearchBtn && navSearchInp) {
-    const doSearch = () => {
-      const q = navSearchInp.value.trim();
-      if (q) window.location.href = `catalogo.html?search=${encodeURIComponent(q)}`;
-    };
-    navSearchBtn.addEventListener('click', doSearch);
-    navSearchInp.addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
-  }
+  // Navbar search event (Global)
+  const doGlobalSearch = () => {
+    const inp = document.getElementById('navbar-search-input');
+    const q = inp?.value.trim();
+    if (q) window.location.href = `catalogo.html?search=${encodeURIComponent(q)}`;
+  };
+  
+  document.getElementById('btn-navbar-search')?.addEventListener('click', doGlobalSearch);
+  document.getElementById('navbar-search-input')?.addEventListener('keypress', (e) => { 
+    if (e.key === 'Enter') doGlobalSearch(); 
+  });
 
   // Auth UI sync
   updateAuthUI();
@@ -382,6 +399,17 @@ async function loadDynamicCategories() {
         </div>
       `).join('') + '<a href="#" class="nav-link-ofertas">Ofertas</a>';
 
+      // Categorías en Menú Móvil
+      const mobileNav = document.getElementById('mobile-categories-list');
+      if (mobileNav) {
+        mobileNav.innerHTML = json.data.map(cat => `
+          <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link">
+            ${cat.name}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        `).join('');
+      }
+
       // Categorías en Footer
       const footerNav = document.getElementById('footer-categories');
       if (footerNav) {
@@ -435,7 +463,7 @@ function initCatalog() {
   if (params.get('category')) currentFilters.category = params.get('category');
   if (params.get('search')) {
     currentFilters.search = params.get('search');
-    const sInput = document.getElementById('catalog-search');
+    const sInput = document.getElementById('navbar-search-input');
     if (sInput) sInput.value = params.get('search');
   }
   if (params.get('on_sale')) {
@@ -445,11 +473,11 @@ function initCatalog() {
   }
 
   // Events
-  document.getElementById('btn-search-catalog')?.addEventListener('click', () => {
-    currentFilters.search = document.getElementById('catalog-search').value;
+  document.getElementById('btn-navbar-search')?.addEventListener('click', () => {
+    currentFilters.search = document.getElementById('navbar-search-input').value;
     reloadCatalog();
   });
-  document.getElementById('catalog-search')?.addEventListener('keypress', (e) => {
+  document.getElementById('navbar-search-input')?.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       currentFilters.search = e.target.value;
       reloadCatalog();

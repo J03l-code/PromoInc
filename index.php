@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=47.8">
-  <link rel="stylesheet" href="assets/css/components.css?v=47.8">
-  <link rel="stylesheet" href="assets/css/animations.css?v=47.8">
+  <link rel="stylesheet" href="assets/css/main.css?v=47.9">
+  <link rel="stylesheet" href="assets/css/components.css?v=47.9">
+  <link rel="stylesheet" href="assets/css/animations.css?v=47.9">
   
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -83,8 +83,8 @@ header("Expires: 0");
         </a>
 
         <div class="navbar-search">
-          <input type="text" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
-          <button type="button" aria-label="Botón buscar">
+          <input type="text" id="navbar-search-input" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
+          <button type="button" id="btn-navbar-search" aria-label="Botón buscar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -93,7 +93,7 @@ header("Expires: 0");
         </div>
 
         <div class="navbar-actions-top">
-          <a href="#" class="nav-action-btn">
+          <a href="javascript:void(0)" onclick="openCart()" class="nav-action-btn" id="cart-btn-nav">
             <div class="cart-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="9" cy="21" r="1" />
@@ -118,39 +118,37 @@ header("Expires: 0");
     <div class="navbar-bottom">
       <div class="container">
         <nav class="nav-categories">
-          <a href="#">Día de la madre <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Oficina <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Tomatodos y Jarros <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Textil <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Bolsos <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Hogar <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Llaveros</a>
-          <a href="#">Tecnología <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Ecológicos <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#">Más categorías <svg viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg></a>
-          <a href="#" class="nav-link-ofertas">Ofertas</a>
+          <!-- Se llena dinámicamente -->
         </nav>
       </div>
     </div>
   </header>
+
+  <!-- Menú Móvil Overlay -->
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="index.php" class="navbar-logo">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; margin:0;">
+      </a>
+      <button id="mobile-menu-close" class="btn-close-menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="mobile-menu-body">
+      <nav class="mobile-nav-list">
+        <a href="index.php" class="mobile-nav-link">Inicio</a>
+        <a href="catalogo.html" class="mobile-nav-link">Catálogo Completo</a>
+        <a href="catalogo.html?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
+        <div class="mobile-nav-divider">Categorías</div>
+        <div id="mobile-categories-list">
+          <!-- Se llena dinámicamente -->
+        </div>
+      </nav>
+      <div class="mobile-menu-footer">
+        <a href="login.html" class="btn btn-primary w-full justify-center" id="mobile-portal-btn">Mi Portal Corporativo</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ HERO SECTION ═══════════════════════════════════════ -->
   <section class="hero-main">
@@ -589,7 +587,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=47.8"></script>
+  <script src="assets/js/main.js?v=47.9"></script>
 </body>
 
 </html>
