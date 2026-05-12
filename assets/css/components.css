@@ -200,7 +200,7 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  padding-top: 180px;
+  padding-top: 320px; /* Aumento para el nuevo logo gigante */
   padding-bottom: 0;
 }
 
