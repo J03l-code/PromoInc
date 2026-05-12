@@ -695,7 +695,9 @@ function renderProducts(grid, products, append = false) {
           >
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           </button>
-          <a href="producto.html?id=${p.id}&v=${VERSION}"
+          <a
+            href="javascript:void(0)"
+            onclick="(function(e){ e.stopPropagation(); const wa = window.siteWhatsapp || '593987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${p.name.replace(/'/g,\"\\'\")}%0ASKU: ${p.sku}%0ACantidad mínima: ${p.min_quantity || 10} unidades'; window.open('https://wa.me/' + wa + '?text=' + txt, '_blank'); })(event)"
             style="
               flex: 1; display:flex; align-items:center; justify-content:center; gap:6px;
               padding: 0.5rem 0.75rem; border-radius:10px; font-size:0.8rem; font-weight:700;
@@ -707,7 +709,7 @@ function renderProducts(grid, products, append = false) {
             onmouseenter="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 22px rgba(0,188,255,0.5)'"
             onmouseleave="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,188,255,0.3)'"
           >
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             Cotizar
           </a>
         </div>
