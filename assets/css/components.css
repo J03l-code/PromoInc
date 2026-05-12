@@ -1095,16 +1095,19 @@
 .logos-marquee {
   width: 100%;
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 1rem 0;
   position: relative;
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .logos-track {
   display: flex;
-  width: calc(250px * 20);
-  animation: scroll 40s linear infinite;
+  width: max-content;
+  animation: scroll var(--scroll-speed, 40s) linear infinite;
 }
 
 .logo-item {
@@ -1137,7 +1140,12 @@
 
 @keyframes scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-250px * 10)); }
+  100% { transform: translateX(var(--scroll-dist, -2800px)); }
+}
+
+@keyframes scroll-reverse {
+  0% { transform: translateX(var(--scroll-dist, -2800px)); }
+  100% { transform: translateX(0); }
 }
 
 @media (max-width: 1024px) {

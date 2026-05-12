@@ -79,30 +79,56 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Dynamic Brands Ticker
-  const track = document.querySelector('.logos-track');
-  if (track) {
+  const marquee = document.querySelector('.logos-marquee');
+  if (marquee) {
     fetch('api/public_brand_logos.php')
       .then(res => res.json())
       .then(res => {
         if (res.success && res.data.length > 0) {
-          track.innerHTML = res.data.map(b => `
-            <div class="logo-item" style="flex-direction: column; width: auto; min-width: 280px; padding: 0 1.5rem;">
-              <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.9; max-height: 135px; max-width: 300px; transition: all 0.3s ease; object-fit: contain;">
-              </div>
-              <span style="margin-top: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.2; text-align: center; max-width: 220px; word-wrap: break-word; white-space: normal;">${b.name}</span>
-            </div>
-          `).join('');
+          const brands = res.data;
           
-          // Efecto infinito o centrado dependiendo de la cantidad
-          if (res.data.length > 5) {
-            track.innerHTML += track.innerHTML; // Duplicar para el loop
+          const renderTrack = (items, direction = 'normal') => {
+            const html = items.map(b => `
+              <div class="logo-item" style="flex-direction: column; width: auto; min-width: 280px; padding: 0 1.5rem;">
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                  <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.9; max-height: 100px; max-width: 250px; transition: all 0.3s ease; object-fit: contain;">
+                </div>
+                <span style="margin-top: 0.5rem; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.2; text-align: center; max-width: 220px; word-wrap: break-word; white-space: normal;">${b.name}</span>
+              </div>
+            `).join('');
+            
+            const track = document.createElement('div');
+            track.className = 'logos-track';
+            track.style.setProperty('--scroll-dist', `-${items.length * 280}px`);
+            track.style.setProperty('--scroll-speed', `${items.length * 4}s`); // Smooth constant speed
+            
+            if (direction === 'reverse') {
+              track.style.animationName = 'scroll-reverse';
+            }
+            track.innerHTML = html + html; 
+            return track;
+          };
+
+          marquee.innerHTML = ''; // Clear original track placeholder
+          
+          if (brands.length > 8) {
+            // Split into two rows
+            const mid = Math.ceil(brands.length / 2);
+            const row1 = brands.slice(0, mid);
+            const row2 = brands.slice(mid);
+            
+            marquee.appendChild(renderTrack(row1, 'normal'));
+            marquee.appendChild(renderTrack(row2, 'reverse'));
           } else {
-            // Si hay pocas marcas, quitar animación y centrarlas
-            track.style.animation = 'none';
-            track.style.justifyContent = 'center';
-            track.style.width = '100%';
-            track.style.flexWrap = 'wrap';
+            // Single row
+            const track = renderTrack(brands, 'normal');
+            if (brands.length <= 5) {
+              track.style.animation = 'none';
+              track.style.justifyContent = 'center';
+              track.style.width = '100%';
+              track.style.flexWrap = 'wrap';
+            }
+            marquee.appendChild(track);
           }
         }
       })
