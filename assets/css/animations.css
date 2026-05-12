@@ -2,50 +2,6 @@
    PromoInc — Animaciones y Micro-interacciones
    ============================================================ */
 
-/* ── Cursor personalizado ─────────────────────────────────── */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent-gold);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s var(--ease-smooth), background 0.2s, opacity 0.3s;
-}
-
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--accent-gold);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), width 0.3s, height 0.3s, border-color 0.3s;
-  opacity: 0.6;
-}
-
-body.hovering .cursor-dot {
-  transform: translate(-50%, -50%) scale(2);
-  background: var(--accent-cyan);
-}
-
-body.hovering .cursor-ring {
-  width: 65px;
-  height: 65px;
-  border-color: var(--accent-cyan);
-  opacity: 0.3;
-}
-
-/* --- Magnetic Element Support --- */
-.magnetic {
-  display: inline-block;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
 /* --- Smooth Scroll (Lenis) Support --- */
 html.lenis {
   height: auto;
