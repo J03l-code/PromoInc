@@ -697,7 +697,7 @@ function renderProducts(grid, products, append = false) {
           </button>
           <a
             href="javascript:void(0)"
-            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '593987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}%0ACantidad mínima: ${p.min_quantity || 10} unidades'; window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
+            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '5930987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}%0ACantidad mínima: ${p.min_quantity || 10} unidades'; window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
             style="
               flex: 1; display:flex; align-items:center; justify-content:center; gap:6px;
               padding: 0.5rem 0.75rem; border-radius:10px; font-size:0.8rem; font-weight:700;
