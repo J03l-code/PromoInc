@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=44.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=44.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=44.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=45.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=45.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=45.0">
 
 </head>
 
@@ -571,7 +571,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=35.0"></script>
+  <script src="assets/js/main.js?v=45.0"></script>
 </body>
 
 </html>
