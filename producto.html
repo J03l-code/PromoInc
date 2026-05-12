@@ -665,13 +665,15 @@
       
       // Update WA Link
       const waBtn = document.getElementById('wa-quote-btn');
-      const waNumber = window.siteWhatsapp || '593987654321';
-      const text = `Hola PromoInc, me interesa cotizar:
+      if (waBtn) {
+        const waNumber = window.siteWhatsapp || '593987654321';
+        const text = `Hola PromoInc, me interesa cotizar:
 Producto: ${p.name}
 SKU: ${p.sku}
 Cantidad: ${qty} unidades
 Precio Ref: $${unitPrice.toFixed(2)} c/u`;
-      waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+        waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+      }
     }
   </script>
 
