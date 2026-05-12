@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=46.7">
-  <link rel="stylesheet" href="assets/css/components.css?v=46.7">
-  <link rel="stylesheet" href="assets/css/animations.css?v=46.7">
+  <link rel="stylesheet" href="assets/css/main.css?v=46.8">
+  <link rel="stylesheet" href="assets/css/components.css?v=46.8">
+  <link rel="stylesheet" href="assets/css/animations.css?v=46.8">
   
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -361,12 +361,8 @@ header("Expires: 0");
         <a href="catalogo.html" class="btn btn-secondary reveal">Ver Todo el Catálogo</a>
       </div>
 
-      <div class="products-filter-bar reveal">
-        <button class="filter-btn active">Todos</button>
-        <button class="filter-btn">Tecnología</button>
-        <button class="filter-btn">Escritura</button>
-        <button class="filter-btn">Tomatodos</button>
-        <button class="filter-btn">Ecología</button>
+      <div id="featured-filter-bar" class="products-filter-bar reveal">
+        <button class="filter-btn active" data-cat="all">Todos</button>
       </div>
 
       <!-- El contenedor se llenará vía main.js -->
@@ -572,7 +568,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=46.7"></script>
+  <script src="assets/js/main.js?v=46.8"></script>
 </body>
 
 </html>
