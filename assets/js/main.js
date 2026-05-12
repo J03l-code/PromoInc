@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '44.1';
+const VERSION = '45.1';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -86,10 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => {
         if (res.success && res.data.length > 0) {
           track.innerHTML = res.data.map(b => `
-            <div class="logo-item">
-              <div class="client-logo-box">
-                <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.7; height: 32px; transition: opacity 0.3s; object-fit: contain;">
+            <div class="logo-item" style="flex-direction: column; width: auto; min-width: 280px; padding: 2rem;">
+              <div style="display: flex; justify-content: center; align-items: center; height: 140px; width: 100%;">
+                <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.9; max-height: 120px; max-width: 220px; transition: all 0.3s ease; object-fit: contain;">
               </div>
+              <span style="margin-top: 1rem; font-size: 0.95rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase;">${b.name}</span>
             </div>
           `).join('');
           
