@@ -1,0 +1,50 @@
+/* ── PDF Catalog Generator ────────────────────────────────────── */
+/* Used on catalogo.html to generate a downloadable product catalog */
+
+#btn-download-catalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-cyan-d) 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+  box-shadow: 0 4px 20px rgba(0, 188, 255, 0.3);
+  white-space: nowrap;
+}
+
+#btn-download-catalog:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 188, 255, 0.45);
+}
+
+#btn-download-catalog:active {
+  transform: translateY(0);
+}
+
+#btn-download-catalog.loading {
+  opacity: 0.75;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+#btn-download-catalog svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Spinner animation for loading state */
+@keyframes catalog-spin {
+  to { transform: rotate(360deg); }
+}
+
+#btn-download-catalog.loading svg {
+  animation: catalog-spin 0.8s linear infinite;
+}
