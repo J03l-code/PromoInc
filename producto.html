@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=21.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=21.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=21.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=44.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=44.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=44.0">
   <style>
     .product-detail { padding-top: 180px; padding-bottom: 80px; }
     .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
@@ -256,9 +256,9 @@
 
 
 
-  <script src="assets/js/cart.js?v=21.0"></script>
-  <script src="assets/js/checkout.js?v=21.0"></script>
-  <script src="assets/js/main.js?v=24.0"></script>
+  <script src="assets/js/cart.js?v=44.0"></script>
+  <script src="assets/js/checkout.js?v=44.0"></script>
+  <script src="assets/js/main.js?v=44.0"></script>
   <script>
     let currentProduct = null;
 
@@ -338,18 +338,30 @@
       if (!productId) { window.location.href = 'catalogo.html'; return; }
 
       try {
+        console.log('Cargando producto ID:', productId);
         const res = await fetch(`api/products.php?id=${productId}`);
+        if (!res.ok) throw new Error('Error en la respuesta del servidor');
+        
         const json = await res.json();
         if (json.success) {
           currentProduct = json.data;
           renderProductDetail();
         } else {
-          window.location.href = 'catalogo.html';
+          showError('Lo sentimos, este producto no está disponible o no existe.');
         }
       } catch (err) {
-        console.error(err);
-        window.location.href = 'catalogo.html';
+        console.error('Error initPage:', err);
+        showError('Hubo un problema al cargar los detalles del producto.');
       }
+    }
+
+    function showError(msg) {
+      document.getElementById('product-content').innerHTML = `
+        <div style="text-align:center; padding: 100px 20px;">
+          <h2 style="font-family:var(--font-display); margin-bottom:1rem;">${msg}</h2>
+          <a href="catalogo.html" class="btn btn-primary">Volver al Catálogo</a>
+        </div>
+      `;
     }
 
     document.addEventListener('DOMContentLoaded', initPage);

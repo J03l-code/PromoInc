@@ -1,4 +1,6 @@
 /* PromoInc — main.js */
+const VERSION = '44.0';
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // Page loader
@@ -140,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Load all dynamic data
-  console.log('Main.js v1.8 initialized');
+  console.log(`Main.js v${VERSION} initialized`);
   loadSiteSettings();
   loadDynamicCategories();
   
@@ -481,7 +483,7 @@ function renderProducts(grid, products, append = false) {
       </div>`;
       
     return `
-    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=2.8'" style="cursor: pointer;">
+    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
         ${imgUrl 
@@ -518,7 +520,7 @@ function renderProducts(grid, products, append = false) {
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             </button>
-            <a href="producto.html?id=${p.id}&v=2.8" class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Cotizar</a>
+            <a href="producto.html?id=${p.id}&v=${VERSION}" class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Cotizar</a>
           </div>
         </div>
       </div>
