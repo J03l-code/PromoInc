@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=46.4">
-  <link rel="stylesheet" href="assets/css/components.css?v=46.4">
-  <link rel="stylesheet" href="assets/css/animations.css?v=46.4">
+  <link rel="stylesheet" href="assets/css/main.css?v=46.5">
+  <link rel="stylesheet" href="assets/css/components.css?v=46.5">
+  <link rel="stylesheet" href="assets/css/animations.css?v=46.5">
   <style>
     .product-detail { padding-top: 180px; padding-bottom: 80px; }
     .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
@@ -256,9 +256,9 @@
 
 
 
-  <script src="assets/js/cart.js?v=46.4"></script>
-  <script src="assets/js/checkout.js?v=46.4"></script>
-  <script src="assets/js/main.js?v=46.4"></script>
+  <script src="assets/js/cart.js?v=46.5"></script>
+  <script src="assets/js/checkout.js?v=46.5"></script>
+  <script src="assets/js/main.js?v=46.5"></script>
   <script>
     let currentProduct = null;
 
@@ -694,11 +694,11 @@
       let isResizing = false;
       let initialWidth, initialHeight;
 
-      el.onmousedown = dragStart;
-      el.ontouchstart = dragStart;
+      el.addEventListener('mousedown', dragStart);
+      el.addEventListener('touchstart', dragStart, { passive: false });
       
-      resizer.onmousedown = resizeStart;
-      resizer.ontouchstart = resizeStart;
+      resizer.addEventListener('mousedown', resizeStart);
+      resizer.addEventListener('touchstart', resizeStart, { passive: false });
 
       function resizeStart(e) {
         e.preventDefault();
@@ -715,32 +715,23 @@
         initialWidth = rect.width;
         initialHeight = rect.height;
 
-        document.onmousemove = resizeMove;
-        document.onmouseup = stopAll;
-        document.ontouchmove = resizeMove;
-        document.ontouchend = stopAll;
+        window.addEventListener('mousemove', resizeMove);
+        window.addEventListener('mouseup', stopAll);
+        window.addEventListener('touchmove', resizeMove, { passive: false });
+        window.addEventListener('touchend', stopAll);
       }
 
       function resizeMove(e) {
         if (!isResizing) return;
-        
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-        
-        const dx = clientX - startX;
-        const dy = clientY - startY;
-        
-        // Maintain aspect ratio if possible, or just free resize
-        // Let's go with proportional resize based on the larger delta
-        const delta = Math.max(dx, dy);
-        
-        el.style.width = (initialWidth + delta) + 'px';
-        el.style.height = (initialHeight + delta) + 'px';
+        const delta = Math.max(clientX - startX, clientY - startY);
+        el.style.width = Math.max(30, initialWidth + delta) + 'px';
+        el.style.height = Math.max(30, initialHeight + delta) + 'px';
       }
 
       function dragStart(e) {
-        if (isResizing) return;
-        if (e.target.id === 'mockup-resizer') return;
+        if (isResizing || e.target.id === 'mockup-resizer') return;
         
         e.preventDefault();
         isDragging = true;
@@ -757,36 +748,33 @@
         initialLeft = rect.left - parentRect.left;
         initialTop = rect.top - parentRect.top;
 
-        document.onmousemove = dragMove;
-        document.onmouseup = dragEnd;
-        document.ontouchmove = dragMove;
-        document.ontouchend = dragEnd;
+        window.addEventListener('mousemove', dragMove);
+        window.addEventListener('mouseup', stopAll);
+        window.addEventListener('touchmove', dragMove, { passive: false });
+        window.addEventListener('touchend', stopAll);
         
-        el.style.transform = 'none'; // Remove centering transform for manual positioning
+        el.style.transform = 'none'; 
         el.style.left = initialLeft + 'px';
         el.style.top = initialTop + 'px';
       }
 
       function dragMove(e) {
         if (!isDragging) return;
-        
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-        
-        const dx = clientX - startX;
-        const dy = clientY - startY;
-        
-        el.style.left = (initialLeft + dx) + 'px';
-        el.style.top = (initialTop + dy) + 'px';
+        el.style.left = (initialLeft + (clientX - startX)) + 'px';
+        el.style.top = (initialTop + (clientY - startY)) + 'px';
       }
 
       function stopAll() {
         isDragging = false;
         isResizing = false;
-        document.onmousemove = null;
-        document.onmouseup = null;
-        document.ontouchmove = null;
-        document.ontouchend = null;
+        window.removeEventListener('mousemove', dragMove);
+        window.removeEventListener('mousemove', resizeMove);
+        window.removeEventListener('mouseup', stopAll);
+        window.removeEventListener('touchmove', dragMove);
+        window.removeEventListener('touchmove', resizeMove);
+        window.removeEventListener('touchend', stopAll);
       }
     }
 
