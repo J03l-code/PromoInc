@@ -1,7 +1,26 @@
 /* PromoInc — main.js */
-const VERSION = '45.9';
+const VERSION = '46.5';
 
 document.addEventListener('DOMContentLoaded', () => {
+  
+  // --- Lenis Smooth Scroll ---
+  if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      lerp: 0.1
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    window.lenis = lenis; // Expose to global if needed
+  }
+
 
   // Page loader
   const loader = document.getElementById('page-loader');
@@ -64,6 +83,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     cio.observe(el);
   });
+
+  // --- Magnetic & Custom Cursor ---
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorRing = document.querySelector('.cursor-ring');
+  
+  if (cursorDot && cursorRing) {
+    let mouseX = -100, mouseY = -100;
+    let dotX = -100, dotY = -100;
+    let ringX = -100, ringY = -100;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.opacity = '1';
+      cursorRing.style.opacity = '1';
+    });
+
+    const renderCursor = () => {
+      // Dot follows fast
+      dotX += (mouseX - dotX) * 0.2;
+      dotY += (mouseY - dotY) * 0.2;
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top = dotY + 'px';
+
+      // Ring follows with more delay/inertia
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+
+      requestAnimationFrame(renderCursor);
+    };
+    requestAnimationFrame(renderCursor);
+
+    // Magnetic effect for buttons
+    const magneticElements = document.querySelectorAll('.btn, .nav-categories a, .nav-action-btn, .social-btn, .magnetic');
+    
+    magneticElements.forEach(el => {
+      el.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const x = e.clientX - centerX;
+        const y = e.clientY - centerY;
+        
+        // Move element (magnetic pull)
+        this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        
+        // Snapping cursor ring towards center
+        mouseX = centerX + (x * 0.1);
+        mouseY = centerY + (y * 0.1);
+        
+        document.body.classList.add('hovering');
+      });
+
+      el.addEventListener('mouseleave', function() {
+        this.style.transform = 'translate(0px, 0px)';
+        document.body.classList.remove('hovering');
+      });
+    });
+  }
+
 
   // Ripple buttons
   document.querySelectorAll('.btn').forEach(btn => {

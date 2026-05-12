@@ -21,6 +21,9 @@ header("Expires: 0");
   <link rel="stylesheet" href="assets/css/main.css?v=46.5">
   <link rel="stylesheet" href="assets/css/components.css?v=46.5">
   <link rel="stylesheet" href="assets/css/animations.css?v=46.5">
+  
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
 
 </head>
 
