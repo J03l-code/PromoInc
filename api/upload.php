@@ -29,16 +29,38 @@ if ($file['size'] > MAX_FILE_SIZE) {
     jsonError(413, 'El archivo supera el límite de 5 MB');
 }
 
-$allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+$allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 if (!in_array($origExt, $allowed)) {
-    jsonError(415, 'Formato no soportado. Use JPG, PNG o WebP');
+    jsonError(415, 'Formato no soportado. Use JPG, PNG, WebP o SVG');
 }
 
 // ── Detectar tipo real con finfo ──────────────────────────────
 $mime = mime_content_type($tmpPath);
-$allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+$allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml', 'image/svg'];
 if (!in_array($mime, $allowedMimes)) {
-    jsonError(415, 'Tipo MIME no válido');
+    // Algunos servidores no detectan SVG correctamente como mime
+    if ($origExt !== 'svg') {
+        jsonError(415, 'Tipo MIME no válido: ' . $mime);
+    }
+    $mime = 'image/svg+xml';
+}
+
+$folder = UPLOAD_DIR;
+if (!is_dir($folder)) mkdir($folder, 0755, true);
+
+// ── Manejo de SVG (Pass-through) ──────────────────────────────
+if ($mime === 'image/svg+xml' || $origExt === 'svg') {
+    $filename = uniqid('img_', true) . '.svg';
+    $destPath = $folder . $filename;
+    if (!move_uploaded_file($tmpPath, $destPath)) {
+        jsonError(500, 'Error al guardar archivo SVG');
+    }
+    jsonSuccess([
+        'filename'  => $filename,
+        'path'      => 'assets/images/' . $filename,
+        'url'       => '/assets/images/' . $filename,
+        'size_bytes'=> filesize($destPath),
+    ]);
 }
 
 // ── Conversión a WebP ─────────────────────────────────────────
@@ -51,7 +73,7 @@ switch ($mime) {
 }
 
 if (!$srcImage) {
-    jsonError(500, 'No se pudo procesar la imagen');
+    jsonError(500, 'No se pudo procesar la imagen (formato incompatible)');
 }
 
 // Para PNG con transparencia
@@ -65,9 +87,6 @@ imagefilledrectangle($output, 0, 0, $width, $height, $transparent);
 imagecopy($output, $srcImage, 0, 0, 0, 0, $width, $height);
 
 // ── Guardar WebP ──────────────────────────────────────────────
-$folder   = UPLOAD_DIR;
-if (!is_dir($folder)) mkdir($folder, 0755, true);
-
 $filename = uniqid('img_', true) . '.webp';
 $destPath = $folder . $filename;
 

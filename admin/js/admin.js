@@ -977,7 +977,11 @@ async function handleBrandUpload(file) {
   formData.append('image', file);
   
   try {
-    const res = await fetch(`${API}/upload.php`, { method: 'POST', body: formData });
+    const res = await fetch(`${API}/upload.php`, { 
+      method: 'POST', 
+      body: formData,
+      credentials: 'same-origin'
+    });
     const data = await res.json();
     if (data.success) {
       document.getElementById('brand-image').value = data.filename;
@@ -985,7 +989,10 @@ async function handleBrandUpload(file) {
       document.getElementById('brand-upload-preview').classList.remove('hidden');
       document.getElementById('brand-upload-placeholder').classList.add('hidden');
     } else toast(data.error || 'Error al subir', 'error');
-  } catch (err) { toast('Error de conexión', 'error'); }
+  } catch (err) { 
+    console.error('Upload Error:', err);
+    toast('Error al procesar la imagen', 'error'); 
+  }
 }
 
 document.getElementById('brand-remove-img')?.addEventListener('click', e => {
