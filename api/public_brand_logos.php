@@ -16,5 +16,9 @@ try {
     ]);
 
 } catch (PDOException $e) {
+    if (strpos($e->getMessage(), "doesn't exist") !== false || strpos($e->getMessage(), "no such table") !== false) {
+        echo json_encode(["success" => true, "data" => []]);
+        exit;
+    }
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

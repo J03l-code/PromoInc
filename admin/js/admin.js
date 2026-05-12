@@ -30,8 +30,19 @@ async function api(endpoint, method = 'GET', body = null) {
     opts.body = JSON.stringify(finalBody);
   }
 
-  const res = await fetch(`${API}/${endpoint}`, opts);
-  return res.json();
+  try {
+    const res = await fetch(`${API}/${endpoint}`, opts);
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('API Response was not JSON:', text);
+      return { success: false, error: 'Error en la respuesta del servidor' };
+    }
+  } catch (err) {
+    console.error('API Connection Error:', err);
+    return { success: false, error: 'No se pudo conectar con el servidor' };
+  }
 }
 
 function toast(msg, type = 'info') {

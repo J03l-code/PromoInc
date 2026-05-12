@@ -25,8 +25,24 @@ switch ($method) {
 }
 
 function getBrandLogos(PDO $db): void {
-    $stmt = $db->query("SELECT * FROM brand_logos ORDER BY sort_order ASC, id DESC");
-    jsonSuccess($stmt->fetchAll());
+    try {
+        $stmt = $db->query("SELECT * FROM brand_logos ORDER BY sort_order ASC, id DESC");
+        jsonSuccess($stmt->fetchAll());
+    } catch (PDOException $e) {
+        // Si la tabla no existe, intentamos crearla
+        if (strpos($e->getMessage(), "doesn't exist") !== false || strpos($e->getMessage(), "no such table") !== false) {
+            $db->exec("CREATE TABLE IF NOT EXISTS brand_logos (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                filename VARCHAR(255) NOT NULL,
+                sort_order INT DEFAULT 0,
+                active TINYINT(1) DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+            jsonSuccess([]);
+        }
+        jsonError(500, 'Error en BD: ' . $e->getMessage());
+    }
 }
 
 function createBrandLogo(PDO $db): void {
