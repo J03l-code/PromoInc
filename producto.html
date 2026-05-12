@@ -5,59 +5,139 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cargando Producto... | PromoInc</title>
-  
+
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=48.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=48.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=48.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=48.1">
+  <link rel="stylesheet" href="assets/css/components.css?v=48.1">
+  <link rel="stylesheet" href="assets/css/animations.css?v=48.1">
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <style>
-    .product-detail { padding-top: 260px; padding-bottom: 80px; }
-    .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
-    .product-gallery { position: sticky; top: 120px; }
-    
-    .main-image-container { 
-      aspect-ratio: 1; 
-      background: var(--bg-surface); 
-      border: 1px solid var(--border); 
-      border-radius: 24px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      overflow: hidden; 
+    .product-detail {
+      padding-top: 260px;
+      padding-bottom: 80px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+    }
+
+    .product-gallery {
+      position: sticky;
+      top: 120px;
+    }
+
+    .main-image-container {
+      aspect-ratio: 1;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
       margin-bottom: 24px;
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
     }
-    .main-image-container:hover { border-color: var(--accent-cyan); box-shadow: var(--shadow-glow-cyan); }
-    .main-image-container img { width: 90%; height: 90%; object-fit: contain; }
-    
-    .gallery-thumbs { display: flex; gap: 15px; }
-    .thumb { width: 80px; height: 80px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-surface); cursor: pointer; padding: 10px; }
-    .thumb.active { border-color: var(--accent-cyan); }
-    .thumb img { width: 100%; height: 100%; object-fit: contain; }
 
-    .breadcrumbs { margin-bottom: 2rem; font-size: 0.9rem; display: flex; gap: 10px; color: var(--text-muted); }
-    .breadcrumbs a { color: var(--text-muted); }
-    .breadcrumbs a:hover { color: var(--accent-cyan); }
+    .main-image-container:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: var(--shadow-glow-cyan);
+    }
 
-    .product-info h1 { font-family: var(--font-display); font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
-    .product-description-short { color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; }
-    
-    .stock-status { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem; }
-    .stock-dot { width: 8px; height: 8px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+    .main-image-container img {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+    }
 
-    .calc-box { 
+    .gallery-thumbs {
+      display: flex;
+      gap: 15px;
+    }
+
+    .thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .thumb.active {
+      border-color: var(--accent-cyan);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 10px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumbs a {
+      color: var(--text-muted);
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .product-info h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .product-description-short {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .stock-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .stock-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 10px #00ff88;
+    }
+
+    .calc-box {
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px; 
-      padding: 35px; 
+      border-radius: 24px;
+      padding: 35px;
       margin-bottom: 30px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
+
     .calc-box::before {
       content: '';
       position: absolute;
@@ -68,101 +148,346 @@
       background: radial-gradient(circle at center, rgba(0, 255, 240, 0.05) 0%, transparent 70%);
       pointer-events: none;
     }
-    .calc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .calc-label { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-    .calc-value { font-size: 1.8rem; font-weight: 800; }
-    .price-unit { color: var(--text-primary); }
-    .price-total { color: var(--accent-cyan); }
 
-    .qty-selector { display: flex; align-items: center; background: var(--bg-body); border: 1px solid var(--border); border-radius: 12px; padding: 5px; width: fit-content; }
-    .qty-btn { width: 40px; height: 40px; border-radius: 8px; border: none; background: transparent; color: var(--text-primary); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-    .qty-btn:hover { background: var(--bg-surface); color: var(--accent-cyan); }
-    .qty-input { width: 60px; border: none; background: transparent; text-align: center; color: var(--text-primary); font-weight: 700; font-size: 1.1rem; }
-    .qty-input::-webkit-inner-spin-button { display: none; }
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-    .discount-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
-    .discount-table th { text-align: left; padding: 12px; color: var(--text-muted); font-weight: 500; border-bottom: 1px solid var(--border); }
-    .discount-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
-    .discount-table tr:last-child td { border-bottom: none; }
-    .discount-table .highlight { color: var(--accent-cyan); font-weight: 600; }
-    .discount-table .saving { color: #00ff88; font-size: 0.8rem; }
+    .calc-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-    .specs-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-    .spec-item { display: flex; flex-direction: column; }
-    .spec-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-    .spec-value { font-weight: 600; color: var(--text-primary); }
+    .calc-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    .price-unit {
+      color: var(--text-primary);
+    }
+
+    .price-total {
+      color: var(--accent-cyan);
+    }
+
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 5px;
+      width: fit-content;
+    }
+
+    .qty-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .qty-btn:hover {
+      background: var(--bg-surface);
+      color: var(--accent-cyan);
+    }
+
+    .qty-input {
+      width: 60px;
+      border: none;
+      background: transparent;
+      text-align: center;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .qty-input::-webkit-inner-spin-button {
+      display: none;
+    }
+
+    .discount-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .discount-table th {
+      text-align: left;
+      padding: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .discount-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .discount-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .discount-table .highlight {
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .discount-table .saving {
+      color: #00ff88;
+      font-size: 0.8rem;
+    }
+
+    .specs-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .spec-value {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
 
     @media (max-width: 992px) {
-      .product-detail { padding-top: 220px; }
-      .detail-grid { grid-template-columns: 1fr; gap: 40px; }
-      .product-gallery { position: static; }
-      .product-info h1 { font-size: 2rem; }
+      .product-detail {
+        padding-top: 220px;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .product-gallery {
+        position: static;
+      }
+
+      .product-info h1 {
+        font-size: 2rem;
+      }
     }
 
     /* ── CART SIDEBAR ────────────────────────────────────── */
     .cart-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
     }
-    .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+    .cart-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
     .cart-panel {
-      position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw;
-      height: 100%; background: var(--bg-surface); border-left: 1px solid var(--border);
-      z-index: 2001; display: flex; flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 420px;
+      max-width: 100vw;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      z-index: 2001;
+      display: flex;
+      flex-direction: column;
       transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: -20px 0 60px rgba(0,0,0,0.4);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
     }
-    .cart-panel.open { right: 0; }
+
+    .cart-panel.open {
+      right: 0;
+    }
+
     .cart-panel-header {
-      padding: 24px; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .cart-panel-header h3 { font-family: var(--font-display); font-size: 1.3rem; }
+
+    .cart-panel-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+    }
+
     .cart-close-btn {
-      width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px;
-      background: transparent; color: var(--text-muted); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; transition: var(--transition);
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
     }
-    .cart-close-btn:hover { background: var(--bg-body); color: var(--text-primary); }
-    .cart-items-list { flex: 1; overflow-y: auto; padding: 20px; }
+
+    .cart-close-btn:hover {
+      background: var(--bg-body);
+      color: var(--text-primary);
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
     .cart-item {
-      display: flex; gap: 15px; align-items: flex-start;
-      padding: 15px 0; border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
     }
+
     .cart-item-img {
-      width: 70px; height: 70px; border-radius: 10px;
-      background: var(--bg-body); border: 1px solid var(--border);
-      object-fit: contain; flex-shrink: 0; padding: 5px;
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      object-fit: contain;
+      flex-shrink: 0;
+      padding: 5px;
     }
-    .cart-item-info { flex: 1; }
-    .cart-item-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
-    .cart-item-sku { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; }
-    .cart-item-price { color: var(--accent-cyan); font-weight: 700; }
-    .cart-item-qty { font-size: 0.82rem; color: var(--text-muted); }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-sku {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+
+    .cart-item-price {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .cart-item-qty {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
     .cart-item-remove {
-      background: none; border: none; color: var(--text-muted); cursor: pointer;
-      padding: 4px; border-radius: 6px; transition: var(--transition);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: var(--transition);
     }
-    .cart-item-remove:hover { color: var(--accent-pink); background: rgba(232,62,140,0.1); }
+
+    .cart-item-remove:hover {
+      color: var(--accent-pink);
+      background: rgba(232, 62, 140, 0.1);
+    }
+
     .cart-panel-footer {
-      padding: 20px 24px; border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
       background: var(--bg-body);
     }
-    .cart-total-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
-    .cart-total-label { color: var(--text-muted); }
-    .cart-total-value { font-weight: 800; font-size: 1.4rem; color: var(--accent-cyan); }
-    .cart-count-badge {
-      position: absolute; top: -6px; right: -6px;
-      background: var(--accent-cyan); color: #000; border-radius: 50%;
-      width: 18px; height: 18px; font-size: 0.7rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
     }
-    .nav-action-btn { position: relative; }
-    .cart-empty-msg { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+
+    .cart-total-label {
+      color: var(--text-muted);
+    }
+
+    .cart-total-value {
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--accent-cyan);
+    }
+
+    .cart-count-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--accent-cyan);
+      color: #000;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-action-btn {
+      position: relative;
+    }
+
+    .cart-empty-msg {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
     .cart-login-notice {
-      background: rgba(0,188,255,0.1); border: 1px solid rgba(0,188,255,0.2);
-      border-radius: 10px; padding: 12px 15px; font-size: 0.85rem;
-      color: var(--accent-cyan); margin-bottom: 15px; text-align: center;
+      background: rgba(0, 188, 255, 0.1);
+      border: 1px solid rgba(0, 188, 255, 0.2);
+      border-radius: 10px;
+      padding: 12px 15px;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      margin-bottom: 15px;
+      text-align: center;
     }
   </style>
 </head>
@@ -171,31 +496,42 @@
   <header id="navbar" class="navbar-ecommerce">
     <div class="navbar-top">
       <div class="container navbar-top-inner">
-        
+
         <a href="index.php" class="navbar-logo">
           <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
         </a>
 
         <div class="navbar-search">
-          <input type="text" id="navbar-search-input" placeholder="Buscar productos, categorías, SKU..." aria-label="Buscar">
+          <input type="text" id="navbar-search-input" placeholder="Buscar productos, categorías, SKU..."
+            aria-label="Buscar">
           <button type="button" id="btn-navbar-search" aria-label="Botón buscar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </button>
         </div>
 
         <div class="navbar-actions-top">
           <a href="javascript:void(0)" onclick="openCart()" class="nav-action-btn" id="cart-btn-nav">
             <div class="cart-icon" style="position:relative;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
               <span id="cart-badge" class="cart-count-badge" style="display:none;"></span>
             </div>
             <span>Mi carrito</span>
           </a>
-          <a href="login.html" class="btn btn-outline btn-sm" style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);" id="auth-btn">Mi Portal</a>
-          
+          <a href="login.html" class="btn btn-outline btn-sm"
+            style="background:var(--bg-surface); color:var(--text-primary); border-color:var(--border);"
+            id="auth-btn">Mi Portal</a>
+
           <!-- Mobile Menu Toggle -->
           <button id="navbar-toggle" class="navbar-toggle" aria-label="Menu" style="margin-left:0.5rem">
-            <span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
+            <span style="background:var(--text-primary)"></span><span
+              style="background:var(--text-primary)"></span><span style="background:var(--text-primary)"></span>
           </button>
         </div>
       </div>
@@ -216,7 +552,10 @@
         <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; margin:0;">
       </a>
       <button id="mobile-menu-close" class="btn-close-menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
     <div class="mobile-menu-body">
@@ -230,7 +569,8 @@
         </div>
       </nav>
       <div class="mobile-menu-footer">
-        <a href="login.html" class="btn btn-primary w-full justify-center" id="mobile-portal-btn">Mi Portal Corporativo</a>
+        <a href="login.html" class="btn btn-primary w-full justify-center" id="mobile-portal-btn">Mi Portal
+          Corporativo</a>
       </div>
     </div>
   </div>
@@ -241,27 +581,38 @@
     <div class="cart-panel-header">
       <h3>🛒 Mi Carrito</h3>
       <button class="cart-close-btn" onclick="closeCart()">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
       </button>
     </div>
     <div class="cart-items-list" id="cart-items-list">
       <div class="cart-empty-msg">
-        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:15px; opacity:0.3"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"
+          style="margin-bottom:15px; opacity:0.3">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+        </svg>
         <p>Tu carrito está vacío</p>
       </div>
     </div>
     <div class="cart-panel-footer" id="cart-footer" style="display:none">
       <div id="cart-login-notice" class="cart-login-notice" style="display:none">
-        <a href="login.html" style="color:var(--accent-cyan); font-weight:600;">Inicia sesión</a> para guardar tu carrito permanentemente.
+        <a href="login.html" style="color:var(--accent-cyan); font-weight:600;">Inicia sesión</a> para guardar tu
+        carrito permanentemente.
       </div>
       <div class="cart-total-row">
         <span class="cart-total-label">Total estimado</span>
         <span class="cart-total-value" id="cart-total-value">$0.00</span>
       </div>
-      <button onclick="CheckoutModal.open()" class="btn btn-primary" style="width:100%; justify-content:center; margin-bottom:10px;">
+      <button onclick="CheckoutModal.open()" class="btn btn-primary"
+        style="width:100%; justify-content:center; margin-bottom:10px;">
         Continuar al pago por WhatsApp
       </button>
-      <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline" style="width:100%; justify-content:center; font-size:0.85rem;">Vaciar carrito</button>
+      <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline"
+        style="width:100%; justify-content:center; font-size:0.85rem;">Vaciar carrito</button>
     </div>
   </div>
 
@@ -269,21 +620,21 @@
     <div id="product-content">
       <!-- Loading State -->
       <div class="detail-grid">
-         <div class="skeleton" style="height:500px; border-radius:24px"></div>
-         <div>
-            <div class="skeleton" style="height:40px; width:70%; margin-bottom:20px"></div>
-            <div class="skeleton" style="height:100px; margin-bottom:30px"></div>
-            <div class="skeleton" style="height:250px"></div>
-         </div>
+        <div class="skeleton" style="height:500px; border-radius:24px"></div>
+        <div>
+          <div class="skeleton" style="height:40px; width:70%; margin-bottom:20px"></div>
+          <div class="skeleton" style="height:100px; margin-bottom:30px"></div>
+          <div class="skeleton" style="height:250px"></div>
+        </div>
       </div>
     </div>
   </main>
 
 
 
-  <script src="assets/js/cart.js?v=48.0"></script>
-  <script src="assets/js/checkout.js?v=48.0"></script>
-  <script src="assets/js/main.js?v=48.0"></script>
+  <script src="assets/js/cart.js?v=48.1"></script>
+  <script src="assets/js/checkout.js?v=48.1"></script>
+  <script src="assets/js/main.js?v=48.1"></script>
   <script>
     let currentProduct = null;
 
@@ -336,7 +687,7 @@
 
       footer.style.display = 'block';
       document.getElementById('cart-total-value').textContent =
-        `$${CartManager.getTotal().toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+        `$${CartManager.getTotal().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
       // Show login notice if guest
       document.getElementById('cart-login-notice').style.display = CartManager.isLoggedIn() ? 'none' : 'block';
@@ -366,7 +717,7 @@
         console.log('Cargando producto ID:', productId);
         const res = await fetch(`api/products.php?id=${productId}`);
         if (!res.ok) throw new Error('Error en la respuesta del servidor');
-        
+
         const json = await res.json();
         if (json.success) {
           currentProduct = json.data;
@@ -395,7 +746,7 @@
     async function addToCart() {
       if (!currentProduct) return;
       const qty = parseInt(document.getElementById('qty-input').value);
-      const unitPrice = parseFloat(document.getElementById('unit-price-display').textContent.replace('$',''));
+      const unitPrice = parseFloat(document.getElementById('unit-price-display').textContent.replace('$', ''));
       const p = currentProduct;
       await CartManager.addItem({
         product_id: p.id,
@@ -413,7 +764,7 @@
     function renderProductDetail() {
       const p = currentProduct;
       document.title = `${p.name} | PromoInc`;
-      
+
       const svgPlaceholder = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
       const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
 
@@ -429,13 +780,13 @@
         <div class="detail-grid">
           <div class="product-gallery">
             <div class="main-image-container" id="main-image" style="position: relative;">
-              ${imgUrl 
-                ? `
+              ${imgUrl
+          ? `
                   <img src="${imgUrl}" alt="${p.name.replace(/"/g, '&quot;')}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                   <div class="img-placeholder" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">${svgPlaceholder}</div>
                 `
-                : svgPlaceholder
-              }
+          : svgPlaceholder
+        }
               <!-- Contenedor del logo overlay (Mockup) -->
               <div id="mockup-overlay" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); overflow:visible; min-width:30px; min-height:30px; z-index:999; background:transparent; cursor:move; user-select:none; border:1px dashed rgba(255,255,255,0.2);">
                  <img id="mockup-img" src="" style="width:100%; height:100%; object-fit:contain; pointer-events:none; display:block;">
@@ -555,17 +906,17 @@
                      </thead>
                      <tbody style="background:var(--card-bg);">
                        ${prices.map((tier, idx) => {
-                          const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
-                          const bg = idx % 2 === 0 ? 'background: rgba(255,255,255,0.03);' : '';
-                          return `
+          const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
+          const bg = idx % 2 === 0 ? 'background: rgba(255,255,255,0.03);' : '';
+          return `
                             <tr style="${bg} border-bottom:1px solid var(--border);">
                               <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
                               <td style="padding:12px 15px; font-weight:600;">$${parseFloat(tier.price).toFixed(2)}</td>
                               <td style="padding:12px 15px; color:#00ff88;">${discount === 0 ? '0%' : `-${discount}%`}</td>
-                              <td style="padding:12px 15px;">$${(tier.min_qty * tier.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                              <td style="padding:12px 15px;">$${(tier.min_qty * tier.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             </tr>
                           `;
-                       }).join('')}
+        }).join('')}
                      </tbody>
                   </table>
                 </div>
@@ -593,7 +944,7 @@
           </div>
         </div>
       `;
-      
+
       // SEO Schema.org
       let schemaScript = document.getElementById('product-schema');
       if (!schemaScript) {
@@ -620,7 +971,7 @@
         }
       };
       schemaScript.textContent = JSON.stringify(schemaData);
-      
+
       // Mockup Draggable Logic
       const overlay = document.getElementById('mockup-overlay');
       let isDragging = false;
@@ -629,14 +980,14 @@
       overlay.addEventListener('mousedown', (e) => {
         const rect = overlay.getBoundingClientRect();
         if (e.clientX > rect.right - 15 && e.clientY > rect.bottom - 15) return;
-        
+
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
         if (overlay.style.transform.includes('translate')) {
-           overlay.style.top = overlay.offsetTop + 'px';
-           overlay.style.left = overlay.offsetLeft + 'px';
-           overlay.style.transform = 'none';
+          overlay.style.top = overlay.offsetTop + 'px';
+          overlay.style.left = overlay.offsetLeft + 'px';
+          overlay.style.transform = 'none';
         }
         initialTop = parseInt(overlay.style.top || 0, 10);
         initialLeft = parseInt(overlay.style.left || 0, 10);
@@ -653,7 +1004,7 @@
       document.addEventListener('mouseup', () => {
         isDragging = false;
       });
-      
+
       calculatePrices();
     }
 
@@ -661,46 +1012,46 @@
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
 
-    window.handleMockupUpload = function(e) {
+    window.handleMockupUpload = function (e) {
       const file = e.target.files[0];
       if (!file) return;
-      
+
       const validTypes = ['image/png', 'image/svg+xml'];
       if (!validTypes.includes(file.type)) {
-          showToast('Por favor, sube únicamente un archivo PNG sin fondo o un SVG.', 'error');
-          e.target.value = '';
-          return;
+        showToast('Por favor, sube únicamente un archivo PNG sin fondo o un SVG.', 'error');
+        e.target.value = '';
+        return;
       }
-      
+
       const reader = new FileReader();
       reader.onload = (event) => {
-         const overlay = document.getElementById('mockup-overlay');
-         const img = document.getElementById('mockup-img');
-         const controls = document.getElementById('mockup-controls');
-         
-         img.src = event.target.result;
-         overlay.style.display = 'block';
-         controls.style.display = 'block';
-         
-         // Reset position and size
-         overlay.style.top = '50%';
-         overlay.style.left = '50%';
-         overlay.style.transform = 'translate(-50%, -50%)';
-         overlay.style.width = '120px';
-         overlay.style.height = '120px';
-         
-         updateMockupStyle();
-         initDraggable(overlay);
+        const overlay = document.getElementById('mockup-overlay');
+        const img = document.getElementById('mockup-img');
+        const controls = document.getElementById('mockup-controls');
+
+        img.src = event.target.result;
+        overlay.style.display = 'block';
+        controls.style.display = 'block';
+
+        // Reset position and size
+        overlay.style.top = '50%';
+        overlay.style.left = '50%';
+        overlay.style.transform = 'translate(-50%, -50%)';
+        overlay.style.width = '120px';
+        overlay.style.height = '120px';
+
+        updateMockupStyle();
+        initDraggable(overlay);
       };
       reader.readAsDataURL(file);
     };
 
-    window.updateMockupStyle = function() {
+    window.updateMockupStyle = function () {
       const overlay = document.getElementById('mockup-overlay');
       const opacity = document.getElementById('mockup-opacity').value;
       const blend = document.getElementById('mockup-blend').value;
       const opacityDisplay = document.getElementById('opacity-val');
-      
+
       if (overlay) {
         overlay.style.opacity = opacity / 100;
         overlay.style.mixBlendMode = blend;
@@ -708,10 +1059,10 @@
       }
     };
 
-    window.removeMockup = function() {
-       document.getElementById('mockup-overlay').style.display = 'none';
-       document.getElementById('mockup-controls').style.display = 'none';
-       document.getElementById('mockup-upload').value = '';
+    window.removeMockup = function () {
+      document.getElementById('mockup-overlay').style.display = 'none';
+      document.getElementById('mockup-controls').style.display = 'none';
+      document.getElementById('mockup-upload').value = '';
     };
 
     function initDraggable(el) {
@@ -721,7 +1072,7 @@
 
       el.addEventListener('mousedown', dragStart);
       el.addEventListener('touchstart', dragStart, { passive: false });
-      
+
       resizer.addEventListener('mousedown', resizeStart);
       resizer.addEventListener('touchstart', resizeStart, { passive: false });
 
@@ -729,13 +1080,13 @@
         e.preventDefault();
         e.stopPropagation();
         isResizing = true;
-        
+
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-        
+
         startX = clientX;
         startY = clientY;
-        
+
         const rect = el.getBoundingClientRect();
         initialWidth = rect.width;
         initialHeight = rect.height;
@@ -757,19 +1108,19 @@
 
       function dragStart(e) {
         if (isResizing || e.target.id === 'mockup-resizer') return;
-        
+
         e.preventDefault();
         isDragging = true;
-        
+
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-        
+
         startX = clientX;
         startY = clientY;
-        
+
         const rect = el.getBoundingClientRect();
         const parentRect = el.parentElement.getBoundingClientRect();
-        
+
         initialLeft = rect.left - parentRect.left;
         initialTop = rect.top - parentRect.top;
 
@@ -777,8 +1128,8 @@
         window.addEventListener('mouseup', stopAll);
         window.addEventListener('touchmove', dragMove, { passive: false });
         window.addEventListener('touchend', stopAll);
-        
-        el.style.transform = 'none'; 
+
+        el.style.transform = 'none';
         el.style.left = initialLeft + 'px';
         el.style.top = initialTop + 'px';
       }
@@ -815,7 +1166,7 @@
       const qty = parseInt(document.getElementById('qty-input').value);
       const p = currentProduct;
       let unitPrice = parseFloat(p.price_from);
-      
+
       // Encontrar el mejor precio según la cantidad
       if (p.volume_prices && p.volume_prices.length) {
         const applicableTier = [...p.volume_prices]
@@ -823,12 +1174,12 @@
           .find(t => qty >= t.min_qty);
         if (applicableTier) unitPrice = parseFloat(applicableTier.price);
       }
-      
+
       const subtotal = qty * unitPrice;
-      
+
       document.getElementById('unit-price-display').textContent = `$${unitPrice.toFixed(2)}`;
-      document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-      
+      document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
       const basePrice = parseFloat(p.price_from);
       let savings = 0;
       if (unitPrice < basePrice) {
@@ -836,12 +1187,12 @@
       }
       const savingsDiv = document.getElementById('savings-display');
       if (savings > 0) {
-        document.getElementById('savings-amount').textContent = `$${savings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        document.getElementById('savings-amount').textContent = `$${savings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         savingsDiv.style.display = 'block';
       } else {
         savingsDiv.style.display = 'none';
       }
-      
+
       // Update WA Link
       const waBtn = document.getElementById('wa-quote-btn');
       if (waBtn) {
@@ -860,21 +1211,38 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
 
   <!-- Features Row (Beneficios) -->
   <div class="container">
-    <div class="features-row" style="background: var(--bg-surface); padding: 40px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 40px;">
+    <div class="features-row"
+      style="background: var(--bg-surface); padding: 40px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 40px;">
       <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
         <span>Stock en tiempo real</span>
       </div>
       <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+          <line x1="12" y1="20" x2="12" y2="10" />
+          <line x1="18" y1="20" x2="18" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="16" />
+        </svg>
         <span>Descuentos por volumen</span>
       </div>
       <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+          <path
+            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+        </svg>
         <span>Asesoría personalizada</span>
       </div>
       <div class="feature-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+          <rect x="1" y="3" width="15" height="13" />
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
         <span>Entregas a nivel nacional</span>
       </div>
     </div>
@@ -882,9 +1250,12 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
 
   <!-- SECCIÓN PRODUCTOS DESTACADOS -->
   <section class="section container" style="margin-top: 20px;">
-    <div class="section-header" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem;">
+    <div class="section-header"
+      style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem;">
       <h2 class="section-title">Te podría <span style="color:var(--accent-cyan)">interesar</span></h2>
-      <a href="catalogo.html" class="link-underline" style="color:var(--text-muted); text-transform:uppercase; font-size:0.85rem; font-weight:600; letter-spacing:1px;">Ver catálogo completo</a>
+      <a href="catalogo.html" class="link-underline"
+        style="color:var(--text-muted); text-transform:uppercase; font-size:0.85rem; font-weight:600; letter-spacing:1px;">Ver
+        catálogo completo</a>
     </div>
     <div class="products-grid" id="featured-grid">
       <!-- Dinámico -->
@@ -930,7 +1301,8 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
 
         <div>
           <h4 class="footer-heading">Servicios</h4>
-          <div style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+          <div
+            style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
             <div class="footer-service-group">
               <strong style="color: #fff; display: block; margin-bottom: 2px;">Personalización</strong>
               <span>Vasos, Merch, Regalos, Logo</span>
@@ -958,20 +1330,24 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
           <h4 class="footer-heading">Contacto</h4>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
               <circle cx="12" cy="10" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>De los Eucaliptos E1-37 y 10 de Agosto<br>Quito, Ecuador</span>
           </div>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>(02) 2471-233<br>+593 98 939 8005</span>
           </div>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
               <polyline points="22,6 12,13 2,6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>ventas@promoinc.ec</span>
@@ -993,10 +1369,12 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
   <!-- WhatsApp FAB -->
   <a href="https://wa.me/593987827215" target="_blank" class="fab-whatsapp" aria-label="Chat en WhatsApp">
     <svg viewBox="0 0 24 24">
-      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z" />
+      <path
+        d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z" />
     </svg>
   </a>
 
   <script src="assets/js/main.js?v=46.2"></script>
 </body>
+
 </html>
