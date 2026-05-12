@@ -5,6 +5,7 @@
 'use strict';
 
 const API = '../api';
+const VERSION = '44.0';
 let currentUser = null;
 let productsPage = 0;
 const LIMIT = 20;
@@ -119,6 +120,11 @@ function navigateTo(section) {
 
   // Cerrar sidebar en mobile
   document.getElementById('sidebar').classList.remove('open');
+
+  if (section === 'settings') {
+    const vEl = document.getElementById('current-asset-version');
+    if (vEl) vEl.textContent = `v${VERSION}`;
+  }
 
   const loaders = { dashboard: loadDashboard, products: loadProducts,
     categories: loadCategories, brands: loadBrands, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
