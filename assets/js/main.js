@@ -149,6 +149,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             marquee.appendChild(track);
           }
+
+          // --- Inject logos into Hero Avatars (Social Proof) ---
+          const slots = document.querySelectorAll('.brand-avatar-slot');
+          if (slots.length > 0 && brands.length > 0) {
+            slots.forEach((slot, idx) => {
+               if (brands[idx]) {
+                  const b = brands[idx];
+                  slot.innerHTML = `<img src="assets/images/${b.filename}" alt="${b.name}" style="width:100%; height:100%; object-fit:contain; filter:brightness(0) invert(1);">`;
+               }
+            });
+          }
         }
       })
       .catch(err => console.error('Error loading brands:', err));

@@ -164,19 +164,11 @@ header("Expires: 0");
       <!-- Left column: Rotating headline -->
       <div class="hero-left reveal">
         <div class="hero-social-proof">
-          <div class="hero-avatars">
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#c0185a); display: flex; align-items: center; justify-content: center; padding: 6px;">
-               <svg viewBox="0 0 24 24" fill="#fff" style="width:100%; height:100%;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-            </div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#0080aa); display: flex; align-items: center; justify-content: center; padding: 6px;">
-               <svg viewBox="0 0 24 24" fill="#fff" style="width:100%; height:100%;"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
-            </div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#7c3aed); display: flex; align-items: center; justify-content: center; padding: 6px;">
-               <svg viewBox="0 0 24 24" fill="#fff" style="width:100%; height:100%;"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.97 4.65c-.31.18-.69.18-1 0l-7.97-4.65A1.02 1.02 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.97-4.65c.31-.18.69-.18 1 0l7.97 4.65c.32.17.53.5.53.88v9z"/></svg>
-            </div>
-            <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#d97706); display: flex; align-items: center; justify-content: center; padding: 6px;">
-               <svg viewBox="0 0 24 24" fill="#fff" style="width:100%; height:100%;"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/></svg>
-            </div>
+          <div class="hero-avatars" id="hero-brand-avatars">
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#e83e8c,#c0185a); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#00bcff,#0080aa); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#a78bfa,#7c3aed); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
+            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#fbbf24,#d97706); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
           </div>
           <div class="hero-proof-text">
             <div class="hero-stars">
