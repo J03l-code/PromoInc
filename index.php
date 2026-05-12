@@ -1014,7 +1014,7 @@ header("Expires: 0");
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=49.2"></script>
   <script src="assets/js/checkout.js?v=49.2"></script>
-  <script src="assets/js/main.js?v=63.3"></script>
+  <script src="assets/js/main.js?v=63.6"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
