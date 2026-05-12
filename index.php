@@ -1014,7 +1014,7 @@ header("Expires: 0");
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=49.2"></script>
   <script src="assets/js/checkout.js?v=49.2"></script>
-  <script src="assets/js/main.js?v=50.0"></script>
+  <script src="assets/js/main.js?v=63.3"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
@@ -1060,6 +1060,50 @@ header("Expires: 0");
     }
     document.addEventListener('DOMContentLoaded', () => {
       CartManager.init(renderCart);
+
+      // Override quickAddToCart for the home page — guaranteed to work
+      window.quickAddToCart = function(event, productId, name, sku, price, imageWebp, minQty) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        const btn = event ? event.currentTarget : null;
+
+        // Visual feedback: animate button
+        if (btn) {
+          btn.style.transform = 'scale(0.8)';
+          btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+          setTimeout(() => {
+            btn.style.transform = 'scale(1)';
+            btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
+          }, 1500);
+        }
+
+        const product = {
+          product_id: productId,
+          name: name,
+          sku: sku,
+          unit_price: parseFloat(price),
+          image_webp: imageWebp,
+          quantity: parseInt(minQty) || 10,
+          min_quantity: parseInt(minQty) || 10
+        };
+
+        // Add to cart and open panel
+        const result = CartManager.addItem(product);
+        const afterAdd = () => {
+          renderCart(CartManager.getItems());
+          openCart();
+        };
+
+        // Handle both Promise and sync responses
+        if (result && typeof result.then === 'function') {
+          result.then(afterAdd).catch(err => console.error('Cart error:', err));
+        } else {
+          afterAdd();
+        }
+      };
     });
   </script>
 </body>
