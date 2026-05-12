@@ -227,9 +227,9 @@ const CheckoutModal = (() => {
     // Obtener número desde la API (dinámico)
     let waNumber = '593987827215';
     try {
-      const r = await fetch('api/public_settings.php?key=whatsapp_number');
+      const r = await fetch('api/public_settings.php?key=whatsapp');
       const d = await r.json();
-      if (d.success && d.data.value) waNumber = d.data.value;
+      if (d.success && d.data.value) waNumber = d.data.value.replace(/\D/g, '');
     } catch (_) {}
 
     // 💾 Guardar el pedido en la base de datos

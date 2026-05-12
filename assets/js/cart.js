@@ -15,9 +15,9 @@ const CartManager = (() => {
     _onChangeCallback = onChangeCallback;
     
     // Fetch WhatsApp number from settings
-    fetch('api/public_settings.php?key=whatsapp_number')
+    fetch('api/public_settings.php?key=whatsapp')
       .then(r => r.json())
-      .then(d => { if(d.success) _waNumber = d.data.value; })
+      .then(d => { if(d.success && d.data.value) _waNumber = d.data.value.replace(/\D/g, ''); })
       .catch(() => {});
 
     try {
