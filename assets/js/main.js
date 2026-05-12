@@ -549,8 +549,6 @@ function renderProducts(grid, products, append = false) {
     </article>`;
   }).join('');
 
-  }).join('');
-
   if (append) grid.innerHTML += html;
   else grid.innerHTML = html;
 
