@@ -15,7 +15,7 @@
 }
 
 .navbar-top {
-  padding: 0.4rem 0; /* Espacio reducido entre búsqueda y categorías */
+  padding: 0.4rem 0 0.1rem 0; /* Espacio mínimo abajo para el logo grande */
   border-bottom: 1px solid var(--border);
 }
 
