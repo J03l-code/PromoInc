@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
   
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=44.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=44.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=44.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=46.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=46.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=46.0">
   <style>
     .product-detail { padding-top: 180px; padding-bottom: 80px; }
     .detail-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; }
@@ -256,9 +256,9 @@
 
 
 
-  <script src="assets/js/cart.js?v=45.9"></script>
-  <script src="assets/js/checkout.js?v=45.9"></script>
-  <script src="assets/js/main.js?v=45.9"></script>
+  <script src="assets/js/cart.js?v=46.0"></script>
+  <script src="assets/js/checkout.js?v=46.0"></script>
+  <script src="assets/js/main.js?v=46.0"></script>
   <script>
     let currentProduct = null;
 
@@ -301,7 +301,7 @@
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-sku">SKU: ${item.sku}</div>
             <div class="cart-item-qty">${item.quantity} unid. × $${item.unit_price.toFixed(2)}</div>
-            <div class="cart-item-price">MX$${subtotal}</div>
+            <div class="cart-item-price">$${subtotal}</div>
           </div>
           <button class="cart-item-remove" onclick="CartManager.removeItem(${item.product_id}).then(renderCart)" title="Eliminar">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -501,9 +501,9 @@
                           return `
                             <tr style="${bg} border-bottom:1px solid var(--border);">
                               <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
-                              <td style="padding:12px 15px; font-weight:600;">MX$${parseFloat(tier.price).toFixed(2)}</td>
+                              <td style="padding:12px 15px; font-weight:600;">$${parseFloat(tier.price).toFixed(2)}</td>
                               <td style="padding:12px 15px; color:#00ff88;">${discount === 0 ? '0%' : `-${discount}%`}</td>
-                              <td style="padding:12px 15px;">MX$${(tier.min_qty * tier.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                              <td style="padding:12px 15px;">$${(tier.min_qty * tier.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                             </tr>
                           `;
                        }).join('')}
@@ -647,8 +647,8 @@
       
       const subtotal = qty * unitPrice;
       
-      document.getElementById('unit-price-display').textContent = `MX$${unitPrice.toFixed(2)}`;
-      document.getElementById('total-price-display').textContent = `MX$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      document.getElementById('unit-price-display').textContent = `$${unitPrice.toFixed(2)}`;
+      document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
       
       const basePrice = parseFloat(p.price_from);
       let savings = 0;
@@ -818,6 +818,6 @@ Precio Ref: $${unitPrice.toFixed(2)} c/u`;
     </svg>
   </a>
 
-  <script src="assets/js/main.js?v=45.9"></script>
+  <script src="assets/js/main.js?v=46.0"></script>
 </body>
 </html>
