@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=49.4">
-  <link rel="stylesheet" href="assets/css/components.css?v=49.4">
-  <link rel="stylesheet" href="assets/css/animations.css?v=49.4">
+  <link rel="stylesheet" href="assets/css/main.css?v=49.5">
+  <link rel="stylesheet" href="assets/css/components.css?v=49.5">
+  <link rel="stylesheet" href="assets/css/animations.css?v=49.5">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
