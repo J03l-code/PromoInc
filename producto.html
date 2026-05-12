@@ -426,8 +426,36 @@
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   Subir mi Logo (PNG/SVG)
                </label>
-               <input type="file" id="mockup-upload" accept=".png, .svg" style="display:none;" onchange="handleMockupUpload(event)">
-               <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Arrastra para mover el logo sobre el producto.</p>
+                <input type="file" id="mockup-upload" accept=".png, .svg" style="display:none;" onchange="handleMockupUpload(event)">
+                
+                <div id="mockup-controls" style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                   <div style="margin-bottom:12px;">
+                      <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                         <label style="font-size:0.75rem; color:var(--text-secondary);">Opacidad</label>
+                         <span id="opacity-val" style="font-size:0.75rem; color:var(--accent-gold);">80%</span>
+                      </div>
+                      <input type="range" id="mockup-opacity" min="0" max="100" value="80" style="width:100%; accent-color:var(--accent-gold);" oninput="updateMockupStyle()">
+                   </div>
+                   
+                   <div>
+                      <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:5px; text-align:left;">Modo de Integración</label>
+                      <select id="mockup-blend" class="btn btn-outline btn-sm" style="width:100%; background:var(--bg-elevated); margin-bottom:12px;" onchange="updateMockupStyle()">
+                         <option value="normal">Normal</option>
+                         <option value="multiply">Multiplicar (Para fondos claros)</option>
+                         <option value="screen">Trama (Para fondos oscuros)</option>
+                         <option value="overlay">Superponer</option>
+                      </select>
+                   </div>
+                   
+                   <button class="btn btn-outline btn-sm" style="width:100%; color:#ff4d4d; border-color:rgba(255,77,77,0.3);" onclick="removeMockup()">
+                      Eliminar Logo
+                   </button>
+                </div>
+                
+                <p style="font-size:0.72rem; color:var(--text-muted); margin-top:10px;">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  Arrastra para mover y usa la esquina inferior para redimensionar.
+                </p>
             </div>
           </div>
 
@@ -601,13 +629,17 @@
       calculatePrices();
     }
 
+    // --- Mockup System ---
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
     window.handleMockupUpload = function(e) {
       const file = e.target.files[0];
       if (!file) return;
       
       const validTypes = ['image/png', 'image/svg+xml'];
       if (!validTypes.includes(file.type)) {
-          alert('Por favor, sube únicamente un archivo PNG sin fondo o un SVG.');
+          showToast('Por favor, sube únicamente un archivo PNG sin fondo o un SVG.', 'error');
           e.target.value = '';
           return;
       }
@@ -616,16 +648,96 @@
       reader.onload = (event) => {
          const overlay = document.getElementById('mockup-overlay');
          const img = document.getElementById('mockup-img');
+         const controls = document.getElementById('mockup-controls');
+         
          img.src = event.target.result;
          overlay.style.display = 'block';
+         controls.style.display = 'block';
+         
+         // Reset position and size
          overlay.style.top = '50%';
          overlay.style.left = '50%';
          overlay.style.transform = 'translate(-50%, -50%)';
-         overlay.style.width = '150px';
-         overlay.style.height = '150px';
+         overlay.style.width = '120px';
+         overlay.style.height = '120px';
+         
+         updateMockupStyle();
+         initDraggable(overlay);
       };
       reader.readAsDataURL(file);
     };
+
+    window.updateMockupStyle = function() {
+      const overlay = document.getElementById('mockup-overlay');
+      const opacity = document.getElementById('mockup-opacity').value;
+      const blend = document.getElementById('mockup-blend').value;
+      const opacityDisplay = document.getElementById('opacity-val');
+      
+      if (overlay) {
+        overlay.style.opacity = opacity / 100;
+        overlay.style.mixBlendMode = blend;
+        if (opacityDisplay) opacityDisplay.textContent = opacity + '%';
+      }
+    };
+
+    window.removeMockup = function() {
+       document.getElementById('mockup-overlay').style.display = 'none';
+       document.getElementById('mockup-controls').style.display = 'none';
+       document.getElementById('mockup-upload').value = '';
+    };
+
+    function initDraggable(el) {
+      el.onmousedown = dragStart;
+      el.ontouchstart = dragStart;
+
+      function dragStart(e) {
+        if (e.target !== el && e.target.id !== 'mockup-img') return; // Allow resize via handle
+        e.preventDefault();
+        isDragging = true;
+        
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+        
+        startX = clientX;
+        startY = clientY;
+        
+        const rect = el.getBoundingClientRect();
+        const parentRect = el.parentElement.getBoundingClientRect();
+        
+        initialLeft = rect.left - parentRect.left;
+        initialTop = rect.top - parentRect.top;
+
+        document.onmousemove = dragMove;
+        document.onmouseup = dragEnd;
+        document.ontouchmove = dragMove;
+        document.ontouchend = dragEnd;
+        
+        el.style.transform = 'none'; // Remove centering transform for manual positioning
+        el.style.left = initialLeft + 'px';
+        el.style.top = initialTop + 'px';
+      }
+
+      function dragMove(e) {
+        if (!isDragging) return;
+        
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+        
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+        
+        el.style.left = (initialLeft + dx) + 'px';
+        el.style.top = (initialTop + dy) + 'px';
+      }
+
+      function dragEnd() {
+        isDragging = false;
+        document.onmousemove = null;
+        document.onmouseup = null;
+        document.ontouchmove = null;
+        document.ontouchend = null;
+      }
+    }
 
     function updateQty(delta) {
       const input = document.getElementById('qty-input');
