@@ -35,7 +35,7 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
   } else {
     console.error('CartManager not found');
   }
-};};
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   
