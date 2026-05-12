@@ -7,9 +7,9 @@
   <title>Cargando Producto... | PromoInc</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=49.4">
-  <link rel="stylesheet" href="assets/css/components.css?v=49.4">
-  <link rel="stylesheet" href="assets/css/animations.css?v=49.4">
+  <link rel="stylesheet" href="assets/css/main.css?v=62.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=62.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=62.0">
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <style>
     .product-detail {
@@ -888,32 +888,41 @@
               Guardar en mi Carrito
             </button>
 
-            ${prices.length > 0 ? `
+            ${prices.length > 0 || parseInt(p.on_sale) ? `
               <div class="discount-section" style="margin-bottom:40px; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
                 <div style="padding:15px; background:var(--bg-secondary); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="document.getElementById('discount-table-body').classList.toggle('hidden')">
-                  <h3 style="font-size:1.05rem; margin:0; font-weight:600;">Ahorra más al comprar más</h3>
-                  <span style="color:var(--cyan); font-size:0.9rem;">Ocultar tabla de descuentos</span>
+                  <h3 style="font-size:1.05rem; margin:0; font-weight:600;">✨ Ahorra más al comprar más</h3>
+                  <span style="color:var(--accent-cyan); font-size:0.9rem;">Ver tabla de descuentos</span>
                 </div>
-                <div id="discount-table-body">
+                <div id="discount-table-body" class="hidden">
                   <table class="discount-table" style="width:100%; border-collapse:collapse; text-align:left;">
-                     <thead style="background:#0f2b33; color:white;">
+                     <thead style="background:rgba(0,188,255,0.1); color:var(--accent-cyan);">
                        <tr>
                          <th style="padding:12px 15px; font-weight:600;">Cantidad</th>
-                         <th style="padding:12px 15px; font-weight:600;">Precio</th>
-                         <th style="padding:12px 15px; font-weight:600; color:#00ff88;">Desct</th>
+                         <th style="padding:12px 15px; font-weight:600;">Precio Unit.</th>
+                         <th style="padding:12px 15px; font-weight:600; color:#00ff88;">Descto.</th>
                          <th style="padding:12px 15px; font-weight:600;">Subtotal</th>
                        </tr>
                      </thead>
                      <tbody style="background:var(--card-bg);">
+                       <!-- Fila Base/Oferta -->
+                       <tr style="border-bottom:1px solid var(--border); background:rgba(232,62,140,0.05);">
+                         <td style="padding:12px 15px; color:var(--text-secondary);">${p.min_quantity} Unidades (Base)</td>
+                         <td style="padding:12px 15px; font-weight:600;">$${(parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from)).toFixed(2)}</td>
+                         <td style="padding:12px 15px; color:#00ff88;">${parseInt(p.on_sale) ? `Oferta -${p.sale_discount}%` : '0%'}</td>
+                         <td style="padding:12px 15px;">$${(p.min_quantity * (parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from))).toFixed(2)}</td>
+                       </tr>
                        ${prices.map((tier, idx) => {
-          const discount = basePrice > 0 ? Math.round((1 - (tier.price / basePrice)) * 100) : 0;
-          const bg = idx % 2 === 0 ? 'background: rgba(255,255,255,0.03);' : '';
+          const currentUnitPrice = parseFloat(tier.price);
+          const originalFullPrice = parseFloat(p.price_from);
+          const discount = Math.round((1 - (currentUnitPrice / originalFullPrice)) * 100);
+          const bg = idx % 2 === 0 ? '' : 'background: rgba(255,255,255,0.02);';
           return `
                             <tr style="${bg} border-bottom:1px solid var(--border);">
                               <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
-                              <td style="padding:12px 15px; font-weight:600;">$${parseFloat(tier.price).toFixed(2)}</td>
-                              <td style="padding:12px 15px; color:#00ff88;">${discount === 0 ? '0%' : `-${discount}%`}</td>
-                              <td style="padding:12px 15px;">$${(tier.min_qty * tier.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                              <td style="padding:12px 15px; font-weight:600;">$${currentUnitPrice.toFixed(2)}</td>
+                              <td style="padding:12px 15px; color:#00ff88;">-${discount}%</td>
+                              <td style="padding:12px 15px;">$${(tier.min_qty * currentUnitPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             </tr>
                           `;
         }).join('')}
@@ -964,8 +973,8 @@
           "@type": "AggregateOffer",
           "url": window.location.href,
           "priceCurrency": "USD",
-          "lowPrice": p.volume_prices && p.volume_prices.length ? Math.min(...p.volume_prices.map(t => t.price)) : p.price_from,
-          "highPrice": p.price_from,
+          "lowPrice": p.volume_prices && p.volume_prices.length ? Math.min(...p.volume_prices.map(t => t.price)) : (parseInt(p.on_sale) ? p.sale_price : p.price_from),
+          "highPrice": parseInt(p.on_sale) ? p.sale_price : p.price_from,
           "offerCount": p.volume_prices ? p.volume_prices.length + 1 : 1,
           "availability": parseInt(p.total_stock) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
         }
@@ -1165,29 +1174,39 @@
     function calculatePrices() {
       const qty = parseInt(document.getElementById('qty-input').value);
       const p = currentProduct;
-      let unitPrice = parseFloat(p.price_from);
+      
+      // Determinar precio base efectivo (Oferta vs Normal)
+      const isSale = parseInt(p.on_sale) && p.sale_price;
+      const baseEffective = isSale ? parseFloat(p.sale_price) : parseFloat(p.price_from);
+      
+      let unitPrice = baseEffective;
 
-      // Encontrar el mejor precio según la cantidad
+      // Encontrar el mejor precio según la cantidad (Tiers de volumen)
       if (p.volume_prices && p.volume_prices.length) {
         const applicableTier = [...p.volume_prices]
           .sort((a, b) => b.min_qty - a.min_qty)
           .find(t => qty >= t.min_qty);
-        if (applicableTier) unitPrice = parseFloat(applicableTier.price);
+        
+        if (applicableTier) {
+          unitPrice = parseFloat(applicableTier.price);
+        }
       }
 
       const subtotal = qty * unitPrice;
 
-      document.getElementById('unit-price-display').textContent = `$${unitPrice.toFixed(2)}`;
+      document.getElementById('unit-price-display').innerHTML = `
+        ${isSale && qty < (p.volume_prices?.[0]?.min_qty || 9999) ? `<span style="text-decoration:line-through; font-size:1rem; color:var(--text-muted); margin-right:8px;">$${parseFloat(p.price_from).toFixed(2)}</span>` : ''}
+        $${unitPrice.toFixed(2)}
+      `;
+      
       document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-      const basePrice = parseFloat(p.price_from);
-      let savings = 0;
-      if (unitPrice < basePrice) {
-        savings = (basePrice - unitPrice) * qty;
-      }
+      const originalBase = parseFloat(p.price_from);
+      let totalSavings = (originalBase * qty) - subtotal;
+      
       const savingsDiv = document.getElementById('savings-display');
-      if (savings > 0) {
-        document.getElementById('savings-amount').textContent = `$${savings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (totalSavings > 0.01) {
+        document.getElementById('savings-amount').textContent = `$${totalSavings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         savingsDiv.style.display = 'block';
       } else {
         savingsDiv.style.display = 'none';
