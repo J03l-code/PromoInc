@@ -1,9 +1,12 @@
 /* PromoInc — main.js */
-const VERSION = '56.0';
+const VERSION = '57.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
-  event.stopPropagation();
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
   if (typeof CartManager !== 'undefined') {
     CartManager.addItem({
       product_id: id,

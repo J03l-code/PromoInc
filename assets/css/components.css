@@ -274,7 +274,8 @@
   grid-template-columns: 1fr 480px;
   gap: 8rem;
   align-items: center;
-  padding-block: 2rem 4rem;
+  padding-top: 10rem;
+  padding-bottom: 4rem;
 }
 
 /* — Left: Editorial text — */
