@@ -13,13 +13,18 @@ $method = $_SERVER['REQUEST_METHOD'];
 $db     = getDB();
 
 switch ($method) {
-    case 'GET':    getBrandLogos($db);    break;
+    case 'GET':    
+        if (isset($_GET['id'])) getBrandLogo($db, (int)$_GET['id']);
+        else getBrandLogos($db);    
+        break;
     case 'POST':
         $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
         $action = $data['_method'] ?? 'POST';
         if ($action === 'DELETE') deleteBrandLogo($db);
+        elseif ($action === 'PUT') updateBrandLogo($db);
         else createBrandLogo($db);
         break;
+    case 'PUT':    updateBrandLogo($db); break;
     case 'DELETE': deleteBrandLogo($db);  break;
     default:       jsonError(405, 'Método no permitido');
 }
@@ -72,4 +77,33 @@ function deleteBrandLogo(PDO $db): void {
     $stmt->execute([(int)$data['id']]);
 
     jsonSuccess(['deleted' => true]);
+}
+
+function getBrandLogo(PDO $db, int $id): void {
+    $stmt = $db->prepare("SELECT * FROM brand_logos WHERE id = ?");
+    $stmt->execute([$id]);
+    $brand = $stmt->fetch();
+    if (!$brand) jsonError(404, 'Marca no encontrada');
+    jsonSuccess($brand);
+}
+
+function updateBrandLogo(PDO $db): void {
+    $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
+    if (empty($data['id'])) jsonError(400, 'ID requerido');
+    if (empty($data['name'])) jsonError(422, 'El nombre es requerido');
+    if (empty($data['filename'])) jsonError(422, 'La imagen es requerida');
+
+    $stmt = $db->prepare("
+        UPDATE brand_logos 
+        SET name = :name, filename = :filename, sort_order = :sort_order 
+        WHERE id = :id
+    ");
+    $stmt->execute([
+        ':name'       => sanitize($data['name']),
+        ':filename'   => sanitize($data['filename']),
+        ':sort_order' => (int)($data['sort_order'] ?? 0),
+        ':id'         => (int)$data['id']
+    ]);
+
+    jsonSuccess(['updated' => true]);
 }

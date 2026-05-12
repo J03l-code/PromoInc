@@ -921,7 +921,10 @@ async function loadBrands() {
       <td>${b.sort_order}</td>
       <td style="color:var(--muted); font-size:0.8rem">${fmtDate(b.created_at)}</td>
       <td>
-        <button class="btn btn-ghost btn-sm" onclick="deleteBrand(${b.id}, '${escHtml(b.name)}')">Eliminar</button>
+        <div class="table-actions" style="justify-content: flex-start; gap: 0.5rem;">
+          <button class="btn btn-ghost btn-sm" onclick="editBrand(${b.id})">Editar</button>
+          <button class="btn btn-ghost btn-sm" style="color: var(--accent-pink)" onclick="deleteBrand(${b.id}, '${escHtml(b.name)}')">Eliminar</button>
+        </div>
       </td>
     </tr>
   `).join('');
@@ -945,18 +948,39 @@ async function deleteBrand(id, name) {
   else toast(res.error || 'Error al eliminar', 'error');
 }
 
+async function editBrand(id) {
+  const res = await api(`admin_brand_logos.php?id=${id}`);
+  if (!res.success) { toast('Error al cargar marca', 'error'); return; }
+  const b = res.data;
+  document.getElementById('brand-id').value = b.id;
+  document.getElementById('brand-name').value = b.name;
+  document.getElementById('brand-order').value = b.sort_order;
+  document.getElementById('brand-image').value = b.filename;
+  if (b.filename) {
+    document.getElementById('brand-preview-img').src = `../assets/images/${b.filename}`;
+    document.getElementById('brand-upload-placeholder').classList.add('hidden');
+    document.getElementById('brand-upload-preview').classList.remove('hidden');
+  }
+  document.getElementById('modal-brand-title').textContent = 'Editar Marca';
+  openModal('modal-brand');
+}
+
 document.getElementById('btn-save-brand')?.addEventListener('click', async () => {
+  const id = document.getElementById('brand-id').value;
   const payload = {
     name:       document.getElementById('brand-name').value.trim(),
     sort_order: parseInt(document.getElementById('brand-order').value) || 0,
     filename:   document.getElementById('brand-image').value,
   };
+  if (id) payload.id = parseInt(id);
+
   if (!payload.name) { toast('El nombre es requerido', 'error'); return; }
   if (!payload.filename) { toast('El logo es requerido', 'error'); return; }
 
-  const res = await api('admin_brand_logos.php', 'POST', payload);
+  const method = id ? 'PUT' : 'POST';
+  const res = await api('admin_brand_logos.php', method, payload);
   if (res.success) {
-    toast('Marca guardada', 'success');
+    toast(id ? 'Marca actualizada' : 'Marca guardada', 'success');
     closeModal('modal-brand');
     loadBrands();
   } else toast(res.error || 'Error al guardar', 'error');
