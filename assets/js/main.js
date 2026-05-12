@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '48.3';
+const VERSION = '48.4';
 
 document.addEventListener('DOMContentLoaded', () => {
   
