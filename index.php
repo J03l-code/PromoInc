@@ -11,6 +11,7 @@ header("Expires: 0");
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromoInc | Artículos Promocionales Corporativos de Alto Impacto</title>
+  <link rel="icon" href="assets/images/favicon.png">
   <meta name="description"
     content="Plataforma líder en artículos promocionales y corporativos. Regalos empresariales de alta gama, merchandising y productos personalizables.">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />

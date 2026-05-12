@@ -199,6 +199,18 @@ h4, h5, .ui-heading {
   box-shadow: 0 4px 20px rgba(0,188,255,0.2);
 }
 
+.btn-outline {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .btn-cyan {
   background: var(--accent-cyan);
   color: var(--bg-primary);
