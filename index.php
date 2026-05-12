@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=45.2">
-  <link rel="stylesheet" href="assets/css/components.css?v=45.2">
-  <link rel="stylesheet" href="assets/css/animations.css?v=45.2">
+  <link rel="stylesheet" href="assets/css/main.css?v=45.3">
+  <link rel="stylesheet" href="assets/css/components.css?v=45.3">
+  <link rel="stylesheet" href="assets/css/animations.css?v=45.3">
 
 </head>
 
@@ -338,7 +338,7 @@ header("Expires: 0");
   <section class="clients-section">
     <div class="container">
       <p class="text-center text-muted"
-        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; font-weight: 600;">
+        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; font-weight: 600;">
         Confían en nuestra calidad</p>
 
       <div class="logos-marquee">
@@ -571,7 +571,7 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=45.2"></script>
+  <script src="assets/js/main.js?v=45.3"></script>
 </body>
 
 </html>

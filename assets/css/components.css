@@ -1150,7 +1150,7 @@
 
 /* ── SOCIAL PROOF ─────────────────────────────────────────── */
 .clients-section {
-  padding-block: var(--section-pad);
+  padding-block: 2rem;
   background: var(--bg-surface);
 }
 
