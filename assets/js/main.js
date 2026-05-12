@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '47.7';
+const VERSION = '47.8';
 
 document.addEventListener('DOMContentLoaded', () => {
   
@@ -233,10 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSaleProducts();
   }
   
-  // Link Ofertas
-  document.querySelector('.nav-link-ofertas')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'catalogo.html?on_sale=1';
+  // Link Ofertas (Event Delegation for dynamic nav)
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('.nav-link-ofertas');
+    if (target) {
+      e.preventDefault();
+      window.location.href = 'catalogo.html?on_sale=1';
+    }
   });
 });
 
