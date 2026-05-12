@@ -18,9 +18,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=49.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=49.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=49.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=49.1">
+  <link rel="stylesheet" href="assets/css/components.css?v=49.1">
+  <link rel="stylesheet" href="assets/css/animations.css?v=49.1">
   
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -94,12 +94,13 @@ header("Expires: 0");
 
         <div class="navbar-actions-top">
           <a href="javascript:void(0)" onclick="openCart()" class="nav-action-btn" id="cart-btn-nav">
-            <div class="cart-icon">
+            <div class="cart-icon" style="position:relative;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="9" cy="21" r="1" />
                 <circle cx="20" cy="21" r="1" />
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
+              <span id="cart-badge" class="cart-count-badge" style="display:none;"></span>
             </div>
             <span>Mi carrito</span>
           </a>
@@ -147,6 +148,45 @@ header("Expires: 0");
       <div class="mobile-menu-footer">
         <a href="login.html" class="btn btn-primary w-full justify-center" id="mobile-portal-btn">Mi Portal Corporativo</a>
       </div>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-panel-header">
+      <h3>🛒 Mi Carrito</h3>
+      <button class="cart-close-btn" onclick="closeCart()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items-list" id="cart-items-list">
+      <div class="cart-empty-msg">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"
+          style="margin-bottom:15px;opacity:0.3">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+        </svg>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="cart-panel-footer" id="cart-footer" style="display:none">
+      <div id="cart-login-notice" class="cart-login-notice" style="display:none">
+        <a href="login.html" style="color:var(--accent-cyan);font-weight:600;">Inicia sesión</a> para guardar
+        permanentemente.
+      </div>
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total estimado</span>
+        <span class="cart-total-value" id="cart-total-value">$0.00</span>
+      </div>
+      <button onclick="CheckoutModal.open()" class="btn btn-primary"
+        style="width:100%;justify-content:center;margin-bottom:10px;">Continuar al pago por WhatsApp</button>
+      <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline"
+        style="width:100%;justify-content:center;font-size:0.85rem;">Vaciar carrito</button>
     </div>
   </div>
 
@@ -587,7 +627,56 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=49.0"></script>
+  <script src="assets/js/cart.js?v=49.1"></script>
+  <script src="assets/js/checkout.js?v=49.1"></script>
+  <script src="assets/js/main.js?v=49.1"></script>
+  <script>
+    function openCart() {
+      document.getElementById('cart-panel').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cart-panel').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function renderCart(items) {
+      const list = document.getElementById('cart-items-list');
+      const footer = document.getElementById('cart-footer');
+      const badge = document.getElementById('cart-badge');
+      const count = CartManager.getCount();
+      if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+      if (!items || items.length === 0) {
+        list.innerHTML = '<div class="cart-empty-msg"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:15px;opacity:0.3"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Tu carrito está vacío</p></div>';
+        footer.style.display = 'none'; return;
+      }
+      list.innerHTML = items.map(item => {
+        const imgSrc = item.image_webp ? `assets/images/${item.image_webp}` : '';
+        return `
+          <div class="cart-item">
+            <img src="${imgSrc}" alt="${item.name}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">$${item.unit_price.toFixed(2)}</div>
+              <div class="cart-item-qty">Cant: ${item.quantity}</div>
+            </div>
+            <button class="cart-item-remove" onclick="CartManager.removeItem(${item.product_id}).then(renderCart)">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('cart-total-value').textContent = '$' + CartManager.getTotal().toFixed(2);
+      footer.style.display = 'block';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      CartManager.init(renderCart);
+    });
+  </script>
 </body>
 
 </html>
