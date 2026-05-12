@@ -1197,9 +1197,29 @@
 
       const subtotal = qty * unitPrice;
 
+      // Build the original price for this tier (before sale discount)
+      const originalTierPrice = (() => {
+        if (p.volume_prices && p.volume_prices.length) {
+          const applicableTier = [...p.volume_prices]
+            .sort((a, b) => b.min_qty - a.min_qty)
+            .find(t => qty >= t.min_qty);
+          return applicableTier ? parseFloat(applicableTier.price) : parseFloat(p.price_from);
+        }
+        return parseFloat(p.price_from);
+      })();
+
       document.getElementById('unit-price-display').innerHTML = `
-        ${isSale && qty < (p.volume_prices?.[0]?.min_qty || 9999) ? `<span style="text-decoration:line-through; font-size:1rem; color:var(--text-muted); margin-right:8px;">$${parseFloat(p.price_from).toFixed(2)}</span>` : ''}
-        $${unitPrice.toFixed(2)}
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          ${isSale ? `
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="background:var(--accent-pink); color:#fff; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:20px; letter-spacing:0.05em;">-${p.sale_discount}% OFERTA</span>
+            </div>
+            <div style="display:flex; align-items:baseline; gap:8px;">
+              <span style="text-decoration:line-through; font-size:1rem; color:var(--text-muted);">$${originalTierPrice.toFixed(2)}</span>
+              <span style="font-size:1.8rem; font-weight:800; color:var(--accent-pink);">$${unitPrice.toFixed(2)}</span>
+            </div>
+          ` : `<span style="font-size:1.8rem; font-weight:800; color:var(--text-primary);">$${unitPrice.toFixed(2)}</span>`}
+        </div>
       `;
       
       document.getElementById('total-price-display').textContent = `$${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
