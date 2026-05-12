@@ -9,14 +9,14 @@
     content="Explora nuestro catálogo completo de artículos promocionales. Tecnología, oficina, confecciones y más.">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=47.5">
-  <link rel="stylesheet" href="assets/css/components.css?v=47.5">
-  <link rel="stylesheet" href="assets/css/animations.css?v=47.5">
+  <link rel="stylesheet" href="assets/css/main.css?v=47.6">
+  <link rel="stylesheet" href="assets/css/components.css?v=47.6">
+  <link rel="stylesheet" href="assets/css/animations.css?v=47.6">
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
-  <link rel="stylesheet" href="assets/css/catalog_pdf.css?v=47.5">
+  <link rel="stylesheet" href="assets/css/catalog_pdf.css?v=47.6">
   <style>
     .catalog-header {
-      padding-top: 320px;
+      padding-top: 260px;
       padding-bottom: 50px;
       background: linear-gradient(160deg, var(--bg-surface) 0%, var(--bg-body) 100%);
       border-bottom: 1px solid var(--border);
@@ -209,6 +209,30 @@
     .nav-action-btn { position:relative; }
     .cart-empty-msg { text-align:center; padding:60px 20px; color:var(--text-muted); }
     .cart-login-notice { background:rgba(0,188,255,0.1); border:1px solid rgba(0,188,255,0.2); border-radius:10px; padding:12px 15px; font-size:0.85rem; color:var(--accent-cyan); margin-bottom:15px; text-align:center; }
+    #btn-download-catalog {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-cyan), #0080aa);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      box-shadow: 0 4px 15px rgba(0, 188, 255, 0.3);
+    }
+    #btn-download-catalog:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 188, 255, 0.4);
+      filter: brightness(1.1);
+    }
+    #btn-download-catalog svg { width: 18px; height: 18px; }
   </style>
 
 </head>
@@ -332,16 +356,7 @@
         </span>
       </h1>
       <p class="text-muted" style="margin-top: 1.5rem; font-size: 1.1rem;">Más de 500 productos personalizables para potenciar tu marca.</p>
-      <div style="margin-top: 2rem;">
-        <button id="btn-download-catalog">
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 16l4-4h-3V4h-2v8H8l4 4z"/>
-            <path d="M20 18H4v2h16v-2z"/>
-          </svg>
-          <span class="btn-text">Descargar Catálogo PDF</span>
-        </button>
-        <span style="display: block; margin-top: 0.6rem; font-size: 0.78rem; color: var(--text-muted);">Catálogo completo con precios y secciones</span>
-      </div>
+
     </div>
 
     <div class="catalog-layout">
@@ -349,6 +364,15 @@
       <aside class="sidebar-filters reveal reveal-delay-1">
 
         <div class="sidebar-card">
+          <!-- Botón Catálogo PDF -->
+          <button id="btn-download-catalog">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 16l4-4h-3V4h-2v8H8l4 4z" />
+              <path d="M20 18H4v2h16v-2z" />
+            </svg>
+            Descargar Catálogo PDF
+          </button>
+
           <!-- Logo de la empresa -->
           <div class="sidebar-logo">
             <img src="assets/images/logo blanco (2).png" alt="PromoInc">
@@ -524,13 +548,13 @@
     </svg>
   </a>
 
-  <script src="assets/js/cart.js?v=47.5"></script>
-  <script src="assets/js/checkout.js?v=47.5"></script>
-  <script src="assets/js/main.js?v=47.5"></script>
+  <script src="assets/js/cart.js?v=47.6"></script>
+  <script src="assets/js/checkout.js?v=47.6"></script>
+  <script src="assets/js/main.js?v=47.6"></script>
   <!-- jsPDF: generador de catálogo PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <script src="assets/js/catalog_pdf.js?v=47.5"></script>
+  <script src="assets/js/catalog_pdf.js?v=47.6"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
