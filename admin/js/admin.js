@@ -984,8 +984,8 @@ async function handleBrandUpload(file) {
     });
     const data = await res.json();
     if (data.success) {
-      document.getElementById('brand-image').value = data.filename;
-      document.getElementById('brand-preview-img').src = `../assets/images/${data.filename}`;
+      document.getElementById('brand-image').value = data.data.filename;
+      document.getElementById('brand-preview-img').src = `../assets/images/${data.data.filename}`;
       document.getElementById('brand-upload-preview').classList.remove('hidden');
       document.getElementById('brand-upload-placeholder').classList.add('hidden');
     } else toast(data.error || 'Error al subir', 'error');
