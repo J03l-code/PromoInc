@@ -23,6 +23,113 @@ header("Expires: 0");
   <link rel="stylesheet" href="assets/css/animations.css?v=49.2">
   
   <style>
+    /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
+    :root {
+      --hero-gradient: radial-gradient(circle at 0% 0%, rgba(232, 62, 140, 0.15) 0%, transparent 50%),
+                       radial-gradient(circle at 100% 100%, rgba(0, 188, 255, 0.1) 0%, transparent 50%);
+    }
+
+    /* Mejora de Textura Global */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .hero-main {
+      padding: 180px 0 100px;
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg-body);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--hero-gradient);
+      pointer-events: none;
+    }
+
+    .hero-headline {
+      font-size: clamp(3.5rem, 8vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      max-width: 500px;
+      color: var(--text-secondary);
+      border-left: 2px solid var(--accent-pink);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Tarjetas de Producto Evolucionadas */
+    .card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      transition: all 0.5s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0, 188, 255, 0.1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Botones de Acción */
+    .hero-btn-primary {
+      padding: 1.2rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));
+      box-shadow: 0 10px 30px rgba(232, 62, 140, 0.3);
+      transition: all 0.3s var(--ease-spring);
+    }
+
+    .hero-btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(232, 62, 140, 0.5);
+    }
+
+    /* Glassmorphism Sidebar/Action */
+    .nav-action-btn {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.6rem 1.2rem;
+      border-radius: 100px;
+    }
+    
     /* ── CART SIDEBAR ──────────────────────────────────────────────── */
     .cart-overlay {
       position: fixed;
@@ -33,7 +140,6 @@ header("Expires: 0");
       pointer-events: none;
       transition: opacity 0.3s;
     }
-
     .cart-overlay.open {
       opacity: 1;
       pointer-events: all;
@@ -414,30 +520,29 @@ header("Expires: 0");
         </div>
 
         <h1 class="hero-headline">
-          Tu marca en cada<br>
+          Creamos<br>
           <span class="hero-word-rotate">
-            <span class="hero-word active">evento</span>
-            <span class="hero-word">producto</span>
-            <span class="hero-word">regalo</span>
-            <span class="hero-word">detalle</span>
+            <span class="hero-word active">Impacto</span>
+            <span class="hero-word">Marca</span>
+            <span class="hero-word">Diseño</span>
+            <span class="hero-word">Calidad</span>
           </span>
         </h1>
 
         <p class="hero-sub">
-          Artículos promocionales personalizados con tu logo.<br>
-          Desde 20 unidades. Entrega nacional.
+          Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle, desde 20 unidades.
         </p>
 
         <div class="hero-actions">
           <a href="catalogo.html" class="hero-btn-primary">
-            Explorar catálogo
+            Explorar Colección
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <a href="#cotizar" class="hero-btn-outline">
-            Solicitar cotización
+          <a href="#cotizar" class="hero-btn-outline" style="padding: 1.2rem 2rem; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); backdrop-filter: blur(5px);">
+            Planificar Proyecto
           </a>
         </div>
 
