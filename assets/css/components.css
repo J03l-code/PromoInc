@@ -662,7 +662,7 @@
 
 @media (max-width: 640px) {
   .hero-main {
-    padding-top: 320px;
+    padding-top: 200px;
   }
 
   .hero-headline {
@@ -1061,7 +1061,7 @@
 
 /* — Responsive — */
   .hero-main {
-    padding-top: 320px;
+    padding-top: 200px;
     min-height: auto;
     padding-bottom: 2rem;
   }
@@ -1697,37 +1697,37 @@
 
 @media (max-width: 768px) {
   .navbar-top-inner { 
-    flex-direction: column; 
+    flex-wrap: wrap; 
     align-items: center; 
-    padding: 1.5rem 1rem 1rem;
+    padding: 0.75rem 1rem 0.5rem;
     position: relative;
-    min-height: 140px;
+    min-height: auto;
   }
   .navbar-logo { 
-    width: 100%; 
+    width: auto; 
     display: flex;
-    justify-content: center; 
-    margin-bottom: 0.75rem; 
+    justify-content: flex-start; 
+    margin-bottom: 0; 
     order: 1;
   }
   .navbar-logo img { 
-    height: 120px !important; 
+    height: 100px !important; 
     width: auto;
     margin: 0 !important; 
   } 
   .navbar-actions-top { 
     position: absolute;
     right: 1.25rem;
-    top: 1.75rem;
+    top: 1.25rem;
     gap: 1rem; 
     order: 2;
   }
   .navbar-search { 
     width: 100%; 
     max-width: 100%; 
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     order: 3;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
   }
   
   .navbar-actions-top .btn, .nav-action-btn span { display: none; }
