@@ -35,7 +35,7 @@
 }
 
 .navbar-logo img {
-  height: 110px; /* Tamaño mucho más grande */
+  height: 165px; /* Aumento a 1.5x (110 * 1.5) */
   width: auto;
   object-fit: contain;
   display: block;
