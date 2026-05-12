@@ -128,6 +128,93 @@ header("Expires: 0");
       border: 1px solid rgba(255, 255, 255, 0.05);
       padding: 0.6rem 1.2rem;
       border-radius: 100px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-action-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    /* Headline Dynamic Gradient */
+    .hero-headline {
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .hero-word {
+      display: block;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 15px rgba(232, 62, 140, 0.2));
+    }
+
+    /* Social Proof Refined */
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-avatars {
+      display: flex;
+      align-items: center;
+    }
+    .hero-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-body);
+      margin-left: -10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .hero-avatar:first-child { margin-left: 0; }
+
+    /* Floating Cards Evolution */
+    .hero-imgs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+      position: relative;
+    }
+    .hero-img-main, .hero-img-secondary {
+      border-radius: 24px;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+    .hero-img-main:hover, .hero-img-secondary:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .hero-img-tag {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Hero Layout Adjustments */
+    .hero-main {
+      padding-top: 140px;
+      background: radial-gradient(circle at 10% 30%, rgba(232, 62, 140, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 70%, rgba(0, 188, 255, 0.08) 0%, transparent 40%);
     }
     
     /* ── CART SIDEBAR ──────────────────────────────────────────────── */
@@ -486,62 +573,45 @@ header("Expires: 0");
       <!-- Left column: Rotating headline -->
       <div class="hero-left reveal">
         <div class="hero-social-proof">
-          <div class="hero-avatars" id="hero-brand-avatars">
-            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#e83e8c,#c0185a); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
-            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#00bcff,#0080aa); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
-            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#a78bfa,#7c3aed); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
-            <div class="hero-avatar brand-avatar-slot" style="background: linear-gradient(135deg,#fbbf24,#d97706); display: flex; align-items: center; justify-content: center; padding: 6px;"></div>
+          <div class="hero-avatars">
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#e83e8c,#ff8eb3)"></div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#00bcff,#80e1ff)"></div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#a78bfa,#c4b5fd)"></div>
+            <div class="hero-avatar" style="background: linear-gradient(135deg,#fbbf24,#fde68a)"></div>
           </div>
-          <div class="hero-proof-text">
-            <div class="hero-stars">
-              <svg viewBox="0 0 20 20" fill="#fbbf24">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg viewBox="0 0 20 20" fill="#fbbf24">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
+          <div class="hero-proof-text" style="display:flex; align-items:center; gap:8px;">
+            <div class="hero-stars" style="display:flex; gap:2px;">
+              <svg viewBox="0 0 20 20" fill="#fbbf24" width="14"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24" width="14"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24" width="14"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24" width="14"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+              <svg viewBox="0 0 20 20" fill="#fbbf24" width="14"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
             </div>
-            <span>+100 empresas ya confiaron en nosotros</span>
+            <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">+100 empresas ya confiaron en nosotros</span>
           </div>
         </div>
 
         <h1 class="hero-headline">
           Creamos<br>
-          <span class="hero-word-rotate">
-            <span class="hero-word active">Impacto</span>
-            <span class="hero-word">Marca</span>
-            <span class="hero-word">Diseño</span>
-            <span class="hero-word">Calidad</span>
-          </span>
+          <span class="hero-word">Diseño</span>
         </h1>
 
-        <p class="hero-sub">
-          Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle, desde 20 unidades.
-        </p>
+        <div style="margin: 2rem 0; max-width: 420px; border-left: 3px solid var(--accent-pink); padding-left: 20px;">
+          <p style="color: var(--text-secondary); font-size: 1.15rem; line-height: 1.6;">
+            Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle, desde 20 unidades.
+          </p>
+        </div>
 
-        <div class="hero-actions">
-          <a href="catalogo.html" class="hero-btn-primary">
+        <div class="hero-actions" style="margin-bottom: 2rem;">
+          <a href="catalogo.html" class="hero-btn-primary" style="display:inline-flex; align-items:center; gap:10px;">
             Explorar Colección
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <a href="#cotizar" class="hero-btn-outline" style="padding: 1.2rem 2rem; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); backdrop-filter: blur(5px);">
+          <br><br>
+          <a href="#cotizar" class="hero-btn-outline" style="display:inline-block; padding: 1.1rem 2.2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); font-weight: 700; font-size: 0.95rem;">
             Planificar Proyecto
           </a>
         </div>
@@ -567,22 +637,16 @@ header("Expires: 0");
       <!-- Right column: Product images showcase -->
       <div class="hero-imgs reveal reveal-delay-2">
         <div class="hero-img-main">
-          <img src="assets/images/hero-products-1.png" alt="Artículos promocionales personalizados — PromoInc">
+          <img src="assets/images/hero-products-1.png" alt="Personalización con tu logo" style="width:100%; height:auto;">
           <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-              <line x1="7" y1="7" x2="7.01" y2="7" />
-            </svg>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent-pink)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             Personalización con tu logo
           </div>
         </div>
         <div class="hero-img-secondary">
-          <img src="assets/images/hero-products-2.png" alt="Ropa corporativa y kit empresarial — PromoInc">
+          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" style="width:100%; height:auto;">
           <div class="hero-img-tag">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z" />
-            </svg>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent-cyan)"><path d="M20 7h-4V5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 5h4v2h-4V5z"/></svg>
             Kits corporativos
           </div>
         </div>
