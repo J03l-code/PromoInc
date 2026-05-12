@@ -15,7 +15,7 @@
 }
 
 .navbar-top {
-  padding: 0.1rem 0 0 0; /* Sin espacio abajo para logo gigante */
+  padding: 0; /* Eliminado todo el padding vertical */
   border-bottom: 1px solid var(--border);
 }
 
@@ -24,6 +24,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  padding: 0 1.5rem; /* Mantener solo padding lateral */
 }
 
 .navbar-logo {
@@ -39,7 +40,8 @@
   width: auto;
   object-fit: contain;
   display: block;
-  margin-bottom: -25px; /* Pull down more to reduce gap by half */
+  margin-top: -20px; /* Reducir borde superior */
+  margin-bottom: -50px; /* Reducir borde inferior agresivamente */
 }
 
 .navbar-logo-text {
