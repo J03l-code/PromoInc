@@ -105,20 +105,38 @@ header("Expires: 0");
       opacity: 1;
     }
 
-    /* Botones de Acción */
     .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       padding: 1.2rem 2.5rem;
       font-size: 1.1rem;
       font-weight: 800;
       border-radius: 16px;
+      color: #fff !important;
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));
-      box-shadow: 0 10px 30px rgba(232, 62, 140, 0.3);
-      transition: all 0.3s var(--ease-spring);
+      box-shadow: 0 10px 30px rgba(232, 62, 140, 0.4);
+      transition: all 0.4s var(--ease-spring);
+      text-decoration: none;
     }
-
     .hero-btn-primary:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(232, 62, 140, 0.5);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(232, 62, 140, 0.6);
+    }
+    .hero-btn-outline {
+      display: inline-block;
+      padding: 1.1rem 2.2rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    .hero-btn-outline:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.3);
     }
 
     /* Glassmorphism Sidebar/Action */
@@ -602,16 +620,15 @@ header("Expires: 0");
           </p>
         </div>
 
-        <div class="hero-actions" style="margin-bottom: 2rem;">
-          <a href="catalogo.html" class="hero-btn-primary" style="display:inline-flex; align-items:center; gap:10px;">
+        <div class="hero-actions" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+          <a href="catalogo.html" class="hero-btn-primary">
             Explorar Colección
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <br><br>
-          <a href="#cotizar" class="hero-btn-outline" style="display:inline-block; padding: 1.1rem 2.2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); font-weight: 700; font-size: 0.95rem;">
+          <a href="#cotizar" class="hero-btn-outline">
             Planificar Proyecto
           </a>
         </div>
