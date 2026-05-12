@@ -27,7 +27,7 @@
 
   function fmt(price) {
     if (!price || parseFloat(price) <= 0) return 'Consultar';
-    return 'MX$' + parseFloat(price).toLocaleString('es-MX', {
+    return '$' + parseFloat(price).toLocaleString('en-US', {
       minimumFractionDigits: 2, maximumFractionDigits: 2
     });
   }

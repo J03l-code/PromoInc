@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '45.7';
+const VERSION = '45.8';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -502,37 +502,53 @@ function renderProducts(grid, products, append = false) {
       </div>
       <div class="card-body">
         ${!isProductPage ? `<h3 class="card-title">${p.name}</h3><p class="card-sku">${p.sku}</p>` : ''}
-        <div class="card-badges" style="margin-bottom: 0.75rem;">
-          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
-          ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
+        <div class="card-badges" style="margin-bottom: 0.75rem; display: flex; flex-wrap: wrap; gap: 5px;">
+          ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">● Stock Disponible</span>' : '<span class="badge badge-nostock">● Sin Stock</span>'}
+          ${parseInt(p.featured) ? '<span class="badge badge-featured">● Destacado</span>' : ''}
+          ${parseInt(p.customizable) ? '<span class="badge" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); padding:3px 8px; border-radius:20px; font-size:0.68rem; font-weight:700; letter-spacing:0.04em;">✓ Personalizable</span>' : ''}
         </div>
-        <div class="flex items-center justify-between" style="gap: 8px; flex-wrap: wrap;">
-          <div style="min-width: fit-content;">
-            <p class="card-price" style="font-size: 0.8rem;">Desde <strong style="font-size: 1.2rem; color: var(--accent-gold);">MX$${parseFloat(p.price_from || 0).toFixed(2)}</strong></p>
-            <p class="card-min" style="font-size: 0.7rem;">Mín. ${p.min_quantity || 10} unidades</p>
-          </div>
-          <div style="display:flex; gap:6px; align-items:center;" onclick="event.stopPropagation()">
-            <button
-              title="Agregar al carrito"
-              onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${parseFloat(p.price_from||0).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
-              style="
-                width:34px; height:34px; border-radius:8px; border: none; cursor:pointer;
-                background: linear-gradient(135deg, #e83e8c, #c0185a);
-                color: #fff; display:flex; align-items:center; justify-content:center;
-                box-shadow: 0 4px 15px rgba(232,62,140,0.4);
-                transition: transform 0.15s, box-shadow 0.15s;
-                flex-shrink: 0;
-              "
-              onmouseenter="this.style.transform='scale(1.12)'; this.style.boxShadow='0 6px 20px rgba(232,62,140,0.6)'"
-              onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(232,62,140,0.4)'"
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            </button>
-            <a href="producto.html?id=${p.id}&v=${VERSION}" class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Cotizar</a>
-          </div>
+        <div style="margin-bottom: 0.75rem;">
+          <p class="card-price" style="font-size: 0.78rem; margin-bottom: 2px;">Desde</p>
+          <strong style="font-size: 1.35rem; color: var(--accent-gold); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>
+          <p class="card-min" style="font-size: 0.7rem; margin-top: 2px;">Mín. ${p.min_quantity || 10} unidades</p>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;" onclick="event.stopPropagation()">
+          <button
+            title="Agregar al carrito"
+            onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${parseFloat(p.price_from||0).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
+            style="
+              width:38px; height:38px; border-radius:10px; border: none; cursor:pointer;
+              background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));
+              color: #fff; display:flex; align-items:center; justify-content:center;
+              box-shadow: 0 4px 15px rgba(232,62,140,0.4);
+              transition: transform 0.15s, box-shadow 0.15s;
+              flex-shrink: 0;
+            "
+            onmouseenter="this.style.transform='scale(1.12)'; this.style.boxShadow='0 6px 20px rgba(232,62,140,0.6)'"
+            onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(232,62,140,0.4)'"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </button>
+          <a href="producto.html?id=${p.id}&v=${VERSION}"
+            style="
+              flex: 1; display:flex; align-items:center; justify-content:center; gap:6px;
+              padding: 0.5rem 0.75rem; border-radius:10px; font-size:0.8rem; font-weight:700;
+              background: linear-gradient(135deg, var(--accent-cyan), var(--accent-cyan-d));
+              color:#000; text-decoration:none; letter-spacing:0.03em;
+              box-shadow: 0 4px 15px rgba(0,188,255,0.3);
+              transition: transform 0.15s, box-shadow 0.15s;
+            "
+            onmouseenter="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 22px rgba(0,188,255,0.5)'"
+            onmouseleave="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,188,255,0.3)'"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Cotizar
+          </a>
         </div>
       </div>
     </article>`;
+  }).join('');
+
   }).join('');
 
   if (append) grid.innerHTML += html;
