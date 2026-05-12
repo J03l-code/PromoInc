@@ -5,7 +5,7 @@
 'use strict';
 
 const API = '../api';
-const VERSION = '44.0';
+const VERSION = '47.4';
 let currentUser = null;
 let productsPage = 0;
 const LIMIT = 20;
