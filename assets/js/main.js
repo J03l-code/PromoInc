@@ -681,7 +681,7 @@ function renderProducts(grid, products, append = false) {
         <div style="display:flex; gap:8px; align-items:center;" onclick="event.stopPropagation()">
           <button
             title="Agregar al carrito"
-            onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${parseFloat(p.price_from||0).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
+            onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${(parseInt(p.on_sale) && p.sale_price ? parseFloat(p.sale_price) : parseFloat(p.price_from||0)).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
             style="
               width:38px; height:38px; border-radius:10px; border: none; cursor:pointer;
               background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));

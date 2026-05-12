@@ -905,24 +905,25 @@
                        </tr>
                      </thead>
                      <tbody style="background:var(--card-bg);">
-                       <!-- Fila Base/Oferta -->
-                       <tr style="border-bottom:1px solid var(--border); background:rgba(232,62,140,0.05);">
-                         <td style="padding:12px 15px; color:var(--text-secondary);">${p.min_quantity} Unidades (Base)</td>
-                         <td style="padding:12px 15px; font-weight:600;">$${(parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from)).toFixed(2)}</td>
-                         <td style="padding:12px 15px; color:#00ff88;">${parseInt(p.on_sale) ? `Oferta -${p.sale_discount}%` : '0%'}</td>
-                         <td style="padding:12px 15px;">$${(p.min_quantity * (parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from))).toFixed(2)}</td>
-                       </tr>
-                       ${prices.map((tier, idx) => {
-          const currentUnitPrice = parseFloat(tier.price);
+                        <tr style="border-bottom:1px solid var(--border); background:rgba(232,62,140,0.05);">
+                          <td style="padding:12px 15px; color:var(--text-secondary);">${p.min_quantity} Unidades (Base)</td>
+                          <td style="padding:12px 15px; font-weight:600; color:${parseInt(p.on_sale) ? 'var(--accent-pink)' : 'var(--text-primary)'};">$${(parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from)).toFixed(2)}</td>
+                          <td style="padding:12px 15px; color:#00ff88;">${parseInt(p.on_sale) ? `-${p.sale_discount}%` : '0%'}</td>
+                          <td style="padding:12px 15px;">$${(p.min_quantity * (parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from))).toFixed(2)}</td>
+                        </tr>
+                        ${prices.map((tier, idx) => {
+          const isSale = parseInt(p.on_sale) && p.sale_discount;
+          const saleMultiplier = isSale ? (1 - parseFloat(p.sale_discount) / 100) : 1;
+          const effectiveTierPrice = parseFloat(tier.price) * saleMultiplier;
           const originalFullPrice = parseFloat(p.price_from);
-          const discount = Math.round((1 - (currentUnitPrice / originalFullPrice)) * 100);
+          const totalDiscount = Math.round((1 - (effectiveTierPrice / originalFullPrice)) * 100);
           const bg = idx % 2 === 0 ? '' : 'background: rgba(255,255,255,0.02);';
           return `
                             <tr style="${bg} border-bottom:1px solid var(--border);">
                               <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
-                              <td style="padding:12px 15px; font-weight:600;">$${currentUnitPrice.toFixed(2)}</td>
-                              <td style="padding:12px 15px; color:#00ff88;">-${discount}%</td>
-                              <td style="padding:12px 15px;">$${(tier.min_qty * currentUnitPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                              <td style="padding:12px 15px; font-weight:600; color:${isSale ? 'var(--accent-pink)' : 'var(--text-primary)'};">$${effectiveTierPrice.toFixed(2)}</td>
+                              <td style="padding:12px 15px; color:#00ff88;">-${totalDiscount}%</td>
+                              <td style="padding:12px 15px;">$${(tier.min_qty * effectiveTierPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             </tr>
                           `;
         }).join('')}
@@ -1187,8 +1188,10 @@
           .sort((a, b) => b.min_qty - a.min_qty)
           .find(t => qty >= t.min_qty);
         
+      // Apply sale discount on top of the volume tier price
         if (applicableTier) {
-          unitPrice = parseFloat(applicableTier.price);
+          const saleMultiplier = isSale ? (1 - parseFloat(p.sale_discount) / 100) : 1;
+          unitPrice = parseFloat(applicableTier.price) * saleMultiplier;
         }
       }
 
