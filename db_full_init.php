@@ -72,7 +72,7 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
     
     // Insertar defaults si no existen
-    $db->exec("INSERT IGNORE INTO settings (`key`, `value`) VALUES ('whatsapp_number', '5930987827215')");
+    $db->exec("INSERT IGNORE INTO settings (`key`, `value`) VALUES ('whatsapp_number', '593987827215')");
     echo "Tabla settings verificada.<br>";
 
     echo "<h3>Base de datos inicializada correctamente.</h3>";

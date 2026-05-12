@@ -356,14 +356,15 @@ async function loadSiteSettings() {
       
       // WhatsApp
       if (s.whatsapp) {
-        window.siteWhatsapp = s.whatsapp;
+        window.siteWhatsapp = s.whatsapp.replace(/\D/g, '');
+        const cleanWa = window.siteWhatsapp;
         document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
           try {
             const url = new URL(a.href);
             const text = url.searchParams.get('text') || '';
-            a.href = `https://wa.me/${s.whatsapp}?text=${encodeURIComponent(text)}`;
+            a.href = `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
           } catch(e) {
-            a.href = `https://wa.me/${s.whatsapp}`;
+            a.href = `https://wa.me/${cleanWa}`;
           }
         });
         const waDisplay = document.querySelector('.footer-contact-item svg path[d*="M22 16.92"]')?.parentElement?.nextElementSibling;
