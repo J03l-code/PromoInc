@@ -905,12 +905,6 @@
                        </tr>
                      </thead>
                      <tbody style="background:var(--card-bg);">
-                        <tr style="border-bottom:1px solid var(--border); background:rgba(232,62,140,0.05);">
-                          <td style="padding:12px 15px; color:var(--text-secondary);">${p.min_quantity} Unidades (Base)</td>
-                          <td style="padding:12px 15px; font-weight:600; color:${parseInt(p.on_sale) ? 'var(--accent-pink)' : 'var(--text-primary)'};">$${(parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from)).toFixed(2)}</td>
-                          <td style="padding:12px 15px; color:#00ff88;">${parseInt(p.on_sale) ? `-${p.sale_discount}%` : '0%'}</td>
-                          <td style="padding:12px 15px;">$${(p.min_quantity * (parseInt(p.on_sale) ? parseFloat(p.sale_price) : parseFloat(p.price_from))).toFixed(2)}</td>
-                        </tr>
                         ${prices.map((tier, idx) => {
           const isSale = parseInt(p.on_sale) && p.sale_discount;
           const saleMultiplier = isSale ? (1 - parseFloat(p.sale_discount) / 100) : 1;
