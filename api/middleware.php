@@ -14,9 +14,13 @@ function requireAuth(): void {
     }
 }
 
+function requireAdmin(): void {
+    requireRole('admin', 'superadmin', 'editor');
+}
+
 function requireRole(string ...$roles): void {
     requireAuth();
-    if (!in_array($_SESSION['user_role'], $roles)) {
+    if (!in_array($_SESSION['user_role'] ?? '', $roles)) {
         http_response_code(403);
         echo json_encode(['success' => false, 'error' => 'Sin permisos suficientes'], JSON_UNESCAPED_UNICODE);
         exit;

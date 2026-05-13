@@ -6,7 +6,7 @@
  */
 
 require_once 'middleware.php';
-requireRole('superadmin', 'admin');
+requireAdmin();
 
 $db = getDB();
 

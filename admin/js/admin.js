@@ -135,7 +135,7 @@ function navigateTo(section) {
 // ── AUTH ──────────────────────────────────────────────────────
 async function checkAuth() {
   const res = await api('auth.php');
-  if (!res.data?.loggedIn) {
+  if (!res.data?.loggedIn || !['admin', 'superadmin', 'editor'].includes(res.data.user.role)) {
     window.location.href = 'login.html';
     return;
   }

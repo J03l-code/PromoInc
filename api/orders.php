@@ -75,11 +75,12 @@ if ($method === 'GET') {
     }
 
     if ($number) {
-        $stmt = $db->prepare("SELECT * FROM orders WHERE order_number = ?");
-        $stmt->execute([$number]);
+        if (empty($_SESSION['user_id'])) jsonError(401, 'No autenticado');
+        $stmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? AND user_id = ?");
+        $stmt->execute([$number, $_SESSION['user_id']]);
         $order = $stmt->fetch();
         if (!$order)
-            jsonError(404, 'Pedido no encontrado');
+            jsonError(404, 'Pedido no encontrado o no tienes permiso para verlo');
         $order['items'] = json_decode($order['items'], true);
         jsonSuccess(['order' => $order]);
     }

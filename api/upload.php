@@ -6,7 +6,7 @@
  */
 
 require_once 'middleware.php';
-requireAuth();
+requireAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonError(405, 'Solo se permiten peticiones POST');

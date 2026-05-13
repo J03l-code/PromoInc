@@ -8,7 +8,7 @@
  */
 
 require_once 'middleware.php';
-requireAuth();
+requireAdmin();
 
 $method = $_SERVER['REQUEST_METHOD'];
 $db     = getDB();

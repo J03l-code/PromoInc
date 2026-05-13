@@ -17,7 +17,7 @@ $db     = getDB();
 // Proteger métodos de escritura
 if (in_array($method, ['POST', 'PUT', 'DELETE'])) {
     require_once 'middleware.php';
-    checkAuth(); // Solo administradores pueden modificar
+    requireAdmin(); // Solo administradores pueden modificar
 }
 
 switch ($method) {

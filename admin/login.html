@@ -430,7 +430,14 @@
       try {
         const res = await fetch('../api/auth.php');
         const json = await res.json();
-        if (json.data?.loggedIn) window.location.href = 'index.html';
+        if (json.data?.loggedIn) {
+          if (['admin', 'superadmin', 'editor'].includes(json.data.user.role)) {
+            window.location.href = 'index.html';
+          } else {
+            // Si es un cliente, lo mandamos al portal
+            window.location.href = '../portal.html';
+          }
+        }
       } catch (_) { }
     })();
 
@@ -476,7 +483,13 @@
         const json = await res.json();
 
         if (json.success && json.data.loggedIn) {
-          window.location.href = 'index.html';
+          if (['admin', 'superadmin', 'editor'].includes(json.data.user.role)) {
+            window.location.href = 'index.html';
+          } else {
+            showError('No tienes permisos para acceder al panel administrativo.');
+            // Opcional: Cerrar sesión para evitar confusiones
+            await fetch('../api/auth.php', { method: 'POST', body: JSON.stringify({ action: 'logout' }) });
+          }
         } else {
           showError(json.error || 'Credenciales incorrectas.');
         }

@@ -5,7 +5,7 @@
  * GET ?id=X → Detalle de cliente y sus pedidos
  */
 require_once __DIR__ . '/middleware.php';
-requireRole('superadmin', 'admin');
+requireAdmin();
 
 $db     = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
