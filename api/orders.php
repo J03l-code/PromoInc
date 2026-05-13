@@ -26,8 +26,11 @@ if ($method === 'POST') {
     $num = str_pad($count + 1, 4, '0', STR_PAD_LEFT);
     $orderNumber = "PI-{$date}-{$num}";
 
-    // Usuario logueado (opcional)
+    // Usuario logueado (obligatorio)
     $userId = !empty($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
+    if (!$userId) {
+        jsonError(401, 'Debes iniciar sesión para realizar un pedido');
+    }
 
     $stmt = $db->prepare("
         INSERT INTO orders

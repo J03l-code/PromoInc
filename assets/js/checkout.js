@@ -110,7 +110,18 @@ const CheckoutModal = (() => {
   }
 
   // ── Abrir Modal ───────────────────────────────────────────
-  function open() {
+  async function open() {
+    try {
+      const authRes = await fetch('api/auth_b2b.php?action=me', { credentials: 'include', cache: 'no-cache' });
+      if (!authRes.ok) throw new Error('Not authenticated');
+      const authData = await authRes.json();
+      if (!authData.success) throw new Error('Not authenticated');
+    } catch (e) {
+      alert('Debes iniciar sesión con tu cuenta de Google para realizar un pedido y guardar tu historial.');
+      window.location.href = 'login.html';
+      return;
+    }
+
     _inject();
     const items = CartManager.getItems();
     if (!items || items.length === 0) {
