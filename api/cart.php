@@ -32,7 +32,8 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $stmt = $db->prepare("
         SELECT ci.id, ci.product_id, ci.quantity, ci.unit_price,
-               p.name, p.image_webp, p.sku, p.min_quantity
+               p.name, p.image_webp, p.sku, p.min_quantity,
+               COALESCE(p.shipping_cost, 0) AS shipping_cost
         FROM cart_items ci
         JOIN products p ON p.id = ci.product_id
         WHERE ci.user_id = ?
