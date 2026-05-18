@@ -296,9 +296,17 @@ const CheckoutModal = (() => {
     btn.disabled = false;
     btn.innerHTML = `${WA_ICON} Enviar pedido por WhatsApp`;
 
-    // Navegar directo a WhatsApp — el mensaje queda listo, el cliente solo presiona Enviar
+    // Usar web.whatsapp.com para compatibilidad con escritorio y móvil.
+    // Abrimos en nueva pestaña con <a> temporal para evitar bloqueo de popups.
+    const waUrl = `https://web.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(finalMsg)}`;
+    const anchor = document.createElement('a');
+    anchor.href = waUrl;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
     close();
-    window.location.href = url;
   }
 
   return { open, close, submit };

@@ -744,7 +744,7 @@
 
 
   <script src="assets/js/cart.js?v=65.0"></script>
-  <script src="assets/js/checkout.js?v=65.0"></script>
+  <script src="assets/js/checkout.js?v=65.1"></script>
   <script src="assets/js/main.js?v=69.0"></script>
   <script>
     let currentProduct = null;
@@ -1393,7 +1393,10 @@
           ? `\nEnvío fijo: $${shippingCost.toFixed(2)}\n*TOTAL (productos + envío): $${grandTotal.toFixed(2)}*`
           : `\n*Total estimado: $${subtotal.toFixed(2)}*`;
         const text = `Hola PromoInc, me interesa cotizar:\nProducto: ${p.name}\nSKU: ${p.sku}\nCantidad: ${qty} unidades\nPrecio Ref: $${unitPrice.toFixed(2)} c/u\nSubtotal: $${subtotal.toFixed(2)}${shippingLine}`;
-        waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+        // web.whatsapp.com pre-llena el mensaje tanto en escritorio como en móvil
+        waBtn.href = `https://web.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(text)}`;
+        waBtn.target = '_blank';
+        waBtn.rel = 'noopener noreferrer';
       }
     }
   </script>
