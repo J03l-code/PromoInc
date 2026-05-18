@@ -880,6 +880,12 @@ function renderPortfolioItems(container, items, append = false) {
   } else {
     container.innerHTML = html;
   }
+
+  // Re-observe new elements to make them fade in elegantly
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  container.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
 function openPortfolioLightbox(filename, title, description) {
