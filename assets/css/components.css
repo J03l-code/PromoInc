@@ -2446,3 +2446,44 @@
     grid-column: 2;
   }
 }
+
+/* ── ACORDEÓN DE CATEGORÍAS EN HOVER (SIDEBAR DEL CATÁLOGO) ── */
+.filter-group-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.subcategory-list {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease !important;
+  padding-left: 0.8rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  border-left: 1.5px solid var(--border) !important;
+  margin-left: 0.75rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  pointer-events: none !important; /* Desactivar interacción cuando está colapsado */
+}
+
+/* Al pasar el puntero (Hover) sobre la categoría principal */
+.filter-group-container:hover .subcategory-list {
+  max-height: 350px !important;
+  opacity: 1 !important;
+  margin-top: 4px !important;
+  margin-bottom: 8px !important;
+  pointer-events: auto !important; /* Activar interacción al desplegar */
+}
+
+.filter-group-container .chevron-icon {
+  transition: transform 0.3s ease !important;
+}
+
+.filter-group-container:hover .chevron-icon {
+  transform: rotate(180deg) !important;
+}

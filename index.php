@@ -20,7 +20,7 @@ header("Expires: 0");
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css?v=63.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=103.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=104.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=61.0">
   
   <style>

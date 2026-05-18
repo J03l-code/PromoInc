@@ -11,7 +11,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css?v=51.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=103.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=104.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=49.4">
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <link rel="stylesheet" href="assets/css/catalog_pdf.css?v=49.2">
@@ -168,46 +168,7 @@
       font-weight: 700;
     }
 
-    /* ── ACORDEÓN DE CATEGORÍAS EN HOVER (SIDEBAR) ── */
-    .filter-group-container {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      position: relative;
-    }
 
-    .subcategory-list {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
-      padding-left: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      border-left: 1.5px solid var(--border);
-      margin-left: 0.75rem;
-      margin-top: 0;
-      margin-bottom: 0;
-      pointer-events: none; /* Desactivar interacción cuando está colapsado */
-    }
-
-    /* Al pasar el puntero (Hover) */
-    .filter-group-container:hover .subcategory-list {
-      max-height: 350px;
-      opacity: 1;
-      margin-top: 4px;
-      margin-bottom: 8px;
-      pointer-events: auto; /* Activar interacción al desplegar */
-    }
-
-    .filter-group-container .chevron-icon {
-      transition: transform 0.3s ease;
-    }
-
-    .filter-group-container:hover .chevron-icon {
-      transform: rotate(180deg);
-    }
 
     .filter-item input[type="checkbox"] {
       accent-color: var(--accent-cyan);
