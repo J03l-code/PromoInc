@@ -72,8 +72,12 @@ function getProducts(PDO $db): void {
     $params = [];
 
     if (!empty($_GET['category'])) {
-        $where[]  = 'EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = p.id AND pc.category_id = ?)';
-        $params[] = (int)$_GET['category'];
+        $catId = (int)$_GET['category'];
+        $where[]  = '(p.category_id = ? OR p.category_id IN (SELECT id FROM categories WHERE parent_id = ?) OR EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = p.id AND (pc.category_id = ? OR pc.category_id IN (SELECT id FROM categories WHERE parent_id = ?))))';
+        $params[] = $catId;
+        $params[] = $catId;
+        $params[] = $catId;
+        $params[] = $catId;
     }
 
     if (!empty($_GET['featured'])) {

@@ -59,10 +59,11 @@ function updateCategory(PDO $db): void {
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     $stmt = $db->prepare("
-        UPDATE categories SET name = :name, icon = :icon, sort_order = :sort_order, active = :active
+        UPDATE categories SET parent_id = :parent_id, name = :name, icon = :icon, sort_order = :sort_order, active = :active
         WHERE id = :id
     ");
     $stmt->execute([
+        ':parent_id'  => (int)($data['parent_id'] ?? 0),
         ':name'       => sanitize($data['name']),
         ':icon'       => sanitize($data['icon'] ?? ''),
         ':sort_order' => (int)($data['sort_order'] ?? 0),

@@ -295,18 +295,40 @@ async function populateCategorySelects(force = false) {
     const categoriesContainer = document.getElementById('product-categories-container');
     
     if (filterSel) {
-      const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
+      let options = '';
+      const mainCats = allCategories.filter(c => (parseInt(c.parent_id) || 0) === 0);
+      mainCats.forEach(mc => {
+        options += `<option value="${mc.id}">${escHtml(mc.name)}</option>`;
+        const subCats = allCategories.filter(c => c.parent_id == mc.id);
+        subCats.forEach(sc => {
+          options += `<option value="${sc.id}">&nbsp;&nbsp;&nbsp;➔ ${escHtml(sc.name)}</option>`;
+        });
+      });
       const first = filterSel.options[0]?.outerHTML || '<option value="">Todas las categorías</option>';
       filterSel.innerHTML = first + options;
     }
     
     if (categoriesContainer) {
-      categoriesContainer.innerHTML = allCategories.map(c => `
-        <label class="checkbox-label" style="justify-content: flex-start; gap: 0.5rem;">
-          <input type="checkbox" name="category_id[]" class="cat-checkbox" value="${c.id}">
-          <span style="font-size: 0.85rem;">${escHtml(c.name)}</span>
-        </label>
-      `).join('');
+      let checkboxesHtml = '';
+      const mainCats = allCategories.filter(c => (parseInt(c.parent_id) || 0) === 0);
+      mainCats.forEach(mc => {
+        checkboxesHtml += `
+          <label class="checkbox-label" style="justify-content: flex-start; gap: 0.5rem; font-weight: 600;">
+            <input type="checkbox" name="category_id[]" class="cat-checkbox" value="${mc.id}">
+            <span style="font-size: 0.85rem;">${escHtml(mc.name)}</span>
+          </label>
+        `;
+        const subCats = allCategories.filter(c => c.parent_id == mc.id);
+        subCats.forEach(sc => {
+          checkboxesHtml += `
+            <label class="checkbox-label" style="justify-content: flex-start; gap: 0.5rem; padding-left: 1.5rem; opacity: 0.9;">
+              <input type="checkbox" name="category_id[]" class="cat-checkbox" value="${sc.id}">
+              <span style="font-size: 0.82rem; font-weight: normal;">➔ ${escHtml(sc.name)}</span>
+            </label>
+          `;
+        });
+      });
+      categoriesContainer.innerHTML = checkboxesHtml;
     }
     console.log('Category selects populated');
   } catch (err) {
@@ -555,35 +577,60 @@ async function deleteProduct(id, name) {
 }
 
 // ── CATEGORÍAS ────────────────────────────────────────────────
+async function populateParentCategories(currentId = null) {
+  const select = document.getElementById('category-parent');
+  if (!select) return;
+  const res = await api('admin_categories.php');
+  if (res.success) {
+    // Solo podemos elegir categorías principales (parent_id = 0) como padre,
+    // y no podemos elegir a la propia categoría actual para evitar ciclos.
+    const mainCategories = res.data.filter(c => (parseInt(c.parent_id) || 0) === 0 && c.id != currentId);
+    let html = '<option value="0">Ninguna (Categoría Principal)</option>';
+    mainCategories.forEach(c => {
+      html += `<option value="${c.id}">${escHtml(c.name)}</option>`;
+    });
+    select.innerHTML = html;
+  }
+}
+
 async function loadCategories() {
   const res = await api('admin_categories.php');
   const tbody = document.getElementById('categories-tbody');
   if (!res.success) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Error</td></tr>'; return; }
   if (!res.data.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Sin categorías</td></tr>'; return; }
-  tbody.innerHTML = res.data.map(c => `
-    <tr>
-      <td style="font-weight:600">${escHtml(c.name)}</td>
-      <td style="color:var(--muted);font-size:0.82rem">${escHtml(c.slug)}</td>
-      <td style="font-size:0.82rem">${escHtml(c.icon || '—')}</td>
-      <td style="font-size:0.84rem">${c.product_count}</td>
-      <td style="font-size:0.84rem">${c.sort_order}</td>
-      <td>${statusBadge(parseInt(c.active) ? 'active' : 'inactive')}</td>
-      <td>
-        <div class="table-actions">
-          <button class="btn-icon" onclick="editCategory(${c.id})" title="Editar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="btn-icon danger" onclick="deleteCategory(${c.id},'${escHtml(c.name)}')" title="Eliminar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
-      </td>
-    </tr>`).join('');
+  
+  tbody.innerHTML = res.data.map(c => {
+    const parent = res.data.find(p => p.id == c.parent_id);
+    const displayName = parent 
+      ? `<span style="opacity:0.6;font-weight:normal;font-size:0.85rem;">${escHtml(parent.name)} ➔</span> ${escHtml(c.name)}` 
+      : escHtml(c.name);
+      
+    return `
+      <tr>
+        <td style="font-weight:600">${displayName}</td>
+        <td style="color:var(--muted);font-size:0.82rem">${escHtml(c.slug)}</td>
+        <td style="font-size:0.82rem">${escHtml(c.icon || '—')}</td>
+        <td style="font-size:0.84rem">${c.product_count}</td>
+        <td style="font-size:0.84rem">${c.sort_order}</td>
+        <td>${statusBadge(parseInt(c.active) ? 'active' : 'inactive')}</td>
+        <td>
+          <div class="table-actions">
+            <button class="btn-icon" onclick="editCategory(${c.id})" title="Editar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn-icon danger" onclick="deleteCategory(${c.id},'${escHtml(c.name)}')" title="Eliminar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
 }
 
-document.getElementById('btn-new-category').addEventListener('click', () => {
+document.getElementById('btn-new-category').addEventListener('click', async () => {
   document.getElementById('category-form').reset();
   document.getElementById('category-id').value = '';
+  await populateParentCategories();
   document.getElementById('modal-category-title').textContent = 'Nueva Categoría';
   openModal('modal-category');
 });
@@ -592,6 +639,7 @@ document.getElementById('btn-save-category').addEventListener('click', async () 
   const id = document.getElementById('category-id').value;
   const payload = {
     name:       document.getElementById('category-name').value.trim(),
+    parent_id:  parseInt(document.getElementById('category-parent').value) || 0,
     icon:       document.getElementById('category-icon').value.trim(),
     sort_order: parseInt(document.getElementById('category-order').value) || 0,
     active:     document.getElementById('category-active').checked ? 1 : 0,
@@ -607,19 +655,22 @@ document.getElementById('btn-save-category').addEventListener('click', async () 
   } else toast(res.error || 'Error al guardar', 'error');
 });
 
-function editCategory(id) {
-  api('admin_categories.php').then(res => {
-    if (!res.success) return;
-    const c = res.data.find(x => x.id == id);
-    if (!c) return;
-    document.getElementById('category-id').value    = c.id;
-    document.getElementById('category-name').value  = c.name;
-    document.getElementById('category-icon').value  = c.icon || '';
-    document.getElementById('category-order').value = c.sort_order;
-    document.getElementById('category-active').checked = !!parseInt(c.active);
-    document.getElementById('modal-category-title').textContent = 'Editar Categoría';
-    openModal('modal-category');
-  });
+async function editCategory(id) {
+  const res = await api('admin_categories.php');
+  if (!res.success) return;
+  const c = res.data.find(x => x.id == id);
+  if (!c) return;
+  
+  await populateParentCategories(id);
+  
+  document.getElementById('category-id').value    = c.id;
+  document.getElementById('category-name').value  = c.name;
+  document.getElementById('category-icon').value  = c.icon || '';
+  document.getElementById('category-order').value = c.sort_order;
+  document.getElementById('category-parent').value = c.parent_id || 0;
+  document.getElementById('category-active').checked = !!parseInt(c.active);
+  document.getElementById('modal-category-title').textContent = 'Editar Categoría';
+  openModal('modal-category');
 }
 
 async function deleteCategory(id, name) {

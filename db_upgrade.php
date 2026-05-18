@@ -115,6 +115,18 @@ try {
     $db->exec("INSERT IGNORE INTO product_categories (product_id, category_id) SELECT id, category_id FROM products WHERE category_id IS NOT NULL;");
     echo "Tabla 'product_categories' creada e indexada con las categorías existentes.<br>";
 
+    // Agregar columna 'parent_id' a categories si no existe
+    try {
+        $db->exec("ALTER TABLE categories ADD COLUMN parent_id INT UNSIGNED NOT NULL DEFAULT 0 AFTER id");
+        echo "Columna 'parent_id' añadida a categories.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'parent_id' ya existe en categories.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     echo "<h2 style='color:green'>Migración completada exitosamente!</h2>";
 
 } catch (PDOException $e) {

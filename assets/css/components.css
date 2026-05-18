@@ -371,6 +371,61 @@
   color: var(--accent-cyan);
 }
 
+/* Estilos para Subcategorías Desplegables (Navbar Desktop) */
+.nav-item-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-item-dropdown > a {
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 100;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  width: 100%;
+  display: block !important;
+  text-align: left;
+  border-radius: 0;
+  transition: all var(--duration-fast);
+}
+
+.dropdown-menu a:hover {
+  background: var(--bg-elevated);
+  color: var(--accent-cyan) !important;
+  padding-left: 1.25rem !important;
+}
+
 .nav-link-ofertas {
   color: var(--accent-pink) !important;
   font-weight: 600 !important;

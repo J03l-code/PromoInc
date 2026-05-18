@@ -662,12 +662,24 @@
       <div class="modal-body">
         <form id="category-form">
           <input type="hidden" name="id" id="category-id">
-          <div class="form-group"><label>Nombre *</label><input type="text" name="name" id="category-name" required>
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" name="name" id="category-name" required>
           </div>
-          <div class="form-group"><label>Icono (nombre Feather)</label><input type="text" name="icon" id="category-icon"
-              placeholder="tag, coffee, cpu..."></div>
-          <div class="form-group"><label>Orden de aparición</label><input type="number" name="sort_order"
-              id="category-order" value="0" min="0"></div>
+          <div class="form-group">
+            <label>Categoría Padre (Subcategoría de...)</label>
+            <select name="parent_id" id="category-parent">
+              <option value="0">Ninguna (Categoría Principal)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Icono (nombre Feather)</label>
+            <input type="text" name="icon" id="category-icon" placeholder="tag, coffee, cpu...">
+          </div>
+          <div class="form-group">
+            <label>Orden de aparición</label>
+            <input type="number" name="sort_order" id="category-order" value="0" min="0">
+          </div>
           <div class="form-group">
             <label class="checkbox-label">
               <input type="checkbox" name="active" id="category-active" value="1" checked>

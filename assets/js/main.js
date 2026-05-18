@@ -468,12 +468,27 @@ async function loadDynamicCategories() {
       // Categorías en Menú Móvil
       const mobileNav = document.getElementById('mobile-categories-list');
       if (mobileNav) {
-        mobileNav.innerHTML = json.data.map(cat => `
-          <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link">
-            ${cat.name}
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        `).join('') + `
+        let mobileHtml = '';
+        json.data.forEach(cat => {
+          mobileHtml += `
+            <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
+              ${cat.name}
+              ${cat.children ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
+            </a>
+          `;
+          if (cat.children && cat.children.length > 0) {
+            cat.children.forEach(child => {
+              mobileHtml += `
+                <a href="catalogo.html?category=${child.id}" class="mobile-cat-link" style="padding-left: 2rem; font-size: 0.9rem; opacity: 0.85; border-top: none;">
+                  <span style="margin-right: 0.3rem; opacity: 0.5;">↳</span> ${child.name}
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              `;
+            });
+          }
+        });
+        
+        mobileNav.innerHTML = mobileHtml + `
           <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
             📂 Portafolio de Trabajos
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
@@ -494,26 +509,82 @@ async function loadDynamicCategories() {
       // Categorías en Sidebar de Catálogo
       const filterList = document.getElementById('filter-categories-list');
       if (filterList) {
-        filterList.innerHTML = '<div class="filter-item active" data-cat="all">Todas las categorías</div>' + 
-          json.data.map(c => `<div class="filter-item" data-cat="${c.id}">${c.name}</div>`).join('') +
-          '<div class="filter-item" data-cat="portfolio" style="border-top: 1px solid var(--border); margin-top: 0.8rem; padding-top: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Trabajos Realizados</div>';
+        let categoriesHtml = '<div class="filter-item active" data-cat="all">Todas las categorías</div>';
         
-        // Highlight active category deep link
+        json.data.forEach(c => {
+          if (c.children && c.children.length > 0) {
+            // Categoría principal con subcategorías (Acordeón)
+            categoriesHtml += `
+              <div class="filter-group-container" data-group="${c.id}" style="display: flex; flex-direction: column; width: 100%;">
+                <div class="filter-item filter-parent-item" data-cat="${c.id}" style="display: flex; align-items: center; justify-content: space-between; width: 100%; cursor: pointer;">
+                  <span>${c.name}</span>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.3s ease; opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="subcategory-list collapsed" style="max-height: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding-left: 0.8rem; display: flex; flex-direction: column; gap: 0.1rem; border-left: 1.5px solid var(--border); margin-left: 0.5rem; margin-top: 0.2rem; margin-bottom: 0.4rem;">
+                  ${c.children.map(child => `
+                    <div class="filter-item sub-filter-item" data-cat="${child.id}" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; opacity: 0.8; display: flex; align-items: center; gap: 0.3rem;">
+                      <span style="opacity: 0.4;">↳</span> ${child.name}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          } else {
+            // Categoría principal sin subcategorías
+            categoriesHtml += `<div class="filter-item" data-cat="${c.id}">${c.name}</div>`;
+          }
+        });
+        
+        categoriesHtml += '<div class="filter-item" data-cat="portfolio" style="border-top: 1px solid var(--border); margin-top: 0.8rem; padding-top: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Trabajos Realizados</div>';
+        
+        filterList.innerHTML = categoriesHtml;
+
+        // Función para actualizar el estado del acordeón (abrir/cerrar subcategorías)
+        const updateAccordionStates = (activeCatId) => {
+          filterList.querySelectorAll('.filter-group-container').forEach(group => {
+            const groupId = group.dataset.group;
+            const subList = group.querySelector('.subcategory-list');
+            const chevron = group.querySelector('.chevron-icon');
+            
+            // Verificamos si la categoría activa es este grupo o una de sus subcategorías
+            const isChildActive = Array.from(group.querySelectorAll('.sub-filter-item')).some(item => item.dataset.cat == activeCatId);
+            const isParentActive = groupId == activeCatId;
+            
+            if (isParentActive || isChildActive) {
+              subList.style.maxHeight = subList.scrollHeight + 'px';
+              subList.classList.remove('collapsed');
+              chevron.style.transform = 'rotate(180deg)';
+            } else {
+              subList.style.maxHeight = '0px';
+              subList.classList.add('collapsed');
+              chevron.style.transform = 'rotate(0deg)';
+            }
+          });
+        };
+        
+        // Resaltar categoría si ya está en los filtros iniciales
         if (currentFilters.category) {
           filterList.querySelectorAll('.filter-item').forEach(i => {
-            if (i.dataset.cat === currentFilters.category) {
+            if (i.dataset.cat == currentFilters.category) {
               filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
               i.classList.add('active');
             }
           });
+          updateAccordionStates(currentFilters.category);
         }
 
-        // Add events to sidebar filters
+        // Registrar eventos click para todos los filtros
         filterList.querySelectorAll('.filter-item').forEach(item => {
-          item.addEventListener('click', () => {
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
             filterList.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
             item.classList.add('active');
-            currentFilters.category = item.dataset.cat === 'all' ? '' : item.dataset.cat;
+            
+            const selectedCat = item.dataset.cat === 'all' ? '' : item.dataset.cat;
+            currentFilters.category = selectedCat;
+            
+            updateAccordionStates(selectedCat);
             reloadCatalog();
           });
         });
