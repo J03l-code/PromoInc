@@ -701,7 +701,7 @@ header("Expires: 0");
       </div>
       <button onclick="CheckoutModal.open()" class="btn btn-primary"
         style="width:100%;justify-content:center;margin-bottom:10px;">Continuar al pago por WhatsApp</button>
-      <button onclick="CartManager.clear().then(renderCart)" class="btn btn-outline"
+      <button onclick="CartManager.clear()" class="btn btn-outline"
         style="width:100%;justify-content:center;font-size:0.85rem;">Vaciar carrito</button>
     </div>
   </div>
@@ -1157,7 +1157,7 @@ header("Expires: 0");
               <div class="cart-item-price">$${item.unit_price.toFixed(2)}</div>
               <div class="cart-item-qty">Cant: ${item.quantity}</div>
             </div>
-            <button class="cart-item-remove" onclick="CartManager.removeItem(${item.product_id}).then(renderCart)">
+            <button class="cart-item-remove" onclick="CartManager.removeItem(${item.product_id})">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
