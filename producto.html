@@ -1386,11 +1386,12 @@
       const waBtn = document.getElementById('wa-quote-btn');
       if (waBtn) {
         const waNumber = window.siteWhatsapp || '593987654321';
-        const text = `Hola PromoInc, me interesa cotizar:
-Producto: ${p.name}
-SKU: ${p.sku}
-Cantidad: ${qty} unidades
-Precio Ref: $${unitPrice.toFixed(2)} c/u`;
+        const shippingCost = parseFloat(p.shipping_cost) || 0;
+        const grandTotal = subtotal + shippingCost;
+        const shippingLine = shippingCost > 0
+          ? `\nEnvío fijo: $${shippingCost.toFixed(2)}\n*TOTAL (productos + envío): $${grandTotal.toFixed(2)}*`
+          : `\n*Total estimado: $${subtotal.toFixed(2)}*`;
+        const text = `Hola PromoInc, me interesa cotizar:\nProducto: ${p.name}\nSKU: ${p.sku}\nCantidad: ${qty} unidades\nPrecio Ref: $${unitPrice.toFixed(2)} c/u\nSubtotal: $${subtotal.toFixed(2)}${shippingLine}`;
         waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
       }
     }
