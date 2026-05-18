@@ -136,7 +136,11 @@ const CartManager = (() => {
   function getCount() { return _items.reduce((s, i) => s + i.quantity, 0); }
   function getTotal() { return _items.reduce((s, i) => s + (i.unit_price * i.quantity), 0); }
   function getTotalWithShipping() {
-    return _items.reduce((s, i) => s + (i.unit_price * i.quantity) + (parseFloat(i.shipping_cost) || 0), 0);
+    return _items.reduce((s, i) => {
+      const itemTotal = (parseFloat(i.unit_price) || 0) * (parseInt(i.quantity) || 0);
+      const shipping  = parseFloat(i.shipping_cost) || 0;
+      return s + itemTotal + shipping;
+    }, 0);
   }
   function isLoggedIn() { return _isLoggedIn; }
   

@@ -296,8 +296,9 @@ const CheckoutModal = (() => {
     btn.disabled = false;
     btn.innerHTML = `${WA_ICON} Enviar pedido por WhatsApp`;
 
-    window.open(url, '_blank');
+    // Navegar directo a WhatsApp — el mensaje queda listo, el cliente solo presiona Enviar
     close();
+    window.location.href = url;
   }
 
   return { open, close, submit };
