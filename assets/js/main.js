@@ -275,6 +275,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') doGlobalSearch(); 
   });
 
+  // Handle Quick Search click (both desktop icons & mobile chips)
+  const handleQuickSearchClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const term = btn.getAttribute('data-product');
+    if (!term) return;
+
+    const inp = document.getElementById('navbar-search-input');
+    if (inp) {
+      inp.value = term.charAt(0).toUpperCase() + term.slice(1);
+      
+      // If already on catalog page, search instantly without page reload
+      const isCatalog = document.getElementById('catalog-grid');
+      if (isCatalog && typeof reloadCatalog === 'function') {
+        currentFilters.search = term;
+        reloadCatalog();
+      } else {
+        window.location.href = `catalogo.html?search=${encodeURIComponent(term)}`;
+      }
+    }
+  };
+
+  document.querySelectorAll('.scattered-icon, .search-mobile-chip').forEach(el => {
+    el.addEventListener('click', handleQuickSearchClick);
+  });
+
   // Auth UI sync
   updateAuthUI();
 
