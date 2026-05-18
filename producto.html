@@ -934,6 +934,20 @@
                          <option value="multiply">Multiplicar (Para fondos claros)</option>
                          <option value="screen">Trama (Para fondos oscuros)</option>
                          <option value="overlay">Superponer</option>
+                       </select>
+                    </div>
+                    <div>
+                       <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:5px; text-align:left;">Efecto de Grabado / Simulación</label>
+                       <select id="mockup-effect" class="btn btn-outline btn-sm" style="width:100%; background:var(--bg-elevated); margin-bottom:12px;" onchange="updateMockupStyle()">
+                          <option value="color">A Color / Impresión Original</option>
+                          <option value="laser-light">Grabado Láser (Gris Claro / Acero)</option>
+                          <option value="laser-dark">Grabado Láser (Gris Oscuro / Quemado)</option>
+                          <option value="laser-gold">Grabado Láser (Dorado / Latón)</option>
+                          <option value="laser-wood">Grabado Láser (Café Madera / Bajo Relieve)</option>
+                       </select>
+                    </div>
+                    <div style="display:none;">
+                       <select>
                       </select>
                    </div>
                    
@@ -1171,8 +1185,10 @@
 
     window.updateMockupStyle = function () {
       const overlay = document.getElementById('mockup-overlay');
+      const img = document.getElementById('mockup-img');
       const opacity = document.getElementById('mockup-opacity').value;
       const blend = document.getElementById('mockup-blend').value;
+      const effect = document.getElementById('mockup-effect').value;
       const opacityDisplay = document.getElementById('opacity-val');
 
       if (overlay) {
@@ -1180,12 +1196,28 @@
         overlay.style.mixBlendMode = blend;
         if (opacityDisplay) opacityDisplay.textContent = opacity + '%';
       }
+
+      if (img) {
+        if (effect === 'color') {
+          img.style.filter = 'none';
+        } else if (effect === 'laser-light') {
+          img.style.filter = 'brightness(0) saturate(100%) invert(70%) sepia(0%) drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.3)) drop-shadow(-0.5px -0.5px 0.5px rgba(0,0,0,0.5))';
+        } else if (effect === 'laser-dark') {
+          img.style.filter = 'brightness(0) saturate(100%) invert(20%) sepia(0%) drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.2)) drop-shadow(-0.5px -0.5px 0.5px rgba(0,0,0,0.8))';
+        } else if (effect === 'laser-gold') {
+          img.style.filter = 'brightness(0) saturate(100%) invert(84%) sepia(36%) saturate(692%) hue-rotate(352deg) brightness(97%) contrast(90%) drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.25)) drop-shadow(-0.5px -0.5px 0.5px rgba(0,0,0,0.6))';
+        } else if (effect === 'laser-wood') {
+          img.style.filter = 'brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(1500%) hue-rotate(340deg) brightness(85%) contrast(90%) drop-shadow(0.5px 0.5px 0.5px rgba(255,255,255,0.15)) drop-shadow(-0.5px -0.5px 0.5px rgba(0,0,0,0.8))';
+        }
+      }
     };
 
     window.removeMockup = function () {
       document.getElementById('mockup-overlay').style.display = 'none';
       document.getElementById('mockup-controls').style.display = 'none';
       document.getElementById('mockup-upload').value = '';
+      if (document.getElementById('mockup-effect')) document.getElementById('mockup-effect').value = 'color';
+      if (document.getElementById('mockup-img')) document.getElementById('mockup-img').style.filter = 'none';
     };
 
     function initDraggable(el) {
