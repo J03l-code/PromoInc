@@ -339,6 +339,7 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('sale-discount-info').textContent = '';
   document.getElementById('custom-type-group').style.display = 'block';
   document.getElementById('product-custom-type').value = '';
+  document.getElementById('product-shipping').value = '0.00';
   populateCategorySelects(true);
   document.getElementById('price-tiers-container').innerHTML = ''; // Limpiar tiers
   openModal('modal-product');
@@ -457,6 +458,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     name:          document.getElementById('product-name').value.trim(),
     description:   document.getElementById('product-desc').value.trim(),
     price_from:    document.getElementById('product-price').value || null,
+    shipping_cost: parseFloat(document.getElementById('product-shipping').value) || 0,
     image_webp:    document.getElementById('product-image').value || '',
     min_quantity:  parseInt(document.getElementById('product-minqty').value) || 10,
     show_min_quantity: document.getElementById('product-showmin').checked ? 1 : 0,
@@ -495,6 +497,7 @@ async function editProduct(id) {
   document.getElementById('product-sku').value      = p.sku;
   document.getElementById('product-desc').value     = p.description || '';
   document.getElementById('product-price').value    = p.price_from || '';
+  document.getElementById('product-shipping').value = p.shipping_cost ?? '0.00';
   
   // Set category checkboxes
   document.querySelectorAll('.cat-checkbox').forEach(cb => cb.checked = false);

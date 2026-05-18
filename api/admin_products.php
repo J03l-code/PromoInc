@@ -109,9 +109,9 @@ function createAdminProduct(PDO $db): void {
 
     $stmt = $db->prepare("
         INSERT INTO products
-          (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, show_min_quantity, customizable, customization_type, featured, on_sale, sale_price, sale_discount, active)
+          (category_id, sku, name, slug, description, price_from, shipping_cost, image_webp, min_quantity, show_min_quantity, customizable, customization_type, featured, on_sale, sale_price, sale_discount, active)
         VALUES
-          (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :customization_type, :featured, :on_sale, :sale_price, :sale_discount, 1)
+          (:category_id, :sku, :name, :slug, :description, :price_from, :shipping_cost, :image_webp, :min_quantity, :show_min_quantity, :customizable, :customization_type, :featured, :on_sale, :sale_price, :sale_discount, 1)
     ");
     
     $onSale = (int)($data['on_sale'] ?? 0);
@@ -142,6 +142,7 @@ function createAdminProduct(PDO $db): void {
         ':slug'         => $slug,
         ':description'  => sanitize($data['description'] ?? ''),
         ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
+        ':shipping_cost'=> is_numeric($data['shipping_cost'] ?? null) ? (float)$data['shipping_cost'] : 0.00,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
         ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
@@ -209,6 +210,7 @@ function updateAdminProduct(PDO $db): void {
               name         = :name,
               description  = :description,
               price_from   = :price_from,
+              shipping_cost = :shipping_cost,
               {$updateImage}
               min_quantity = :min_quantity,
               show_min_quantity = :show_min_quantity,
@@ -228,6 +230,7 @@ function updateAdminProduct(PDO $db): void {
             ':name'         => sanitize($data['name']),
             ':description'  => sanitize($data['description'] ?? ''),
             ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
+            ':shipping_cost'=> is_numeric($data['shipping_cost'] ?? null) ? (float)$data['shipping_cost'] : 0.00,
             ':min_quantity' => (int)($data['min_quantity'] ?? 10),
             ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
             ':customizable' => (int)($data['customizable'] ?? 1),

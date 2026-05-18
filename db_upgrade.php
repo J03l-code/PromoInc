@@ -42,6 +42,19 @@ try {
         }
     }
 
+    // Agregar columna 'shipping_cost' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN shipping_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER price_from");
+        echo "Columna 'shipping_cost' añadida a products.<br>";
+    } catch (PDOException $e) {
+        // Ignorar si ya existe
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'shipping_cost' ya existe.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     // Crear tabla orders
     $db->exec("CREATE TABLE IF NOT EXISTS orders (
         id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
