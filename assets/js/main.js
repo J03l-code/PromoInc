@@ -539,23 +539,6 @@ async function loadDynamicCategories() {
         
         filterList.innerHTML = categoriesHtml;
 
-        // Función para actualizar el estado del acordeón (activar grupo seleccionado)
-        const updateAccordionStates = (activeCatId) => {
-          filterList.querySelectorAll('.filter-group-container').forEach(group => {
-            const groupId = group.dataset.group;
-            
-            // Verificamos si la categoría activa es este grupo o una de sus subcategorías
-            const isChildActive = Array.from(group.querySelectorAll('.sub-filter-item')).some(item => item.dataset.cat == activeCatId);
-            const isParentActive = groupId == activeCatId;
-            
-            if (isParentActive || isChildActive) {
-              group.classList.add('active-group');
-            } else {
-              group.classList.remove('active-group');
-            }
-          });
-        };
-        
         // Resaltar categoría si ya está en los filtros iniciales
         if (currentFilters.category) {
           filterList.querySelectorAll('.filter-item').forEach(i => {
@@ -564,7 +547,6 @@ async function loadDynamicCategories() {
               i.classList.add('active');
             }
           });
-          updateAccordionStates(currentFilters.category);
         }
 
         // Registrar eventos click para todos los filtros
@@ -578,7 +560,6 @@ async function loadDynamicCategories() {
             const selectedCat = item.dataset.cat === 'all' ? '' : item.dataset.cat;
             currentFilters.category = selectedCat;
             
-            updateAccordionStates(selectedCat);
             reloadCatalog();
           });
         });

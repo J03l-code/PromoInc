@@ -192,9 +192,8 @@
       pointer-events: none; /* Desactivar interacción cuando está colapsado */
     }
 
-    /* Al pasar el puntero (Hover) o si el grupo está seleccionado como activo */
-    .filter-group-container:hover .subcategory-list,
-    .filter-group-container.active-group .subcategory-list {
+    /* Al pasar el puntero (Hover) */
+    .filter-group-container:hover .subcategory-list {
       max-height: 350px;
       opacity: 1;
       margin-top: 4px;
@@ -206,8 +205,7 @@
       transition: transform 0.3s ease;
     }
 
-    .filter-group-container:hover .chevron-icon,
-    .filter-group-container.active-group .chevron-icon {
+    .filter-group-container:hover .chevron-icon {
       transform: rotate(180deg);
     }
 
@@ -983,7 +981,7 @@
 
   <script src="assets/js/cart.js?v=66.0"></script>
   <script src="assets/js/checkout.js?v=66.0"></script>
-  <script src="assets/js/main.js?v=70.0"></script>
+  <script src="assets/js/main.js?v=71.0"></script>
   <!-- jsPDF: generador de catálogo PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
