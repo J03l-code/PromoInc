@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const html = items.map(b => `
               <div class="logo-item" style="flex-direction: column; width: auto; min-width: 280px; padding: 0 1.5rem;">
                 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                  <img src="assets/images/${b.filename}" alt="${b.name}" style="filter: brightness(0) invert(1); opacity: 0.9; max-height: 100px; max-width: 250px; transition: all 0.3s ease; object-fit: contain;">
+                  <img src="assets/images/${b.filename}" alt="${b.name}" style="opacity: 1; max-height: 100px; max-width: 250px; transition: all 0.3s ease; object-fit: contain;">
                 </div>
                 <span style="margin-top: 0.5rem; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.2; text-align: center; max-width: 220px; word-wrap: break-word; white-space: normal;">${b.name}</span>
               </div>
