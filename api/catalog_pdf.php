@@ -20,7 +20,7 @@ $stmt = $db->query("
         p.name,
         p.description,
         p.price_from,
-        p.min_quantity,
+        p.min_quantity, p.show_min_quantity,
         p.customizable,
         p.image_webp,
         COALESCE(c.name, 'Sin categoría') AS category_name,

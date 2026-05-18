@@ -328,6 +328,7 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('upload-preview').classList.add('hidden');
   document.getElementById('product-image').value = '';
   document.getElementById('product-onsale').checked = false;
+  document.getElementById('product-showmin').checked = false;
   document.getElementById('sale-price-group').style.display = 'none';
   document.getElementById('product-sale-price').value = '';
   document.getElementById('sale-discount-info').textContent = '';
@@ -439,6 +440,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     price_from:    document.getElementById('product-price').value || null,
     image_webp:    document.getElementById('product-image').value || '',
     min_quantity:  parseInt(document.getElementById('product-minqty').value) || 10,
+    show_min_quantity: document.getElementById('product-showmin').checked ? 1 : 0,
     stock_quantity:parseInt(document.getElementById('product-stock').value)  || 0,
     customizable:  document.getElementById('product-custom').checked ? 1 : 0,
     featured:      document.getElementById('product-featured').checked ? 1 : 0,
@@ -474,6 +476,7 @@ async function editProduct(id) {
   document.getElementById('product-desc').value     = p.description || '';
   document.getElementById('product-price').value    = p.price_from || '';
   document.getElementById('product-minqty').value   = p.min_quantity;
+  document.getElementById('product-showmin').checked= parseInt(p.show_min_quantity) === 1;
   document.getElementById('product-stock').value    = p.stock?.[0]?.quantity || 0;
   document.getElementById('product-custom').checked  = !!parseInt(p.customizable);
   document.getElementById('product-featured').checked= !!parseInt(p.featured);

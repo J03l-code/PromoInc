@@ -749,7 +749,7 @@ header("Expires: 0");
 
         <div style="margin: 2.5rem 0; max-width: 520px; border-left: 3px solid #E83E8C; padding-left: 28px; text-align: left !important;">
           <p style="color: #c1c5cd; font-size: 1.25rem; line-height: 1.6; margin: 0; opacity: 0.9;">
-            Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle, desde 20 unidades.
+            Soluciones de merchandising corporativo que definen el estándar de tu industria. Innovación en cada detalle.
           </p>
         </div>
 

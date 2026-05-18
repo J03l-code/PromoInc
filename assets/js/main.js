@@ -704,7 +704,7 @@ function renderProducts(grid, products, append = false) {
                <strong style="font-size: 1.35rem; color: var(--accent-pink); font-family: var(--font-display);">$${parseFloat(p.sale_price).toFixed(2)}</strong>`
             : `<strong style="font-size: 1.35rem; color: var(--accent-gold); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>`
           }
-          <p class="card-min" style="font-size: 0.7rem; margin-top: 2px;">Mín. ${p.min_quantity || 10} unidades</p>
+          ${parseInt(p.show_min_quantity) === 1 ? `<p class="card-min" style="font-size: 0.7rem; margin-top: 2px;">Mín. ${p.min_quantity || 10} unidades</p>` : `<p class="card-min" style="font-size: 0.7rem; margin-top: 2px; visibility: hidden;">Mín. ${p.min_quantity || 10} unidades</p>`}
         </div>
         <div style="display:flex; gap:8px; align-items:center;" onclick="event.stopPropagation()">
           <button
@@ -725,7 +725,7 @@ function renderProducts(grid, products, append = false) {
           </button>
           <a
             href="javascript:void(0)"
-            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '5930987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}%0ACantidad mínima: ${p.min_quantity || 10} unidades'; window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
+            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '5930987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}' + (${parseInt(p.show_min_quantity) === 1 ? `'%0ACantidad mínima: ${p.min_quantity || 10} unidades'` : `''`}); window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
             style="
               flex: 1; display:flex; align-items:center; justify-content:center; gap:6px;
               padding: 0.5rem 0.75rem; border-radius:10px; font-size:0.8rem; font-weight:700;

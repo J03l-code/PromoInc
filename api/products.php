@@ -102,7 +102,7 @@ function getProducts(PDO $db): void {
 
     $stmt = $db->prepare("
         SELECT p.id, p.sku, p.name, p.slug, p.price_from, p.image_webp,
-               p.min_quantity, p.customizable, p.featured, p.on_sale, p.sale_price, p.sale_discount,
+               p.min_quantity, p.show_min_quantity, p.customizable, p.featured, p.on_sale, p.sale_price, p.sale_discount,
                c.name AS category_name,
                COALESCE(SUM(s.quantity), 0) AS total_stock
         FROM products p
@@ -135,8 +135,8 @@ function createProduct(PDO $db): void {
     }
 
     $stmt = $db->prepare("
-        INSERT INTO products (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, customizable, featured)
-        VALUES (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :customizable, :featured)
+        INSERT INTO products (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, show_min_quantity, customizable, featured)
+        VALUES (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :featured)
     ");
     $stmt->execute([
         ':category_id'  => (int)$data['category_id'],
@@ -147,6 +147,7 @@ function createProduct(PDO $db): void {
         ':price_from'   => $data['price_from'] ?? null,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
+        ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
         ':customizable' => (int)($data['customizable'] ?? 1),
         ':featured'     => (int)($data['featured'] ?? 0),
     ]);
@@ -167,6 +168,7 @@ function updateProduct(PDO $db): void {
           price_from   = :price_from,
           image_webp   = :image_webp,
           min_quantity = :min_quantity,
+          show_min_quantity = :show_min_quantity,
           customizable = :customizable,
           featured     = :featured,
           active       = :active
@@ -179,6 +181,7 @@ function updateProduct(PDO $db): void {
         ':price_from'   => $data['price_from'] ?? null,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
+        ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
         ':customizable' => (int)($data['customizable'] ?? 1),
         ':featured'     => (int)($data['featured'] ?? 0),
         ':active'       => (int)($data['active'] ?? 1),

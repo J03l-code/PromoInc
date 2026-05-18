@@ -249,7 +249,7 @@
     }
 
     // Cantidad mínima
-    if (product.min_quantity && product.min_quantity > 1) {
+    if (product.min_quantity && product.min_quantity > 1 && parseInt(product.show_min_quantity) === 1) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(6.5);
       doc.setTextColor(...C.midGray);

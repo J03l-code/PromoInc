@@ -16,6 +16,19 @@ try {
         }
     }
 
+    // Agregar columna 'show_min_quantity' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN show_min_quantity BOOLEAN NOT NULL DEFAULT 0 AFTER min_quantity");
+        echo "Columna 'show_min_quantity' añadida a products.<br>";
+    } catch (PDOException $e) {
+        // Ignorar si ya existe
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'show_min_quantity' ya existe.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     // Crear tabla orders
     $db->exec("CREATE TABLE IF NOT EXISTS orders (
         id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
