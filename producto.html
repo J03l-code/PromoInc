@@ -1050,6 +1050,14 @@
                <div class="spec-item">
                   <span class="spec-label">Personalizable</span>
                   <span class="spec-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</span>
+                </div>
+                ${p.customizable && p.customization_type ? `
+                <div class="spec-item">
+                  <span class="spec-label">Tipo de Personalización</span>
+                  <span class="spec-value">${p.customization_type}</span>
+                </div>
+                ` : ''}
+                <div class="spec-item" style="display:none;"
                </div>
                <div class="spec-item">
                   <span class="spec-label">Muestras</span>

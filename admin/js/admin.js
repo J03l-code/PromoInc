@@ -337,9 +337,16 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('sale-price-group').style.display = 'none';
   document.getElementById('product-sale-price').value = '';
   document.getElementById('sale-discount-info').textContent = '';
+  document.getElementById('custom-type-group').style.display = 'block';
+  document.getElementById('product-custom-type').value = '';
   populateCategorySelects(true);
   document.getElementById('price-tiers-container').innerHTML = ''; // Limpiar tiers
   openModal('modal-product');
+});
+
+// Lógica de Personalización
+document.getElementById('product-custom').addEventListener('change', e => {
+  document.getElementById('custom-type-group').style.display = e.target.checked ? 'block' : 'none';
 });
 
 // Lógica de Ofertas
@@ -455,6 +462,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     show_min_quantity: document.getElementById('product-showmin').checked ? 1 : 0,
     stock_quantity:parseInt(document.getElementById('product-stock').value)  || 0,
     customizable:  document.getElementById('product-custom').checked ? 1 : 0,
+    customization_type: document.getElementById('product-custom').checked ? document.getElementById('product-custom-type').value.trim() : null,
     featured:      document.getElementById('product-featured').checked ? 1 : 0,
     on_sale:       document.getElementById('product-onsale').checked ? 1 : 0,
     sale_price:    document.getElementById('product-onsale').checked ? (parseFloat(document.getElementById('product-sale-price').value) || null) : null,
@@ -503,7 +511,10 @@ async function editProduct(id) {
   document.getElementById('product-minqty').value   = p.min_quantity;
   document.getElementById('product-showmin').checked= parseInt(p.show_min_quantity) === 1;
   document.getElementById('product-stock').value    = p.stock?.[0]?.quantity || 0;
-  document.getElementById('product-custom').checked  = !!parseInt(p.customizable);
+  const customizable = !!parseInt(p.customizable);
+  document.getElementById('product-custom').checked  = customizable;
+  document.getElementById('custom-type-group').style.display = customizable ? 'block' : 'none';
+  document.getElementById('product-custom-type').value = p.customization_type || '';
   document.getElementById('product-featured').checked= !!parseInt(p.featured);
   
   // Ofertas

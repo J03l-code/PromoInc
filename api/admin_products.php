@@ -109,9 +109,9 @@ function createAdminProduct(PDO $db): void {
 
     $stmt = $db->prepare("
         INSERT INTO products
-          (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, show_min_quantity, customizable, featured, on_sale, sale_price, sale_discount, active)
+          (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, show_min_quantity, customizable, customization_type, featured, on_sale, sale_price, sale_discount, active)
         VALUES
-          (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :featured, :on_sale, :sale_price, :sale_discount, 1)
+          (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :customization_type, :featured, :on_sale, :sale_price, :sale_discount, 1)
     ");
     
     $onSale = (int)($data['on_sale'] ?? 0);
@@ -146,6 +146,7 @@ function createAdminProduct(PDO $db): void {
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
         ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
         ':customizable' => (int)($data['customizable'] ?? 1),
+        ':customization_type' => !empty($data['customization_type']) ? sanitize($data['customization_type']) : null,
         ':featured'     => (int)($data['featured'] ?? 0),
         ':on_sale'      => $onSale,
         ':sale_price'   => $salePrice,
@@ -212,6 +213,7 @@ function updateAdminProduct(PDO $db): void {
               min_quantity = :min_quantity,
               show_min_quantity = :show_min_quantity,
               customizable = :customizable,
+              customization_type = :customization_type,
               featured     = :featured,
               on_sale      = :on_sale,
               sale_price   = :sale_price,
@@ -229,6 +231,7 @@ function updateAdminProduct(PDO $db): void {
             ':min_quantity' => (int)($data['min_quantity'] ?? 10),
             ':show_min_quantity' => (int)($data['show_min_quantity'] ?? 0),
             ':customizable' => (int)($data['customizable'] ?? 1),
+            ':customization_type' => !empty($data['customization_type']) ? sanitize($data['customization_type']) : null,
             ':featured'     => (int)($data['featured'] ?? 0),
             ':on_sale'      => (int)($data['on_sale'] ?? 0),
             ':sale_price'   => is_numeric($data['sale_price'] ?? null) ? (float)$data['sale_price'] : null,

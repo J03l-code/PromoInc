@@ -29,6 +29,19 @@ try {
         }
     }
 
+    // Agregar columna 'customization_type' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN customization_type VARCHAR(255) NULL AFTER customizable");
+        echo "Columna 'customization_type' añadida a products.<br>";
+    } catch (PDOException $e) {
+        // Ignorar si ya existe
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'customization_type' ya existe.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     // Crear tabla orders
     $db->exec("CREATE TABLE IF NOT EXISTS orders (
         id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
