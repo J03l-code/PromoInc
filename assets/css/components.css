@@ -1521,13 +1521,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: grayscale(1) opacity(0.5);
+  filter: none;
+  opacity: 1;
   transition: all 0.3s ease;
   padding: 0 2rem;
 }
 
 .logo-item:hover {
-  filter: grayscale(0) opacity(1);
   transform: scale(1.05);
 }
 
@@ -1596,14 +1596,13 @@
   padding: 1.5rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  filter: grayscale(1) brightness(0.5);
+  filter: none;
   transition: all var(--duration-base) var(--ease-smooth);
   background: var(--bg-primary);
   min-height: 80px;
 }
 
 .client-logo:hover {
-  filter: grayscale(0) brightness(1);
   border-color: var(--border-hover);
   transform: scale(1.05);
 }
