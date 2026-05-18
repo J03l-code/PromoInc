@@ -823,7 +823,7 @@ header("Expires: 0");
             <p>Vasos, termos, bolígrafos, textiles y más de 500 productos listos para llevar el logo de tu empresa.
               Trabajamos desde 25 unidades.</p>
             <div class="svc-tags">
-              <span>Vasos</span><span>Merch</span><span>Regalos</span><span>Material POP</span><span>Kits</span>
+              <span>Kits corporativos</span><span>Regalos</span><span>Material POP</span>
             </div>
             <a href="catalogo.html" class="svc-cta">Explorar catálogo
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
