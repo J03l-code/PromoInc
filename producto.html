@@ -1010,8 +1010,8 @@
                      <thead style="background:rgba(0,188,255,0.1); color:var(--accent-cyan);">
                        <tr>
                          <th style="padding:12px 15px; font-weight:600;">Cantidad</th>
-                         <th style="padding:12px 15px; font-weight:600;">Precio Unit.</th>
-                         <th style="padding:12px 15px; font-weight:600; color:#00ff88;">Descto.</th>
+                         <th style="padding:12px 15px; font-weight:600; color:#00ff88;">Precio Unit.</th>
+                         <th style="padding:12px 15px; font-weight:600; color:var(--accent-pink);">Descto.</th>
                          <th style="padding:12px 15px; font-weight:600;">Subtotal</th>
                        </tr>
                      </thead>
@@ -1026,8 +1026,8 @@
           return `
                             <tr style="${bg} border-bottom:1px solid var(--border);">
                               <td style="padding:12px 15px; color:var(--text-secondary);">${tier.min_qty} Unidades</td>
-                              <td style="padding:12px 15px; font-weight:600; color:${isSale ? 'var(--accent-pink)' : 'var(--text-primary)'};">$${effectiveTierPrice.toFixed(2)}</td>
-                              <td style="padding:12px 15px; color:#00ff88;">-${totalDiscount}%</td>
+                              <td style="padding:12px 15px; font-weight:600; color:#00ff88;">$${effectiveTierPrice.toFixed(2)}</td>
+                              <td style="padding:12px 15px; color:var(--accent-pink); font-weight:600;">-${totalDiscount}%</td>
                               <td style="padding:12px 15px;">$${(tier.min_qty * effectiveTierPrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             </tr>
                           `;
