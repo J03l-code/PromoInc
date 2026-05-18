@@ -605,6 +605,8 @@ async function loadCategories() {
       ? `<span style="opacity:0.6;font-weight:normal;font-size:0.85rem;">${escHtml(parent.name)} ➔</span> ${escHtml(c.name)}` 
       : escHtml(c.name);
       
+    const isMainCategory = (parseInt(c.parent_id) || 0) === 0;
+      
     return `
       <tr>
         <td style="font-weight:600">${displayName}</td>
@@ -615,6 +617,14 @@ async function loadCategories() {
         <td>${statusBadge(parseInt(c.active) ? 'active' : 'inactive')}</td>
         <td>
           <div class="table-actions">
+            ${isMainCategory ? `
+              <button class="btn-icon" onclick="createSubcategoryFor(${c.id}, '${escHtml(c.name)}')" title="Crear Subcategoría bajo esta Categoría" style="color: var(--accent-cyan);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            ` : ''}
             <button class="btn-icon" onclick="editCategory(${c.id})" title="Editar">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -627,13 +637,48 @@ async function loadCategories() {
   }).join('');
 }
 
-document.getElementById('btn-new-category').addEventListener('click', async () => {
+document.getElementById('btn-new-category').addEventListener('click', () => {
   document.getElementById('category-form').reset();
   document.getElementById('category-id').value = '';
-  await populateParentCategories();
-  document.getElementById('modal-category-title').textContent = 'Nueva Categoría';
+  
+  // Ocultar selector de padre porque estamos creando una categoría principal
+  const parentGroup = document.getElementById('category-parent').parentElement;
+  if (parentGroup) parentGroup.style.display = 'none';
+  document.getElementById('category-parent').value = '0';
+  
+  document.getElementById('modal-category-title').textContent = 'Nueva Categoría Principal';
   openModal('modal-category');
 });
+
+// Listener para crear nueva subcategoría en general
+document.getElementById('btn-new-subcategory').addEventListener('click', async () => {
+  document.getElementById('category-form').reset();
+  document.getElementById('category-id').value = '';
+  
+  // Mostrar selector de padre
+  const parentGroup = document.getElementById('category-parent').parentElement;
+  if (parentGroup) parentGroup.style.display = 'block';
+  
+  await populateParentCategories();
+  document.getElementById('modal-category-title').textContent = 'Nueva Subcategoría';
+  openModal('modal-category');
+});
+
+// Función global para crear subcategoría directamente bajo una categoría principal específica
+async function createSubcategoryFor(parentId, parentName) {
+  document.getElementById('category-form').reset();
+  document.getElementById('category-id').value = '';
+  
+  // Mostrar selector de padre
+  const parentGroup = document.getElementById('category-parent').parentElement;
+  if (parentGroup) parentGroup.style.display = 'block';
+  
+  await populateParentCategories();
+  document.getElementById('category-parent').value = parentId;
+  
+  document.getElementById('modal-category-title').textContent = `Crear Subcategoría en "${parentName}"`;
+  openModal('modal-category');
+}
 
 document.getElementById('btn-save-category').addEventListener('click', async () => {
   const id = document.getElementById('category-id').value;
@@ -660,6 +705,10 @@ async function editCategory(id) {
   if (!res.success) return;
   const c = res.data.find(x => x.id == id);
   if (!c) return;
+  
+  // Mostrar selector de padre para edición libre
+  const parentGroup = document.getElementById('category-parent').parentElement;
+  if (parentGroup) parentGroup.style.display = 'block';
   
   await populateParentCategories(id);
   
