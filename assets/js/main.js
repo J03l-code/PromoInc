@@ -518,9 +518,9 @@ async function loadDynamicCategories() {
               <div class="filter-group-container" data-group="${c.id}" style="display: flex; flex-direction: column; width: 100%;">
                 <div class="filter-item filter-parent-item" data-cat="${c.id}" style="display: flex; align-items: center; justify-content: space-between; width: 100%; cursor: pointer;">
                   <span>${c.name}</span>
-                  <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.3s ease; opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
-                <div class="subcategory-list collapsed" style="max-height: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding-left: 0.8rem; display: flex; flex-direction: column; gap: 0.1rem; border-left: 1.5px solid var(--border); margin-left: 0.5rem; margin-top: 0.2rem; margin-bottom: 0.4rem;">
+                <div class="subcategory-list">
                   ${c.children.map(child => `
                     <div class="filter-item sub-filter-item" data-cat="${child.id}" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; opacity: 0.8; display: flex; align-items: center; gap: 0.3rem;">
                       <span style="opacity: 0.4;">↳</span> ${child.name}
@@ -539,25 +539,19 @@ async function loadDynamicCategories() {
         
         filterList.innerHTML = categoriesHtml;
 
-        // Función para actualizar el estado del acordeón (abrir/cerrar subcategorías)
+        // Función para actualizar el estado del acordeón (activar grupo seleccionado)
         const updateAccordionStates = (activeCatId) => {
           filterList.querySelectorAll('.filter-group-container').forEach(group => {
             const groupId = group.dataset.group;
-            const subList = group.querySelector('.subcategory-list');
-            const chevron = group.querySelector('.chevron-icon');
             
             // Verificamos si la categoría activa es este grupo o una de sus subcategorías
             const isChildActive = Array.from(group.querySelectorAll('.sub-filter-item')).some(item => item.dataset.cat == activeCatId);
             const isParentActive = groupId == activeCatId;
             
             if (isParentActive || isChildActive) {
-              subList.style.maxHeight = subList.scrollHeight + 'px';
-              subList.classList.remove('collapsed');
-              chevron.style.transform = 'rotate(180deg)';
+              group.classList.add('active-group');
             } else {
-              subList.style.maxHeight = '0px';
-              subList.classList.add('collapsed');
-              chevron.style.transform = 'rotate(0deg)';
+              group.classList.remove('active-group');
             }
           });
         };
