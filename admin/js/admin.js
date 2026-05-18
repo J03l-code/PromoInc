@@ -514,7 +514,6 @@ async function editProduct(id) {
   calculateDiscount();
 
   document.getElementById('product-image').value    = p.image_webp || '';
-  document.getElementById('product-category').value = p.category_id;
   
   // Renderizar tiers de precio
   const tiersContainer = document.getElementById('price-tiers-container');
