@@ -461,7 +461,9 @@ async function loadDynamicCategories() {
             </div>
           ` : ''}
         </div>
-      `).join('') + '<a href="#" class="nav-link-ofertas">Ofertas</a>';
+      `).join('') + 
+      '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
+      '<a href="#" class="nav-link-ofertas">Ofertas</a>';
 
       // Categorías en Menú Móvil
       const mobileNav = document.getElementById('mobile-categories-list');
@@ -471,7 +473,12 @@ async function loadDynamicCategories() {
             ${cat.name}
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
-        `).join('');
+        `).join('') + `
+          <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
+            📂 Portafolio de Trabajos
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        `;
       }
 
       // Categorías en Footer
@@ -479,15 +486,28 @@ async function loadDynamicCategories() {
       if (footerNav) {
         footerNav.innerHTML = json.data.map(cat => `
           <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
-        `).join('') + `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
+        `).join('') + 
+        `<li><a href="catalogo.html?category=portfolio" class="footer-link" style="color:var(--accent); font-weight:600;">Portafolio de Trabajos</a></li>` +
+        `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
       }
 
       // Categorías en Sidebar de Catálogo
       const filterList = document.getElementById('filter-categories-list');
       if (filterList) {
         filterList.innerHTML = '<div class="filter-item active" data-cat="all">Todas las categorías</div>' + 
-          json.data.map(c => `<div class="filter-item" data-cat="${c.id}">${c.name}</div>`).join('');
+          json.data.map(c => `<div class="filter-item" data-cat="${c.id}">${c.name}</div>`).join('') +
+          '<div class="filter-item" data-cat="portfolio" style="border-top: 1px solid var(--border); margin-top: 0.8rem; padding-top: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Trabajos Realizados</div>';
         
+        // Highlight active category deep link
+        if (currentFilters.category) {
+          filterList.querySelectorAll('.filter-item').forEach(i => {
+            if (i.dataset.cat === currentFilters.category) {
+              filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
+              i.classList.add('active');
+            }
+          });
+        }
+
         // Add events to sidebar filters
         filterList.querySelectorAll('.filter-item').forEach(item => {
           item.addEventListener('click', () => {
@@ -579,6 +599,23 @@ function reloadCatalog() {
 }
 
 async function fetchCatalog(append = false) {
+  if (currentFilters.category === 'portfolio') {
+    const grid = document.getElementById('catalog-grid');
+    const countEl = document.getElementById('results-count');
+    const loadMore = document.getElementById('btn-load-more');
+    if (loadMore) loadMore.classList.add('hidden');
+    
+    try {
+      const res = await fetch('api/portfolio.php');
+      const json = await res.json();
+      if (json.success) {
+        if (countEl) countEl.textContent = `Mostrando ${json.data.length} trabajos realizados`;
+        renderPortfolioItems(grid, json.data, append);
+      }
+    } catch (err) { console.error('Error fetching portfolio:', err); }
+    return;
+  }
+
   let url = `api/products.php?limit=${CATALOG_LIMIT}&offset=${currentFilters.offset}`;
   if (currentFilters.category) url += `&category=${currentFilters.category}`;
   if (currentFilters.search) url += `&search=${encodeURIComponent(currentFilters.search)}`;
@@ -803,5 +840,102 @@ async function logout() {
   } catch (err) {
     console.error('Logout failed', err);
     window.location.href = 'login.html';
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+}
+
+// ── RENDER PORTFOLIO ITEMS ────────────────────────────────────
+function renderPortfolioItems(container, items, append = false) {
+  if (!append) container.innerHTML = '';
+  
+  if (!items.length) {
+    container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No hay trabajos realizados registrados por el momento.</div>';
+    return;
+  }
+
+  const html = items.map(item => `
+    <div class="product-card reveal" style="cursor: pointer;" onclick="openPortfolioLightbox('${item.filename}', '${escHtml(item.title)}', '${escHtml(item.description || '')}')">
+      <div class="product-image-container" style="aspect-ratio: 1/1; overflow: hidden; position: relative; border-radius: var(--radius-md) var(--radius-md) 0 0;">
+        <img src="assets/images/${item.filename}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+      </div>
+      <div class="product-info" style="padding: 1.25rem;">
+        <span style="font-size: 0.65rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.25rem;">Trabajo Realizado</span>
+        <h3 class="product-title" style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">${item.title}</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0;">${item.description || ''}</p>
+      </div>
+    </div>
+  `).join('');
+
+  if (append) {
+    container.insertAdjacentHTML('beforeend', html);
+  } else {
+    container.innerHTML = html;
+  }
+}
+
+function openPortfolioLightbox(filename, title, description) {
+  let lightbox = document.getElementById('portfolio-lightbox');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.id = 'portfolio-lightbox';
+    lightbox.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    lightbox.innerHTML = `
+      <div style="position: absolute; top: 1.5rem; right: 1.5rem; color: white; font-size: 2rem; cursor: pointer; font-weight: 300;" onclick="closePortfolioLightbox()">✕</div>
+      <div class="lightbox-content" style="max-width: 900px; width: 100%; display: flex; flex-direction: column; background: #161618; border: 1px solid #2a2a2c; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: scale(0.9); transition: transform 0.3s ease;">
+        <div style="width: 100%; aspect-ratio: 16/10; background: #0c0c0d; display: flex; justify-content: center; align-items: center;">
+          <img id="lightbox-img" src="" alt="Trabajo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+        <div style="padding: 2rem; border-top: 1px solid #2a2a2c;">
+          <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin-bottom: 0.5rem;">Detalle de Trabajo Realizado</span>
+          <h2 id="lightbox-title" style="margin: 0 0 0.75rem 0; color: white; font-size: 1.5rem;"></h2>
+          <p id="lightbox-desc" style="margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;"></p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+  }
+  
+  document.getElementById('lightbox-img').src = `assets/images/${filename}`;
+  document.getElementById('lightbox-title').textContent = title;
+  document.getElementById('lightbox-desc').textContent = description;
+  
+  lightbox.style.display = 'flex';
+  setTimeout(() => {
+    lightbox.style.opacity = '1';
+    lightbox.querySelector('.lightbox-content').style.transform = 'scale(1)';
+  }, 10);
+}
+
+function closePortfolioLightbox() {
+  const lightbox = document.getElementById('portfolio-lightbox');
+  if (lightbox) {
+    lightbox.style.opacity = '0';
+    lightbox.querySelector('.lightbox-content').style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      lightbox.style.display = 'none';
+    }, 300);
   }
 }

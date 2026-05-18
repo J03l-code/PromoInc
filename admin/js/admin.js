@@ -115,7 +115,7 @@ function navigateTo(section) {
   document.getElementById('page-title').textContent = {
     dashboard: 'Dashboard', products: 'Productos', categories: 'Categorías',
     quotes: 'Cotizaciones', users: 'Administradores', settings: 'Configuración',
-    orders: 'Gestión de Pedidos', clients: 'Directorio de Clientes'
+    orders: 'Gestión de Pedidos', clients: 'Directorio de Clientes', portfolio: 'Portafolio de Trabajos'
   }[section] || section;
 
   // Cerrar sidebar en mobile
@@ -127,7 +127,7 @@ function navigateTo(section) {
   }
 
   const loaders = { dashboard: loadDashboard, products: loadProducts,
-    categories: loadCategories, brands: loadBrands, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
+    categories: loadCategories, brands: loadBrands, portfolio: loadPortfolio, quotes: () => loadQuotes(), users: loadUsers, settings: loadSettings,
     orders: loadOrders, clients: loadClients };
   loaders[section]?.();
 }
@@ -1088,3 +1088,128 @@ async function deleteOrder(id) {
     loadOrders();
   } else toast(res.error || 'Error al eliminar', 'error');
 }
+
+// ── PORTAFOLIO ────────────────────────────────────────────────
+async function loadPortfolio() {
+  const res = await api('admin_portfolio.php');
+  const tbody = document.getElementById('portfolio-tbody');
+  if (!res.success) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Error al cargar el portafolio</td></tr>'; return; }
+  
+  const items = res.data;
+  if (!items.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No hay trabajos registrados</td></tr>'; return; }
+
+  tbody.innerHTML = items.map(p => `
+    <tr>
+      <td><img src="../assets/images/${p.filename}" style="height:48px; width:48px; object-fit:cover; border-radius:4px;"></td>
+      <td style="font-weight:600">${escHtml(p.title)}</td>
+      <td style="color:var(--muted); font-size:0.85rem">${escHtml(p.description || '')}</td>
+      <td>${p.sort_order}</td>
+      <td>
+        <div class="table-actions" style="justify-content: flex-start; gap: 0.5rem;">
+          <button class="btn btn-ghost btn-sm" onclick="editPortfolio(${p.id})">Editar</button>
+          <button class="btn btn-ghost btn-sm" style="color: var(--accent-pink)" onclick="deletePortfolio(${p.id}, '${escHtml(p.title)}')">Eliminar</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openPortfolioModal() {
+  document.getElementById('portfolio-form').reset();
+  document.getElementById('portfolio-id').value = '';
+  document.getElementById('portfolio-image').value = '';
+  document.getElementById('portfolio-preview-img').src = '';
+  document.getElementById('portfolio-upload-preview').classList.add('hidden');
+  document.getElementById('portfolio-upload-placeholder').classList.remove('hidden');
+  document.getElementById('modal-portfolio-title').textContent = 'Nuevo Trabajo';
+  openModal('modal-portfolio');
+}
+
+async function editPortfolio(id) {
+  const res = await api(`admin_portfolio.php?id=${id}`);
+  if (!res.success) { toast('Error al obtener los detalles', 'error'); return; }
+  const p = res.data;
+  
+  document.getElementById('portfolio-id').value = p.id;
+  document.getElementById('portfolio-title-input').value = p.title;
+  document.getElementById('portfolio-description').value = p.description || '';
+  document.getElementById('portfolio-order').value = p.sort_order;
+  document.getElementById('portfolio-image').value = p.filename;
+  if (p.filename) {
+    document.getElementById('portfolio-preview-img').src = `../assets/images/${p.filename}`;
+    document.getElementById('portfolio-upload-placeholder').classList.add('hidden');
+    document.getElementById('portfolio-upload-preview').classList.remove('hidden');
+  }
+  document.getElementById('modal-portfolio-title').textContent = 'Editar Trabajo';
+  openModal('modal-portfolio');
+}
+
+document.getElementById('btn-save-portfolio')?.addEventListener('click', async () => {
+  const id = document.getElementById('portfolio-id').value;
+  const payload = {
+    title:       document.getElementById('portfolio-title-input').value.trim(),
+    description: document.getElementById('portfolio-description').value.trim(),
+    sort_order:  parseInt(document.getElementById('portfolio-order').value) || 0,
+    filename:    document.getElementById('portfolio-image').value,
+  };
+  if (id) payload.id = parseInt(id);
+
+  if (!payload.title) { toast('El título es requerido', 'error'); return; }
+  if (!payload.filename) { toast('La imagen es requerida', 'error'); return; }
+
+  const method = id ? 'PUT' : 'POST';
+  const res = await api('admin_portfolio.php', method, payload);
+  if (res.success) {
+    toast(id ? 'Trabajo actualizado' : 'Trabajo guardado', 'success');
+    closeModal('modal-portfolio');
+    loadPortfolio();
+  } else toast(res.error || 'Error al guardar', 'error');
+});
+
+async function deletePortfolio(id, title) {
+  if (!confirm(`¿Eliminar el trabajo "${title}" del portafolio?`)) return;
+  const res = await api('admin_portfolio.php', 'DELETE', { id });
+  if (res.success) { toast('Trabajo eliminado', 'success'); loadPortfolio(); }
+  else toast(res.error || 'Error al eliminar', 'error');
+}
+
+// Upload logic for portfolio
+const portfolioUploadZone = document.getElementById('portfolio-upload-zone');
+const portfolioImgInput   = document.getElementById('portfolio-img-upload');
+
+portfolioUploadZone?.addEventListener('click', () => portfolioImgInput.click());
+portfolioImgInput?.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (file) handlePortfolioUpload(file);
+});
+
+async function handlePortfolioUpload(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  
+  try {
+    const res = await fetch(`${API}/upload.php`, { 
+      method: 'POST', 
+      body: formData,
+      credentials: 'same-origin'
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('portfolio-image').value = data.data.filename;
+      document.getElementById('portfolio-preview-img').src = `../assets/images/${data.data.filename}`;
+      document.getElementById('portfolio-upload-preview').classList.remove('hidden');
+      document.getElementById('portfolio-upload-placeholder').classList.add('hidden');
+    } else toast(data.error || 'Error al subir', 'error');
+  } catch (err) { 
+    console.error('Upload Error:', err);
+    toast('Error al procesar la imagen', 'error'); 
+  }
+}
+
+document.getElementById('portfolio-remove-img')?.addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('portfolio-image').value = '';
+  document.getElementById('portfolio-preview-img').src = '';
+  document.getElementById('portfolio-upload-preview').classList.add('hidden');
+  document.getElementById('portfolio-upload-placeholder').classList.remove('hidden');
+});

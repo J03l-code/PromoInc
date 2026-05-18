@@ -65,6 +65,17 @@ try {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
     echo "Tabla 'quotes' creada o verificada.<br>";
 
+    // Crear tabla portfolio
+    $db->exec("CREATE TABLE IF NOT EXISTS portfolio (
+        id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        title       VARCHAR(255) NOT NULL,
+        description TEXT,
+        filename    VARCHAR(255) NOT NULL,
+        sort_order  INT DEFAULT 0,
+        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+    echo "Tabla 'portfolio' creada o verificada.<br>";
+
     echo "<h2 style='color:green'>Migración completada exitosamente!</h2>";
 
 } catch (PDOException $e) {

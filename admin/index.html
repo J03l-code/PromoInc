@@ -51,6 +51,13 @@
         </svg>
         Marcas
       </a>
+      <a href="#" class="nav-item" data-section="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        Portafolio
+      </a>
       <a href="#" class="nav-item" data-section="orders">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -296,6 +303,36 @@
             </tr>
           </thead>
           <tbody id="brands-tbody">
+            <tr><td colspan="5" class="loading-row">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── SECTION: PORTFOLIO ── -->
+    <section class="section hidden" id="section-portfolio">
+      <div class="section-header">
+        <h2>Portafolio de Trabajos Realizados</h2>
+        <button class="btn btn-primary" onclick="openPortfolioModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nuevo Trabajo
+        </button>
+      </div>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Título</th>
+              <th>Descripción</th>
+              <th>Orden</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="portfolio-tbody">
             <tr><td colspan="5" class="loading-row">Cargando...</td></tr>
           </tbody>
         </table>
@@ -853,9 +890,56 @@
     </div>
   </div>
 
+  <!-- ── MODAL: PORTFOLIO ── -->
+  <div class="modal-overlay hidden" id="modal-portfolio">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-portfolio-title">Nuevo Trabajo</h3>
+        <button class="modal-close" data-close="modal-portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="portfolio-form">
+          <input type="hidden" name="id" id="portfolio-id">
+          <div class="form-group"><label>Título del Trabajo *</label><input type="text" name="title" id="portfolio-title-input" required></div>
+          <div class="form-group"><label>Descripción del Trabajo</label><textarea name="description" id="portfolio-description" style="width:100%; border:1px solid var(--border); background:var(--bg-primary); color:var(--text-primary); border-radius:var(--radius-sm); padding:0.5rem; font-family:inherit; min-height:80px; resize:vertical;"></textarea></div>
+          <div class="form-group"><label>Orden de aparición</label><input type="number" name="sort_order" id="portfolio-order" value="0" min="0"></div>
+          
+          <div class="form-group">
+            <label>Imagen del Trabajo Realizado *</label>
+            <div class="upload-zone" id="portfolio-upload-zone">
+              <input type="file" id="portfolio-img-upload" accept="image/jpeg,image/png,image/webp" class="hidden">
+              <div class="upload-preview hidden" id="portfolio-upload-preview">
+                <img id="portfolio-preview-img" src="" alt="Preview">
+                <button type="button" class="remove-img" id="portfolio-remove-img">✕</button>
+              </div>
+              <div class="upload-placeholder" id="portfolio-upload-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Sube la foto del trabajo</span>
+              </div>
+            </div>
+            <input type="hidden" name="filename" id="portfolio-image">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-portfolio">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-portfolio">Guardar Trabajo</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="./js/admin.js?v=47.7"></script>
+  <script src="./js/admin.js?v=48.0"></script>
 </body>
 
 </html>
