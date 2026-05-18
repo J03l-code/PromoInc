@@ -853,7 +853,6 @@ function escHtml(str) {
             .replace(/'/g, '&#039;');
 }
 
-// ── RENDER PORTFOLIO ITEMS ────────────────────────────────────
 function renderPortfolioItems(container, items, append = false) {
   if (!append) container.innerHTML = '';
   
@@ -862,23 +861,34 @@ function renderPortfolioItems(container, items, append = false) {
     return;
   }
 
-  const html = items.map(item => `
-    <div class="product-card reveal" style="cursor: pointer;" onclick="openPortfolioLightbox('${item.filename}', '${escHtml(item.title)}', '${escHtml(item.description || '')}')">
+  const cards = items.map(item => {
+    const card = document.createElement('div');
+    card.className = 'product-card reveal';
+    card.style.cursor = 'pointer';
+    
+    card.innerHTML = `
       <div class="product-image-container" style="aspect-ratio: 1/1; overflow: hidden; position: relative; border-radius: var(--radius-md) var(--radius-md) 0 0;">
-        <img src="assets/images/${item.filename}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+        <img src="assets/images/${item.filename}" alt="${escHtml(item.title)}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
       </div>
       <div class="product-info" style="padding: 1.25rem;">
         <span style="font-size: 0.65rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.25rem;">Trabajo Realizado</span>
-        <h3 class="product-title" style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">${item.title}</h3>
-        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0;">${item.description || ''}</p>
+        <h3 class="product-title" style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">${escHtml(item.title)}</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0;">${escHtml(item.description || '')}</p>
       </div>
-    </div>
-  `).join('');
+    `;
+    
+    card.addEventListener('click', () => {
+      openPortfolioLightbox(item.filename, item.title, item.description || '');
+    });
+    
+    return card;
+  });
 
   if (append) {
-    container.insertAdjacentHTML('beforeend', html);
+    cards.forEach(card => container.appendChild(card));
   } else {
-    container.innerHTML = html;
+    container.innerHTML = '';
+    cards.forEach(card => container.appendChild(card));
   }
 
   // Re-observe new elements to make them fade in elegantly
