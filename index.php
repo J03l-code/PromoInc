@@ -1123,8 +1123,8 @@ header("Expires: 0");
   </a>
 
   <!-- Scripts -->
-  <script src="assets/js/cart.js?v=65.0"></script>
-  <script src="assets/js/checkout.js?v=65.1"></script>
+  <script src="assets/js/cart.js?v=66.0"></script>
+  <script src="assets/js/checkout.js?v=66.0"></script>
   <script src="assets/js/main.js?v=69.0"></script>
   <script>
     function openCart() {

@@ -145,10 +145,14 @@ const CartManager = (() => {
   function isLoggedIn() { return _isLoggedIn; }
   
   function getWhatsAppUrl() {
-    const total = getTotal();
-    const itemsText = _items.map(i => `• ${i.name} (x${i.quantity}) - $${(i.unit_price * i.quantity).toFixed(2)}`).join('\n');
+    const total = getTotalWithShipping();
+    const itemsText = _items.map(i => {
+      const sh = parseFloat(i.shipping_cost) || 0;
+      const shLabel = sh > 0 ? ` (+$${sh.toFixed(2)} envío)` : '';
+      return `• ${i.name} (x${i.quantity}) - $${(i.unit_price * i.quantity).toFixed(2)}${shLabel}`;
+    }).join('\n');
     const msg = `Hola PromoInc, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: $${total.toFixed(2)}`;
-    return `https://wa.me/${_waNumber}?text=${encodeURIComponent(msg)}`;
+    return 'https://api.whatsapp.com/send?phone=' + _waNumber + '&text=' + encodeURIComponent(msg);
   }
 
   function _notify() {

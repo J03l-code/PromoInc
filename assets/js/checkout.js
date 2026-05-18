@@ -291,14 +291,14 @@ const CheckoutModal = (() => {
       finalMsg = msg.replace('🛒 *NUEVO PEDIDO — PromoInc*', `🛒 *NUEVO PEDIDO — PromoInc*\n🔖 *Pedido #:* ${orderNumber}`);
     }
 
-    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(finalMsg)}`;
+
 
     btn.disabled = false;
     btn.innerHTML = `${WA_ICON} Enviar pedido por WhatsApp`;
 
-    // Usar web.whatsapp.com para compatibilidad con escritorio y móvil.
-    // Abrimos en nueva pestaña con <a> temporal para evitar bloqueo de popups.
-    const waUrl = `https://web.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(finalMsg)}`;
+    // api.whatsapp.com abre WhatsApp Desktop/Web con el mensaje pre-llenado
+    const encodedMsg = encodeURIComponent(finalMsg);
+    const waUrl = 'https://api.whatsapp.com/send?phone=' + waNumber + '&text=' + encodedMsg;
     const anchor = document.createElement('a');
     anchor.href = waUrl;
     anchor.target = '_blank';
