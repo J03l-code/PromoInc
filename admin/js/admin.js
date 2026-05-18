@@ -292,17 +292,21 @@ async function populateCategorySelects(force = false) {
     }
     
     const filterSel   = document.getElementById('filter-category');
-    const productSel  = document.getElementById('product-category');
-    
-    const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
+    const categoriesContainer = document.getElementById('product-categories-container');
     
     if (filterSel) {
+      const options = allCategories.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
       const first = filterSel.options[0]?.outerHTML || '<option value="">Todas las categorías</option>';
       filterSel.innerHTML = first + options;
     }
-    if (productSel) {
-      const first = productSel.options[0]?.outerHTML || '<option value="">Seleccionar categoría...</option>';
-      productSel.innerHTML = first + options;
+    
+    if (categoriesContainer) {
+      categoriesContainer.innerHTML = allCategories.map(c => `
+        <label class="checkbox-label" style="justify-content: flex-start; gap: 0.5rem;">
+          <input type="checkbox" name="category_id[]" class="cat-checkbox" value="${c.id}">
+          <span style="font-size: 0.85rem;">${escHtml(c.name)}</span>
+        </label>
+      `).join('');
     }
     console.log('Category selects populated');
   } catch (err) {
@@ -322,6 +326,7 @@ document.getElementById('filter-active').addEventListener('change',   () => { pr
 // ── NUEVO PRODUCTO ────────────────────────────────────────────
 document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('product-form').reset();
+  document.querySelectorAll('.cat-checkbox').forEach(cb => cb.checked = false);
   document.getElementById('product-id').value = '';
   document.getElementById('modal-product-title').textContent = 'Nuevo Producto';
   document.getElementById('upload-placeholder').classList.remove('hidden');
@@ -432,8 +437,15 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
   const form = document.getElementById('product-form');
   if (!form.checkValidity()) { form.reportValidity(); return; }
   const id = document.getElementById('product-id').value;
+  const selectedCats = Array.from(document.querySelectorAll('.cat-checkbox:checked')).map(cb => parseInt(cb.value));
+  
+  if (selectedCats.length === 0) {
+    toast('Debes seleccionar al menos una categoría', 'error');
+    return;
+  }
+  
   const payload = {
-    category_id:   parseInt(document.getElementById('product-category').value),
+    category_id:   selectedCats,
     sku:           document.getElementById('product-sku').value.trim(),
     name:          document.getElementById('product-name').value.trim(),
     description:   document.getElementById('product-desc').value.trim(),
@@ -475,6 +487,19 @@ async function editProduct(id) {
   document.getElementById('product-sku').value      = p.sku;
   document.getElementById('product-desc').value     = p.description || '';
   document.getElementById('product-price').value    = p.price_from || '';
+  
+  // Set category checkboxes
+  document.querySelectorAll('.cat-checkbox').forEach(cb => cb.checked = false);
+  if (p.category_ids) {
+    const ids = p.category_ids.split(',').map(Number);
+    document.querySelectorAll('.cat-checkbox').forEach(cb => {
+      if (ids.includes(parseInt(cb.value))) cb.checked = true;
+    });
+  } else if (p.category_id) {
+    const cb = document.querySelector(`.cat-checkbox[value="${p.category_id}"]`);
+    if (cb) cb.checked = true;
+  }
+
   document.getElementById('product-minqty').value   = p.min_quantity;
   document.getElementById('product-showmin').checked= parseInt(p.show_min_quantity) === 1;
   document.getElementById('product-stock').value    = p.stock?.[0]?.quantity || 0;

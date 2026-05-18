@@ -72,7 +72,7 @@ function getProducts(PDO $db): void {
     $params = [];
 
     if (!empty($_GET['category'])) {
-        $where[]  = 'p.category_id = ?';
+        $where[]  = 'EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = p.id AND pc.category_id = ?)';
         $params[] = (int)$_GET['category'];
     }
 

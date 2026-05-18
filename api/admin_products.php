@@ -78,6 +78,7 @@ function getAdminProducts(PDO $db): void {
                p.min_quantity, p.show_min_quantity, p.customizable, p.featured, p.active,
                p.created_at, p.updated_at,
                c.name AS category_name,
+               (SELECT GROUP_CONCAT(category_id) FROM product_categories WHERE product_id = p.id) AS category_ids,
                COALESCE((SELECT SUM(quantity) FROM stock WHERE product_id = p.id), 0) AS total_stock
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
@@ -121,8 +122,21 @@ function createAdminProduct(PDO $db): void {
         if ($price > 0) $discount = (int)round((($price - $salePrice) / $price) * 100);
     }
 
+    // Si vienen multiples categorias (array) o una sola (int)
+    $primaryCat = 0;
+    $categoryIds = [];
+    if (!empty($data['category_id'])) {
+        if (is_array($data['category_id'])) {
+            $categoryIds = array_map('intval', $data['category_id']);
+            $primaryCat = $categoryIds[0] ?? 0;
+        } else {
+            $primaryCat = (int)$data['category_id'];
+            $categoryIds = [$primaryCat];
+        }
+    }
+
     $stmt->execute([
-        ':category_id'  => (int)$data['category_id'],
+        ':category_id'  => $primaryCat,
         ':sku'          => sanitize($data['sku']),
         ':name'         => sanitize($data['name']),
         ':slug'         => $slug,
@@ -139,6 +153,14 @@ function createAdminProduct(PDO $db): void {
     ]);
 
     $productId = (int)$db->lastInsertId();
+
+    // Guardar categorias en tabla pivot
+    if (!empty($categoryIds)) {
+        $insertCats = $db->prepare("INSERT IGNORE INTO product_categories (product_id, category_id) VALUES (?, ?)");
+        foreach ($categoryIds as $cid) {
+            $insertCats->execute([$productId, $cid]);
+        }
+    }
 
     // Guardar precios por volumen si existen
     if (!empty($data['volume_prices']) && is_array($data['volume_prices'])) {
@@ -159,6 +181,19 @@ function createAdminProduct(PDO $db): void {
 function updateAdminProduct(PDO $db): void {
     $data = $GLOBALS['_POST_JSON'] ?? json_decode(file_get_contents('php://input'), true) ?? [];
     if (empty($data['id'])) jsonError(400, 'ID requerido');
+
+    // Si vienen multiples categorias (array) o una sola (int)
+    $primaryCat = 0;
+    $categoryIds = [];
+    if (!empty($data['category_id'])) {
+        if (is_array($data['category_id'])) {
+            $categoryIds = array_map('intval', $data['category_id']);
+            $primaryCat = $categoryIds[0] ?? 0;
+        } else {
+            $primaryCat = (int)$data['category_id'];
+            $categoryIds = [$primaryCat];
+        }
+    }
 
     try {
         $updateImage = '';
@@ -186,7 +221,7 @@ function updateAdminProduct(PDO $db): void {
         ");
         
         $params = [
-            ':category_id'  => (int)$data['category_id'],
+            ':category_id'  => $primaryCat,
             ':sku'          => sanitize($data['sku']),
             ':name'         => sanitize($data['name']),
             ':description'  => sanitize($data['description'] ?? ''),
@@ -212,6 +247,15 @@ function updateAdminProduct(PDO $db): void {
         }
         
         $stmt->execute($params);
+
+        // Actualizar categorias en tabla pivot
+        if (!empty($categoryIds)) {
+            $db->prepare("DELETE FROM product_categories WHERE product_id = ?")->execute([(int)$data['id']]);
+            $insertCats = $db->prepare("INSERT IGNORE INTO product_categories (product_id, category_id) VALUES (?, ?)");
+            foreach ($categoryIds as $cid) {
+                $insertCats->execute([(int)$data['id'], $cid]);
+            }
+        }
 
         // Actualizar precios por volumen
         if (isset($data['volume_prices']) && is_array($data['volume_prices'])) {
