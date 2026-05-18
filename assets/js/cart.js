@@ -6,7 +6,7 @@
 
 const CartManager = (() => {
   let _isLoggedIn = false;
-  let _items = [];         // [{product_id, name, sku, quantity, unit_price, image_webp}]
+  let _items = [];         // [{product_id, name, sku, quantity, unit_price, shipping_cost, image_webp}]
   let _onChangeCallback = null;
   let _waNumber = '593987827215'; // Default fallback
 
@@ -61,7 +61,8 @@ const CartManager = (() => {
           quantity: i.quantity,
           unit_price: parseFloat(i.unit_price),
           image_webp: i.image_webp,
-          min_quantity: i.min_quantity
+          min_quantity: i.min_quantity,
+          shipping_cost: parseFloat(i.shipping_cost) || 0
         }));
       }
     } catch { _items = []; }
@@ -134,6 +135,9 @@ const CartManager = (() => {
   function getItems() { return [..._items]; }
   function getCount() { return _items.reduce((s, i) => s + i.quantity, 0); }
   function getTotal() { return _items.reduce((s, i) => s + (i.unit_price * i.quantity), 0); }
+  function getTotalWithShipping() {
+    return _items.reduce((s, i) => s + (i.unit_price * i.quantity) + (parseFloat(i.shipping_cost) || 0), 0);
+  }
   function isLoggedIn() { return _isLoggedIn; }
   
   function getWhatsAppUrl() {
@@ -147,5 +151,5 @@ const CartManager = (() => {
     if (_onChangeCallback) _onChangeCallback(_items);
   }
 
-  return { init, addItem, removeItem, clear, getItems, getCount, getTotal, isLoggedIn, getWhatsAppUrl };
+  return { init, addItem, removeItem, clear, getItems, getCount, getTotal, getTotalWithShipping, isLoggedIn, getWhatsAppUrl };
 })();

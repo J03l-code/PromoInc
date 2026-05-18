@@ -866,7 +866,8 @@
         quantity: qty,
         unit_price: unitPrice,
         image_webp: p.image_webp,
-        min_quantity: p.min_quantity
+        min_quantity: p.min_quantity,
+        shipping_cost: parseFloat(p.shipping_cost) || 0
       });
       renderCart(CartManager.getItems());
       openCart();

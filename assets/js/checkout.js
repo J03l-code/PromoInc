@@ -129,17 +129,21 @@ const CheckoutModal = (() => {
       return;
     }
 
-    // Resumen del carrito
+    // Resumen del carrito con envío por ítem
     const summary = document.getElementById('co-cart-summary');
-    summary.innerHTML = items.map(i => `
+    summary.innerHTML = items.map(i => {
+      const itemShipping = parseFloat(i.shipping_cost) || 0;
+      const shippingLabel = itemShipping > 0
+        ? `<span class="co-item-shipping">+ $${itemShipping.toFixed(2)} envío</span>` : '';
+      return `
       <div class="co-item">
         <span class="co-item-name">${i.name}</span>
-        <span class="co-item-detail">${i.quantity} × $${i.unit_price.toFixed(2)}</span>
-        <span class="co-item-sub">$${(i.unit_price * i.quantity).toFixed(2)}</span>
-      </div>
-    `).join('');
+        <span class="co-item-detail">${i.quantity} × $${i.unit_price.toFixed(2)}${shippingLabel}</span>
+        <span class="co-item-sub">$${((i.unit_price * i.quantity) + itemShipping).toFixed(2)}</span>
+      </div>`;
+    }).join('');
 
-    const total = CartManager.getTotal();
+    const total = CartManager.getTotalWithShipping();
     document.getElementById('co-total').textContent = '$' + total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     // 1️⃣ Cargar datos guardados en localStorage
@@ -209,11 +213,19 @@ const CheckoutModal = (() => {
 
     // Construir mensaje WhatsApp
     const items = CartManager.getItems();
-    const total = CartManager.getTotal();
+    const total = CartManager.getTotalWithShipping();
+    const subtotalProducts = CartManager.getTotal();
+    const totalShipping = total - subtotalProducts;
 
-    const itemsText = items.map(i =>
-      `  • ${i.name} (x${i.quantity}) → $${(i.unit_price * i.quantity).toFixed(2)}`
-    ).join('\n');
+    const itemsText = items.map(i => {
+      const sh = parseFloat(i.shipping_cost) || 0;
+      const shLine = sh > 0 ? ` (+ $${sh.toFixed(2)} envío)` : '';
+      return `  • ${i.name} (x${i.quantity}) → $${(i.unit_price * i.quantity).toFixed(2)}${shLine}`;
+    }).join('\n');
+
+    const shippingSummaryLines = totalShipping > 0
+      ? ['', `📦 *Costo de envío: $${totalShipping.toFixed(2)}*`]
+      : [];
 
     const msg = [
       '🛒 *NUEVO PEDIDO — PromoInc*',
@@ -231,8 +243,9 @@ const CheckoutModal = (() => {
       '',
       '🛍️ *Productos:*',
       itemsText,
+      ...shippingSummaryLines,
       '',
-      `💰 *Total: $${total.toFixed(2)}*`,
+      `💰 *TOTAL (productos + envío): $${total.toFixed(2)}*`,
     ].filter(l => l !== null).join('\n');
 
     // Obtener número desde la API (dinámico)
@@ -255,7 +268,7 @@ const CheckoutModal = (() => {
         delivery_city: city,
         delivery_notes: notes,
         items: items,
-        total: total
+        total: total  // total ya incluye el envío
       };
 
       const res = await fetch('api/orders.php', {

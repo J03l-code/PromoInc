@@ -2227,6 +2227,16 @@
   font-weight: 700;
 }
 
+.co-item-shipping {
+  margin-left: 6px;
+  font-size: 0.72rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  background: rgba(212, 175, 55, 0.12);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
 /* Section labels */
 .co-section-title {
   font-size: 0.82rem;
