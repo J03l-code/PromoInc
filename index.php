@@ -20,7 +20,7 @@ header("Expires: 0");
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css?v=61.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=100.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=101.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=61.0">
   
   <style>
@@ -489,7 +489,7 @@ header("Expires: 0");
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
-      <div class="scattered-wrapper item-2" style="left: 15%; --top-pos: 75px; animation-delay: 1.2s;">
+      <div class="scattered-wrapper item-2" style="left: 15%; --top-pos: 48px; animation-delay: 1.2s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
@@ -499,7 +499,7 @@ header("Expires: 0");
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
-      <div class="scattered-wrapper item-4" style="left: 45%; --top-pos: 85px; animation-delay: 2.1s;">
+      <div class="scattered-wrapper item-4" style="left: 45%; --top-pos: 52px; animation-delay: 2.1s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
@@ -509,7 +509,7 @@ header("Expires: 0");
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
-      <div class="scattered-wrapper item-6" style="left: 72%; --top-pos: 80px; animation-delay: 1.6s;">
+      <div class="scattered-wrapper item-6" style="left: 72%; --top-pos: 50px; animation-delay: 1.6s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
@@ -519,14 +519,14 @@ header("Expires: 0");
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
-      <div class="scattered-wrapper item-8" style="left: 95%; --top-pos: 70px; animation-delay: 2.7s;">
+      <div class="scattered-wrapper item-8" style="left: 95%; --top-pos: 46px; animation-delay: 2.7s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
 
       <!-- Group B: Desktop-only for dense high-end collage (8 more items, total 16!) -->
-      <div class="scattered-wrapper item-9 desktop-only" style="left: 8%; --top-pos: 85px; animation-delay: 1.5s;">
+      <div class="scattered-wrapper item-9 desktop-only" style="left: 8%; --top-pos: 52px; animation-delay: 1.5s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
@@ -536,7 +536,7 @@ header("Expires: 0");
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
-      <div class="scattered-wrapper item-11 desktop-only" style="left: 34%; --top-pos: 90px; animation-delay: 2.3s;">
+      <div class="scattered-wrapper item-11 desktop-only" style="left: 34%; --top-pos: 55px; animation-delay: 2.3s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
@@ -546,7 +546,7 @@ header("Expires: 0");
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
       </div>
-      <div class="scattered-wrapper item-13 desktop-only" style="left: 64%; --top-pos: 85px; animation-delay: 2.9s;">
+      <div class="scattered-wrapper item-13 desktop-only" style="left: 64%; --top-pos: 50px; animation-delay: 2.9s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
@@ -556,7 +556,7 @@ header("Expires: 0");
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
-      <div class="scattered-wrapper item-15 desktop-only" style="left: 90%; --top-pos: 80px; animation-delay: 1.8s;">
+      <div class="scattered-wrapper item-15 desktop-only" style="left: 90%; --top-pos: 48px; animation-delay: 1.8s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
