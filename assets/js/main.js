@@ -1,5 +1,5 @@
 /* PromoInc — main.js */
-const VERSION = '75.0';
+const VERSION = '76.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
@@ -775,7 +775,7 @@ function renderProducts(grid, products, append = false) {
       <div class="card-body">
         ${!isProductPage ? `<h3 class="card-title">${p.name}</h3><p class="card-sku">${p.sku}</p>` : ''}
         <div class="card-badges" style="margin-bottom: 0.75rem; display: flex; flex-wrap: wrap; gap: 8px;">
-          ${parseInt(p.on_sale) ? `<span class="badge badge-sale">Oferta -${p.sale_discount}%</span>` : ''}
+          ${parseInt(p.on_sale) ? `<span class="badge badge-sale">Oferta -${p.sale_discount}%</span><div style="flex-basis: 100%; height: 0;"></div>` : ''}
           ${parseInt(p.total_stock) > 0 ? '<span class="badge badge-stock">Stock Disponible</span>' : '<span class="badge badge-nostock">Sin Stock</span>'}
           ${parseInt(p.featured) ? '<span class="badge badge-featured">Destacado</span>' : ''}
           ${parseInt(p.customizable) ? '<span class="badge badge-customizable">Personalizable</span>' : ''}
