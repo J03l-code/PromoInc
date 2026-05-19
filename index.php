@@ -19,9 +19,9 @@ header("Expires: 0");
   <meta http-equiv="Expires" content="0" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=63.0">
-  <link rel="stylesheet" href="assets/css/components.css?v=104.0">
-  <link rel="stylesheet" href="assets/css/animations.css?v=61.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=75.0">
+  <link rel="stylesheet" href="assets/css/components.css?v=105.0">
+  <link rel="stylesheet" href="assets/css/animations.css?v=75.0">
   
   <style>
     /* ── FRONTEND-DESIGN: REFINED EDITORIAL LUXURY ── */
@@ -1105,7 +1105,7 @@ header("Expires: 0");
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=66.0"></script>
   <script src="assets/js/checkout.js?v=66.0"></script>
-  <script src="assets/js/main.js?v=69.0"></script>
+  <script src="assets/js/main.js?v=75.0"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');
