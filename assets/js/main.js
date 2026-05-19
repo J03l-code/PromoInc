@@ -381,27 +381,32 @@ async function loadSiteSettings() {
       // If you need to update these, edit index.php or catalogo.html directly.
 
       
-      // WhatsApp
-      if (s.whatsapp) {
-        window.siteWhatsapp = s.whatsapp.replace(/\D/g, '');
-        const cleanWa = window.siteWhatsapp;
-        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
-          try {
-            const url = new URL(a.href);
-            const text = url.searchParams.get('text') || '';
-            a.href = `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
-          } catch(e) {
-            a.href = `https://wa.me/${cleanWa}`;
-          }
-        });
+      // WhatsApp and Phone
+      if (s.whatsapp || s.site_phone) {
+        if (s.whatsapp) window.siteWhatsapp = s.whatsapp.replace(/\D/g, '');
+        const cleanWa = window.siteWhatsapp || '';
+        if (cleanWa) {
+          document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+            try {
+              const url = new URL(a.href);
+              const text = url.searchParams.get('text') || '';
+              a.href = `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
+            } catch(e) {
+              a.href = `https://wa.me/${cleanWa}`;
+            }
+          });
+        }
         const waDisplay = document.querySelector('.footer-contact-item svg path[d*="M22 16.92"]')?.parentElement?.nextElementSibling;
         if (waDisplay) {
            const lines = waDisplay.innerHTML.split('<br>');
            if (lines.length > 1) {
-             lines[1] = `+${s.whatsapp}`;
+             if (s.site_phone) lines[0] = s.site_phone;
+             if (s.whatsapp) lines[1] = `+${s.whatsapp}`;
              waDisplay.innerHTML = lines.join('<br>');
            } else {
-             waDisplay.textContent = `+${s.whatsapp}`;
+             if (s.whatsapp && s.site_phone) waDisplay.innerHTML = `${s.site_phone}<br>+${s.whatsapp}`;
+             else if (s.whatsapp) waDisplay.textContent = `+${s.whatsapp}`;
+             else if (s.site_phone) waDisplay.textContent = s.site_phone;
            }
         }
       }

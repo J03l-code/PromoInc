@@ -52,7 +52,90 @@ if ($method === 'POST') {
         round((float) $body['total'], 2),
     ]);
 
-    jsonSuccess(['order_number' => $orderNumber, 'id' => $db->lastInsertId()], 201);
+    $orderId = $db->lastInsertId();
+
+    // ── Enviar Email al Administrador ─────────────────────────
+    try {
+        $stmtSettings = $db->query("SELECT `value` FROM settings WHERE `key` = 'site_email'");
+        $emailRow = $stmtSettings->fetch();
+        $adminEmail = $emailRow ? $emailRow['value'] : 'ventas@promoinc.ec';
+
+        $subject = "Nuevo Pedido Confirmado: {$orderNumber}";
+        
+        $itemsHtml = '';
+        foreach($body['items'] as $item) {
+            $subtotal = number_format($item['price'] * $item['quantity'], 2);
+            $itemsHtml .= "
+            <tr>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd;'>" . htmlspecialchars($item['name']) . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: center;'>" . (int)$item['quantity'] . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . number_format($item['price'], 2) . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . $subtotal . "</td>
+            </tr>";
+        }
+
+        $totalHtml = number_format((float)$body['total'], 2);
+        
+        $htmlEmail = "
+        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 8px; overflow: hidden;'>
+            <div style='background: #121212; padding: 20px; text-align: center;'>
+                <img src='https://promoinc.ec/assets/images/logo%20blanco%20(2).png' alt='PromoInc' style='height: 50px;'>
+            </div>
+            <div style='padding: 30px; background: #fafafa;'>
+                <h2 style='color: #e83e8c; margin-top: 0; font-size: 24px; text-align: center;'>¡Nuevo Pedido Recibido!</h2>
+                <div style='background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px;'>
+                    <p style='margin: 0 0 10px;'><strong>Nro. de Pedido:</strong> <span style='color: #00bcff;'>" . htmlspecialchars($orderNumber) . "</span></p>
+                    <p style='margin: 0 0 10px;'><strong>Cliente:</strong> " . htmlspecialchars($body['customer_name']) . "</p>
+                    <p style='margin: 0 0 10px;'><strong>Empresa:</strong> " . htmlspecialchars($body['customer_company'] ?? 'N/A') . "</p>
+                    <p style='margin: 0 0 10px;'><strong>Teléfono:</strong> " . htmlspecialchars($body['customer_phone']) . "</p>
+                    <p style='margin: 0 0 0;'><strong>Email:</strong> " . htmlspecialchars($body['customer_email'] ?? 'N/A') . "</p>
+                </div>
+                
+                <h3 style='margin-bottom: 15px; color: #121212; border-bottom: 2px solid #00bcff; padding-bottom: 5px; display: inline-block;'>Dirección de Entrega</h3>
+                <p style='margin: 0 0 5px; font-weight: bold;'>" . htmlspecialchars($body['delivery_address']) . "</p>
+                <p style='margin: 0 0 15px;'>" . htmlspecialchars($body['delivery_city']) . "</p>
+                <p style='margin: 0; padding: 10px; background: #fff3cd; border-left: 4px solid #ffc107; color: #856404;'><em>Notas: " . htmlspecialchars($body['delivery_notes'] ?? 'Ninguna') . "</em></p>
+                
+                <h3 style='margin: 30px 0 15px; color: #121212; border-bottom: 2px solid #e83e8c; padding-bottom: 5px; display: inline-block;'>Detalle de Productos</h3>
+                <table style='width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff;'>
+                    <thead>
+                        <tr style='background: #f1f1f1;'>
+                            <th style='padding: 12px 10px; text-align: left; border-bottom: 2px solid #ddd;'>Producto</th>
+                            <th style='padding: 12px 10px; text-align: center; border-bottom: 2px solid #ddd;'>Cant.</th>
+                            <th style='padding: 12px 10px; text-align: right; border-bottom: 2px solid #ddd;'>P. Unit</th>
+                            <th style='padding: 12px 10px; text-align: right; border-bottom: 2px solid #ddd;'>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {$itemsHtml}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='3' style='padding: 15px 10px; text-align: right; font-weight: bold; font-size: 16px;'>Total a Pagar:</td>
+                            <td style='padding: 15px 10px; text-align: right; font-weight: bold; color: #e83e8c; font-size: 18px;'>\${$totalHtml}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div style='background: #121212; color: #aaa; text-align: center; padding: 20px; font-size: 12px;'>
+                &copy; " . date('Y') . " PromoInc. Este es un correo automático generado por el sistema.
+            </div>
+        </div>
+        ";
+
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $headers .= "From: PromoInc Web <noreply@promoinc.ec>\r\n";
+        if (!empty($body['customer_email'])) {
+            $headers .= "Reply-To: " . filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) . "\r\n";
+        }
+
+        @mail($adminEmail, $subject, $htmlEmail, $headers);
+    } catch (\Throwable $e) {
+        // Ignorar errores de envío de correo para no bloquear la creación del pedido
+    }
+
+    jsonSuccess(['order_number' => $orderNumber, 'id' => $orderId], 201);
 }
 
 // ── GET: Mis pedidos ──────────────────────────────────────
