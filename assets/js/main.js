@@ -2,7 +2,7 @@
 const VERSION = '76.0';
 
 // Global function for adding to cart quickly from the Home page
-window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
+window.quickAddToCart = function(event, id, name, sku, price, image, minQty, shippingCost) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -16,7 +16,8 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty) {
       unit_price: parseFloat(price),
       image_webp: image,
       quantity: parseInt(minQty) || 10,
-      min_quantity: parseInt(minQty) || 10
+      min_quantity: parseInt(minQty) || 10,
+      shipping_cost: parseFloat(shippingCost) || 0
     };
 
     // Instant local update for better UX
@@ -803,7 +804,7 @@ function renderProducts(grid, products, append = false) {
         <div style="display:flex; gap:8px; align-items:center;" onclick="event.stopPropagation()">
           <button
             title="Agregar al carrito"
-            onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${(parseInt(p.on_sale) && p.sale_price ? parseFloat(p.sale_price) : parseFloat(p.price_from||0)).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10})"
+            onclick="quickAddToCart(event, ${p.id}, '${p.name.replace(/'/g,"\\'")}', '${p.sku}', ${(parseInt(p.on_sale) && p.sale_price ? parseFloat(p.sale_price) : parseFloat(p.price_from||0)).toFixed(2)}, '${p.image_webp||''}', ${p.min_quantity||10}, ${parseFloat(p.shipping_cost)||0})"
             style="
               width:38px; height:38px; border-radius:10px; border: none; cursor:pointer;
               background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));
@@ -850,7 +851,7 @@ function renderProducts(grid, products, append = false) {
 }
 
 /* ── Quick Add to Cart (from product cards) ──────────────── */
-window.quickAddToCart = async function(event, productId, name, sku, price, imageWebp, minQty) {
+window.quickAddToCart = async function(event, productId, name, sku, price, imageWebp, minQty, shippingCost) {
   event.stopPropagation();
   const btn = event.currentTarget;
 
@@ -875,7 +876,8 @@ window.quickAddToCart = async function(event, productId, name, sku, price, image
     quantity: parseInt(minQty),
     unit_price: parseFloat(price),
     image_webp: imageWebp,
-    min_quantity: parseInt(minQty)
+    min_quantity: parseInt(minQty),
+    shipping_cost: parseFloat(shippingCost) || 0
   });
 
   // Trigger re-render if renderCart exists on this page

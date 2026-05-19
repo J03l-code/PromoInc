@@ -62,15 +62,29 @@ if ($method === 'POST') {
 
         $subject = "Nuevo Pedido Confirmado: {$orderNumber}";
 
+        $productsSubtotal = 0;
+        $totalShipping = 0;
         $itemsHtml = '';
         foreach ($body['items'] as $item) {
-            $subtotal = number_format($item['price'] * $item['quantity'], 2);
+            $unitPrice = isset($item['unit_price']) ? (float)$item['unit_price'] : 0.00;
+            $quantity = isset($item['quantity']) ? (int)$item['quantity'] : 1;
+            $shipping = isset($item['shipping_cost']) ? (float)$item['shipping_cost'] : 0.00;
+
+            $itemSubtotal = $unitPrice * $quantity;
+            $productsSubtotal += $itemSubtotal;
+            $totalShipping += $shipping;
+
+            $shippingText = $shipping > 0 ? " <br><span style='font-size: 11px; color: #777;'>+ $" . number_format($shipping, 2) . " envío</span>" : "";
+            $subtotalDisplay = number_format($itemSubtotal + $shipping, 2);
+
             $itemsHtml .= "
             <tr>
-                <td style='padding: 10px; border-bottom: 1px solid #ddd;'>" . htmlspecialchars($item['name']) . "</td>
-                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: center;'>" . (int) $item['quantity'] . "</td>
-                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . number_format($item['price'], 2) . "</td>
-                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . $subtotal . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd;'>
+                    <div style='font-weight: bold;'>" . htmlspecialchars($item['name']) . "</div>" . $shippingText . "
+                </td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: center;'>" . $quantity . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . number_format($unitPrice, 2) . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold;'>$" . $subtotalDisplay . "</td>
             </tr>";
         }
 
@@ -111,8 +125,17 @@ if ($method === 'POST') {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan='3' style='padding: 15px 10px; text-align: right; font-weight: bold; font-size: 16px;'>Total a Pagar:</td>
-                            <td style='padding: 15px 10px; text-align: right; font-weight: bold; color: #e83e8c; font-size: 18px;'>\${$totalHtml}</td>
+                            <td colspan='3' style='padding: 8px 10px; text-align: right; color: #666; font-size: 14px;'>Subtotal Productos:</td>
+                            <td style='padding: 8px 10px; text-align: right; color: #333; font-size: 14px;'>$" . number_format($productsSubtotal, 2) . "</td>
+                        </tr>
+                        " . ($totalShipping > 0 ? "
+                        <tr>
+                            <td colspan='3' style='padding: 5px 10px; text-align: right; color: #666; font-size: 14px;'>Envío Total:</td>
+                            <td style='padding: 5px 10px; text-align: right; color: #333; font-size: 14px;'>$" . number_format($totalShipping, 2) . "</td>
+                        </tr>" : "") . "
+                        <tr>
+                            <td colspan='3' style='padding: 15px 10px; text-align: right; font-weight: bold; font-size: 16px; border-top: 1px solid #ddd;'>Total a Pagar:</td>
+                            <td style='padding: 15px 10px; text-align: right; font-weight: bold; color: #e83e8c; font-size: 18px; border-top: 1px solid #ddd;'>\${$totalHtml}</td>
                         </tr>
                     </tfoot>
                 </table>

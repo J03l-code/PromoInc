@@ -1153,7 +1153,7 @@ header("Expires: 0");
       CartManager.init(renderCart);
 
       // Override quickAddToCart for the home page — guaranteed to work
-      window.quickAddToCart = function(event, productId, name, sku, price, imageWebp, minQty) {
+      window.quickAddToCart = function(event, productId, name, sku, price, imageWebp, minQty, shippingCost) {
         if (event) {
           event.preventDefault();
           event.stopPropagation();
@@ -1178,7 +1178,8 @@ header("Expires: 0");
           unit_price: parseFloat(price),
           image_webp: imageWebp,
           quantity: parseInt(minQty) || 10,
-          min_quantity: parseInt(minQty) || 10
+          min_quantity: parseInt(minQty) || 10,
+          shipping_cost: parseFloat(shippingCost) || 0
         };
 
         // Add to cart and open panel
