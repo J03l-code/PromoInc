@@ -24,33 +24,21 @@ try {
     $adminEmail = 'ventas@promoinc.ec';
 }
 
-// 4. Try sending a simple mail
+// 4. Try sending a simple mail via new sendSMTP helper
 $to = $adminEmail;
-$subject = "PromoInc Diagnostic Test Mail";
-$message = "This is a simple diagnostic mail sent from " . ($_SERVER['HTTP_HOST'] ?? 'unknown host') . " at " . date('Y-m-d H:i:s');
+$subject = "PromoInc Diagnostic SMTP Test Mail";
+$message = "This is a simple diagnostic mail sent via SECURE SMTP from " . ($_SERVER['HTTP_HOST'] ?? 'unknown host') . " at " . date('Y-m-d H:i:s');
 
-$fromEmail = 'promoink@jiyanedesign.com';
-
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$headers .= "From: PromoInc Diagnostico <" . $fromEmail . ">\r\n";
-
-echo "<br><b>Sending test mail...</b><br>";
+echo "<br><b>Sending test mail via secure SMTP...</b><br>";
 echo "To: $to<br>";
-echo "From: $fromEmail<br>";
+echo "Sender SMTP account: promoink@jiyanedesign.com<br>";
 
-error_clear_last();
-$sent = @mail($to, $subject, $message, $headers, "-f" . $fromEmail);
-$err = error_get_last();
+$sent = sendSMTP($to, $subject, "<p>" . nl2br(htmlspecialchars($message)) . "</p>");
 
 if ($sent) {
-    echo "<span style='color:green; font-weight:bold;'>SUCCESS! mail() function returned TRUE.</span><br>";
-    echo "This means PHP successfully handed off the mail to the host mail server. If you still don't receive it, the host server is blocking it or dropping it downstream (e.g. SMTP/SPF issue).<br>";
+    echo "<span style='color:green; font-weight:bold;'>SUCCESS! SMTP email was successfully sent.</span><br>";
+    echo "This means the secure connection to smtp.hostinger.com on port 465 was established, credentials for promoink@jiyanedesign.com were verified, and the mail was successfully accepted and dispatched.<br>";
 } else {
-    echo "<span style='color:red; font-weight:bold;'>FAILED! mail() function returned FALSE.</span><br>";
-    if ($err) {
-        echo "<b>Error Message:</b> " . htmlspecialchars($err['message']) . "<br>";
-    } else {
-        echo "<b>Error Message:</b> No direct PHP error message. The server's mail agent rejected the handoff.<br>";
-    }
+    echo "<span style='color:red; font-weight:bold;'>FAILED! SMTP sending failed.</span><br>";
+    echo "Check error logs for connection or authentication issues. Ensure the password 'Promoinc2026!' is correct.<br>";
 }

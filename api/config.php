@@ -107,3 +107,73 @@ function sanitize(string $input): string
 {
     return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
 }
+
+/**
+ * Envía un correo HTML profesional vía SMTP seguro (Hostinger)
+ * Sin dependencias externas
+ */
+function sendSMTP(string $to, string $subject, string $htmlContent, string $replyTo = ''): bool
+{
+    $smtpHost = 'smtp.hostinger.com';
+    $smtpPort = 465;
+    $smtpUser = 'promoink@jiyanedesign.com';
+    $smtpPass = 'Promoinc2026!';
+
+    // Cabeceras MIME para HTML en UTF-8
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: PromoInc <" . $smtpUser . ">\r\n";
+    if (!empty($replyTo)) {
+        $headers .= "Reply-To: <" . $replyTo . ">\r\n";
+    }
+    $headers .= "To: <" . $to . ">\r\n";
+    $headers .= "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n";
+    $headers .= "Date: " . date('r') . "\r\n";
+    $headers .= "Message-ID: <" . uniqid('', true) . "@" . ($_SERVER['HTTP_HOST'] ?? 'promoinc.ec') . ">\r\n";
+
+    $body = $headers . "\r\n" . $htmlContent;
+
+    // Conectar vía SSL
+    $socket = @fsockopen("ssl://" . $smtpHost, $smtpPort, $errno, $errstr, 10);
+    if (!$socket) {
+        error_log("SMTP Connection Error: $errstr ($errno)");
+        return false;
+    }
+
+    $read = function($socket) {
+        $res = "";
+        while ($str = fgets($socket, 515)) {
+            $res .= $str;
+            if (substr($str, 3, 1) === " ") break;
+        }
+        return $res;
+    };
+
+    $send = function($socket, $cmd) use ($read) {
+        fputs($socket, $cmd . "\r\n");
+        return $read($socket);
+    };
+
+    try {
+        $read($socket); // Leer saludo inicial (220)
+        $send($socket, "EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
+        $send($socket, "AUTH LOGIN");
+        $send($socket, base64_encode($smtpUser));
+        $send($socket, base64_encode($smtpPass));
+        
+        $send($socket, "MAIL FROM:<" . $smtpUser . ">");
+        $send($socket, "RCPT TO:<" . $to . ">");
+        $send($socket, "DATA");
+        
+        fputs($socket, $body . "\r\n.\r\n");
+        $read($socket); // Leer respuesta del DATA (250)
+        
+        $send($socket, "QUIT");
+        fclose($socket);
+        return true;
+    } catch (\Throwable $e) {
+        error_log("SMTP Error: " . $e->getMessage());
+        @fclose($socket);
+        return false;
+    }
+}

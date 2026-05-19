@@ -61,21 +61,21 @@ if ($method === 'POST') {
         $adminEmail = $emailRow ? $emailRow['value'] : 'ventas@promoinc.ec';
 
         $subject = "Nuevo Pedido Confirmado: {$orderNumber}";
-        
+
         $itemsHtml = '';
-        foreach($body['items'] as $item) {
+        foreach ($body['items'] as $item) {
             $subtotal = number_format($item['price'] * $item['quantity'], 2);
             $itemsHtml .= "
             <tr>
                 <td style='padding: 10px; border-bottom: 1px solid #ddd;'>" . htmlspecialchars($item['name']) . "</td>
-                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: center;'>" . (int)$item['quantity'] . "</td>
+                <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: center;'>" . (int) $item['quantity'] . "</td>
                 <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . number_format($item['price'], 2) . "</td>
                 <td style='padding: 10px; border-bottom: 1px solid #ddd; text-align: right;'>$" . $subtotal . "</td>
             </tr>";
         }
 
-        $totalHtml = number_format((float)$body['total'], 2);
-        
+        $totalHtml = number_format((float) $body['total'], 2);
+
         $htmlEmail = "
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 8px; overflow: hidden;'>
             <div style='background: #121212; padding: 20px; text-align: center;'>
@@ -123,18 +123,13 @@ if ($method === 'POST') {
         </div>
         ";
 
-        $fromEmail = 'promoink@jiyanedesign.com'; // Cuenta de correo real y autorizada en Hostinger
-
-        $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: PromoInc Web <" . $fromEmail . ">\r\n";
-        if (!empty($body['customer_email'])) {
-            $headers .= "Reply-To: " . filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) . "\r\n";
-        }
-
-        $mailSent = @mail($adminEmail, $subject, $htmlEmail, $headers, "-f" . $fromEmail);
+        // Detectar el dominio dinámicamente para alinearlo con el hosting activo (ej: jiyanedesign.com)
+        $host = $_SERVER['HTTP_HOST'] ?? 'promoinc.ec';
+        $host = preg_replace('/^www\./i', '', $host);
+        $replyTo = !empty($body['customer_email']) ? filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) : '';
+        $mailSent = sendSMTP($adminEmail, $subject, $htmlEmail, $replyTo);
         if (!$mailSent) {
-            error_log("Failed to send order email to {$adminEmail}");
+            error_log("Failed to send SMTP order email to {$adminEmail}");
         }
     } catch (\Throwable $e) {
         // Ignorar errores de envío de correo para no bloquear la creación del pedido
@@ -163,7 +158,8 @@ if ($method === 'GET') {
     }
 
     if ($number) {
-        if (empty($_SESSION['user_id'])) jsonError(401, 'No autenticado');
+        if (empty($_SESSION['user_id']))
+            jsonError(401, 'No autenticado');
         $stmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? AND user_id = ?");
         $stmt->execute([$number, $_SESSION['user_id']]);
         $order = $stmt->fetch();
