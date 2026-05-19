@@ -491,10 +491,8 @@ function renderGallery() {
 const galleryUploadZone = document.getElementById('gallery-upload-zone');
 const galleryImgUpload  = document.getElementById('gallery-img-upload');
 
-galleryUploadZone.addEventListener('click', (e) => {
-  if (e.target !== galleryImgUpload) {
-    galleryImgUpload.click();
-  }
+galleryUploadZone.addEventListener('click', () => {
+  galleryImgUpload.click();
 });
 galleryUploadZone.addEventListener('dragover', e => { e.preventDefault(); galleryUploadZone.style.borderColor = 'var(--cyan)'; });
 galleryUploadZone.addEventListener('dragleave', () => { galleryUploadZone.style.borderColor = ''; });
