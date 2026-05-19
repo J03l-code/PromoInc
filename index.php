@@ -100,6 +100,7 @@ header("Expires: 0");
       background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
       opacity: 0;
       transition: opacity 0.5s;
+      pointer-events: none;
     }
 
     .card:hover::before {
