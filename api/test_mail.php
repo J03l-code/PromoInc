@@ -29,9 +29,7 @@ $to = $adminEmail;
 $subject = "PromoInc Diagnostic Test Mail";
 $message = "This is a simple diagnostic mail sent from " . ($_SERVER['HTTP_HOST'] ?? 'unknown host') . " at " . date('Y-m-d H:i:s');
 
-$host = $_SERVER['HTTP_HOST'] ?? 'promoinc.ec';
-$host = preg_replace('/^www\./i', '', $host);
-$fromEmail = 'noreply@' . $host;
+$fromEmail = 'promoink@jiyanedesign.com';
 
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";

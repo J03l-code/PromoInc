@@ -123,10 +123,7 @@ if ($method === 'POST') {
         </div>
         ";
 
-        // Detectar el dominio dinámicamente para alinearlo con el hosting activo (ej: jiyanedesign.com)
-        $host = $_SERVER['HTTP_HOST'] ?? 'promoinc.ec';
-        $host = preg_replace('/^www\./i', '', $host);
-        $fromEmail = 'noreply@' . $host;
+        $fromEmail = 'promoink@jiyanedesign.com'; // Cuenta de correo real y autorizada en Hostinger
 
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
