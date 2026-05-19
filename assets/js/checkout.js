@@ -306,6 +306,12 @@ const CheckoutModal = (() => {
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+    
+    // Vaciar el carrito automáticamente
+    if (typeof CartManager !== 'undefined' && typeof CartManager.clear === 'function') {
+      CartManager.clear();
+    }
+    
     close();
   }
 
