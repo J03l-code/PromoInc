@@ -933,7 +933,7 @@ header("Expires: 0");
             </div>
             <div>
               <p style="font-size:0.8rem; color:var(--text-subtle);">Atención al Cliente</p>
-              <p style="font-weight:600;">(02) 2471-233</p>
+              <p style="font-weight:600;" id="cta-phone">(02) 2471-233</p>
             </div>
           </div>
           <div class="flex items-center gap-1">
@@ -946,7 +946,7 @@ header("Expires: 0");
             </div>
             <div>
               <p style="font-size:0.8rem; color:var(--text-subtle);">Email Corporativo</p>
-              <p style="font-weight:600;">ventas@promoinc.ec</p>
+              <p style="font-weight:600;" id="cta-email">ventas@promoinc.ec</p>
             </div>
           </div>
         </div>
@@ -1105,7 +1105,7 @@ header("Expires: 0");
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=66.0"></script>
   <script src="assets/js/checkout.js?v=77.0"></script>
-  <script src="assets/js/main.js?v=76.0"></script>
+  <script src="assets/js/main.js?v=78.0"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');

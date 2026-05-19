@@ -409,6 +409,9 @@ async function loadSiteSettings() {
              else if (s.site_phone) waDisplay.textContent = s.site_phone;
            }
         }
+        
+        const ctaPhone = document.getElementById('cta-phone');
+        if (ctaPhone) ctaPhone.textContent = s.site_phone || `+${s.whatsapp}`;
       }
 
       // Site Name
@@ -422,6 +425,9 @@ async function loadSiteSettings() {
       if (s.site_email) {
         const emailEl = document.querySelector('.footer-contact-item svg polyline[points*="22,6"]')?.parentElement?.nextElementSibling;
         if (emailEl) emailEl.textContent = s.site_email;
+        
+        const ctaEmail = document.getElementById('cta-email');
+        if (ctaEmail) ctaEmail.textContent = s.site_email;
       }
 
       // Address

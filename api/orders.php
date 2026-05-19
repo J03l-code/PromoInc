@@ -125,12 +125,15 @@ if ($method === 'POST') {
 
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: PromoInc Web <noreply@promoinc.ec>\r\n";
+        $headers .= "From: PromoInc Web <" . $adminEmail . ">\r\n";
         if (!empty($body['customer_email'])) {
             $headers .= "Reply-To: " . filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) . "\r\n";
         }
 
-        @mail($adminEmail, $subject, $htmlEmail, $headers);
+        $mailSent = @mail($adminEmail, $subject, $htmlEmail, $headers);
+        if (!$mailSent) {
+            error_log("Failed to send order email to {$adminEmail}");
+        }
     } catch (\Throwable $e) {
         // Ignorar errores de envío de correo para no bloquear la creación del pedido
     }
