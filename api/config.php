@@ -7,14 +7,16 @@
 // ── Inicialización de Sesión Global ───────────────────────────
 if (session_status() === PHP_SESSION_NONE) {
     $isSecure = false;
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') $isSecure = true;
-    elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') $isSecure = true;
+    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on')
+        $isSecure = true;
+    elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
+        $isSecure = true;
 
     session_set_cookie_params([
         'lifetime' => 28800,
-        'path'     => '/',
-        'domain'   => '',
-        'secure'   => $isSecure,
+        'path' => '/',
+        'domain' => '',
+        'secure' => $isSecure,
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -30,8 +32,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'u434851126_promoincec');
-define('DB_USER', 'u434851126_promoinc_u');
+define('DB_NAME', 'u434851126_promoink');
+define('DB_USER', 'u434851126_promoink_usr');
 define('DB_PASS', 'Promoinc2026!');
 define('DB_CHARSET', 'utf8mb4');
 
@@ -77,9 +79,9 @@ function getDB(): PDO
         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
+                PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
@@ -116,8 +118,8 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
 {
     $smtpHost = 'smtp.hostinger.com';
     $smtpPort = 465;
-    $smtpUser = 'promoink@jiyanedesign.com';
-    $smtpPass = 'Promoink2026!'; // Actualizada con la contraseña correcta (Promoink2026!)
+    $smtpUser = 'info@promocionalespromoink.com';
+    $smtpPass = '26072023Dyv!'; // Actualizada con la contraseña correcta (Promoink2026!)
 
     // Cabeceras MIME para HTML en UTF-8
     $headers = "MIME-Version: 1.0\r\n";
@@ -142,19 +144,20 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
         return false;
     }
 
-    $read = function($socket) {
+    $read = function ($socket) {
         $res = "";
         while ($str = fgets($socket, 515)) {
             $res .= $str;
-            if (substr($str, 3, 1) === " ") break;
+            if (substr($str, 3, 1) === " ")
+                break;
         }
         return $res;
     };
 
-    $send = function($socket, $cmd, $expectedCode) use ($read) {
+    $send = function ($socket, $cmd, $expectedCode) use ($read) {
         fputs($socket, $cmd . "\r\n");
         $response = $read($socket);
-        $code = (int)substr($response, 0, 3);
+        $code = (int) substr($response, 0, 3);
         if ($code !== $expectedCode) {
             throw new \Exception("SMTP Command failed: '$cmd' -> Expected $expectedCode, got: " . trim($response));
         }
@@ -163,7 +166,7 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
 
     try {
         $greet = $read($socket); // 220
-        if ((int)substr($greet, 0, 3) !== 220) {
+        if ((int) substr($greet, 0, 3) !== 220) {
             throw new \Exception("Invalid greeting: " . trim($greet));
         }
 
@@ -171,17 +174,17 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
         $send($socket, "AUTH LOGIN", 334);
         $send($socket, base64_encode($smtpUser), 334);
         $send($socket, base64_encode($smtpPass), 235);
-        
+
         $send($socket, "MAIL FROM:<" . $smtpUser . ">", 250);
         $send($socket, "RCPT TO:<" . $to . ">", 250);
         $send($socket, "DATA", 354);
-        
+
         fputs($socket, $body . "\r\n.\r\n");
         $dataResponse = $read($socket); // 250
-        if ((int)substr($dataResponse, 0, 3) !== 250) {
+        if ((int) substr($dataResponse, 0, 3) !== 250) {
             throw new \Exception("Data transfer failed: " . trim($dataResponse));
         }
-        
+
         $send($socket, "QUIT", 221);
         fclose($socket);
         return true;
