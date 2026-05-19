@@ -131,7 +131,7 @@ if ($method === 'POST') {
             $headers .= "Reply-To: " . filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) . "\r\n";
         }
 
-        $mailSent = @mail($adminEmail, $subject, $htmlEmail, $headers);
+        $mailSent = @mail($adminEmail, $subject, $htmlEmail, $headers, "-f" . $fromEmail);
         if (!$mailSent) {
             error_log("Failed to send order email to {$adminEmail}");
         }
