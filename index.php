@@ -1104,7 +1104,7 @@ header("Expires: 0");
 
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=66.0"></script>
-  <script src="assets/js/checkout.js?v=66.0"></script>
+  <script src="assets/js/checkout.js?v=77.0"></script>
   <script src="assets/js/main.js?v=76.0"></script>
   <script>
     function openCart() {
