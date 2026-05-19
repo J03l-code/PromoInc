@@ -123,9 +123,10 @@ if ($method === 'POST') {
         </div>
         ";
 
+        $fromEmail = 'ventas@promoinc.ec'; // Debe ser un correo del mismo dominio hospedado para no ser bloqueado por SPF/Hostinger
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: PromoInc Web <" . $adminEmail . ">\r\n";
+        $headers .= "From: PromoInc Web <" . $fromEmail . ">\r\n";
         if (!empty($body['customer_email'])) {
             $headers .= "Reply-To: " . filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) . "\r\n";
         }
