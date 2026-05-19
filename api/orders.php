@@ -123,7 +123,11 @@ if ($method === 'POST') {
         </div>
         ";
 
-        $fromEmail = 'ventas@promoinc.ec'; // Debe ser un correo del mismo dominio hospedado para no ser bloqueado por SPF/Hostinger
+        // Detectar el dominio dinámicamente para alinearlo con el hosting activo (ej: jiyanedesign.com)
+        $host = $_SERVER['HTTP_HOST'] ?? 'promoinc.ec';
+        $host = preg_replace('/^www\./i', '', $host);
+        $fromEmail = 'noreply@' . $host;
+
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
         $headers .= "From: PromoInc Web <" . $fromEmail . ">\r\n";
