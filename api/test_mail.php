@@ -40,5 +40,8 @@ if ($sent) {
     echo "This means the secure connection to smtp.hostinger.com on port 465 was established, credentials for promoink@jiyanedesign.com were verified, and the mail was successfully accepted and dispatched.<br>";
 } else {
     echo "<span style='color:red; font-weight:bold;'>FAILED! SMTP sending failed.</span><br>";
-    echo "Check error logs for connection or authentication issues. Ensure the password 'Promoinc2026!' is correct.<br>";
+    if (isset($GLOBALS['SMTP_LAST_ERROR'])) {
+        echo "<b>SMTP Error Detail:</b> <span style='color:orange'>" . htmlspecialchars($GLOBALS['SMTP_LAST_ERROR']) . "</span><br>";
+    }
+    echo "Check connection or authentication settings.<br>";
 }

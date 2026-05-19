@@ -117,7 +117,7 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
     $smtpHost = 'smtp.hostinger.com';
     $smtpPort = 465;
     $smtpUser = 'promoink@jiyanedesign.com';
-    $smtpPass = 'Promoinc2026!';
+    $smtpPass = 'Promoink2026!'; // Actualizada con la contraseña correcta (Promoink2026!)
 
     // Cabeceras MIME para HTML en UTF-8
     $headers = "MIME-Version: 1.0\r\n";
@@ -136,7 +136,9 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
     // Conectar vía SSL
     $socket = @fsockopen("ssl://" . $smtpHost, $smtpPort, $errno, $errstr, 10);
     if (!$socket) {
-        error_log("SMTP Connection Error: $errstr ($errno)");
+        $err = "SMTP Connection Error: $errstr ($errno)";
+        error_log($err);
+        $GLOBALS['SMTP_LAST_ERROR'] = $err;
         return false;
     }
 
@@ -149,30 +151,43 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
         return $res;
     };
 
-    $send = function($socket, $cmd) use ($read) {
+    $send = function($socket, $cmd, $expectedCode) use ($read) {
         fputs($socket, $cmd . "\r\n");
-        return $read($socket);
+        $response = $read($socket);
+        $code = (int)substr($response, 0, 3);
+        if ($code !== $expectedCode) {
+            throw new \Exception("SMTP Command failed: '$cmd' -> Expected $expectedCode, got: " . trim($response));
+        }
+        return $response;
     };
 
     try {
-        $read($socket); // Leer saludo inicial (220)
-        $send($socket, "EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
-        $send($socket, "AUTH LOGIN");
-        $send($socket, base64_encode($smtpUser));
-        $send($socket, base64_encode($smtpPass));
+        $greet = $read($socket); // 220
+        if ((int)substr($greet, 0, 3) !== 220) {
+            throw new \Exception("Invalid greeting: " . trim($greet));
+        }
+
+        $send($socket, "EHLO " . ($_SERVER['HTTP_HOST'] ?? 'localhost'), 250);
+        $send($socket, "AUTH LOGIN", 334);
+        $send($socket, base64_encode($smtpUser), 334);
+        $send($socket, base64_encode($smtpPass), 235);
         
-        $send($socket, "MAIL FROM:<" . $smtpUser . ">");
-        $send($socket, "RCPT TO:<" . $to . ">");
-        $send($socket, "DATA");
+        $send($socket, "MAIL FROM:<" . $smtpUser . ">", 250);
+        $send($socket, "RCPT TO:<" . $to . ">", 250);
+        $send($socket, "DATA", 354);
         
         fputs($socket, $body . "\r\n.\r\n");
-        $read($socket); // Leer respuesta del DATA (250)
+        $dataResponse = $read($socket); // 250
+        if ((int)substr($dataResponse, 0, 3) !== 250) {
+            throw new \Exception("Data transfer failed: " . trim($dataResponse));
+        }
         
-        $send($socket, "QUIT");
+        $send($socket, "QUIT", 221);
         fclose($socket);
         return true;
     } catch (\Throwable $e) {
         error_log("SMTP Error: " . $e->getMessage());
+        $GLOBALS['SMTP_LAST_ERROR'] = $e->getMessage();
         @fclose($socket);
         return false;
     }
