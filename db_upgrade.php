@@ -55,6 +55,19 @@ try {
         }
     }
 
+    // Agregar columna 'images_gallery' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN images_gallery TEXT NULL DEFAULT NULL AFTER image_webp");
+        echo "Columna 'images_gallery' añadida a products.<br>";
+    } catch (PDOException $e) {
+        // Ignorar si ya existe
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'images_gallery' ya existe.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     // Crear tabla orders
     $db->exec("CREATE TABLE IF NOT EXISTS orders (
         id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

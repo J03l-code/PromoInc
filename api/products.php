@@ -105,7 +105,7 @@ function getProducts(PDO $db): void {
     $whereSQL = implode(' AND ', $where);
 
     $stmt = $db->prepare("
-        SELECT p.id, p.sku, p.name, p.slug, p.price_from, p.image_webp,
+        SELECT p.id, p.sku, p.name, p.slug, p.price_from, p.image_webp, p.images_gallery,
                p.min_quantity, p.show_min_quantity, p.customizable, p.featured, p.on_sale, p.sale_price, p.sale_discount,
                COALESCE(p.shipping_cost, 0) AS shipping_cost,
                c.name AS category_name,

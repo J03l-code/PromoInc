@@ -774,7 +774,7 @@ function renderProducts(grid, products, append = false) {
       </div>`;
       
     return `
-    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;">
+    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;" data-gallery="${p.images_gallery || ''}" data-main-img="${imgUrl || ''}">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
         ${parseInt(p.on_sale) ? `<div class="discount-floating-badge">-${p.sale_discount}%</div>` : ''}
@@ -1014,3 +1014,64 @@ function closePortfolioLightbox() {
     }, 300);
   }
 }
+
+// ── Hover Image Rotation for Catalog Products with multiple gallery images ──
+let hoverInterval = null;
+let hoverImages = [];
+let hoverIndex = 0;
+let currentImgElement = null;
+let originalSrc = '';
+
+document.addEventListener('mouseover', (e) => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  
+  const galleryStr = card.getAttribute('data-gallery');
+  if (!galleryStr) return;
+  
+  const img = card.querySelector('.card-img');
+  if (!img || currentImgElement === img) return;
+  
+  // Clear any existing rotation
+  if (hoverInterval) {
+    clearInterval(hoverInterval);
+    if (currentImgElement && originalSrc) {
+      currentImgElement.src = originalSrc;
+    }
+  }
+  
+  const mainImg = card.getAttribute('data-main-img') || img.src;
+  const galleryImgs = galleryStr.split(',').filter(Boolean).map(filename => `assets/images/${filename}`);
+  
+  if (galleryImgs.length === 0) return;
+  
+  // Build queue of images to rotate: original image + gallery images
+  hoverImages = [mainImg, ...galleryImgs];
+  hoverIndex = 0;
+  currentImgElement = img;
+  originalSrc = mainImg;
+  
+  hoverInterval = setInterval(() => {
+    hoverIndex = (hoverIndex + 1) % hoverImages.length;
+    img.src = hoverImages[hoverIndex];
+  }, 1000); // Fluid rotation every 1.0s
+});
+
+document.addEventListener('mouseout', (e) => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  
+  // Verify if we are actually leaving the card container
+  const related = e.relatedTarget;
+  if (related && card.contains(related)) return;
+  
+  if (hoverInterval) {
+    clearInterval(hoverInterval);
+    hoverInterval = null;
+  }
+  if (currentImgElement && originalSrc) {
+    currentImgElement.src = originalSrc;
+  }
+  currentImgElement = null;
+  originalSrc = '';
+});

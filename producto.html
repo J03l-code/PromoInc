@@ -852,12 +852,33 @@
       openCart();
     }
 
+    window.setMainImage = function(url, element) {
+      const mainImg = document.querySelector('.main-image-container img');
+      if (mainImg) {
+        mainImg.src = url;
+        mainImg.style.display = 'block';
+        const placeholder = document.querySelector('.main-image-container .img-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+      }
+      document.querySelectorAll('.gallery-thumbs .thumb').forEach(t => t.classList.remove('active'));
+      if (element) {
+        element.classList.add('active');
+      }
+    };
+
     function renderProductDetail() {
       const p = currentProduct;
       document.title = `${p.name} | PromoInc`;
 
       const svgPlaceholder = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
       const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
+
+      const gallery = p.images_gallery ? p.images_gallery.split(',').filter(Boolean) : [];
+      let thumbsHtml = `<div class="thumb active" onclick="window.setMainImage('${imgUrl}', this)">${imgUrl ? `<img src="${imgUrl}">` : svgPlaceholder}</div>`;
+      gallery.forEach(filename => {
+        const thumbUrl = `assets/images/${filename}`;
+        thumbsHtml += `<div class="thumb" onclick="window.setMainImage('${thumbUrl}', this)"><img src="${thumbUrl}"></div>`;
+      });
 
       // Ordenar precios por volumen
       const prices = p.volume_prices || [];
@@ -887,7 +908,7 @@
               </div>
             </div>
             <div class="gallery-thumbs" style="margin-bottom: 20px;">
-               <div class="thumb active">${imgUrl ? `<img src="${imgUrl}">` : svgPlaceholder}</div>
+               \${thumbsHtml}
             </div>
             
             <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:15px; text-align:center;">

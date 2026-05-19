@@ -601,6 +601,24 @@
               </div>
               <input type="hidden" name="image_webp" id="product-image">
             </div>
+            
+            <div class="form-group col-span-2" style="margin-top: 10px;">
+              <label>Galería de imágenes secundarias (opcional)</label>
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 10px;">
+                <div class="upload-zone" id="gallery-upload-zone" style="height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 2px dashed var(--border2); border-radius: var(--radius); text-align: center; padding: 10px; min-height: unset; overflow: hidden;">
+                  <input type="file" id="gallery-img-upload" accept="image/jpeg,image/png,image/webp" class="hidden" multiple>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24" style="color: var(--cyan); margin-bottom: 5px;">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span style="font-size: 0.72rem; color: var(--muted); font-weight: 500;">Subir imagen</span>
+                </div>
+                <div id="gallery-container" style="display: contents;">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+              <input type="hidden" name="images_gallery" id="product-gallery-input">
+            </div>
             <div class="form-group col-span-2">
               <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.9rem; color: var(--text-primary)">Precios por Volumen
                 (Descuentos)</h4>

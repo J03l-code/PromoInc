@@ -364,6 +364,9 @@ document.getElementById('btn-new-product').addEventListener('click', () => {
   document.getElementById('product-shipping').value = '0.00';
   populateCategorySelects(true);
   document.getElementById('price-tiers-container').innerHTML = ''; // Limpiar tiers
+  galleryImages = [];
+  document.getElementById('product-gallery-input').value = '';
+  renderGallery();
   openModal('modal-product');
 });
 
@@ -462,6 +465,77 @@ async function handleImageUpload(file) {
   }
 }
 
+// --- Galería de Imágenes Secundarias ---
+let galleryImages = [];
+
+function renderGallery() {
+  const container = document.getElementById('gallery-container');
+  container.innerHTML = '';
+  galleryImages.forEach((img, idx) => {
+    const item = document.createElement('div');
+    item.style.cssText = 'position:relative; width:100px; height:100px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border2);';
+    item.innerHTML = `
+      <img src="../assets/images/${img}" style="width:100%; height:100%; object-fit:cover;">
+      <button type="button" class="remove-gallery-img" style="position:absolute; top:4px; right:4px; background:rgba(220,53,69,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; line-height:1;">✕</button>
+    `;
+    item.querySelector('.remove-gallery-img').addEventListener('click', (e) => {
+      e.stopPropagation();
+      galleryImages.splice(idx, 1);
+      document.getElementById('product-gallery-input').value = galleryImages.join(',');
+      renderGallery();
+    });
+    container.appendChild(item);
+  });
+}
+
+const galleryUploadZone = document.getElementById('gallery-upload-zone');
+const galleryImgUpload  = document.getElementById('gallery-img-upload');
+
+galleryUploadZone.addEventListener('click', (e) => {
+  if (e.target !== galleryImgUpload) {
+    galleryImgUpload.click();
+  }
+});
+galleryUploadZone.addEventListener('dragover', e => { e.preventDefault(); galleryUploadZone.style.borderColor = 'var(--cyan)'; });
+galleryUploadZone.addEventListener('dragleave', () => { galleryUploadZone.style.borderColor = ''; });
+galleryUploadZone.addEventListener('drop', async e => {
+  e.preventDefault();
+  galleryUploadZone.style.borderColor = '';
+  if (e.dataTransfer.files.length) {
+    for (let file of e.dataTransfer.files) {
+      await handleGalleryImageUpload(file);
+    }
+  }
+});
+galleryImgUpload.addEventListener('change', async e => {
+  if (e.target.files.length) {
+    for (let file of e.target.files) {
+      await handleGalleryImageUpload(file);
+    }
+  }
+  galleryImgUpload.value = '';
+});
+
+async function handleGalleryImageUpload(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    toast('Subiendo imagen a la galería...', 'info');
+    const res = await fetch(`${API}/upload.php`, { method: 'POST', body: formData, credentials: 'same-origin' });
+    const json = await res.json();
+    if (json.success) {
+      galleryImages.push(json.data.filename);
+      document.getElementById('product-gallery-input').value = galleryImages.join(',');
+      renderGallery();
+      toast('Imagen agregada a la galería', 'success');
+    } else {
+      toast(json.error || 'Error al subir imagen de galería', 'error');
+    }
+  } catch {
+    toast('Error de conexión al subir imagen de galería', 'error');
+  }
+}
+
 // Guardar producto
 document.getElementById('btn-save-product').addEventListener('click', async () => {
   const form = document.getElementById('product-form');
@@ -482,6 +556,7 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     price_from:    document.getElementById('product-price').value || null,
     shipping_cost: parseFloat(document.getElementById('product-shipping').value) || 0,
     image_webp:    document.getElementById('product-image').value || '',
+    images_gallery:document.getElementById('product-gallery-input').value || null,
     min_quantity:  parseInt(document.getElementById('product-minqty').value) || 10,
     show_min_quantity: document.getElementById('product-showmin').checked ? 1 : 0,
     stock_quantity:parseInt(document.getElementById('product-stock').value)  || 0,
@@ -551,6 +626,11 @@ async function editProduct(id) {
 
   document.getElementById('product-image').value    = p.image_webp || '';
   
+  // Galería de imágenes
+  galleryImages = p.images_gallery ? p.images_gallery.split(',').filter(Boolean) : [];
+  document.getElementById('product-gallery-input').value = galleryImages.join(',');
+  renderGallery();
+
   // Renderizar tiers de precio
   const tiersContainer = document.getElementById('price-tiers-container');
   tiersContainer.innerHTML = '';
