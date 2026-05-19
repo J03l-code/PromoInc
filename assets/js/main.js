@@ -785,7 +785,7 @@ function renderProducts(grid, products, append = false) {
           ${parseInt(p.on_sale) && p.sale_price 
             ? `<span class="price-original">$${parseFloat(p.price_from || 0).toFixed(2)}</span>
                <strong style="font-size: 1.35rem; color: var(--accent-pink); font-family: var(--font-display);">$${parseFloat(p.sale_price).toFixed(2)}</strong>`
-            : `<strong style="font-size: 1.35rem; color: var(--accent-gold); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>`
+            : `<strong style="font-size: 1.35rem; color: var(--accent-pink); font-family: var(--font-display);">$${parseFloat(p.price_from || 0).toFixed(2)}</strong>`
           }
           ${parseInt(p.show_min_quantity) === 1 ? `<p class="card-min" style="font-size: 0.7rem; margin-top: 2px;">Mín. ${p.min_quantity || 10} unidades</p>` : `<p class="card-min" style="font-size: 0.7rem; margin-top: 2px; visibility: hidden;">Mín. ${p.min_quantity || 10} unidades</p>`}
         </div>

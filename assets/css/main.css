@@ -261,12 +261,12 @@ h4, h5, .ui-heading {
 }
 
 .badge-stock {
-  color: var(--accent-cyan);
+  color: #ffffff;
 }
 
 .badge-stock::before {
-  background: var(--accent-cyan);
-  box-shadow: 0 0 6px var(--accent-cyan);
+  background: #ffffff;
+  box-shadow: 0 0 6px #ffffff;
 }
 
 .badge-featured {
