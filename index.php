@@ -585,28 +585,7 @@ header("Expires: 0");
           </button>
         </div>
 
-        <!-- Suggestions chips for mobile -->
-        <div class="navbar-search-mobile-chips mobile-only">
-          <span class="chips-label">Sugeridos:</span>
-          <div class="chips-scroll">
-            <a href="catalogo.html?search=gorra" class="search-mobile-chip" data-product="gorra">
-              <img src="assets/images/gorra.png" alt="Gorra">
-              <span>Gorra</span>
-            </a>
-            <a href="catalogo.html?search=libreta" class="search-mobile-chip" data-product="libreta">
-              <img src="assets/images/libreta.png" alt="Libreta">
-              <span>Libreta</span>
-            </a>
-            <a href="catalogo.html?search=termo" class="search-mobile-chip" data-product="termo">
-              <img src="assets/images/termo.png" alt="Termo">
-              <span>Termo</span>
-            </a>
-            <a href="catalogo.html?search=etiqueta" class="search-mobile-chip" data-product="etiqueta">
-              <img src="assets/images/etiqueta.png" alt="Etiqueta">
-              <span>Etiqueta</span>
-            </a>
-          </div>
-        </div>
+
 
         <div class="navbar-actions-top">
           <a href="javascript:void(0)" onclick="openCart()" class="nav-action-btn" id="cart-btn-nav">
