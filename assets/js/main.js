@@ -474,6 +474,7 @@ async function loadDynamicCategories() {
           ` : ''}
         </div>
       `).join('') + 
+      '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
       '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
       '<a href="#" class="nav-link-ofertas">Ofertas</a>';
 
@@ -501,7 +502,11 @@ async function loadDynamicCategories() {
         });
         
         mobileNav.innerHTML = mobileHtml + `
-          <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
+          <a href="catalogo.html?category=all_grouped" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
+            📦 Todos los productos
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="color:var(--accent); font-weight: 600;">
             📂 Portafolio de Trabajos
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
@@ -514,6 +519,7 @@ async function loadDynamicCategories() {
         footerNav.innerHTML = json.data.map(cat => `
           <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
         `).join('') + 
+        `<li><a href="catalogo.html?category=all_grouped" class="footer-link" style="color:var(--accent); font-weight:600;">Todos los productos</a></li>` +
         `<li><a href="catalogo.html?category=portfolio" class="footer-link" style="color:var(--accent); font-weight:600;">Portafolio de Trabajos</a></li>` +
         `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
       }
@@ -657,8 +663,10 @@ function reloadCatalog() {
 }
 
 async function fetchCatalog(append = false) {
+  const grid = document.getElementById('catalog-grid');
+  if (grid) grid.style.display = ''; // Restore grid style
+
   if (currentFilters.category === 'portfolio') {
-    const grid = document.getElementById('catalog-grid');
     const countEl = document.getElementById('results-count');
     const loadMore = document.getElementById('btn-load-more');
     if (loadMore) loadMore.classList.add('hidden');
@@ -666,11 +674,62 @@ async function fetchCatalog(append = false) {
     try {
       const res = await fetch('api/portfolio.php');
       const json = await res.json();
-      if (json.success) {
+      if (json.success && grid) {
         if (countEl) countEl.textContent = `Mostrando ${json.data.length} trabajos realizados`;
         renderPortfolioItems(grid, json.data, append);
       }
     } catch (err) { console.error('Error fetching portfolio:', err); }
+    return;
+  }
+
+  // Check if we should render grouped catalog view
+  const isGroupedView = currentFilters.category === 'all_grouped' || 
+    (!currentFilters.category && !currentFilters.search && !currentFilters.stock && !currentFilters.featured && !currentFilters.on_sale);
+
+  if (isGroupedView) {
+    const countEl = document.getElementById('results-count');
+    const loadMore = document.getElementById('btn-load-more');
+    if (loadMore) loadMore.classList.add('hidden');
+    
+    if (grid && !append) {
+      grid.innerHTML = '<div class="card skeleton" style="height:380px"></div><div class="card skeleton" style="height:380px"></div><div class="card skeleton" style="height:380px"></div>';
+    }
+    
+    try {
+      const res = await fetch('api/catalog_pdf.php');
+      const json = await res.json();
+      if (json.success && grid) {
+        if (countEl) countEl.textContent = `Mostrando ${json.data.total} productos en total`;
+        
+        grid.style.display = 'block'; // Turn off grid wrapper so sections stack vertically
+        grid.innerHTML = '';
+        
+        json.data.categories.forEach(cat => {
+          if (!cat.products || cat.products.length === 0) return;
+          
+          const sectionEl = document.createElement('div');
+          sectionEl.className = 'category-group-section reveal';
+          sectionEl.style.marginBottom = '50px';
+          
+          sectionEl.innerHTML = `
+            <div class="flex items-center gap-3" style="margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-top: 10px;">
+              <span style="font-size: 1.5rem;">📁</span>
+              <h2 class="display-3" style="margin: 0; font-size: 1.5rem; letter-spacing: -0.01em; font-weight: 800; color: #fff;">${cat.name}</h2>
+              <span class="badge badge-stock" style="margin-left: 10px; font-size: 0.72rem; padding: 0.2rem 0.5rem; background: var(--border); color: #fff;">${cat.products.length} productos</span>
+            </div>
+            <div class="products-grid category-products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+            </div>
+          `;
+          
+          grid.appendChild(sectionEl);
+          
+          const catGrid = sectionEl.querySelector('.category-products-grid');
+          renderProducts(catGrid, cat.products, false);
+        });
+      }
+    } catch (err) {
+      console.error('Error fetching grouped catalog:', err);
+    }
     return;
   }
 
