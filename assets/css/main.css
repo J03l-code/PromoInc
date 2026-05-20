@@ -1,6 +1,10 @@
 /* ============================================================
    PromoInc — Sistema de Diseño Principal
    ============================================================ */
+/* ── Gilroy Fonts (Inlined with swap for 100/100 Font Display score) ── */
+@font-face { font-family: 'Gilroy-Bold'; font-style: normal; font-weight: 700; font-display: swap; src: local('Gilroy-Bold'), url('https://fonts.cdnfonts.com/s/16219/Gilroy-Bold.woff') format('woff'); }
+@font-face { font-family: 'Gilroy-Medium'; font-style: normal; font-weight: 500; font-display: swap; src: local('Gilroy-Medium'), url('https://fonts.cdnfonts.com/s/16219/Gilroy-Medium.woff') format('woff'); }
+
 
 /* ── Gilroy y Google Fonts se cargan ahora en el HTML para evitar bloqueo de renderizado ── */
 
