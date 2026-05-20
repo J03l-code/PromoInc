@@ -437,18 +437,12 @@ async function loadSiteSettings() {
         if (addrEl) addrEl.textContent = s.site_address;
       }
 
-      // Social Media
-      if (s.instagram) {
-        const handle = s.instagram === 'promoinc' ? 'promoink.uio' : s.instagram;
-        const insta = document.querySelector('a.social-btn svg rect')?.parentElement || document.querySelector('a[href*="instagram"]');
-        if (insta) {
-          insta.href = handle.startsWith('http') ? handle : `https://www.instagram.com/${handle}/`;
-        }
-      }
-      if (s.facebook) {
-        const fb = document.querySelector('a.social-btn svg path[d*="M18 2h-3"]')?.parentElement;
-        if (fb) fb.href = `https://facebook.com/${s.facebook}`;
-      }
+      // Social Media: Redirect all buttons to the Instagram profile
+      const socialBtns = document.querySelectorAll('a.social-btn');
+      socialBtns.forEach(btn => {
+        btn.href = 'https://www.instagram.com/promoink.uio/';
+        btn.target = '_blank';
+      });
     }
   } catch (err) { console.error('Error loading settings:', err); }
 }
