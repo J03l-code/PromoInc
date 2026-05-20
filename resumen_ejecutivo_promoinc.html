@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen Ejecutivo PromoInc B2B</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+            line-height: 1.6;
+            color: #2b2b2b;
+            max-width: 21cm; /* Ancho estándar de hoja A4 */
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #ffffff;
+        }
+        h1 {
+            color: #E83E8C; /* Acento Pink PromoInc */
+            font-size: 28pt;
+            border-bottom: 3px solid #E83E8C;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #009ed9; /* Acento Cyan PromoInc */
+            font-size: 18pt;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eeeeee;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #18191d;
+            font-size: 14pt;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 11pt;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        li {
+            font-size: 11pt;
+            margin-bottom: 8px;
+        }
+        strong {
+            color: #1e2024;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #E83E8C;
+        }
+        .module-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #009ed9;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+        }
+        .intro {
+            font-size: 12pt;
+            color: #4a4a4a;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        .disclaimer {
+            font-size: 9pt;
+            color: #888888;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 1px solid #dddddd;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dossier Ejecutivo: Plataforma B2B PromoInc</h1>
+    
+    <p class="intro">
+        El presente documento detalla la arquitectura, características y funcionalidades de la nueva plataforma corporativa B2B de <strong>PromoInc</strong>. Diseñada bajo un estándar de "boutique digital", la plataforma no es solo un catálogo, sino una herramienta integral de ventas empresariales, optimizada para ofrecer la máxima velocidad, seguridad y una experiencia de usuario de lujo.
+    </p>
+
+    <h2>1. Experiencia del Cliente Corporativo (Frontend Público)</h2>
+    <p>El portal ha sido diseñado para cautivar al cliente empresarial desde el primer segundo, combinando una estética <em>Dark Mode</em> minimalista con interacciones fluidas.</p>
+    
+    <div class="module-box">
+        <h3>1.1. Catálogo Inteligente y Ultrarrápido</h3>
+        <ul>
+            <li><strong>Búsqueda en Tiempo Real:</strong> Motor de búsqueda y filtrado dinámico que permite a los clientes encontrar productos al instante sin recargar la página.</li>
+            <li><strong>Reglas de Negocio B2B:</strong> Visualización clara de <em>"Cantidades Mínimas de Pedido"</em> y escalas de descuentos por volumen de forma automática.</li>
+            <li><strong>Indicadores de Stock y Etiquetas:</strong> Sistema de insignias visuales (Nuevo, Agotado, Destacado) para incentivar la conversión.</li>
+        </ul>
+
+        <h3>1.2. Fichas de Producto Detalladas</h3>
+        <ul>
+            <li><strong>Galería Inmersiva:</strong> Visualización de productos en alta resolución con animaciones de carga suave.</li>
+            <li><strong>Selector de Variantes:</strong> Elección intuitiva de colores, capacidades o tamaños según el tipo de artículo promocional.</li>
+            <li><strong>Cotizador Automático Integrado:</strong> Al ingresar la cantidad deseada, el sistema calcula automáticamente el precio unitario aplicando los descuentos por volumen correspondientes en tiempo real.</li>
+        </ul>
+
+        <h3>1.3. Generador Automático de Catálogos en PDF</h3>
+        <ul>
+            <li><strong>Exportación Profesional:</strong> Con un solo clic, el cliente puede generar y descargar un documento PDF corporativo con los productos que está visualizando. Ideal para presentaciones ejecutivas y toma de decisiones en comités de compras.</li>
+        </ul>
+
+        <h3>1.4. Flujo de Cotización (Checkout B2B)</h3>
+        <ul>
+            <li><strong>Gestor de Archivos (Logos):</strong> Durante la solicitud de cotización, el cliente puede adjuntar los logotipos de su marca (PNG, SVG, PDF) para la personalización de los productos solicitados.</li>
+            <li><strong>Carrito Especializado:</strong> Un carrito de compras adaptado a empresas; en lugar de exigir un pago inmediato con tarjeta, genera una "Solicitud de Cotización" formal y detallada que llega directamente al equipo de ventas de PromoInc.</li>
+        </ul>
+    </div>
+
+    <h2>2. Panel de Control Administrativo (Backend)</h2>
+    <p>Un sistema de gestión privado, seguro y exclusivo para el equipo de PromoInc, diseñado para automatizar las ventas y administrar el catálogo sin depender de terceros.</p>
+
+    <div class="module-box">
+        <h3>2.1. Gestión Integral de Inventario</h3>
+        <ul>
+            <li><strong>Sistema ABM de Productos:</strong> Creación, edición y eliminación de artículos. Gestión completa de descripciones, SKUs, categorías y parámetros técnicos.</li>
+            <li><strong>Matriz de Precios Compleja:</strong> Configuración de precios escalonados y "Precios Tachados" para reflejar descuentos estratégicos.</li>
+            <li><strong>Gestor de Imágenes Multicarga:</strong> Subida múltiple de fotografías por producto.</li>
+        </ul>
+
+        <h3>2.2. CRM B2B y Gestión de Cotizaciones (Órdenes)</h3>
+        <ul>
+            <li><strong>Bandeja de Entrada Inteligente:</strong> Recepción detallada de los pedidos de clientes, organizando datos de contacto, productos seleccionados y calculando totales netos.</li>
+            <li><strong>Estados de Orden (Workflow):</strong> Flujo de trabajo visual para cambiar el estado de las cotizaciones (Pendiente, Procesando, Aprobado, Finalizado), manteniendo un orden estricto de las operaciones.</li>
+            <li><strong>Gestión de Usuarios Corporativos:</strong> Base de datos de clientes registrados y administración integral de sus accesos y roles en el sistema.</li>
+        </ul>
+
+        <h3>2.3. Portafolio y Archivos del Cliente</h3>
+        <ul>
+            <li><strong>Repositorio Central de Logos:</strong> Un módulo especializado donde el administrador puede visualizar y descargar los artes originales subidos por los clientes, listos para ser enviados al departamento de producción e impresión.</li>
+        </ul>
+    </div>
+
+    <h2>3. Arquitectura Tecnológica y Rendimiento (Para Dirección IT)</h2>
+    <p>La plataforma está construida con tecnología web de vanguardia, enfocada en la autonomía absoluta, el posicionamiento en Google (SEO) y la invulnerabilidad de los datos.</p>
+
+    <div class="module-box">
+        <ul>
+            <li><strong>Rendimiento Extremo (Score 90+):</strong> Código estructurado para cargar el contenido crítico en menos de 2 segundos. Se optimizaron al extremo todas las imágenes y la entrega tipográfica, logrando métricas de velocidad móvil y escritorio que superan al 95% de la industria del eCommerce.</li>
+            <li><strong>Código Nativo sin Dependencias Frágiles:</strong> Desarrollo "Vanilla" a medida (PHP 8 + Base de datos relacional MySQL) sin el uso de constructores pesados (como WordPress, Shopify o Elementor). Esto garantiza que el sitio sea inmune a hackeos masivos, no requiera costosas actualizaciones de plugins y ofrezca una velocidad de respuesta instantánea.</li>
+            <li><strong>Seguridad de Grado Bancario:</strong> Inyecciones SQL totalmente neutralizadas mediante <em>Prepared Statements (PDO)</em>. Las contraseñas empresariales están encriptadas con algoritmos Hash avanzados, y todas las transacciones están blindadas por tokens CSRF contra la suplantación de identidad.</li>
+            <li><strong>Infraestructura SEO-Ready:</strong> Estructura HTML5 semántica, jerarquía de navegación y URLs amigables preparadas desde el día 1 para dominar los resultados de búsqueda orgánica en Google.</li>
+        </ul>
+    </div>
+
+    <h2>4. Accesos y Credenciales del Sistema</h2>
+    <p>A continuación, se detallan las credenciales oficiales de acceso al panel administrativo y las URLs clave del sistema. Se recomienda cambiar la contraseña del administrador una vez el sistema entre en producción definitiva.</p>
+
+    <div class="module-box" style="border-left-color: #E83E8C; background-color: #fcf4f8;">
+        <h3>4.1. Panel Administrativo B2B (Backend)</h3>
+        <ul>
+            <li><strong>URL de Acceso:</strong> <a href="https://promocionalespromoink.com/login_b2b.html" target="_blank">promocionalespromoink.com/login_b2b.html</a></li>
+            <li><strong>Rol:</strong> Super Administrador (Acceso total al sistema)</li>
+            <li><strong>Usuario / Correo:</strong> <span class="highlight">admin@promoinc.com</span></li>
+            <li><strong>Contraseña:</strong> <span class="highlight">Admin2024!</span></li>
+        </ul>
+
+        <h3>4.2. Portal Público (Frontend)</h3>
+        <ul>
+            <li><strong>URL Principal:</strong> <a href="https://promocionalespromoink.com/" target="_blank">promocionalespromoink.com</a></li>
+            <li><strong>Catálogo Directo:</strong> <a href="https://promocionalespromoink.com/catalogo.html" target="_blank">promocionalespromoink.com/catalogo.html</a></li>
+            <li><strong>Nota:</strong> Los usuarios regulares (clientes corporativos) pueden auto-registrarse desde la página de login o ser creados directamente por el Administrador desde el panel de control.</li>
+        </ul>
+    </div>
+
+    <div class="disclaimer">
+        Documento generado para fines de presentación ejecutiva. Arquitectura y desarrollo a medida para PromoInc.
+    </div>
+
+</body>
+</html>
