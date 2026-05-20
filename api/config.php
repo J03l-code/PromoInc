@@ -83,6 +83,10 @@ function getDB(): PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
+            // Corrección proactiva de typo común en correo de configuración para evitar rebotes de SMTP
+            try {
+                $pdo->exec("UPDATE settings SET `value` = 'info@promocionalespromoink.com' WHERE `key` = 'site_email' AND (LOWER(TRIM(`value`)) = 'info@promocionalesink.com' OR LOWER(TRIM(`value`)) = 'info@promocionalesink.com/')");
+            } catch (\Exception $ex) {}
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
         }

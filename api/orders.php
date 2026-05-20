@@ -58,7 +58,12 @@ if ($method === 'POST') {
     try {
         $stmtSettings = $db->query("SELECT `value` FROM settings WHERE `key` = 'site_email'");
         $emailRow = $stmtSettings->fetch();
-        $adminEmail = $emailRow ? $emailRow['value'] : 'ventas@promoinc.ec';
+        $adminEmail = $emailRow ? trim($emailRow['value']) : 'info@promocionalespromoink.com';
+        
+        // Corrección de typo para evitar rebotes de correo
+        if (strcasecmp($adminEmail, 'info@promocionalesink.com') === 0 || strpos(strtolower($adminEmail), 'promocionalesink.com') !== false) {
+            $adminEmail = 'info@promocionalespromoink.com';
+        }
 
         $subject = "Nuevo Pedido Confirmado: {$orderNumber}";
 
