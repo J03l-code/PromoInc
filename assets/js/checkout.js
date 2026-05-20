@@ -34,7 +34,7 @@ const CheckoutModal = (() => {
 
     document.body.insertAdjacentHTML('beforeend', `
       <div id="checkout-overlay" class="co-overlay" onclick="CheckoutModal.close()"></div>
-      <div id="checkout-modal" class="co-modal" role="dialog" aria-modal="true" aria-labelledby="co-title">
+      <div id="checkout-modal" class="co-modal" role="dialog" aria-modal="true" aria-labelledby="co-title" data-lenis-prevent>
         <div class="co-header">
           <div class="co-header-icon">📦</div>
           <div>
@@ -44,7 +44,7 @@ const CheckoutModal = (() => {
           <button class="co-close" onclick="CheckoutModal.close()" aria-label="Cerrar">&times;</button>
         </div>
 
-        <div class="co-body">
+        <div class="co-body" data-lenis-prevent>
           <!-- Resumen del carrito -->
           <div class="co-cart-summary" id="co-cart-summary"></div>
 
@@ -172,6 +172,7 @@ const CheckoutModal = (() => {
     document.getElementById('checkout-overlay').classList.add('open');
     document.getElementById('checkout-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
+    if (window.lenis) window.lenis.stop();
   }
 
   // ── Cerrar Modal ──────────────────────────────────────────
@@ -181,6 +182,7 @@ const CheckoutModal = (() => {
     if (overlay) overlay.classList.remove('open');
     if (modal) modal.classList.remove('open');
     document.body.style.overflow = '';
+    if (window.lenis) window.lenis.start();
   }
 
   // ── Validar y Enviar ──────────────────────────────────────
