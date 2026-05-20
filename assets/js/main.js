@@ -439,8 +439,11 @@ async function loadSiteSettings() {
 
       // Social Media
       if (s.instagram) {
-        const insta = document.querySelector('a.social-btn svg rect')?.parentElement;
-        if (insta) insta.href = `https://instagram.com/${s.instagram}`;
+        const handle = s.instagram === 'promoinc' ? 'promoink.uio' : s.instagram;
+        const insta = document.querySelector('a.social-btn svg rect')?.parentElement || document.querySelector('a[href*="instagram"]');
+        if (insta) {
+          insta.href = handle.startsWith('http') ? handle : `https://www.instagram.com/${handle}/`;
+        }
       }
       if (s.facebook) {
         const fb = document.querySelector('a.social-btn svg path[d*="M18 2h-3"]')?.parentElement;
