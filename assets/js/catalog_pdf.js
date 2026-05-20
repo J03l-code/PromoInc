@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  const API_BASE = '../api';
+  const API_BASE = 'api';
 
   // Paleta — aspecto catálogo impreso profesional
   const C = {
@@ -29,7 +29,7 @@
     if (!price || parseFloat(price) <= 0) return 'Consultar';
     return '$' + parseFloat(price).toLocaleString('en-US', {
       minimumFractionDigits: 2, maximumFractionDigits: 2
-    });
+    }) + ' USD';
   }
 
   function trunc(text, n) {
@@ -106,7 +106,7 @@
     doc.setFont('helvetica', 'italic');
     doc.setFontSize(7);
     doc.setTextColor(...C.midGray);
-    doc.text('PromoInc — Artículos Promocionales de Alta Calidad  •  Precios sujetos a cambio sin previo aviso', M, pageH - 7.5);
+    doc.text('PromoInk — Artículos Promocionales de Alta Calidad  •  Precios en USD sujetos a cambio sin previo aviso', M, pageH - 7.5);
     // Página derecha
     doc.setFont('helvetica', 'normal');
     doc.text(`${pageNum} / ${totalPages}`, pageW - M, pageH - 7.5, { align: 'right' });
@@ -206,14 +206,14 @@
     doc.line(INFO_X, iy, INFO_X + INFO_W, iy);
     iy += 4;
 
-    // Descripción corta
+    // Descripción completa
     if (product.description) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
       doc.setTextColor(...C.darkGray);
       const descText = product.description.replace(/<[^>]*>/g, '').trim();
-      const descLines = doc.splitTextToSize(trunc(descText, 130), INFO_W);
-      const descDraw = descLines.slice(0, 4);
+      const descLines = doc.splitTextToSize(descText, INFO_W);
+      const descDraw = descLines.slice(0, 8);
       doc.text(descDraw, INFO_X, iy);
       iy += descDraw.length * 3.5 + 3;
     }
@@ -355,7 +355,7 @@
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
     doc.setTextColor(...C.midGray);
-    doc.text('www.promoinc.mx  |  Los precios son sin IVA y están sujetos a cambio sin previo aviso', M + 8, pageH - 7);
+    doc.text('www.promocionalespromoink.com  |  Los precios son en USD sin IVA y están sujetos a cambio sin previo aviso', M + 8, pageH - 7);
   }
 
   /* ── Función principal ────────────────────────────────────── */
@@ -398,7 +398,7 @@
       const M      = 12;   // margen
       const GAP    = 5;    // espacio entre tarjetas
       const CARD_W = (PAGE_W - M * 2 - GAP) / 2;  // 2 columnas
-      const CARD_H = 68;   // alto de tarjeta en mm
+      const CARD_H = 80;   // alto de tarjeta en mm
       const TOP_START = 14; // Y inicial del contenido en páginas interiores
 
       // 4. Portada
