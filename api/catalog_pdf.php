@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 $db = getDB();
 
-// Obtener todos los productos activos con su categoría, precio y SKU
+// Obtener todos los productos activos con todos los campos necesarios para renderizado de tarjetas
 $stmt = $db->query("
     SELECT 
         p.id,
@@ -23,12 +23,21 @@ $stmt = $db->query("
         p.min_quantity, p.show_min_quantity,
         p.customizable,
         p.image_webp,
+        p.images_gallery,
+        p.featured,
+        p.on_sale,
+        p.sale_price,
+        p.sale_discount,
+        COALESCE(p.shipping_cost, 0) AS shipping_cost,
+        COALESCE(SUM(s.quantity), 0) AS total_stock,
         COALESCE(c.name, 'Sin categoría') AS category_name,
         COALESCE(c.icon, '') AS category_icon,
         c.sort_order AS category_sort
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN stock s ON s.product_id = p.id
     WHERE p.active = 1
+    GROUP BY p.id
     ORDER BY COALESCE(c.sort_order, 999) ASC, c.name ASC, p.name ASC
 ");
 $products = $stmt->fetchAll();

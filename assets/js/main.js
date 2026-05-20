@@ -558,13 +558,16 @@ async function loadDynamicCategories() {
         filterList.innerHTML = categoriesHtml;
 
         // Resaltar categoría si ya está en los filtros iniciales
-        if (currentFilters.category) {
+        filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
+        if (currentFilters.category && currentFilters.category !== 'all_grouped') {
           filterList.querySelectorAll('.filter-item').forEach(i => {
             if (i.dataset.cat == currentFilters.category) {
-              filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
               i.classList.add('active');
             }
           });
+        } else {
+          const allItem = filterList.querySelector('.filter-item[data-cat="all"]');
+          if (allItem) allItem.classList.add('active');
         }
 
         // Registrar eventos click para todos los filtros
