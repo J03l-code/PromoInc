@@ -17,9 +17,14 @@ header("Expires: 0");
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+  <!-- Fonts (Preloaded for maximum speed and zero FOIT) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-bold">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/main.css?v=75.0">
+  <link rel="stylesheet" href="assets/css/main.css?v=76.0">
   <link rel="stylesheet" href="assets/css/components.css?v=106.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=75.0">
   
@@ -472,7 +477,7 @@ header("Expires: 0");
 
     <div class="loader-logo-container">
       <div class="loader-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc" class="loader-img-main">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInc" class="loader-img-main" width="210" height="140">
         <div class="loader-bar">
           <div class="loader-bar-fill"></div>
         </div>
@@ -487,84 +492,84 @@ header("Expires: 0");
       <!-- Group A: Visible on both Desktop and Mobile (8 items, perfectly spaced) -->
       <div class="scattered-wrapper item-1" style="left: 2%; --top-pos: 25px; animation-delay: 0s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-15deg); width: 38px; height: 38px;" title="Buscar Gorras">
-          <img src="assets/images/gorra.png" alt="Gorra">
+          <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-2" style="left: 15%; --top-pos: 48px; animation-delay: 1.2s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
-          <img src="assets/images/libreta.png" alt="Libreta">
+          <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-3" style="left: 28%; --top-pos: 30px; animation-delay: 0.5s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Termos">
-          <img src="assets/images/termo.png" alt="Termo">
+          <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-4" style="left: 45%; --top-pos: 52px; animation-delay: 2.1s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
-          <img src="assets/images/etiqueta.png" alt="Etiqueta">
+          <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-5" style="left: 58%; --top-pos: 20px; animation-delay: 0.8s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(12deg); width: 36px; height: 36px;" title="Buscar Gorras">
-          <img src="assets/images/gorra.png" alt="Gorra">
+          <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-6" style="left: 72%; --top-pos: 50px; animation-delay: 1.6s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
-          <img src="assets/images/libreta.png" alt="Libreta">
+          <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-7" style="left: 85%; --top-pos: 35px; animation-delay: 0.3s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(8deg); width: 38px; height: 38px;" title="Buscar Termos">
-          <img src="assets/images/termo.png" alt="Termo">
+          <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-8" style="left: 95%; --top-pos: 46px; animation-delay: 2.7s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
-          <img src="assets/images/etiqueta.png" alt="Etiqueta">
+          <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
 
       <!-- Group B: Desktop-only for dense high-end collage (8 more items, total 16!) -->
       <div class="scattered-wrapper item-9 desktop-only" style="left: 8%; --top-pos: 52px; animation-delay: 1.5s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
-          <img src="assets/images/termo.png" alt="Termo">
+          <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-10 desktop-only" style="left: 22%; --top-pos: 15px; animation-delay: 0.7s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-12deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
-          <img src="assets/images/etiqueta.png" alt="Etiqueta">
+          <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-11 desktop-only" style="left: 34%; --top-pos: 55px; animation-delay: 2.3s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
-          <img src="assets/images/gorra.png" alt="Gorra">
+          <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-12 desktop-only" style="left: 50%; --top-pos: 25px; animation-delay: 1.1s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-8deg); width: 34px; height: 34px;" title="Buscar Libretas">
-          <img src="assets/images/libreta.png" alt="Libreta">
+          <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-13 desktop-only" style="left: 64%; --top-pos: 50px; animation-delay: 2.9s;">
         <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
-          <img src="assets/images/termo.png" alt="Termo">
+          <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-14 desktop-only" style="left: 78%; --top-pos: 20px; animation-delay: 0.4s;">
         <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(15deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
-          <img src="assets/images/etiqueta.png" alt="Etiqueta">
+          <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-15 desktop-only" style="left: 90%; --top-pos: 48px; animation-delay: 1.8s;">
         <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
-          <img src="assets/images/gorra.png" alt="Gorra">
+          <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-16 desktop-only" style="left: 39%; --top-pos: 15px; animation-delay: 2.5s;">
         <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(12deg); width: 34px; height: 34px;" title="Buscar Libretas">
-          <img src="assets/images/libreta.png" alt="Libreta">
+          <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
     </div>
@@ -625,7 +630,7 @@ header("Expires: 0");
   <div id="mobile-menu" class="mobile-menu">
     <div class="mobile-menu-header">
       <a href="index.php" class="navbar-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; margin:0;">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="120" height="80" style="height: 80px; width: auto; margin:0;" loading="lazy">
       </a>
       <button id="mobile-menu-close" class="btn-close-menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -767,14 +772,14 @@ header("Expires: 0");
       <!-- Right column: Images Stacked Perfectly -->
       <div class="hero-right reveal" style="display: flex; flex-direction: column; gap: 15px; align-items: flex-end; justify-content: center; height: 100%;">
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
-          <img src="assets/images/hero-products-1.png" alt="Merchandising" style="width: 100%; height: auto; display: block;">
+          <img src="assets/images/hero-products-1.png" alt="Merchandising" width="600" height="600" style="width: 100%; height: auto; display: block;" loading="lazy">
           <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Personalización con tu logo</span>
           </div>
         </div>
         
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
-          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" style="width: 100%; height: auto; display: block;">
+          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" width="600" height="600" style="width: 100%; height: auto; display: block;" loading="lazy">
           <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Kits corporativos</span>
           </div>
@@ -998,7 +1003,7 @@ header("Expires: 0");
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 45px; margin-bottom: 1.5rem;">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="67" height="45" style="height: 45px; margin-bottom: 1.5rem;" loading="lazy">
           <p>Potenciamos la presencia de tu marca a través de artículos promocionales corporativos de la más alta
             calidad. Importación directa y producción a medida.</p>
           <div class="footer-social">
