@@ -29,15 +29,13 @@ $stmt = $db->query("
         p.sale_price,
         p.sale_discount,
         COALESCE(p.shipping_cost, 0) AS shipping_cost,
-        COALESCE(SUM(s.quantity), 0) AS total_stock,
+        (SELECT COALESCE(SUM(quantity), 0) FROM stock WHERE product_id = p.id) AS total_stock,
         COALESCE(c.name, 'Sin categoría') AS category_name,
         COALESCE(c.icon, '') AS category_icon,
         c.sort_order AS category_sort
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN stock s ON s.product_id = p.id
     WHERE p.active = 1
-    GROUP BY p.id
     ORDER BY COALESCE(c.sort_order, 999) ASC, c.name ASC, p.name ASC
 ");
 $products = $stmt->fetchAll();
