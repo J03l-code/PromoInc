@@ -711,7 +711,7 @@ async function fetchCatalog(append = false) {
           if (!cat.products || cat.products.length === 0) return;
           
           const sectionEl = document.createElement('div');
-          sectionEl.className = 'category-group-section reveal';
+          sectionEl.className = 'category-group-section';
           sectionEl.style.marginBottom = '50px';
           
           sectionEl.innerHTML = `
@@ -836,7 +836,7 @@ function renderProducts(grid, products, append = false) {
       </div>`;
       
     return `
-    <article class="card reveal" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;" data-gallery="${p.images_gallery || ''}" data-main-img="${imgUrl || ''}">
+    <article class="card reveal visible" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;" data-gallery="${p.images_gallery || ''}" data-main-img="${imgUrl || ''}">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
         ${parseInt(p.on_sale) ? `<div class="discount-floating-badge">-${p.sale_discount}%</div>` : ''}
