@@ -629,7 +629,7 @@ header("Expires: 0");
   <div id="mobile-menu" class="mobile-menu">
     <div class="mobile-menu-header">
       <a href="index.php" class="navbar-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="120" height="80" style="height: 80px; width: auto; margin:0;" loading="lazy">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="120" height="80" style="height: 80px; width: auto; margin:0;">
       </a>
       <button id="mobile-menu-close" class="btn-close-menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -771,14 +771,14 @@ header("Expires: 0");
       <!-- Right column: Images Stacked Perfectly -->
       <div class="hero-right reveal" style="display: flex; flex-direction: column; gap: 15px; align-items: flex-end; justify-content: center; height: 100%;">
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
-          <img src="assets/images/hero-products-1.png" alt="Merchandising" width="600" height="600" style="width: 100%; height: auto; display: block;" loading="lazy">
+          <img src="assets/images/hero-products-1.png" alt="Merchandising" width="600" height="600" style="width: 100%; height: auto; display: block;" fetchpriority="high" loading="eager">
           <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Personalización con tu logo</span>
           </div>
         </div>
         
         <div class="hero-img-card" style="width: 100%; max-width: 520px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
-          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" width="600" height="600" style="width: 100%; height: auto; display: block;" loading="lazy">
+          <img src="assets/images/hero-products-2.png" alt="Kits corporativos" width="600" height="600" style="width: 100%; height: auto; display: block;" fetchpriority="high" loading="eager">
           <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 100px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: #fff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Kits corporativos</span>
           </div>
