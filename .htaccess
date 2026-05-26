@@ -1,7 +1,7 @@
 # PromoInc — Configuración de Servidor Definitiva
 # Forzar el uso de archivos estáticos y PHP, ignorando Node/Next
 
-DirectoryIndex index.html index.php
+DirectoryIndex index.php index.html
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -13,8 +13,8 @@ DirectoryIndex index.html index.php
     RewriteRule ^ - [L]
 
     # Evitar que Next.js o rutas fantasmas tomen el control
-    # Si no es un archivo real, redirigir al index.html
-    RewriteRule ^ index.html [L]
+    # Si no es un archivo real, redirigir al index.php directamente para evitar redirecciones cliente intermedias
+    RewriteRule ^ index.php [L]
 </IfModule>
 
 # Habilitar compresión Gzip/Deflate para acelerar la transferencia de archivos
