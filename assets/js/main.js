@@ -495,12 +495,18 @@ async function loadSiteSettings() {
 
 async function loadDynamicCategories() {
   const nav = document.querySelector('.nav-categories');
-  if (!nav) return;
+  const filterList = document.getElementById('filter-categories-list');
+  if (!nav && !filterList) return;
 
   try {
     console.log('Fetching dynamic categories...');
-    const res = await fetch('api/categories.php');
-    const json = await res.json();
+    const [resCats, resSettings] = await Promise.all([
+      fetch('api/categories.php'),
+      fetch('api/settings.php')
+    ]);
+    const json = await resCats.json();
+    const settingsJson = await resSettings.json();
+    const showSidebarCategories = !settingsJson.success || !settingsJson.data || settingsJson.data.show_sidebar_categories !== '0';
     
     let dynNav = '';
     let dynMobile = '';
@@ -550,12 +556,14 @@ async function loadDynamicCategories() {
     }
 
     // Static Links ALWAYS append
-    nav.innerHTML = dynNav + 
-      '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
-      '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
-      '<a href="#" class="nav-link-ofertas">Ofertas</a>' +
-      '<a href="nosotros.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
-      '<a href="contacto.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
+    if (nav) {
+      nav.innerHTML = dynNav + 
+        '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
+        '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
+        '<a href="#" class="nav-link-ofertas">Ofertas</a>' +
+        '<a href="nosotros.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
+        '<a href="contacto.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
+    }
 
     const mobileNav = document.getElementById('mobile-categories-list');
     if (mobileNav) {
@@ -591,13 +599,11 @@ async function loadDynamicCategories() {
         `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
     }
 
-    if (json.success && json.data && json.data.length > 0) {
-
-      // Categorías en Sidebar de Catálogo
-      const filterList = document.getElementById('filter-categories-list');
-      if (filterList) {
-        let categoriesHtml = '<div class="filter-item active" data-cat="all">Todas las categorías</div>';
-        
+    // Categorías en Sidebar de Catálogo
+    if (filterList) {
+      let categoriesHtml = '<div class="filter-item active" data-cat="all">Todas las categorías</div>';
+      
+      if (showSidebarCategories && json.success && json.data && json.data.length > 0) {
         json.data.forEach(c => {
           if (c.children && c.children.length > 0) {
             // Categoría principal con subcategorías (Acordeón)
@@ -621,54 +627,55 @@ async function loadDynamicCategories() {
             categoriesHtml += `<div class="filter-item" data-cat="${c.id}">${c.name}</div>`;
           }
         });
-        
-        categoriesHtml += '<div class="filter-item" data-cat="portfolio" style="border-top: 1px solid var(--border); margin-top: 0.8rem; padding-top: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Trabajos Realizados</div>';
-        
-        filterList.innerHTML = categoriesHtml;
-
-        // Resaltar categoría si ya está en los filtros iniciales
-        filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
-        if (currentFilters.category && currentFilters.category !== 'all_grouped') {
-          filterList.querySelectorAll('.filter-item').forEach(i => {
-            if (i.dataset.cat == currentFilters.category) {
-              i.classList.add('active');
-            }
-          });
-        } else {
-          const allItem = filterList.querySelector('.filter-item[data-cat="all"]');
-          if (allItem) allItem.classList.add('active');
-        }
-
-        // Registrar eventos click para todos los filtros
-        filterList.querySelectorAll('.filter-item').forEach(item => {
-          item.addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            filterList.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            const selectedCat = item.dataset.cat === 'all' ? '' : item.dataset.cat;
-            currentFilters.category = selectedCat;
-            
-            reloadCatalog();
-          });
-        });
       }
-      // Categorías en Filtros Destacados (Home)
-      const featuredFilterBar = document.getElementById('featured-filter-bar');
-      if (featuredFilterBar) {
-        featuredFilterBar.innerHTML = '<button class="filter-btn active" data-cat="all">Todos</button>' +
-          json.data.map(c => `<button class="filter-btn" data-cat="${c.id}">${c.name}</button>`).join('');
+      
+      categoriesHtml += '<div class="filter-item" data-cat="portfolio" style="border-top: 1px solid var(--border); margin-top: 0.8rem; padding-top: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Trabajos Realizados</div>';
+      
+      filterList.innerHTML = categoriesHtml;
 
-        featuredFilterBar.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            featuredFilterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const catId = btn.dataset.cat === 'all' ? '' : btn.dataset.cat;
-            loadFeaturedProducts(catId);
-          });
+      // Resaltar categoría si ya está en los filtros iniciales
+      filterList.querySelectorAll('.filter-item').forEach(x => x.classList.remove('active'));
+      if (currentFilters.category && currentFilters.category !== 'all_grouped') {
+        filterList.querySelectorAll('.filter-item').forEach(i => {
+          if (i.dataset.cat == currentFilters.category) {
+            i.classList.add('active');
+          }
         });
+      } else {
+        const allItem = filterList.querySelector('.filter-item[data-cat="all"]');
+        if (allItem) allItem.classList.add('active');
       }
+
+      // Registrar eventos click para todos los filtros
+      filterList.querySelectorAll('.filter-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          
+          filterList.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          
+          const selectedCat = item.dataset.cat === 'all' ? '' : item.dataset.cat;
+          currentFilters.category = selectedCat;
+          
+          reloadCatalog();
+        });
+      });
+    }
+
+    // Categorías en Filtros Destacados (Home)
+    const featuredFilterBar = document.getElementById('featured-filter-bar');
+    if (featuredFilterBar && json.success && json.data) {
+      featuredFilterBar.innerHTML = '<button class="filter-btn active" data-cat="all">Todos</button>' +
+        json.data.map(c => `<button class="filter-btn" data-cat="${c.id}">${c.name}</button>`).join('');
+
+      featuredFilterBar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          featuredFilterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const catId = btn.dataset.cat === 'all' ? '' : btn.dataset.cat;
+          loadFeaturedProducts(catId);
+        });
+      });
     }
   } catch (err) { console.error('Error loading categories:', err); }
 }
