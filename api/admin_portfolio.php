@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Portafolio de trabajos (protegida)
+ * PromoInk — API Admin: Portafolio de trabajos (protegida)
  * GET    /api/admin_portfolio.php            → Listado
  * POST   /api/admin_portfolio.php            → Crear
  * DELETE /api/admin_portfolio.php            → Eliminar

@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Productos (protegida)
+ * PromoInk — API Admin: Productos (protegida)
  * GET    /api/admin_products.php            → Listado completo
  * GET    /api/admin_products.php?id=X       → Detalle
  * POST   /api/admin_products.php            → Crear

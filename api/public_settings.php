@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Pública: Obtener configuración específica
+ * PromoInk — API Pública: Obtener configuración específica
  * GET /api/public_settings.php?key=whatsapp_number
  */
 

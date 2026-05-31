@@ -1,5 +1,5 @@
-# PromoInc — Roadmap de Innovación 🚀
-Este documento detalla las mejoras estratégicas para posicionar a **PromoInc** como una plataforma líder a nivel mundial en el sector de merchandising corporativo.
+# PromoInk — Roadmap de Innovación 🚀
+Este documento detalla las mejoras estratégicas para posicionar a **PromoInk** como una plataforma líder a nivel mundial en el sector de merchandising corporativo.
 
 ## 🎯 Fase 1: Experiencia de Usuario "World-Class"
 *   **Visualizador de Mockups en Tiempo Real:** Implementar una herramienta interactiva donde los clientes puedan subir su logo (PNG/SVG) y verlo aplicado automáticamente sobre los productos mediante transformaciones CSS/Canvas.
@@ -17,4 +17,4 @@ Este documento detalla las mejoras estratégicas para posicionar a **PromoInc** 
 *   **Performance Extrema:** Migración de imágenes críticas a formatos de próxima generación (WebP/Avif) con carga diferida (lazy-loading) nativa para un puntaje de 100/100 en Google Lighthouse.
 
 ---
-*Documento de visión técnica para PromoInc. Mayo 2026.*
+*Documento de visión técnica para PromoInk. Mayo 2026.*

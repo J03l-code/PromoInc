@@ -1,5 +1,5 @@
 -- ============================================================
---  PromoInc — Esquema completo de base de datos
+--  PromoInk — Esquema completo de base de datos
 --  Motor: MySQL 8.0+ / MariaDB 10.5+
 --  Ejecutar: mysql -u root -p < sql/schema.sql
 -- ============================================================
@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS users (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Usuario por defecto: admin@promoinc.com / Admin2024!
+-- Usuario por defecto: admin@promoink.com / Admin2024!
 -- El hash se debe regenerar con: password_hash('Admin2024!', PASSWORD_BCRYPT)
 INSERT IGNORE INTO users (name, email, password_hash, role) VALUES
-  ('Administrador', 'admin@promoinc.com',
+  ('Administrador', 'admin@promoink.com',
    '$2y$12$uB6TqJGFkdlHy3sG5tJxouLSRaQOy/fSDjFijNwWZtRjvRYmhJNHm',
    'superadmin');
 
@@ -122,13 +122,13 @@ CREATE TABLE IF NOT EXISTS settings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT IGNORE INTO settings (`key`, `value`) VALUES
-  ('site_name',      'PromoInc'),
-  ('site_email',     'info@promoinc.com'),
+  ('site_name',      'PromoInk'),
+  ('site_email',     'info@promoink.com'),
   ('site_phone',     '+57 300 000 0000'),
   ('site_address',   'Colombia'),
   ('whatsapp',       '573000000000'),
-  ('instagram',      'promoinc'),
-  ('facebook',       'promoinc'),
+  ('instagram',      'promoink'),
+  ('facebook',       'promoink'),
   ('hero_title',     'Así se compra merchandising'),
   ('hero_subtitle',  'Explora productos, revisa precios, compra en minutos.');
 -- ── LOGOS DE MARCAS (Trusted Brands) ────────────────────────

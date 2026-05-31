@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Gestión de Pedidos (protegida)
+ * PromoInk — API Admin: Gestión de Pedidos (protegida)
  * GET    → Lista paginada con filtros
  * GET ?id=X → Detalle de pedido
  * PUT    → Actualizar status + nota

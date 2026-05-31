@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Cotización
+ * PromoInk — API Cotización
  * POST /api/quote.php   Content-Type: application/json
  */
 
@@ -113,9 +113,9 @@ jsonSuccess([
 ], 201);
 
 function sendQuoteEmail(array $data, int $id): void {
-    $to      = 'ventas@promoinc.ec'; // Cambiar al email corporativo
+    $to      = 'ventas@promoink.ec'; // Cambiar al email corporativo
     $subject = "Nueva Cotización #{$id} - {$data['company']}";
     $body    = "Empresa: {$data['company']}\nContacto: {$data['contact_name']}\nEmail: {$data['email']}\nMensaje: {$data['message']}";
-    $headers = 'From: noreply@promoinc.ec';
+    $headers = 'From: noreply@promoink.ec';
     mail($to, $subject, $body, $headers);
 }

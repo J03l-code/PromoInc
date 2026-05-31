@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API de Pedidos
+ * PromoInk — API de Pedidos
  * POST   → Crear nuevo pedido (público, desde checkout)
  * GET ?user=me → Pedidos del usuario logueado
  * GET ?number=PI-XXX → Detalle por número
@@ -98,7 +98,7 @@ if ($method === 'POST') {
         $htmlEmail = "
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; border: 1px solid #eee; border-radius: 8px; overflow: hidden;'>
             <div style='background: #121212; padding: 20px; text-align: center;'>
-                <img src='https://promoinc.ec/assets/images/logo%20blanco%20(2).png' alt='PromoInc' style='height: 50px;'>
+                <img src='https://promoink.ec/assets/images/logo%20blanco%20(2).png' alt='PromoInk' style='height: 50px;'>
             </div>
             <div style='padding: 30px; background: #fafafa;'>
                 <h2 style='color: #e83e8c; margin-top: 0; font-size: 24px; text-align: center;'>¡Nuevo Pedido Recibido!</h2>
@@ -146,13 +146,13 @@ if ($method === 'POST') {
                 </table>
             </div>
             <div style='background: #121212; color: #aaa; text-align: center; padding: 20px; font-size: 12px;'>
-                &copy; " . date('Y') . " PromoInc. Este es un correo automático generado por el sistema.
+                &copy; " . date('Y') . " PromoInk. Este es un correo automático generado por el sistema.
             </div>
         </div>
         ";
 
         // Detectar el dominio dinámicamente para alinearlo con el hosting activo (ej: jiyanedesign.com)
-        $host = $_SERVER['HTTP_HOST'] ?? 'promoinc.ec';
+        $host = $_SERVER['HTTP_HOST'] ?? 'promoink.ec';
         $host = preg_replace('/^www\./i', '', $host);
         $replyTo = !empty($body['customer_email']) ? filter_var($body['customer_email'], FILTER_SANITIZE_EMAIL) : '';
         $mailSent = sendSMTP($adminEmail, $subject, $htmlEmail, $replyTo);

@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Settings Pública
+ * PromoInk — API Settings Pública
  */
 require_once 'config.php';
 

@@ -1,5 +1,5 @@
 /**
- * PromoInc — Cart Manager
+ * PromoInk — Cart Manager
  * Gestiona el carrito: sincroniza con el backend si el usuario está autenticado,
  * o usa localStorage como fallback para visitantes.
  */
@@ -151,7 +151,7 @@ const CartManager = (() => {
       const shLabel = sh > 0 ? ` (+$${sh.toFixed(2)} envío)` : '';
       return `• ${i.name} (x${i.quantity}) - $${(i.unit_price * i.quantity).toFixed(2)}${shLabel}`;
     }).join('\n');
-    const msg = `Hola PromoInc, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: $${total.toFixed(2)}`;
+    const msg = `Hola PromoInk, deseo continuar al pago de mi pedido:\n${itemsText}\n\nTotal: $${total.toFixed(2)}`;
     return 'https://api.whatsapp.com/send?phone=' + _waNumber + '&text=' + encodeURIComponent(msg);
   }
 

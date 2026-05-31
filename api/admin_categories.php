@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Categorías (protegida)
+ * PromoInk — API Admin: Categorías (protegida)
  * GET    /api/admin_categories.php      → Listado
  * POST   /api/admin_categories.php      → Crear
  * PUT    /api/admin_categories.php      → Actualizar

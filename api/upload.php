@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Upload con conversión WebP nativa
+ * PromoInk — API Upload con conversión WebP nativa
  * Convierte PNG/JPG/GIF → WebP usando PHP GD (sin dependencias externas)
  * POST /api/upload.php   multipart/form-data  field: "image"
  */

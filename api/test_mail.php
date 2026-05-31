@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 require_once 'config.php';
 
-echo "<h2>PromoInc Mail Diagnosis Script</h2>";
+echo "<h2>PromoInk Mail Diagnosis Script</h2>";
 
 // 1. Check if mail function exists
 $mailExists = function_exists('mail');
@@ -17,16 +17,16 @@ try {
     $db = getDB();
     $stmtSettings = $db->query("SELECT `value` FROM settings WHERE `key` = 'site_email'");
     $emailRow = $stmtSettings->fetch();
-    $adminEmail = $emailRow ? $emailRow['value'] : 'ventas@promoinc.ec';
+    $adminEmail = $emailRow ? $emailRow['value'] : 'ventas@promoink.ec';
     echo "<b>Configured admin email (Receiver):</b> " . htmlspecialchars($adminEmail) . "<br>";
 } catch (\Throwable $e) {
     echo "<b style='color:red'>Database Error:</b> " . htmlspecialchars($e->getMessage()) . "<br>";
-    $adminEmail = 'ventas@promoinc.ec';
+    $adminEmail = 'ventas@promoink.ec';
 }
 
 // 4. Try sending a simple mail via new sendSMTP helper
 $to = $adminEmail;
-$subject = "PromoInc Diagnostic SMTP Test Mail";
+$subject = "PromoInk Diagnostic SMTP Test Mail";
 $message = "This is a simple diagnostic mail sent via SECURE SMTP from " . ($_SERVER['HTTP_HOST'] ?? 'unknown host') . " at " . date('Y-m-d H:i:s');
 
 echo "<br><b>Sending test mail via secure SMTP...</b><br>";

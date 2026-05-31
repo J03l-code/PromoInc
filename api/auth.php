@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Autenticación (Login / Logout / Check)
+ * PromoInk — API Autenticación (Login / Logout / Check)
  * POST /api/auth.php           { action: 'login', email, password }
  * POST /api/auth.php           { action: 'logout' }
  * GET  /api/auth.php           → { loggedIn: bool, user: {...} }

@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Usuarios (protegida – solo superadmin)
+ * PromoInk — API Admin: Usuarios (protegida – solo superadmin)
  * GET    /api/admin_users.php     → Listado
  * POST   /api/admin_users.php     → Crear usuario
  * PUT    /api/admin_users.php     → Actualizar (nombre, rol, activo, contraseña)

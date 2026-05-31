@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Settings del sitio (protegida)
+ * PromoInk — API Admin: Settings del sitio (protegida)
  * GET /api/admin_settings.php     → Obtener todos los settings
  * PUT /api/admin_settings.php     → Guardar/Actualizar settings
  */

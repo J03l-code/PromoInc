@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Pública: Portafolio de trabajos realizados
+ * PromoInk — API Pública: Portafolio de trabajos realizados
  * GET /api/portfolio.php
  */
 

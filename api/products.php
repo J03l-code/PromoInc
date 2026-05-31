@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Productos
+ * PromoInk — API Productos
  * GET    /api/products.php            → Listado con filtros
  * GET    /api/products.php?id=X       → Detalle de producto
  * GET    /api/products.php?featured=1 → Productos destacados

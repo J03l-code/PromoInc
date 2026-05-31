@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Categorías
+ * PromoInk — API Categorías
  * GET /api/categories.php         → Árbol completo
  * GET /api/categories.php?flat=1  → Lista plana para selects
  */

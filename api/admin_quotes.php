@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Cotizaciones (protegida)
+ * PromoInk — API Admin: Cotizaciones (protegida)
  * GET  /api/admin_quotes.php           → Listado con filtros
  * PUT  /api/admin_quotes.php           → Actualizar estado
  * DELETE /api/admin_quotes.php         → Eliminar

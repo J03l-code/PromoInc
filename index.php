@@ -10,10 +10,9 @@ header("Expires: 0");
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoInc | Artículos Promocionales Corporativos de Alto Impacto</title>
+  <title>PromoInk UIO los mejores artículos promocionales para ti</title>
   <link rel="icon" href="assets/images/favicon.png">
-  <meta name="description"
-    content="Plataforma líder en artículos promocionales y corporativos. Regalos empresariales de alta gama, merchandising y productos personalizables.">
+  <meta name="description" content="Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -476,7 +475,7 @@ header("Expires: 0");
 
     <div class="loader-logo-container">
       <div class="loader-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc" class="loader-img-main" width="210" height="140">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInk" class="loader-img-main" width="210" height="140">
         <div class="loader-bar">
           <div class="loader-bar-fill"></div>
         </div>
@@ -577,7 +576,7 @@ header("Expires: 0");
       <div class="container navbar-top-inner">
 
         <a href="index.php" class="navbar-logo">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo">
         </a>
 
         <div class="navbar-search">
@@ -629,7 +628,7 @@ header("Expires: 0");
   <div id="mobile-menu" class="mobile-menu">
     <div class="mobile-menu-header">
       <a href="index.php" class="navbar-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="120" height="80" style="height: 80px; width: auto; margin:0;">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo" width="120" height="80" style="height: 80px; width: auto; margin:0;">
       </a>
       <button id="mobile-menu-close" class="btn-close-menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -950,7 +949,7 @@ header("Expires: 0");
             </div>
             <div>
               <p style="font-size:0.8rem; color:var(--text-subtle);">Email Corporativo</p>
-              <p style="font-weight:600;" id="cta-email">ventas@promoinc.ec</p>
+              <p style="font-weight:600;" id="cta-email">ventas@promoink.ec</p>
             </div>
           </div>
         </div>
@@ -1002,7 +1001,7 @@ header("Expires: 0");
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" width="67" height="45" style="height: 45px; margin-bottom: 1.5rem;" loading="lazy">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo" width="67" height="45" style="height: 45px; margin-bottom: 1.5rem;" loading="lazy">
           <p>Potenciamos la presencia de tu marca a través de artículos promocionales corporativos de la más alta
             calidad. Importación directa y producción a medida.</p>
           <div class="footer-social">
@@ -1081,13 +1080,13 @@ header("Expires: 0");
                 stroke-linecap="round" stroke-linejoin="round" />
               <polyline points="22,6 12,13 2,6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>ventas@promoinc.ec</span>
+            <span>ventas@promoink.ec</span>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 PromoInc. Todos los derechos reservados.</p>
+        <p>&copy; 2026 PromoInk. Todos los derechos reservados.</p>
         <div class="footer-bottom-links">
           <a href="#" class="footer-bottom-link">Términos y Condiciones</a>
           <a href="#" class="footer-bottom-link">Políticas de Privacidad</a>

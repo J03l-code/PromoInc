@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — Configuración central de la API
+ * PromoInk — Configuración central de la API
  * Conexión PDO + CORS + Utilidades
  */
 
@@ -128,14 +128,14 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
     // Cabeceras MIME para HTML en UTF-8
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: PromoInc <" . $smtpUser . ">\r\n";
+    $headers .= "From: PromoInk <" . $smtpUser . ">\r\n";
     if (!empty($replyTo)) {
         $headers .= "Reply-To: <" . $replyTo . ">\r\n";
     }
     $headers .= "To: <" . $to . ">\r\n";
     $headers .= "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n";
     $headers .= "Date: " . date('r') . "\r\n";
-    $headers .= "Message-ID: <" . uniqid('', true) . "@" . ($_SERVER['HTTP_HOST'] ?? 'promoinc.ec') . ">\r\n";
+    $headers .= "Message-ID: <" . uniqid('', true) . "@" . ($_SERVER['HTTP_HOST'] ?? 'promoink.ec') . ">\r\n";
 
     $body = $headers . "\r\n" . $htmlContent;
 

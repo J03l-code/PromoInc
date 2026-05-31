@@ -1,5 +1,5 @@
 /**
- * PromoInc — Generador de Catálogo PDF v2
+ * PromoInk — Generador de Catálogo PDF v2
  * Catálogo visual con imágenes de producto, layout 2 columnas por página
  * Estilo: catálogo impreso profesional (fondo blanco, tipografía limpia)
  */
@@ -277,7 +277,7 @@
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(30);
     doc.setTextColor(...C.white);
-    doc.text('PromoInc', M + 8, 24);
+    doc.text('PromoInk', M + 8, 24);
 
     // Tagline
     doc.setFont('helvetica', 'normal');
@@ -486,7 +486,7 @@
 
       // 6. Descargar
       const fecha = new Date().toISOString().slice(0, 10);
-      doc.save(`PromoInc_Catalogo_${fecha}.pdf`);
+      doc.save(`PromoInk_Catalogo_${fecha}.pdf`);
 
     } catch (err) {
       console.error('[CatalogPDF] Error:', err);

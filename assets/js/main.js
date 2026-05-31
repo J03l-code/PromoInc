@@ -1,4 +1,4 @@
-/* PromoInc — main.js */
+/* PromoInk — main.js */
 const VERSION = '79.0';
 
 // Global function for adding to cart quickly from the Home page
@@ -417,7 +417,7 @@ async function loadSiteSettings() {
 
       // Site Name
       if (s.site_name) {
-        document.title = document.title.replace('PromoInc', s.site_name);
+        document.title = document.title.replace('PromoInk', s.site_name);
         const copyright = document.querySelector('.footer-bottom p');
         if (copyright) copyright.innerHTML = `&copy; ${new Date().getFullYear()} ${s.site_name}. Todos los derechos reservados.`;
       }
@@ -879,7 +879,7 @@ function renderProducts(grid, products, append = false) {
           </button>
           <a
             href="javascript:void(0)"
-            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '5930987827215'; const txt = 'Hola PromoInc, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}' + (${parseInt(p.show_min_quantity) === 1 ? `'%0ACantidad mínima: ${p.min_quantity || 10} unidades'` : `''`}); window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
+            onclick="event.stopPropagation(); const wa = window.siteWhatsapp || '5930987827215'; const txt = 'Hola PromoInk, me interesa cotizar:%0AProducto: ${encodeURIComponent(p.name)}%0ASKU: ${p.sku}' + (${parseInt(p.show_min_quantity) === 1 ? `'%0ACantidad mínima: ${p.min_quantity || 10} unidades'` : `''`}); window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');"
             style="
               flex: 1; display:flex; align-items:center; justify-content:center; gap:6px;
               padding: 0.5rem 0.75rem; border-radius:10px; font-size:0.8rem; font-weight:700;

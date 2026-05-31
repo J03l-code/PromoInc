@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: CRM de Clientes (protegida)
+ * PromoInk — API Admin: CRM de Clientes (protegida)
  * GET    → Lista de clientes consolidados (usuarios + invitados con pedidos)
  * GET ?id=X → Detalle de cliente y sus pedidos
  */

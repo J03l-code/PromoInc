@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Admin: Logos de Marcas (protegida)
+ * PromoInk — API Admin: Logos de Marcas (protegida)
  * GET    /api/admin_brand_logos.php            → Listado
  * POST   /api/admin_brand_logos.php            → Crear
  * DELETE /api/admin_brand_logos.php            → Eliminar

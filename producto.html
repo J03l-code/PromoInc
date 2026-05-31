@@ -2,9 +2,10 @@
 <html lang="es">
 
 <head>
+  <meta name="description" content="Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cargando Producto... | PromoInc</title>
+  <title>PromoInk UIO los mejores artículos promocionales para ti</title>
   <link rel="icon" href="assets/images/favicon.png">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -590,7 +591,7 @@
       <div class="container navbar-top-inner">
 
         <a href="index.php" class="navbar-logo">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo">
         </a>
 
         <div class="navbar-search">
@@ -643,7 +644,7 @@
   <div id="mobile-menu" class="mobile-menu">
     <div class="mobile-menu-header">
       <a href="index.php" class="navbar-logo">
-        <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; width: auto; margin:0;">
+        <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo" style="height: 80px; width: auto; margin:0;">
       </a>
       <button id="mobile-menu-close" class="btn-close-menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -872,7 +873,7 @@
 
     function renderProductDetail() {
       const p = currentProduct;
-      document.title = `${p.name} | PromoInc`;
+      document.title = `${p.name} | PromoInk`;
 
       const svgPlaceholder = `<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`;
       const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
@@ -1396,7 +1397,7 @@
         const shippingLine = shippingCost > 0
           ? `\nEnvío fijo: $${shippingCost.toFixed(2)}\n*TOTAL (productos + envío): $${grandTotal.toFixed(2)}*`
           : `\n*Total estimado: $${subtotal.toFixed(2)}*`;
-        const text = `Hola PromoInc, me interesa cotizar:\nProducto: ${p.name}\nSKU: ${p.sku}\nCantidad: ${qty} unidades\nPrecio Ref: $${unitPrice.toFixed(2)} c/u\nSubtotal: $${subtotal.toFixed(2)}${shippingLine}`;
+        const text = `Hola PromoInk, me interesa cotizar:\nProducto: ${p.name}\nSKU: ${p.sku}\nCantidad: ${qty} unidades\nPrecio Ref: $${unitPrice.toFixed(2)} c/u\nSubtotal: $${subtotal.toFixed(2)}${shippingLine}`;
         // api.whatsapp.com abre WhatsApp Desktop/Web con el mensaje pre-llenado
         waBtn.href = 'https://api.whatsapp.com/send?phone=' + waNumber + '&text=' + encodeURIComponent(text);
         waBtn.target = '_blank';
@@ -1469,7 +1470,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/images/logo blanco (2).png" alt="PromoInc Logo" style="height: 80px; margin-bottom: 1.5rem;">
+          <img src="assets/images/logo blanco (2).png" alt="PromoInk Logo" style="height: 80px; margin-bottom: 1.5rem;">
           <p>Potenciamos la presencia de tu marca a través de artículos promocionales corporativos de la más alta
             calidad. Importación directa y producción a medida.</p>
           <div class="footer-social">
@@ -1548,13 +1549,13 @@
                 stroke-linecap="round" stroke-linejoin="round" />
               <polyline points="22,6 12,13 2,6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>ventas@promoinc.ec</span>
+            <span>ventas@promoink.ec</span>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 PromoInc. Todos los derechos reservados.</p>
+        <p>&copy; 2026 PromoInk. Todos los derechos reservados.</p>
         <div class="footer-bottom-links">
           <a href="#" class="footer-bottom-link">Términos y Condiciones</a>
           <a href="#" class="footer-bottom-link">Políticas de Privacidad</a>

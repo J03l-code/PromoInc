@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — Middleware de autenticación para APIs admin.
+ * PromoInk — Middleware de autenticación para APIs admin.
  * Incluir ANTES de cualquier lógica en endpoints protegidos.
  */
 

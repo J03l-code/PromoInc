@@ -1,5 +1,5 @@
 /* ============================================================
-   PromoInc — Admin Dashboard JS (Parte 1: Core + Auth + Nav)
+   PromoInk — Admin Dashboard JS (Parte 1: Core + Auth + Nav)
    ============================================================ */
 
 'use strict';

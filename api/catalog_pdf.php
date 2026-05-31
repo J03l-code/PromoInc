@@ -1,6 +1,6 @@
 <?php
 /**
- * PromoInc — API Catálogo para PDF
+ * PromoInk — API Catálogo para PDF
  * GET /api/catalog_pdf.php → todos los productos activos agrupados por categoría
  */
 
