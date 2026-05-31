@@ -417,9 +417,13 @@ async function loadSiteSettings() {
 
       // Site Name
       if (s.site_name) {
-        document.title = document.title.replace('PromoInk', s.site_name);
+        // Removed title override to preserve SEO HTML tags
+        // document.title = document.title.replace('PromoInk', s.site_name);
+        
+        // Force PromoInk display in case live DB still has PromoInc
+        const displaySiteName = s.site_name.replace(/PromoInc/ig, 'PromoInk');
         const copyright = document.querySelector('.footer-bottom p');
-        if (copyright) copyright.innerHTML = `&copy; ${new Date().getFullYear()} ${s.site_name}. Todos los derechos reservados.`;
+        if (copyright) copyright.innerHTML = `&copy; ${new Date().getFullYear()} ${displaySiteName}. Todos los derechos reservados.`;
       }
 
       // Contact Email
