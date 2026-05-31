@@ -605,7 +605,13 @@ async function loadDynamicCategories() {
       
       if (showSidebarCategories && json.success && json.data && json.data.length > 0) {
         json.data.forEach(c => {
-          if (c.children && c.children.length > 0) {
+          if (c.show_in_sidebar !== undefined && parseInt(c.show_in_sidebar) === 0) {
+            return;
+          }
+          
+          const visibleChildren = (c.children || []).filter(child => child.show_in_sidebar === undefined || parseInt(child.show_in_sidebar) !== 0);
+
+          if (visibleChildren.length > 0) {
             // Categoría principal con subcategorías (Acordeón)
             categoriesHtml += `
               <div class="filter-group-container" data-group="${c.id}" style="display: flex; flex-direction: column; width: 100%;">
@@ -614,7 +620,7 @@ async function loadDynamicCategories() {
                   <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="subcategory-list">
-                  ${c.children.map(child => `
+                  ${visibleChildren.map(child => `
                     <div class="filter-item sub-filter-item" data-cat="${child.id}" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; opacity: 0.8; display: flex; align-items: center; gap: 0.3rem;">
                       <span style="opacity: 0.4;">↳</span> ${child.name}
                     </div>

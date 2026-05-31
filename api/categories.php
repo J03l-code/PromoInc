@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $db = getDB();
 
 $stmt = $db->query("
-    SELECT id, parent_id, name, slug, icon, sort_order
+    SELECT id, parent_id, name, slug, icon, sort_order, show_in_sidebar
     FROM categories
     WHERE active = 1
     ORDER BY sort_order ASC, name ASC

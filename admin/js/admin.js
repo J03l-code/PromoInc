@@ -761,11 +761,12 @@ async function createSubcategoryFor(parentId, parentName) {
 document.getElementById('btn-save-category').addEventListener('click', async () => {
   const id = document.getElementById('category-id').value;
   const payload = {
-    name:       document.getElementById('category-name').value.trim(),
-    parent_id:  parseInt(document.getElementById('category-parent').value) || 0,
-    icon:       document.getElementById('category-icon').value.trim(),
-    sort_order: parseInt(document.getElementById('category-order').value) || 0,
-    active:     document.getElementById('category-active').checked ? 1 : 0,
+    name:            document.getElementById('category-name').value.trim(),
+    parent_id:       parseInt(document.getElementById('category-parent').value) || 0,
+    icon:            document.getElementById('category-icon').value.trim(),
+    sort_order:      parseInt(document.getElementById('category-order').value) || 0,
+    active:          document.getElementById('category-active').checked ? 1 : 0,
+    show_in_sidebar: document.getElementById('category-show-sidebar').checked ? 1 : 0,
   };
   if (!payload.name) { toast('El nombre es requerido', 'error'); return; }
   if (id) payload.id = parseInt(id);
@@ -796,6 +797,7 @@ async function editCategory(id) {
   document.getElementById('category-order').value = c.sort_order;
   document.getElementById('category-parent').value = c.parent_id || 0;
   document.getElementById('category-active').checked = !!parseInt(c.active);
+  document.getElementById('category-show-sidebar').checked = c.show_in_sidebar !== undefined ? !!parseInt(c.show_in_sidebar) : true;
   document.getElementById('modal-category-title').textContent = 'Editar Categoría';
   openModal('modal-category');
 }
