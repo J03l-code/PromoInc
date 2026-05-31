@@ -476,11 +476,16 @@ async function loadDynamicCategories() {
     console.log('Fetching dynamic categories...');
     const res = await fetch('api/categories.php');
     const json = await res.json();
-    if (json.success && json.data.length) {
+    
+    let dynNav = '';
+    let dynMobile = '';
+    let dynFooter = '';
+    
+    if (json.success && json.data && json.data.length > 0) {
       catalogCategories = json.data;
       
       // Categorías en Navbar
-      nav.innerHTML = json.data.map(cat => `
+      dynNav = json.data.map(cat => `
         <div class="nav-item-dropdown">
           <a href="catalogo.html?category=${cat.id}">
             ${cat.name} ${cat.children ? '<svg viewBox="0 0 24 24" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>' : ''}
@@ -491,56 +496,77 @@ async function loadDynamicCategories() {
             </div>
           ` : ''}
         </div>
-      `).join('') + 
-      '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
-      '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
-      '<a href="#" class="nav-link-ofertas">Ofertas</a>';
+      `).join('');
 
       // Categorías en Menú Móvil
-      const mobileNav = document.getElementById('mobile-categories-list');
-      if (mobileNav) {
-        let mobileHtml = '';
-        json.data.forEach(cat => {
-          mobileHtml += `
-            <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
-              ${cat.name}
-              ${cat.children ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
-            </a>
-          `;
-          if (cat.children && cat.children.length > 0) {
-            cat.children.forEach(child => {
-              mobileHtml += `
-                <a href="catalogo.html?category=${child.id}" class="mobile-cat-link" style="padding-left: 2rem; font-size: 0.9rem; opacity: 0.85; border-top: none;">
-                  <span style="margin-right: 0.3rem; opacity: 0.5;">↳</span> ${child.name}
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </a>
-              `;
-            });
-          }
-        });
-        
-        mobileNav.innerHTML = mobileHtml + `
-          <a href="catalogo.html?category=all_grouped" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
-            📦 Todos los productos
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-          <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="color:var(--accent); font-weight: 600;">
-            📂 Portafolio de Trabajos
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      json.data.forEach(cat => {
+        dynMobile += `
+          <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
+            ${cat.name}
+            ${cat.children ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
           </a>
         `;
-      }
+        if (cat.children && cat.children.length > 0) {
+          cat.children.forEach(child => {
+            dynMobile += `
+              <a href="catalogo.html?category=${child.id}" class="mobile-cat-link" style="padding-left: 2rem; font-size: 0.9rem; opacity: 0.85; border-top: none;">
+                <span style="margin-right: 0.3rem; opacity: 0.5;">↳</span> ${child.name}
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            `;
+          });
+        }
+      });
 
       // Categorías en Footer
-      const footerNav = document.getElementById('footer-categories');
-      if (footerNav) {
-        footerNav.innerHTML = json.data.map(cat => `
-          <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
-        `).join('') + 
+      dynFooter = json.data.map(cat => `
+        <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
+      `).join('');
+    }
+
+    // Static Links ALWAYS append
+    nav.innerHTML = dynNav + 
+      '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
+      '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
+      '<a href="#" class="nav-link-ofertas">Ofertas</a>' +
+      '<a href="index.php#nosotros" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
+      '<a href="index.php#contacto" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
+
+    const mobileNav = document.getElementById('mobile-categories-list');
+    if (mobileNav) {
+      mobileNav.innerHTML = dynMobile + `
+        <a href="catalogo.html?category=all_grouped" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
+          📦 Todos los productos
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="color:var(--accent); font-weight: 600;">
+          📂 Portafolio de Trabajos
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="#" class="mobile-cat-link nav-link-ofertas" style="font-weight: 600;">
+          🔥 Ofertas
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="index.php#nosotros" class="mobile-cat-link" style="font-weight: 600;">
+          🏢 Nosotros
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="index.php#contacto" class="mobile-cat-link" style="font-weight: 600;">
+          📞 Contacto
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      `;
+    }
+
+    const footerNav = document.getElementById('footer-categories');
+    if (footerNav) {
+      footerNav.innerHTML = dynFooter + 
         `<li><a href="catalogo.html?category=all_grouped" class="footer-link" style="color:var(--accent); font-weight:600;">Todos los productos</a></li>` +
         `<li><a href="catalogo.html?category=portfolio" class="footer-link" style="color:var(--accent); font-weight:600;">Portafolio de Trabajos</a></li>` +
         `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
-      }
+    }
+
+    if (json.success && json.data && json.data.length > 0) {
 
       // Categorías en Sidebar de Catálogo
       const filterList = document.getElementById('filter-categories-list');
