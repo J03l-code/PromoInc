@@ -529,8 +529,8 @@ async function loadDynamicCategories() {
       '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
       '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
       '<a href="#" class="nav-link-ofertas">Ofertas</a>' +
-      '<a href="index.php#nosotros" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
-      '<a href="index.php#contacto" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
+      '<a href="nosotros.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
+      '<a href="contacto.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
 
     const mobileNav = document.getElementById('mobile-categories-list');
     if (mobileNav) {
@@ -547,11 +547,11 @@ async function loadDynamicCategories() {
           🔥 Ofertas
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
-        <a href="index.php#nosotros" class="mobile-cat-link" style="font-weight: 600;">
+        <a href="nosotros.html" class="mobile-cat-link" style="font-weight: 600;">
           🏢 Nosotros
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
-        <a href="index.php#contacto" class="mobile-cat-link" style="font-weight: 600;">
+        <a href="contacto.html" class="mobile-cat-link" style="font-weight: 600;">
           📞 Contacto
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
