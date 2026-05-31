@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoInk ARTICULOS PROMOCIONALES</title>
+  <title>Contacto — PromoInk | Cotiza tus Artículos Promocionales</title>
   <link rel="icon" href="assets/images/favicon.png">
-  <meta name="description" content="Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.">
+  <meta name="description" content="Contáctanos para cotizar artículos promocionales personalizados. Respondemos en menos de 24 horas. Llama al (02) 2471-233 o escríbenos a ventas@promoink.ec">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -20,9 +20,179 @@
   <link rel="stylesheet" href="assets/css/components.css?v=106.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=75.0">
   <style>
-    .hero-bento { padding-top: 150px; }
-    @media (max-width: 992px) {
-      .hero-bento { padding-top: 220px; }
+    /* ── Contacto Page Styles ── */
+    .cto-hero {
+      padding-top: 160px;
+      padding-bottom: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cto-hero::before {
+      content: '';
+      position: absolute;
+      top: -150px; right: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,188,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cto-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-cyan);
+      margin-bottom: 1.5rem;
+    }
+    .cto-label::before {
+      content: '';
+      width: 28px; height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+    }
+    .cto-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+    }
+    .cto-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* Split Layout */
+    .cto-split {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    /* Contact channels */
+    .cto-channels { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
+    .cto-channel {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: all var(--duration-base);
+      text-decoration: none;
+      color: inherit;
+    }
+    .cto-channel:hover {
+      border-color: var(--accent-cyan);
+      transform: translateX(6px);
+      box-shadow: -4px 0 20px rgba(0,188,255,0.12);
+    }
+    .cto-channel.pink:hover {
+      border-color: var(--accent-pink);
+      box-shadow: -4px 0 20px rgba(232,62,140,0.12);
+    }
+    .cto-ch-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cto-ch-icon.cyan { background: rgba(0,188,255,0.12); color: var(--accent-cyan); }
+    .cto-ch-icon.pink { background: rgba(232,62,140,0.12); color: var(--accent-pink); }
+    .cto-ch-icon.green { background: rgba(37,211,102,0.12); color: #25D366; }
+    .cto-ch-icon.gold { background: rgba(255,193,7,0.12); color: var(--accent-gold); }
+    .cto-ch-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+    .cto-ch-value { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+    /* Horario badge */
+    .cto-schedule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.25rem;
+      background: rgba(0,188,255,0.06);
+      border: 1px solid rgba(0,188,255,0.15);
+      border-radius: var(--radius-md);
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .cto-schedule-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #25D366;
+      box-shadow: 0 0 8px #25D366;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+    /* Form card */
+    .cto-form-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cto-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+    }
+    .cto-form-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .cto-form-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .cto-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .cto-form-grid .form-group:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cto-submit-btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-d));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-base);
+      box-shadow: 0 4px 20px rgba(232,62,140,0.3);
+    }
+    .cto-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(232,62,140,0.5);
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .cto-split { grid-template-columns: 1fr; gap: 3rem; }
+      .cto-form-card { padding: 2rem; }
+      .cto-form-grid { grid-template-columns: 1fr; }
+      .cto-title { font-size: clamp(2rem, 8vw, 3rem); }
     }
   </style>
 </head>
@@ -197,95 +367,96 @@
       </div>
     </div>
   </header>
-  <!-- Contacto Header & Section -->
-  <section class="section" style="padding-top: 150px; background: var(--bg-surface);">
-    <div class="container text-center reveal">
-      <h1 class="display-2" style="margin-bottom: 1rem;">Ponte en <span class="text-pink">Contacto</span></h1>
-      <p class="section-subtitle" style="margin: 0 auto 3rem auto; max-width: 600px;">Nuestro equipo de expertos está listo para ayudarte con tu próximo proyecto corporativo. Escríbenos.</p>
-    </div>
-  </section>0px;"></div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CTA Section -->
-  <section id="contacto" class="cta-band">
-    <div class="container cta-band-inner">
-      <div class="cta-info reveal">
-        <span class="section-label">Cotización Rápida</span>
-        <h2 class="display-2" style="margin-bottom: 1rem;">¿Listo para destacar tu <span class="text-pink glitch"
-            data-text="marca">marca</span>?</h2>
-        <p class="text-muted" style="margin-bottom: 2rem; font-size: 1.1rem; max-width: 450px;">Solicita una cotización
-          sin compromiso. Nuestro equipo de asesores corporativos te responderá con opciones personalizadas y mockups
-          visuales en menos de 24 horas.</p>
+  <!-- ── HERO + MAIN CONTENT ── -->
+  <section class="cto-hero">
+    <div class="container">
+      <div class="cto-split">
+        <!-- LEFT: Info -->
+        <div>
+          <div class="cto-label reveal">Contáctanos</div>
+          <h1 class="cto-title reveal reveal-delay-1">Hablemos de<br>tu próximo<br><em>proyecto.</em></h1>
+          <p style="color:var(--text-muted); font-size:1.05rem; line-height:1.75; max-width:420px;" class="reveal reveal-delay-2">Cotización sin compromiso. Nuestro equipo te responderá con opciones personalizadas y mockups visuales en menos de 24 horas.</p>
 
-        <div style="display:flex; flex-direction:column; gap:1.2rem; margin-bottom: 2rem;">
-          <div class="flex items-center gap-1">
-            <div
-              style="width:40px; height:40px; border-radius:50%; background:var(--bg-elevated); display:flex; align-items:center; justify-content:center; color:var(--accent-pink);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-            </div>
-            <div>
-              <p style="font-size:0.8rem; color:var(--text-subtle);">Atención al Cliente</p>
-              <p style="font-weight:600;">(02) 2471-233</p>
-            </div>
+          <div class="cto-channels reveal reveal-delay-3">
+            <a href="tel:022471233" class="cto-channel">
+              <div class="cto-ch-icon cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <div class="cto-ch-label">Teléfono fijo</div>
+                <div class="cto-ch-value">(02) 2471-233</div>
+              </div>
+            </a>
+            <a href="https://wa.me/5930989398005" target="_blank" class="cto-channel">
+              <div class="cto-ch-icon green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
+              </div>
+              <div>
+                <div class="cto-ch-label">WhatsApp</div>
+                <div class="cto-ch-value">+593 98 939 8005</div>
+              </div>
+            </a>
+            <a href="mailto:ventas@promoink.ec" class="cto-channel pink">
+              <div class="cto-ch-icon pink">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="cto-ch-label">Correo corporativo</div>
+                <div class="cto-ch-value">ventas@promoink.ec</div>
+              </div>
+            </a>
+            <a href="https://maps.google.com/?q=De+los+Eucaliptos+E1-37+y+10+de+Agosto+Quito" target="_blank" class="cto-channel">
+              <div class="cto-ch-icon gold">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="cto-ch-label">Dirección</div>
+                <div class="cto-ch-value">De los Eucaliptos E1-37, Quito</div>
+              </div>
+            </a>
           </div>
-          <div class="flex items-center gap-1">
-            <div
-              style="width:40px; height:40px; border-radius:50%; background:var(--bg-elevated); display:flex; align-items:center; justify-content:center; color:var(--accent-cyan);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-            </div>
-            <div>
-              <p style="font-size:0.8rem; color:var(--text-subtle);">Email Corporativo</p>
-              <p style="font-weight:600;">ventas@promoink.ec</p>
-            </div>
+
+          <div class="cto-schedule reveal reveal-delay-4">
+            <div class="cto-schedule-dot"></div>
+            <span>Atención: Lun–Vie 8:00–18:00 · Sáb 9:00–13:00</span>
           </div>
         </div>
-      </div>
 
-      <div class="card reveal reveal-delay-2"
-        style="padding: 2.5rem; background: var(--bg-primary); box-shadow: var(--shadow-glow);">
-        <form id="quote-form" class="cta-form">
-          <div class="cta-form-row">
-            <div class="form-group">
-              <label class="form-label">Nombre Empresa *</label>
-              <input type="text" name="company" class="form-control" required placeholder="Ej. ACME Corp">
+        <!-- RIGHT: Form -->
+        <div class="cto-form-card reveal reveal-delay-2">
+          <div class="cto-form-title">Solicitar cotización</div>
+          <div class="cto-form-sub">Completa el formulario y te respondemos en menos de 24 h.</div>
+          <form id="quote-form">
+            <div class="cto-form-grid">
+              <div class="form-group">
+                <label class="form-label">Empresa *</label>
+                <input type="text" name="company" class="form-control" required placeholder="Ej. ACME Corp">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nombre *</label>
+                <input type="text" name="contact_name" class="form-control" required placeholder="Tu nombre">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Correo *</label>
+                <input type="email" name="email" class="form-control" required placeholder="correo@empresa.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Teléfono / WhatsApp</label>
+                <input type="tel" name="phone" class="form-control" placeholder="099 123 4567">
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label class="form-label">¿Qué necesitas?</label>
+                <textarea name="message" class="form-control" placeholder="Artículos, cantidades, colores corporativos, fecha de entrega..."></textarea>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">Nombre Contacto *</label>
-              <input type="text" name="contact_name" class="form-control" required placeholder="Tu nombre">
-            </div>
-          </div>
-          <div class="cta-form-row">
-            <div class="form-group">
-              <label class="form-label">Correo Electrónico *</label>
-              <input type="email" name="email" class="form-control" required placeholder="correo@empresa.com">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Teléfono / WhatsApp</label>
-              <input type="tel" name="phone" class="form-control" placeholder="099 123 4567">
-            </div>
-          </div>
-          <div class="form-group" style="margin-top: 0.5rem;">
-            <label class="form-label">Detalles de lo que buscas</label>
-            <textarea name="message" class="form-control"
-              placeholder="Describe los artículos que necesitas, cantidades estimadas, colores corporativos..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg"
-            style="margin-top: 1rem; width: 100%; justify-content: center;">
-            Solicitar Cotización <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </form>
+            <button type="submit" class="cto-submit-btn">
+              Enviar solicitud
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+          <p style="font-size:0.78rem; color:var(--text-subtle); margin-top:1.25rem; text-align:center;">Al enviar aceptas nuestra política de privacidad. Sin spam, prometido.</p>
+        </div>
       </div>
     </div>
   </section>

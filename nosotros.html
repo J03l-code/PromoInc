@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoInk ARTICULOS PROMOCIONALES</title>
+  <title>Nosotros — PromoInk | Artículos Promocionales en Quito</title>
   <link rel="icon" href="assets/images/favicon.png">
-  <meta name="description" content="Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.">
+  <meta name="description" content="Conoce la historia, misión y equipo detrás de PromoInk. Más de 5 años creando artículos promocionales de alto impacto para empresas en Quito y todo Ecuador.">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -20,9 +20,243 @@
   <link rel="stylesheet" href="assets/css/components.css?v=106.0">
   <link rel="stylesheet" href="assets/css/animations.css?v=75.0">
   <style>
-    .hero-bento { padding-top: 150px; }
-    @media (max-width: 992px) {
-      .hero-bento { padding-top: 220px; }
+    /* ── Nosotros Page Styles ── */
+    .nos-hero {
+      padding-top: 160px;
+      padding-bottom: 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .nos-hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(232,62,140,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .nos-hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-pink);
+      margin-bottom: 1.5rem;
+    }
+    .nos-hero-label::before {
+      content: '';
+      width: 28px; height: 2px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+    }
+    .nos-hero-title {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .nos-hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent-pink) 20%, var(--accent-cyan) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nos-hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    /* Stats Row */
+    .nos-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 4rem;
+    }
+    .nos-stat-item {
+      background: var(--bg-primary);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: background var(--duration-base);
+    }
+    .nos-stat-item:hover { background: var(--bg-surface); }
+    .nos-stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .nos-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    /* Misión / Visión grid */
+    .nos-mv-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .nos-story-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .nos-story-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--accent-pink), var(--accent-cyan));
+      border-radius: 4px 0 0 4px;
+    }
+    .nos-mv-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+    .nos-mv-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2rem 2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-base), box-shadow var(--duration-base);
+    }
+    .nos-mv-card:hover {
+      transform: translateX(6px);
+      box-shadow: -4px 0 20px rgba(232,62,140,0.15);
+    }
+    .nos-mv-card.cyan:hover { box-shadow: -4px 0 20px rgba(0,188,255,0.15); }
+    .nos-mv-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 4px; height: 100%;
+      background: var(--accent-pink);
+    }
+    .nos-mv-card.cyan::before { background: var(--accent-cyan); }
+    .nos-mv-card.gold::before { background: var(--accent-gold); }
+    .nos-mv-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .nos-mv-icon.pink { background: rgba(232,62,140,0.12); color: var(--accent-pink); }
+    .nos-mv-icon.cyan { background: rgba(0,188,255,0.12); color: var(--accent-cyan); }
+    .nos-mv-icon.gold { background: rgba(255,193,7,0.12); color: var(--accent-gold); }
+    .nos-mv-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .nos-mv-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; }
+    /* Spotlight gradient card */
+    .nos-spotlight {
+      background: linear-gradient(135deg, #2d0a20 0%, #1a0a2e 50%, #0a1a2e 100%);
+      border: 1px solid rgba(232,62,140,0.2);
+      border-radius: 30px;
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .nos-spotlight::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(232,62,140,0.25) 0%, transparent 70%);
+    }
+    .nos-spotlight-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-pink);
+      border: 1px solid rgba(232,62,140,0.3);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .nos-spotlight h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .nos-spotlight p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    /* Services grid */
+    .nos-services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .nos-service-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all var(--duration-base);
+      position: relative;
+      overflow: hidden;
+    }
+    .nos-service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232,62,140,0.04), rgba(0,188,255,0.04));
+      opacity: 0;
+      transition: opacity var(--duration-base);
+    }
+    .nos-service-card:hover { border-color: rgba(232,62,140,0.25); transform: translateY(-4px); }
+    .nos-service-card:hover::before { opacity: 1; }
+    .nos-service-num {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--bg-elevated);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .nos-service-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .nos-service-card p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.6; }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .nos-stats { grid-template-columns: repeat(2, 1fr); }
+      .nos-mv-grid { grid-template-columns: 1fr; }
+      .nos-services { grid-template-columns: 1fr 1fr; }
+      .nos-spotlight { padding: 2.5rem 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .nos-stats { grid-template-columns: repeat(2, 1fr); }
+      .nos-services { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -198,30 +432,131 @@
     </div>
   </header>
 
-  <!-- Nosotros Header -->
-  <section class="section" style="padding-top: 150px; background: var(--bg-surface);">
-    <div class="container text-center reveal">
-      <h1 class="display-2" style="margin-bottom: 1rem;">Sobre <span class="text-cyan">Nosotros</span></h1>
-      <p class="section-subtitle" style="margin: 0 auto; max-width: 600px;">Conoce más acerca de PromoInk, nuestra historia, visión y compromiso con la excelencia corporativa.</p>
+  <!-- ── HERO ── -->
+  <section class="nos-hero">
+    <div class="container">
+      <div class="nos-hero-label reveal">Sobre PromoInk</div>
+      <h1 class="nos-hero-title reveal reveal-delay-1">Más de 5 años<br>imprimiendo <em>identidad</em><br>corporativa.</h1>
+      <p class="nos-hero-sub reveal reveal-delay-2">Somos el aliado estratégico de empresas y emprendedores en Ecuador para crear artículos promocionales que generan recordación de marca real y duradera.</p>
+      <div class="flex gap-2 reveal reveal-delay-3">
+        <a href="contacto.html" class="btn btn-primary btn-lg">Cotizar ahora</a>
+        <a href="catalogo.html" class="btn btn-secondary btn-lg">Ver catálogo</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="nos-stats reveal reveal-delay-4">
+        <div class="nos-stat-item">
+          <span class="nos-stat-num text-pink" data-count="5">5</span>
+          <span class="nos-stat-label">años de experiencia</span>
+        </div>
+        <div class="nos-stat-item">
+          <span class="nos-stat-num text-cyan" data-count="350">350+</span>
+          <span class="nos-stat-label">clientes satisfechos</span>
+        </div>
+        <div class="nos-stat-item">
+          <span class="nos-stat-num" style="color:var(--accent-gold)" data-count="12">12+</span>
+          <span class="nos-stat-label">técnicas de impresión</span>
+        </div>
+        <div class="nos-stat-item">
+          <span class="nos-stat-num text-pink" data-count="98">98%</span>
+          <span class="nos-stat-label">tasa de satisfacción</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Nosotros Content -->
-  <section class="section">
+  <!-- ── HISTORIA + MISIÓN / VISIÓN ── -->
+  <section class="section" style="padding-top:0">
     <div class="container">
-      <div class="bento-grid">
-        <div class="bento-item bento-text reveal" style="grid-column: span 12; padding: 3rem; background: var(--bg-primary);">
-          <h2 style="font-size: 2rem; margin-bottom: 1rem;">Nuestra Historia</h2>
-          <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">En PromoInk iniciamos con un objetivo claro: revolucionar la forma en que las empresas ecuatorianas se comunican a través del merchandising y los artículos promocionales. Con más de 5 años en el mercado, hemos perfeccionado cada técnica de impresión y estampado para garantizar la máxima calidad en cada producto entregado.</p>
-          <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">Creemos que cada artículo regalado no es solo un objeto, es una extensión visual y táctil de los valores de tu marca. Por eso, nos dedicamos a asesorar de manera personalizada a cada cliente, acompañándolo en todo el proceso de branding para asegurar resultados excepcionales.</p>
+      <div class="nos-mv-grid">
+        <!-- Historia -->
+        <div class="nos-story-card reveal">
+          <span class="section-label" style="margin-bottom:1.5rem;">Nuestra Historia</span>
+          <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; letter-spacing:-0.03em; margin-bottom:1.5rem; line-height:1.15;">Comenzamos con un sello de tinta y un sueño corporativo.</h2>
+          <p style="color:var(--text-muted); line-height:1.8; margin-bottom:1.25rem;">En PromoInk iniciamos con un objetivo claro: revolucionar la forma en que las empresas ecuatorianas se comunican a través del merchandising. Con más de 5 años en el mercado, hemos perfeccionado cada técnica de impresión y estampado.</p>
+          <p style="color:var(--text-muted); line-height:1.8;">Creemos que cada artículo regalado es una extensión visual y táctil de los valores de tu marca. Por eso asesoramos de manera personalizada a cada cliente, acompañándolo en todo el proceso de branding.</p>
+          <div style="margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border); display:flex; gap:2rem;">
+            <div>
+              <div style="font-size:1.8rem; font-weight:800; letter-spacing:-0.04em; color:var(--accent-pink);">2019</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em;">Fundación</div>
+            </div>
+            <div>
+              <div style="font-size:1.8rem; font-weight:800; letter-spacing:-0.04em; color:var(--accent-cyan);">Quito</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em;">Ecuador</div>
+            </div>
+          </div>
         </div>
-        <div class="bento-item reveal reveal-delay-1" style="grid-column: span 6; padding: 3rem; background: var(--bg-elevated); box-shadow: var(--shadow-glow);">
-          <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-pink);">Nuestra Misión</h3>
-          <p style="color: var(--text-muted); line-height: 1.6;">Proveer artículos promocionales de la más alta calidad con un servicio de personalización impecable. Ayudar a las empresas a destacar y permanecer en la memoria de sus clientes mediante productos innovadores, útiles y visualmente impactantes.</p>
+        <!-- Misión / Visión / Valores -->
+        <div class="nos-mv-stack">
+          <div class="nos-mv-card reveal reveal-delay-1">
+            <div class="nos-mv-icon pink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <h3>Nuestra Misión</h3>
+            <p>Proveer artículos promocionales de la más alta calidad con personalización impecable. Ayudar a las empresas a destacar y permanecer en la memoria de sus clientes.</p>
+          </div>
+          <div class="nos-mv-card cyan reveal reveal-delay-2">
+            <div class="nos-mv-icon cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6l5 5L12 4l6 7 5-5"/><path d="M1 18l5-5 6 7 6-7 5 5"/></svg></div>
+            <h3>Nuestra Visión</h3>
+            <p>Consolidarnos como líderes en merchandising corporativo a nivel nacional, reconocidos por eficiencia, innovación constante y servicio al cliente inigualable.</p>
+          </div>
+          <div class="nos-mv-card gold reveal reveal-delay-3">
+            <div class="nos-mv-icon gold"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <h3>Nuestros Valores</h3>
+            <p>Calidad sin concesiones, atención personalizada, cumplimiento en tiempos de entrega y honestidad en cada cotización. Eso nos define.</p>
+          </div>
         </div>
-        <div class="bento-item reveal reveal-delay-2" style="grid-column: span 6; padding: 3rem; background: var(--bg-elevated); box-shadow: var(--shadow-glow);">
-          <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">Nuestra Visión</h3>
-          <p style="color: var(--text-muted); line-height: 1.6;">Consolidarnos como los líderes en la industria del merchandising corporativo a nivel nacional, siendo reconocidos por nuestra eficiencia, innovación constante, tecnología de impresión avanzada y un servicio al cliente inigualable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPOTLIGHT ── -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="nos-spotlight reveal">
+        <span class="nos-spotlight-tag">¿Por qué PromoInk?</span>
+        <h2>Tu marca merece ser <span class="text-gradient">recordada.</span></h2>
+        <p>Cada producto que fabricamos lleva el peso de tu identidad corporativa. No hacemos artículos genéricos — hacemos extensiones de tu marca que generan conversaciones, fidelidad y presencia.</p>
+        <a href="contacto.html" class="btn btn-primary btn-lg">Empezar un proyecto →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICIOS ── -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div style="margin-bottom:3rem;" class="reveal">
+        <span class="section-label">Lo que hacemos</span>
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; letter-spacing:-0.03em; margin-top:0.5rem;">Especialidades que nos<br>hacen únicos.</h2>
+      </div>
+      <div class="nos-services">
+        <div class="nos-service-card reveal">
+          <div class="nos-service-num">01</div>
+          <h4>Sublimación & DTF</h4>
+          <p>Impresión de alta resolución con colores que no se desgastan. Ideal para textiles, tazas, gorras y accesorios con degradados complejos.</p>
+        </div>
+        <div class="nos-service-card reveal reveal-delay-1">
+          <div class="nos-service-num">02</div>
+          <h4>Impresión UV Full Color</h4>
+          <p>Tecnología de vanguardia para artículos rígidos: bolígrafos, llaveros, termos y packaging con acabado premium de alta definición.</p>
+        </div>
+        <div class="nos-service-card reveal reveal-delay-2">
+          <div class="nos-service-num">03</div>
+          <h4>Grabado & Bordado</h4>
+          <p>Desde grabado láser en metal hasta bordado computarizado en textiles corporativos. El acabado más elegante para tu marca.</p>
+        </div>
+        <div class="nos-service-card reveal reveal-delay-1">
+          <div class="nos-service-num">04</div>
+          <h4>Serigrafía Corporativa</h4>
+          <p>La técnica clásica llevada a la excelencia. Perfecta para grandes tirajes con colores pantone exactos de tu identidad visual.</p>
+        </div>
+        <div class="nos-service-card reveal reveal-delay-2">
+          <div class="nos-service-num">05</div>
+          <h4>Kits & Empaques</h4>
+          <p>Diseño y producción de kits de bienvenida, cofres corporativos y empaques personalizados que hacen la diferencia al desempacar.</p>
+        </div>
+        <div class="nos-service-card reveal reveal-delay-3">
+          <div class="nos-service-num">06</div>
+          <h4>Asesoría de Branding</h4>
+          <p>No solo producimos — te guiamos. Acompañamos la selección de productos, materiales y técnicas para maximizar el impacto de tu inversión.</p>
         </div>
       </div>
     </div>
