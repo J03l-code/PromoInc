@@ -87,6 +87,10 @@ function getDB(): PDO
             try {
                 $pdo->exec("UPDATE settings SET `value` = 'info@promocionalespromoink.com' WHERE `key` = 'site_email' AND (LOWER(TRIM(`value`)) = 'info@promocionalesink.com' OR LOWER(TRIM(`value`)) = 'info@promocionalesink.com/')");
             } catch (\Exception $ex) {}
+            // Crear columna show_in_sidebar automáticamente si no existe para evitar fallas
+            try {
+                $pdo->exec("ALTER TABLE categories ADD COLUMN show_in_sidebar TINYINT(1) NOT NULL DEFAULT 1 AFTER active");
+            } catch (\Exception $ex) {}
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
         }

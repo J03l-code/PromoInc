@@ -13,13 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 $db = getDB();
 
-$stmt = $db->query("
-    SELECT id, parent_id, name, slug, icon, sort_order, show_in_sidebar
-    FROM categories
-    WHERE active = 1
-    ORDER BY sort_order ASC, name ASC
-");
-$rows = $stmt->fetchAll();
+try {
+    $stmt = $db->query("
+        SELECT id, parent_id, name, slug, icon, sort_order, show_in_sidebar
+        FROM categories
+        WHERE active = 1
+        ORDER BY sort_order ASC, name ASC
+    ");
+    $rows = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $stmt = $db->query("
+        SELECT id, parent_id, name, slug, icon, sort_order
+        FROM categories
+        WHERE active = 1
+        ORDER BY sort_order ASC, name ASC
+    ");
+    $rows = $stmt->fetchAll();
+    foreach ($rows as &$row) {
+        $row['show_in_sidebar'] = 1;
+    }
+    unset($row);
+}
 
 // Lista plana (para dropdowns admin)
 if (!empty($_GET['flat'])) {
