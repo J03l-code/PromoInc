@@ -40,6 +40,23 @@ window.quickAddToCart = function(event, id, name, sku, price, image, minQty, shi
 
 document.addEventListener('DOMContentLoaded', () => {
   
+  // --- SEO Canonical Fix ---
+  (function() {
+    if (!document.querySelector('link[rel="canonical"]')) {
+      const link = document.createElement('link');
+      link.rel = 'canonical';
+      const url = new URL(window.location.href);
+      // Remove common tracking params so Google doesn't index them as duplicates
+      ['fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'gclid'].forEach(p => url.searchParams.delete(p));
+      
+      let finalUrl = url.href;
+      // Normalize index.php / home.html to root
+      finalUrl = finalUrl.replace('/index.php', '/').replace('/home.html', '/');
+      link.href = finalUrl;
+      document.head.appendChild(link);
+    }
+  })();
+
   // --- Lenis Smooth Scroll ---
   if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis({

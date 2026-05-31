@@ -7,6 +7,10 @@ DirectoryIndex index.php index.html
     RewriteEngine On
     RewriteBase /
     
+    # 301 Canonical Redirect: Forzar / en lugar de index.php o home.html para evitar contenido duplicado en Google
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /+(index\.php|home\.html)\ HTTP/ [NC]
+    RewriteRule ^(index\.php|home\.html)$ / [R=301,L]
+
     # Si la petición es para una carpeta o archivo que existe, servirlo directamente
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
