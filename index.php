@@ -1107,7 +1107,7 @@ header("Expires: 0");
   <!-- Scripts -->
   <script src="assets/js/cart.js?v=66.0"></script>
   <script src="assets/js/checkout.js?v=78.0"></script>
-  <script src="assets/js/main.js?v=84.0"></script>
+  <script src="assets/js/main.js?v=85.0"></script>
   <script>
     function openCart() {
       document.getElementById('cart-panel').classList.add('open');

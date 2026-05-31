@@ -1,5 +1,5 @@
 /* PromoInk — main.js */
-const VERSION = '79.0';
+const VERSION = '85.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty, shippingCost) {
