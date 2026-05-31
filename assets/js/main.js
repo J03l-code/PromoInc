@@ -456,6 +456,31 @@ async function loadSiteSettings() {
       if (s.site_address) {
         const addrEl = document.querySelector('.footer-contact-item svg path[d*="M21 10c0 7"]')?.parentElement?.nextElementSibling;
         if (addrEl) addrEl.textContent = s.site_address;
+        // Contacto page address
+        const ctoAddr = document.getElementById('cto-address');
+        if (ctoAddr) ctoAddr.innerHTML = s.site_address;
+        const ctoAddrLink = document.getElementById('cto-addr-link');
+        if (ctoAddrLink) ctoAddrLink.href = `https://maps.google.com/?q=${encodeURIComponent(s.site_address)}`;
+      }
+
+      // Contacto page — phone, whatsapp, email links
+      if (s.site_phone || s.whatsapp) {
+        const phone = s.site_phone || (s.whatsapp ? `+${s.whatsapp}` : '');
+        const wa    = s.whatsapp ? s.whatsapp.replace(/\D/g,'') : '';
+        const ctoPhone    = document.getElementById('cto-phone');
+        const ctoWa       = document.getElementById('cto-whatsapp');
+        const ctoPhoneLink= document.getElementById('cto-phone-link');
+        const ctoWaLink   = document.getElementById('cto-wa-link');
+        if (ctoPhone    && phone) ctoPhone.textContent = phone;
+        if (ctoWa       && wa)    ctoWa.textContent = `+${wa}`;
+        if (ctoPhoneLink && phone) ctoPhoneLink.href = `tel:${phone.replace(/\s/g,'')}`;
+        if (ctoWaLink   && wa)    ctoWaLink.href = `https://wa.me/${wa}?text=Hola%20PromoInk%20estoy%20interesado%20en...`;
+      }
+      if (s.site_email) {
+        const ctoEmail     = document.getElementById('cto-email');
+        const ctoEmailLink = document.getElementById('cto-email-link');
+        if (ctoEmail)     ctoEmail.textContent = s.site_email;
+        if (ctoEmailLink) ctoEmailLink.href = `mailto:${s.site_email}`;
       }
 
       // Social Media: Redirect all buttons to the Instagram profile
