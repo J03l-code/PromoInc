@@ -152,6 +152,18 @@ try {
         }
     }
 
+    // Agregar columna 'show_in_menu' a categories si no existe
+    try {
+        $db->exec("ALTER TABLE categories ADD COLUMN show_in_menu TINYINT(1) NOT NULL DEFAULT 1 AFTER show_in_sidebar");
+        echo "Columna 'show_in_menu' añadida a categories.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') {
+            echo "Columna 'show_in_menu' ya existe en categories.<br>";
+        } else {
+            throw $e;
+        }
+    }
+
     echo "<h2 style='color:green'>Migración completada exitosamente!</h2>";
 
 } catch (PDOException $e) {

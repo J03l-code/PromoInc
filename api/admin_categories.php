@@ -43,14 +43,15 @@ function createCategory(PDO $db): void {
 
     $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $data['name'])), '-'));
 
-    $stmt = $db->prepare("INSERT INTO categories (parent_id, name, slug, icon, sort_order, active, show_in_sidebar) VALUES (?,?,?,?,?,1,?)");
+    $stmt = $db->prepare("INSERT INTO categories (parent_id, name, slug, icon, sort_order, active, show_in_sidebar, show_in_menu) VALUES (?,?,?,?,?,1,?,?)");
     $stmt->execute([
         (int)($data['parent_id'] ?? 0),
         sanitize($data['name']),
         $slug,
         sanitize($data['icon'] ?? ''),
         (int)($data['sort_order'] ?? 0),
-        isset($data['show_in_sidebar']) ? (int)$data['show_in_sidebar'] : 1
+        isset($data['show_in_sidebar']) ? (int)$data['show_in_sidebar'] : 1,
+        isset($data['show_in_menu']) ? (int)$data['show_in_menu'] : 1
     ]);
     jsonSuccess(['id' => (int)$db->lastInsertId()], 201);
 }
@@ -60,7 +61,7 @@ function updateCategory(PDO $db): void {
     if (empty($data['id'])) jsonError(400, 'ID requerido');
 
     $stmt = $db->prepare("
-        UPDATE categories SET parent_id = :parent_id, name = :name, icon = :icon, sort_order = :sort_order, active = :active, show_in_sidebar = :show_in_sidebar
+        UPDATE categories SET parent_id = :parent_id, name = :name, icon = :icon, sort_order = :sort_order, active = :active, show_in_sidebar = :show_in_sidebar, show_in_menu = :show_in_menu
         WHERE id = :id
     ");
     $stmt->execute([
@@ -70,6 +71,7 @@ function updateCategory(PDO $db): void {
         ':sort_order'      => (int)($data['sort_order'] ?? 0),
         ':active'          => (int)($data['active'] ?? 1),
         ':show_in_sidebar' => isset($data['show_in_sidebar']) ? (int)$data['show_in_sidebar'] : 1,
+        ':show_in_menu'    => isset($data['show_in_menu']) ? (int)$data['show_in_menu'] : 1,
         ':id'              => (int)$data['id'],
     ]);
     jsonSuccess(['updated' => true]);

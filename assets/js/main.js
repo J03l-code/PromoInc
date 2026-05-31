@@ -1,5 +1,5 @@
 /* PromoInk — main.js */
-const VERSION = '85.0';
+const VERSION = '86.0';
 
 // Global function for adding to cart quickly from the Home page
 window.quickAddToCart = function(event, id, name, sku, price, image, minQty, shippingCost) {
@@ -515,13 +515,24 @@ async function loadDynamicCategories() {
     if (json.success && json.data && json.data.length > 0) {
       catalogCategories = json.data;
       
+      // Filtrar categorías y subcategorías para la barra superior/menú de navegación
+      const menuCats = json.data
+        .filter(cat => cat.show_in_menu === undefined || parseInt(cat.show_in_menu) !== 0)
+        .map(cat => {
+          const newCat = { ...cat };
+          if (cat.children) {
+            newCat.children = cat.children.filter(child => child.show_in_menu === undefined || parseInt(child.show_in_menu) !== 0);
+          }
+          return newCat;
+        });
+      
       // Categorías en Navbar
-      dynNav = json.data.map(cat => `
+      dynNav = menuCats.map(cat => `
         <div class="nav-item-dropdown">
           <a href="catalogo.html?category=${cat.id}">
-            ${cat.name} ${cat.children ? '<svg viewBox="0 0 24 24" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>' : ''}
+            ${cat.name} ${cat.children && cat.children.length > 0 ? '<svg viewBox="0 0 24 24" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>' : ''}
           </a>
-          ${cat.children ? `
+          ${cat.children && cat.children.length > 0 ? `
             <div class="dropdown-menu">
               ${cat.children.map(child => `<a href="catalogo.html?category=${child.id}">${child.name}</a>`).join('')}
             </div>
@@ -530,11 +541,11 @@ async function loadDynamicCategories() {
       `).join('');
 
       // Categorías en Menú Móvil
-      json.data.forEach(cat => {
+      menuCats.forEach(cat => {
         dynMobile += `
           <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
             ${cat.name}
-            ${cat.children ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
+            ${cat.children && cat.children.length > 0 ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
           </a>
         `;
         if (cat.children && cat.children.length > 0) {
@@ -550,7 +561,7 @@ async function loadDynamicCategories() {
       });
 
       // Categorías en Footer
-      dynFooter = json.data.map(cat => `
+      dynFooter = menuCats.map(cat => `
         <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
       `).join('');
     }

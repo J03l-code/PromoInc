@@ -767,6 +767,7 @@ document.getElementById('btn-save-category').addEventListener('click', async () 
     sort_order:      parseInt(document.getElementById('category-order').value) || 0,
     active:          document.getElementById('category-active').checked ? 1 : 0,
     show_in_sidebar: document.getElementById('category-show-sidebar').checked ? 1 : 0,
+    show_in_menu:    document.getElementById('category-show-menu').checked ? 1 : 0,
   };
   if (!payload.name) { toast('El nombre es requerido', 'error'); return; }
   if (id) payload.id = parseInt(id);
@@ -798,6 +799,7 @@ async function editCategory(id) {
   document.getElementById('category-parent').value = c.parent_id || 0;
   document.getElementById('category-active').checked = !!parseInt(c.active);
   document.getElementById('category-show-sidebar').checked = c.show_in_sidebar !== undefined ? !!parseInt(c.show_in_sidebar) : true;
+  document.getElementById('category-show-menu').checked = c.show_in_menu !== undefined ? !!parseInt(c.show_in_menu) : true;
   document.getElementById('modal-category-title').textContent = 'Editar Categoría';
   openModal('modal-category');
 }

@@ -91,6 +91,10 @@ function getDB(): PDO
             try {
                 $pdo->exec("ALTER TABLE categories ADD COLUMN show_in_sidebar TINYINT(1) NOT NULL DEFAULT 1 AFTER active");
             } catch (\Exception $ex) {}
+            // Crear columna show_in_menu automáticamente si no existe para evitar fallas
+            try {
+                $pdo->exec("ALTER TABLE categories ADD COLUMN show_in_menu TINYINT(1) NOT NULL DEFAULT 1 AFTER show_in_sidebar");
+            } catch (\Exception $ex) {}
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
         }

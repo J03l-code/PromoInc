@@ -15,7 +15,7 @@ $db = getDB();
 
 try {
     $stmt = $db->query("
-        SELECT id, parent_id, name, slug, icon, sort_order, show_in_sidebar
+        SELECT id, parent_id, name, slug, icon, sort_order, show_in_sidebar, show_in_menu
         FROM categories
         WHERE active = 1
         ORDER BY sort_order ASC, name ASC
@@ -31,6 +31,7 @@ try {
     $rows = $stmt->fetchAll();
     foreach ($rows as &$row) {
         $row['show_in_sidebar'] = 1;
+        $row['show_in_menu'] = 1;
     }
     unset($row);
 }
