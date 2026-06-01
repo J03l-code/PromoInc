@@ -15,14 +15,14 @@ DirectoryIndex index.php index.html
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # Redirigir peticiones de .html a .php de forma transparente para mantener compatibilidad
-    RewriteRule ^producto\.html$ producto.php [L,QSA,T=text/html]
-    RewriteRule ^catalogo\.html$ catalogo.php [L,QSA,T=text/html]
+    RewriteRule ^producto\.html$ producto.php [L,QSA]
+    RewriteRule ^catalogo\.html$ catalogo.php [L,QSA]
 
     # Friendly URLs para Productos: /producto/12-taza-neon-personalizada -> producto.php?id=12
-    RewriteRule ^producto/([0-9]+)-?([^/]*)$ producto.php?id=$1 [L,QSA,T=text/html]
+    RewriteRule ^producto/([0-9]+)-?([^/]*)$ producto.php?id=$1 [L,QSA]
 
     # Friendly URLs para Categorías: /catalogo/categoria/4-oficina -> catalogo.php?category=$1
-    RewriteRule ^catalogo/categoria/([0-9]+)-?([^/]*)$ catalogo.php?category=$1 [L,QSA,T=text/html]
+    RewriteRule ^catalogo/categoria/([0-9]+)-?([^/]*)$ catalogo.php?category=$1 [L,QSA]
 
     # Si la petición es para una carpeta o archivo que existe, servirlo directamente
     RewriteCond %{REQUEST_FILENAME} -f [OR]
