@@ -30,12 +30,15 @@ if ($catId) {
     }
 }
 $seo_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$base_href = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/";
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="UTF-8">
+  <base href="<?php echo $base_href; ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $seo_title; ?></title>
   <link rel="icon" href="assets/images/favicon.png">
