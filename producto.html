@@ -1069,8 +1069,8 @@
 
             ${prices.length > 0 || parseInt(p.on_sale) ? `
               <div class="discount-section" style="margin-bottom:40px; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
-                <div style="padding:15px; background:var(--bg-secondary); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="document.getElementById('discount-table-body').classList.toggle('hidden')">
-                  <h3 style="font-size:1.05rem; margin:0; font-weight:600;">Premiamos las compras grandes con descuentos más grandes</h3>
+                <div style="padding:15px; background:var(--bg-secondary); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:8px; cursor:pointer;" onclick="document.getElementById('discount-table-body').classList.toggle('hidden')">
+                  <h3 style="font-size:1.05rem; margin:0; font-weight:600;">¡Premiamos las compras grandes con descuentos más grandes!</h3>
                   <span style="color:var(--accent-cyan); font-size:0.9rem;">Ver tabla de descuentos</span>
                 </div>
                 <div id="discount-table-body" class="hidden">
