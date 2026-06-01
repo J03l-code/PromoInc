@@ -109,9 +109,9 @@ function createAdminProduct(PDO $db): void {
 
     $stmt = $db->prepare("
         INSERT INTO products
-          (category_id, sku, name, slug, description, price_from, shipping_cost, image_webp, images_gallery, min_quantity, show_min_quantity, customizable, customization_type, featured, on_sale, sale_price, sale_discount, active)
+          (category_id, sku, name, slug, description, dimensions, weight, capacity, customization_area, specifications, price_from, shipping_cost, image_webp, images_gallery, min_quantity, show_min_quantity, customizable, customization_type, featured, on_sale, sale_price, sale_discount, active)
         VALUES
-          (:category_id, :sku, :name, :slug, :description, :price_from, :shipping_cost, :image_webp, :images_gallery, :min_quantity, :show_min_quantity, :customizable, :customization_type, :featured, :on_sale, :sale_price, :sale_discount, 1)
+          (:category_id, :sku, :name, :slug, :description, :dimensions, :weight, :capacity, :customization_area, :specifications, :price_from, :shipping_cost, :image_webp, :images_gallery, :min_quantity, :show_min_quantity, :customizable, :customization_type, :featured, :on_sale, :sale_price, :sale_discount, 1)
     ");
     
     $onSale = (int)($data['on_sale'] ?? 0);
@@ -141,6 +141,11 @@ function createAdminProduct(PDO $db): void {
         ':name'         => sanitize($data['name']),
         ':slug'         => $slug,
         ':description'  => sanitize($data['description'] ?? ''),
+        ':dimensions'   => sanitize($data['dimensions'] ?? ''),
+        ':weight'       => sanitize($data['weight'] ?? ''),
+        ':capacity'     => sanitize($data['capacity'] ?? ''),
+        ':customization_area' => sanitize($data['customization_area'] ?? ''),
+        ':specifications'     => sanitize($data['specifications'] ?? ''),
         ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
         ':shipping_cost'=> is_numeric($data['shipping_cost'] ?? null) ? (float)$data['shipping_cost'] : 0.00,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
@@ -210,6 +215,11 @@ function updateAdminProduct(PDO $db): void {
               sku          = :sku,
               name         = :name,
               description  = :description,
+              dimensions   = :dimensions,
+              weight       = :weight,
+              capacity     = :capacity,
+              customization_area = :customization_area,
+              specifications = :specifications,
               price_from   = :price_from,
               shipping_cost = :shipping_cost,
               {$updateImage}
@@ -231,6 +241,11 @@ function updateAdminProduct(PDO $db): void {
             ':sku'          => sanitize($data['sku']),
             ':name'         => sanitize($data['name']),
             ':description'  => sanitize($data['description'] ?? ''),
+            ':dimensions'   => sanitize($data['dimensions'] ?? ''),
+            ':weight'       => sanitize($data['weight'] ?? ''),
+            ':capacity'     => sanitize($data['capacity'] ?? ''),
+            ':customization_area' => sanitize($data['customization_area'] ?? ''),
+            ':specifications'     => sanitize($data['specifications'] ?? ''),
             ':price_from'   => is_numeric($data['price_from'] ?? null) ? (float)$data['price_from'] : null,
             ':shipping_cost'=> is_numeric($data['shipping_cost'] ?? null) ? (float)$data['shipping_cost'] : 0.00,
             ':images_gallery'=> isset($data['images_gallery']) ? sanitize($data['images_gallery']) : null,

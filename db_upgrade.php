@@ -164,6 +164,46 @@ try {
         }
     }
 
+    // Agregar columna 'dimensions' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN dimensions VARCHAR(100) NULL DEFAULT NULL AFTER description");
+        echo "Columna 'dimensions' añadida a products.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') { echo "Columna 'dimensions' ya existe.<br>"; } else { throw $e; }
+    }
+
+    // Agregar columna 'weight' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN weight VARCHAR(50) NULL DEFAULT NULL AFTER dimensions");
+        echo "Columna 'weight' añadida a products.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') { echo "Columna 'weight' ya existe.<br>"; } else { throw $e; }
+    }
+
+    // Agregar columna 'capacity' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN capacity VARCHAR(50) NULL DEFAULT NULL AFTER weight");
+        echo "Columna 'capacity' añadida a products.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') { echo "Columna 'capacity' ya existe.<br>"; } else { throw $e; }
+    }
+
+    // Agregar columna 'customization_area' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN customization_area VARCHAR(100) NULL DEFAULT NULL AFTER capacity");
+        echo "Columna 'customization_area' añadida a products.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') { echo "Columna 'customization_area' ya existe.<br>"; } else { throw $e; }
+    }
+
+    // Agregar columna 'specifications' a products si no existe
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN specifications TEXT NULL DEFAULT NULL AFTER customization_area");
+        echo "Columna 'specifications' añadida a products.<br>";
+    } catch (PDOException $e) {
+        if ($e->getCode() == '42S21') { echo "Columna 'specifications' ya existe.<br>"; } else { throw $e; }
+    }
+
     echo "<h2 style='color:green'>Migración completada exitosamente!</h2>";
 
 } catch (PDOException $e) {

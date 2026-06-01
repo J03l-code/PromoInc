@@ -95,6 +95,22 @@ function getDB(): PDO
             try {
                 $pdo->exec("ALTER TABLE categories ADD COLUMN show_in_menu TINYINT(1) NOT NULL DEFAULT 1 AFTER show_in_sidebar");
             } catch (\Exception $ex) {}
+            // Crear columnas de especificaciones en products automáticamente si no existen
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN dimensions VARCHAR(100) NULL DEFAULT NULL AFTER description");
+            } catch (\Exception $ex) {}
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN weight VARCHAR(50) NULL DEFAULT NULL AFTER dimensions");
+            } catch (\Exception $ex) {}
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN capacity VARCHAR(50) NULL DEFAULT NULL AFTER weight");
+            } catch (\Exception $ex) {}
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN customization_area VARCHAR(100) NULL DEFAULT NULL AFTER capacity");
+            } catch (\Exception $ex) {}
+            try {
+                $pdo->exec("ALTER TABLE products ADD COLUMN specifications TEXT NULL DEFAULT NULL AFTER customization_area");
+            } catch (\Exception $ex) {}
         } catch (PDOException $e) {
             jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
         }

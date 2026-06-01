@@ -495,6 +495,55 @@
       margin-bottom: 15px;
       text-align: center;
     }
+    /* ── ACERCA DEL PRODUCTO ─────────────────────── */
+    .about-product-section {
+      margin-top: 32px;
+    }
+
+    .about-product-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: -0.01em;
+    }
+
+    .about-product-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .about-product-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.15s;
+    }
+
+    .about-product-table tr:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .about-product-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .abt-label {
+      padding: 11px 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      width: 42%;
+      vertical-align: top;
+    }
+
+    .abt-value {
+      padding: 11px 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      vertical-align: top;
+    }
   </style>
 </head>
 
@@ -976,7 +1025,6 @@
             </div>
             
             <h1>${p.name}</h1>
-            <p class="product-description-short">${p.description || 'Producto premium personalizable con el logo de tu empresa.'}</p>
             
             <div class="calc-box">
                <div class="calc-row">
@@ -1058,32 +1106,28 @@
               </div>
             ` : ''}
 
-            <div class="specs-list">
-               <div class="spec-item">
-                  <span class="spec-label">SKU</span>
-                  <span class="spec-value">${p.sku}</span>
-               </div>
-               <div class="spec-item">
-                  <span class="spec-label">Categoría</span>
-                  <span class="spec-value">${p.category_name}</span>
-               </div>
-               <div class="spec-item">
-                  <span class="spec-label">Personalizable</span>
-                  <span class="spec-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</span>
-                </div>
-                ${p.customizable && p.customization_type ? `
-                <div class="spec-item">
-                  <span class="spec-label">Tipo de Personalización</span>
-                  <span class="spec-value">${p.customization_type}</span>
-                </div>
-                ` : ''}
-                <div class="spec-item" style="display:none;"
-               </div>
-               <div class="spec-item">
-                  <span class="spec-label">Muestras</span>
-                  <span class="spec-value">Disponibles</span>
-               </div>
-            </div>
+            ${(p.dimensions || p.weight || p.capacity || p.customization_area || p.specifications || p.description) ? `
+            <div class="about-product-section">
+              <h3 class="about-product-title">Acerca del producto</h3>
+              <table class="about-product-table">
+                ${p.sku ? `<tr><td class="abt-label">SKU</td><td class="abt-value">${p.sku}</td></tr>` : ''}
+                ${p.dimensions ? `<tr><td class="abt-label">Dimensiones</td><td class="abt-value">${p.dimensions}</td></tr>` : ''}
+                ${p.weight ? `<tr><td class="abt-label">Peso</td><td class="abt-value">${p.weight}</td></tr>` : ''}
+                ${p.capacity ? `<tr><td class="abt-label">Capacidad</td><td class="abt-value">${p.capacity}</td></tr>` : ''}
+                ${p.customization_area ? `<tr><td class="abt-label">Área de personalización</td><td class="abt-value">${p.customization_area}</td></tr>` : ''}
+                ${p.specifications ? `<tr><td class="abt-label">Especificaciones</td><td class="abt-value">${p.specifications}</td></tr>` : ''}
+                ${p.customization_type ? `<tr><td class="abt-label">Personalización</td><td class="abt-value">${p.customization_type}</td></tr>` : ''}
+                ${p.category_name ? `<tr><td class="abt-label">Categoría</td><td class="abt-value">${p.category_name}</td></tr>` : ''}
+              </table>
+            </div>` : `
+            <div class="about-product-section">
+              <h3 class="about-product-title">Acerca del producto</h3>
+              <table class="about-product-table">
+                <tr><td class="abt-label">SKU</td><td class="abt-value">${p.sku}</td></tr>
+                <tr><td class="abt-label">Categoría</td><td class="abt-value">${p.category_name || '—'}</td></tr>
+                <tr><td class="abt-label">Personalizable</td><td class="abt-value">${p.customizable ? 'Sí, incluye logo' : 'No'}</td></tr>
+              </table>
+            </div>`}
           </div>
         </div>
       `;

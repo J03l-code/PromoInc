@@ -140,8 +140,8 @@ function createProduct(PDO $db): void {
     }
 
     $stmt = $db->prepare("
-        INSERT INTO products (category_id, sku, name, slug, description, price_from, image_webp, min_quantity, show_min_quantity, customizable, featured)
-        VALUES (:category_id, :sku, :name, :slug, :description, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :featured)
+        INSERT INTO products (category_id, sku, name, slug, description, dimensions, weight, capacity, customization_area, specifications, price_from, image_webp, min_quantity, show_min_quantity, customizable, featured)
+        VALUES (:category_id, :sku, :name, :slug, :description, :dimensions, :weight, :capacity, :customization_area, :specifications, :price_from, :image_webp, :min_quantity, :show_min_quantity, :customizable, :featured)
     ");
     $stmt->execute([
         ':category_id'  => (int)$data['category_id'],
@@ -149,6 +149,11 @@ function createProduct(PDO $db): void {
         ':name'         => sanitize($data['name']),
         ':slug'         => sanitize($data['slug']),
         ':description'  => sanitize($data['description'] ?? ''),
+        ':dimensions'   => sanitize($data['dimensions'] ?? ''),
+        ':weight'       => sanitize($data['weight'] ?? ''),
+        ':capacity'     => sanitize($data['capacity'] ?? ''),
+        ':customization_area' => sanitize($data['customization_area'] ?? ''),
+        ':specifications'     => sanitize($data['specifications'] ?? ''),
         ':price_from'   => $data['price_from'] ?? null,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),
@@ -170,6 +175,11 @@ function updateProduct(PDO $db): void {
           category_id  = :category_id,
           name         = :name,
           description  = :description,
+          dimensions   = :dimensions,
+          weight       = :weight,
+          capacity     = :capacity,
+          customization_area = :customization_area,
+          specifications = :specifications,
           price_from   = :price_from,
           image_webp   = :image_webp,
           min_quantity = :min_quantity,
@@ -183,6 +193,11 @@ function updateProduct(PDO $db): void {
         ':category_id'  => (int)$data['category_id'],
         ':name'         => sanitize($data['name']),
         ':description'  => sanitize($data['description'] ?? ''),
+        ':dimensions'   => sanitize($data['dimensions'] ?? ''),
+        ':weight'       => sanitize($data['weight'] ?? ''),
+        ':capacity'     => sanitize($data['capacity'] ?? ''),
+        ':customization_area' => sanitize($data['customization_area'] ?? ''),
+        ':specifications'     => sanitize($data['specifications'] ?? ''),
         ':price_from'   => $data['price_from'] ?? null,
         ':image_webp'   => sanitize($data['image_webp'] ?? ''),
         ':min_quantity' => (int)($data['min_quantity'] ?? 10),

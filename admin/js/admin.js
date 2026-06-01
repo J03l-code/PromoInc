@@ -551,6 +551,11 @@ document.getElementById('btn-save-product').addEventListener('click', async () =
     sku:           document.getElementById('product-sku').value.trim(),
     name:          document.getElementById('product-name').value.trim(),
     description:   document.getElementById('product-desc').value.trim(),
+    dimensions:    document.getElementById('product-dimensions').value.trim(),
+    weight:        document.getElementById('product-weight').value.trim(),
+    capacity:      document.getElementById('product-capacity').value.trim(),
+    customization_area: document.getElementById('product-customization-area').value.trim(),
+    specifications:document.getElementById('product-specifications').value.trim(),
     price_from:    document.getElementById('product-price').value || null,
     shipping_cost: parseFloat(document.getElementById('product-shipping').value) || 0,
     image_webp:    document.getElementById('product-image').value || '',
@@ -591,6 +596,11 @@ async function editProduct(id) {
   document.getElementById('product-name').value     = p.name;
   document.getElementById('product-sku').value      = p.sku;
   document.getElementById('product-desc').value     = p.description || '';
+  document.getElementById('product-dimensions').value = p.dimensions || '';
+  document.getElementById('product-weight').value     = p.weight || '';
+  document.getElementById('product-capacity').value   = p.capacity || '';
+  document.getElementById('product-customization-area').value = p.customization_area || '';
+  document.getElementById('product-specifications').value     = p.specifications || '';
   document.getElementById('product-price').value    = p.price_from || '';
   document.getElementById('product-shipping').value = p.shipping_cost ?? '0.00';
   
