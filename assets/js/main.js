@@ -797,6 +797,14 @@ async function fetchCatalog(append = false) {
       if (json.success && grid) {
         if (countEl) countEl.textContent = `Mostrando ${json.data.total} productos en total`;
         
+        // --- SEO Dinámico para vista agrupada de catálogo ---
+        let catName = currentFilters.category === 'all_grouped' ? 'Todos los Productos' : 'Catálogo Completo';
+        document.title = `${catName} | PromoInk UIO Artículos Promocionales`;
+        let metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', `Explora el catálogo completo de artículos promocionales corporativos personalizables en PromoInk. Tomatodos, jarros, esferos, libretas y más en Quito.`);
+        }
+        
         grid.style.display = 'block'; // Turn off grid wrapper so sections stack vertically
         grid.innerHTML = '';
         
@@ -853,6 +861,31 @@ async function fetchCatalog(append = false) {
       if (countEl) countEl.textContent = `Mostrando ${json.data.items.length} de ${json.data.total} productos`;
       
       renderProducts(grid, json.data.items, append);
+      
+      // --- SEO Dinámico en la página de Catálogo ---
+      let catName = 'Catálogo Completo';
+      if (currentFilters.category) {
+        if (currentFilters.category === 'all_grouped') {
+          catName = 'Todos los Productos';
+        } else if (currentFilters.category === 'portfolio') {
+          catName = 'Portafolio de Trabajos';
+        } else if (typeof catalogCategories !== 'undefined') {
+          const foundCat = catalogCategories.find(c => c.id == currentFilters.category);
+          if (foundCat) catName = foundCat.name;
+        }
+      }
+      
+      let titleSuffix = 'PromoInk UIO Artículos Promocionales';
+      if (currentFilters.search) {
+        document.title = `Búsqueda: "${currentFilters.search}" | ${titleSuffix}`;
+      } else {
+        document.title = `${catName} | ${titleSuffix}`;
+      }
+      
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', `Explora ${catName} en PromoInk. Artículos promocionales corporativos y merchandising personalizado con la mejor calidad en Quito, Ecuador.`);
+      }
       
       const loadMore = document.getElementById('btn-load-more');
       if (loadMore) {
