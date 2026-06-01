@@ -1,6 +1,6 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
 require_once 'api/config.php';
+header('Content-Type: text/html; charset=utf-8');
 
 $seo_title = 'PromoInk ARTICULOS PROMOCIONALES';
 $seo_desc = 'Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.';

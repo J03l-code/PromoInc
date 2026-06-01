@@ -1,6 +1,6 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
 require_once 'api/config.php';
+header('Content-Type: text/html; charset=utf-8');
 
 $seo_title = 'Catálogo de Artículos Promocionales | PromoInk UIO';
 $seo_desc = 'Explora el catálogo completo de artículos promocionales corporativos personalizables en PromoInk. Tomatodos, jarros, esferos, libretas y más en Quito.';
