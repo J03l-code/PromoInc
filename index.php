@@ -432,6 +432,55 @@ header("Expires: 0");
     }
   </style>
 
+  <!-- Schema.org estructurado JSON-LD para SEO Local de Negocios -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "PromoInk",
+    "image": "https://promoink.ec/assets/images/logo%20blanco%20(2).png",
+    "@id": "https://promoink.ec",
+    "url": "https://promoink.ec",
+    "telephone": "+593987827215",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "De los Eucaliptos E1-37 y 10 de Agosto",
+      "addressLocality": "Quito",
+      "addressRegion": "Pichincha",
+      "postalCode": "170150",
+      "addressCountry": "EC"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -0.1384,
+      "longitude": -78.4795
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "09:00",
+        "closes": "13:00"
+      }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/promoink.uio/"
+    ]
+  }
+  </script>
+
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
 
