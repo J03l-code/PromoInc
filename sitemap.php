@@ -35,13 +35,22 @@ foreach ($staticPages as $path => $priority) {
 // Obtener conexión a la base de datos
 $db = getDB();
 
+function getSitemapSlug($string) {
+    if (!$string) return 'info';
+    // Quitar caracteres especiales y normalizar
+    $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+    $slug = preg_replace('/[^a-zA-Z0-9 -]/', '', $string);
+    $slug = strtolower(trim(preg_replace('/\s+/', '-', $slug)));
+    return $slug ?: 'info';
+}
+
 // 2. Páginas de Categorías Activas
 try {
-    $stmtCats = $db->query("SELECT id, slug FROM categories WHERE active = 1 ORDER BY sort_order ASC");
+    $stmtCats = $db->query("SELECT id, name, slug FROM categories WHERE active = 1 ORDER BY sort_order ASC");
     $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
     foreach ($categories as $cat) {
-        // Enlace al catálogo filtrado por categoría
-        $url = $baseUrl . "catalogo.html?category=" . $cat['id'];
+        $catSlug = getSitemapSlug($cat['slug'] ?: $cat['name']);
+        $url = $baseUrl . "catalogo/categoria/" . $cat['id'] . "-" . $catSlug;
         echo "  <url>\n";
         echo "    <loc>" . htmlspecialchars($url) . "</loc>\n";
         echo "    <changefreq>weekly</changefreq>\n";
@@ -49,15 +58,16 @@ try {
         echo "  </url>\n";
     }
 } catch (\Exception $e) {
-    // Si falla por alguna razón, continuar silenciosamente para no romper el XML
+    // Si falla por alguna razón, continuar silenciosamente
 }
 
 // 3. Páginas de Detalles de Productos Activos
 try {
-    $stmtProds = $db->query("SELECT id, slug, updated_at FROM products WHERE active = 1 ORDER BY id DESC");
+    $stmtProds = $db->query("SELECT id, name, slug, updated_at FROM products WHERE active = 1 ORDER BY id DESC");
     $products = $stmtProds->fetchAll(PDO::FETCH_ASSOC);
     foreach ($products as $prod) {
-        $url = $baseUrl . "producto.html?id=" . $prod['id'];
+        $prodSlug = getSitemapSlug($prod['slug'] ?: $prod['name']);
+        $url = $baseUrl . "producto/" . $prod['id'] . "-" . $prodSlug;
         $lastmod = !empty($prod['updated_at']) ? date('c', strtotime($prod['updated_at'])) : date('c');
         
         echo "  <url>\n";

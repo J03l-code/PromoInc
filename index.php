@@ -538,84 +538,84 @@ header("Expires: 0");
     <div class="header-scattered-bg">
       <!-- Group A: Visible on both Desktop and Mobile (8 items, perfectly spaced) -->
       <div class="scattered-wrapper item-1" style="left: 2%; --top-pos: 25px; animation-delay: 0s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-15deg); width: 38px; height: 38px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-15deg); width: 38px; height: 38px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-2" style="left: 15%; --top-pos: 48px; animation-delay: 1.2s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-3" style="left: 28%; --top-pos: 30px; animation-delay: 0.5s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-4" style="left: 45%; --top-pos: 52px; animation-delay: 2.1s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-5" style="left: 58%; --top-pos: 20px; animation-delay: 0.8s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(12deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(12deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-6" style="left: 72%; --top-pos: 50px; animation-delay: 1.6s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-7" style="left: 85%; --top-pos: 35px; animation-delay: 0.3s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(8deg); width: 38px; height: 38px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(8deg); width: 38px; height: 38px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-8" style="left: 95%; --top-pos: 46px; animation-delay: 2.7s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
 
       <!-- Group B: Desktop-only for dense high-end collage (8 more items, total 16!) -->
       <div class="scattered-wrapper item-9 desktop-only" style="left: 8%; --top-pos: 52px; animation-delay: 1.5s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-10 desktop-only" style="left: 22%; --top-pos: 15px; animation-delay: 0.7s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-12deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-12deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-11 desktop-only" style="left: 34%; --top-pos: 55px; animation-delay: 2.3s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-12 desktop-only" style="left: 50%; --top-pos: 25px; animation-delay: 1.1s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-8deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-8deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-13 desktop-only" style="left: 64%; --top-pos: 50px; animation-delay: 2.9s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-14 desktop-only" style="left: 78%; --top-pos: 20px; animation-delay: 0.4s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(15deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(15deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-15 desktop-only" style="left: 90%; --top-pos: 48px; animation-delay: 1.8s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra" width="300" height="200" loading="lazy">
         </a>
       </div>
       <div class="scattered-wrapper item-16 desktop-only" style="left: 39%; --top-pos: 15px; animation-delay: 2.5s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(12deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(12deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta" width="300" height="200" loading="lazy">
         </a>
       </div>
@@ -686,8 +686,8 @@ header("Expires: 0");
     <div class="mobile-menu-body">
       <nav class="mobile-nav-list">
         <a href="index.php" class="mobile-nav-link">Inicio</a>
-        <a href="catalogo.html" class="mobile-nav-link">Catálogo Completo</a>
-        <a href="catalogo.html?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
+        <a href="catalogo.php" class="mobile-nav-link">Catálogo Completo</a>
+        <a href="catalogo.php?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
         <div class="mobile-nav-divider">Categorías</div>
         <div id="mobile-categories-list">
           <!-- Se llena dinámicamente -->
@@ -786,7 +786,7 @@ header("Expires: 0");
         </div>
 
         <div class="hero-actions" style="display: flex; flex-direction: column; align-items: flex-start !important; gap: 24px; justify-content: flex-start !important;">
-          <a href="catalogo.html" class="hero-btn-primary" style="background: linear-gradient(135deg, #E83E8C, #c4306f) !important; color: #fff !important; box-shadow: 0 12px 35px rgba(232, 62, 140, 0.45) !important; padding: 1.3rem 2.8rem !important; border-radius: 100px !important; display: inline-flex !important; align-items: center; gap: 12px; text-decoration: none; font-weight: 800; font-size: 1.05rem; transition: transform 0.3s ease;">
+          <a href="catalogo.php" class="hero-btn-primary" style="background: linear-gradient(135deg, #E83E8C, #c4306f) !important; color: #fff !important; box-shadow: 0 12px 35px rgba(232, 62, 140, 0.45) !important; padding: 1.3rem 2.8rem !important; border-radius: 100px !important; display: inline-flex !important; align-items: center; gap: 12px; text-decoration: none; font-weight: 800; font-size: 1.05rem; transition: transform 0.3s ease;">
             Explorar Colección
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3.5">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -857,7 +857,7 @@ header("Expires: 0");
             <div class="svc-tags">
               <span>Kits corporativos</span><span>Regalos</span><span>Material POP</span>
             </div>
-            <a href="catalogo.html" class="svc-cta">Explorar catálogo
+            <a href="catalogo.php" class="svc-cta">Explorar catálogo
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -924,7 +924,7 @@ header("Expires: 0");
           <h2 class="display-2">Ofertas <span class="text-pink glitch" data-text="Relámpago">Relámpago</span></h2>
           <p class="section-subtitle">Aprovecha descuentos exclusivos por tiempo limitado.</p>
         </div>
-        <a href="catalogo.html?on_sale=1" class="btn btn-outline reveal">Ver todas las ofertas</a>
+        <a href="catalogo.php?on_sale=1" class="btn btn-outline reveal">Ver todas las ofertas</a>
       </div>
       
       <div id="offers-grid" class="products-grid">
@@ -945,7 +945,7 @@ header("Expires: 0");
           <h2 class="display-2">Catálogo <span class="text-cyan">Destacado</span></h2>
           <p class="section-subtitle">Selección premium con disponibilidad inmediata.</p>
         </div>
-        <a href="catalogo.html" class="btn btn-secondary reveal">Ver Todo el Catálogo</a>
+        <a href="catalogo.php" class="btn btn-secondary reveal">Ver Todo el Catálogo</a>
       </div>
 
       <div id="featured-filter-bar" class="products-filter-bar reveal">
@@ -1074,7 +1074,7 @@ header("Expires: 0");
           <h4 class="footer-heading">Categorías</h4>
           <ul class="footer-links" id="footer-categories">
             <!-- Dinámico -->
-            <li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>
+            <li><a href="catalogo.php" class="footer-link">Ver todo el catálogo</a></li>
           </ul>
         </div>
 

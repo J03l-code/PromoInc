@@ -1,12 +1,52 @@
+<?php
+require_once 'api/config.php';
+
+$seo_title = 'Catálogo de Artículos Promocionales | PromoInk UIO';
+$seo_desc = 'Explora el catálogo completo de artículos promocionales corporativos personalizables en PromoInk. Tomatodos, jarros, esferos, libretas y más en Quito.';
+$seo_image = 'assets/images/favicon.png';
+
+$catId = isset($_GET['category']) ? $_GET['category'] : '';
+if ($catId) {
+    if ($catId === 'all_grouped') {
+        $seo_title = 'Todos los Productos | PromoInk UIO Artículos Promocionales';
+        $seo_desc = 'Descubre nuestra colección completa de artículos corporativos personalizables agrupados por categorías.';
+    } elseif ($catId === 'portfolio') {
+        $seo_title = 'Portafolio de Trabajos | PromoInk UIO';
+        $seo_desc = 'Galería de proyectos de personalización y merchandising entregados a marcas líderes en Ecuador.';
+    } else {
+        try {
+            $db = getDB();
+            $stmt = $db->prepare("SELECT * FROM categories WHERE id = :id LIMIT 1");
+            $stmt->execute([':id' => $catId]);
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($category) {
+                $seo_title = htmlspecialchars($category['name']) . " | PromoInk UIO Artículos Promocionales";
+                $seo_desc = 'Explora la sección de ' . htmlspecialchars($category['name']) . ' en PromoInk. Artículos promocionales corporativos personalizables con la mejor calidad en Quito, Ecuador.';
+            }
+        } catch (Exception $e) {
+            // Silencioso
+        }
+    }
+}
+$seo_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoInk ARTICULOS PROMOCIONALES</title>
+  <title><?php echo $seo_title; ?></title>
   <link rel="icon" href="assets/images/favicon.png">
-  <meta name="description" content="Descubre PromoInk UIO, los mejores artículos promocionales corporativos de alto impacto para ti. Cotiza y personaliza productos de alta calidad para tu empresa.">
+  <meta name="description" content="<?php echo $seo_desc; ?>">
+  <link rel="canonical" href="<?php echo htmlspecialchars($seo_url); ?>">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="<?php echo $seo_title; ?>">
+  <meta property="og:description" content="<?php echo $seo_desc; ?>">
+  <meta property="og:image" content="<?php echo htmlspecialchars($seo_image); ?>">
+  <meta property="og:url" content="<?php echo htmlspecialchars($seo_url); ?>">
+  <meta property="og:type" content="website">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -501,84 +541,84 @@
     <div class="header-scattered-bg">
       <!-- Group A: Visible on both Desktop and Mobile (8 items, perfectly spaced) -->
       <div class="scattered-wrapper item-1" style="left: 2%; --top-pos: 25px; animation-delay: 0s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-15deg); width: 38px; height: 38px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-15deg); width: 38px; height: 38px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
       <div class="scattered-wrapper item-2" style="left: 15%; --top-pos: 48px; animation-delay: 1.2s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(18deg); width: 32px; height: 32px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
       </div>
       <div class="scattered-wrapper item-3" style="left: 28%; --top-pos: 30px; animation-delay: 0.5s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
       <div class="scattered-wrapper item-4" style="left: 45%; --top-pos: 52px; animation-delay: 2.1s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(25deg); width: 34px; height: 34px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
       <div class="scattered-wrapper item-5" style="left: 58%; --top-pos: 20px; animation-delay: 0.8s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(12deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(12deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
       <div class="scattered-wrapper item-6" style="left: 72%; --top-pos: 50px; animation-delay: 1.6s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-15deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
       </div>
       <div class="scattered-wrapper item-7" style="left: 85%; --top-pos: 35px; animation-delay: 0.3s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(8deg); width: 38px; height: 38px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(8deg); width: 38px; height: 38px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
       <div class="scattered-wrapper item-8" style="left: 95%; --top-pos: 46px; animation-delay: 2.7s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-20deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
 
       <!-- Group B: Desktop-only for dense high-end collage (8 more items, total 16!) -->
       <div class="scattered-wrapper item-9 desktop-only" style="left: 8%; --top-pos: 52px; animation-delay: 1.5s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(20deg); width: 34px; height: 34px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
       <div class="scattered-wrapper item-10 desktop-only" style="left: 22%; --top-pos: 15px; animation-delay: 0.7s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-12deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(-12deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
       <div class="scattered-wrapper item-11 desktop-only" style="left: 34%; --top-pos: 55px; animation-delay: 2.3s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(18deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
       <div class="scattered-wrapper item-12 desktop-only" style="left: 50%; --top-pos: 25px; animation-delay: 1.1s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-8deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(-8deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
       </div>
       <div class="scattered-wrapper item-13 desktop-only" style="left: 64%; --top-pos: 50px; animation-delay: 2.9s;">
-        <a href="catalogo.html?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
+        <a href="catalogo.php?search=termo" class="scattered-icon termo" data-product="termo" style="transform: rotate(-22deg); width: 38px; height: 38px;" title="Buscar Termos">
           <img src="assets/images/termo.png" alt="Termo">
         </a>
       </div>
       <div class="scattered-wrapper item-14 desktop-only" style="left: 78%; --top-pos: 20px; animation-delay: 0.4s;">
-        <a href="catalogo.html?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(15deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
+        <a href="catalogo.php?search=etiqueta" class="scattered-icon etiqueta" data-product="etiqueta" style="transform: rotate(15deg); width: 32px; height: 32px;" title="Buscar Etiquetas">
           <img src="assets/images/etiqueta.png" alt="Etiqueta">
         </a>
       </div>
       <div class="scattered-wrapper item-15 desktop-only" style="left: 90%; --top-pos: 48px; animation-delay: 1.8s;">
-        <a href="catalogo.html?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
+        <a href="catalogo.php?search=gorra" class="scattered-icon gorra" data-product="gorra" style="transform: rotate(-10deg); width: 36px; height: 36px;" title="Buscar Gorras">
           <img src="assets/images/gorra.png" alt="Gorra">
         </a>
       </div>
       <div class="scattered-wrapper item-16 desktop-only" style="left: 39%; --top-pos: 15px; animation-delay: 2.5s;">
-        <a href="catalogo.html?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(12deg); width: 34px; height: 34px;" title="Buscar Libretas">
+        <a href="catalogo.php?search=libreta" class="scattered-icon libreta" data-product="libreta" style="transform: rotate(12deg); width: 34px; height: 34px;" title="Buscar Libretas">
           <img src="assets/images/libreta.png" alt="Libreta">
         </a>
       </div>
@@ -646,8 +686,8 @@
     <div class="mobile-menu-body">
       <nav class="mobile-nav-list">
         <a href="index.php" class="mobile-nav-link">Inicio</a>
-        <a href="catalogo.html" class="mobile-nav-link">Catálogo Completo</a>
-        <a href="catalogo.html?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
+        <a href="catalogo.php" class="mobile-nav-link">Catálogo Completo</a>
+        <a href="catalogo.php?on_sale=1" class="mobile-nav-link nav-link-ofertas">Ofertas Especiales</a>
         <div class="mobile-nav-divider">Categorías</div>
         <div id="mobile-categories-list">
           <!-- Dinámico -->
@@ -844,7 +884,7 @@
           <h4 class="footer-heading">Categorías</h4>
           <ul class="footer-links" id="footer-categories">
             <!-- Dinámico -->
-            <li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>
+            <li><a href="catalogo.php" class="footer-link">Ver todo el catálogo</a></li>
           </ul>
         </div>
 

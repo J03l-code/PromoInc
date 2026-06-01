@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const doGlobalSearch = () => {
     const inp = document.getElementById('navbar-search-input');
     const q = inp?.value.trim();
-    if (q) window.location.href = `catalogo.html?search=${encodeURIComponent(q)}`;
+    if (q) window.location.href = `catalogo.php?search=${encodeURIComponent(q)}`;
   };
   
   document.getElementById('btn-navbar-search')?.addEventListener('click', doGlobalSearch);
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFilters.search = term;
         reloadCatalog();
       } else {
-        window.location.href = `catalogo.html?search=${encodeURIComponent(term)}`;
+        window.location.href = `catalogo.php?search=${encodeURIComponent(term)}`;
       }
     }
   };
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const target = e.target.closest('.nav-link-ofertas');
     if (target) {
       e.preventDefault();
-      window.location.href = 'catalogo.html?on_sale=1';
+      window.location.href = 'catalogo.php?on_sale=1';
     }
   });
 });
@@ -396,7 +396,7 @@ async function loadSiteSettings() {
       
       // Hero Title & Subtitle are defined directly in HTML (not overridden by DB)
       // to preserve the animated rotating words effect.
-      // If you need to update these, edit index.php or catalogo.html directly.
+      // If you need to update these, edit index.php or catalogo.php directly.
 
       
       // WhatsApp and Phone
@@ -529,12 +529,12 @@ async function loadDynamicCategories() {
       // Categorías en Navbar
       dynNav = menuCats.map(cat => `
         <div class="nav-item-dropdown">
-          <a href="catalogo.html?category=${cat.id}">
+          <a href="catalogo.php?category=${cat.id}">
             ${cat.name} ${cat.children && cat.children.length > 0 ? '<svg viewBox="0 0 24 24" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>' : ''}
           </a>
           ${cat.children && cat.children.length > 0 ? `
             <div class="dropdown-menu">
-              ${cat.children.map(child => `<a href="catalogo.html?category=${child.id}">${child.name}</a>`).join('')}
+              ${cat.children.map(child => `<a href="catalogo.php?category=${child.id}">${child.name}</a>`).join('')}
             </div>
           ` : ''}
         </div>
@@ -543,7 +543,7 @@ async function loadDynamicCategories() {
       // Categorías en Menú Móvil
       menuCats.forEach(cat => {
         dynMobile += `
-          <a href="catalogo.html?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
+          <a href="catalogo.php?category=${cat.id}" class="mobile-cat-link" style="font-weight: 600;">
             ${cat.name}
             ${cat.children && cat.children.length > 0 ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg); opacity: 0.7;"><polyline points="6 9 12 15 18 9"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'}
           </a>
@@ -551,7 +551,7 @@ async function loadDynamicCategories() {
         if (cat.children && cat.children.length > 0) {
           cat.children.forEach(child => {
             dynMobile += `
-              <a href="catalogo.html?category=${child.id}" class="mobile-cat-link" style="padding-left: 2rem; font-size: 0.9rem; opacity: 0.85; border-top: none;">
+              <a href="catalogo.php?category=${child.id}" class="mobile-cat-link" style="padding-left: 2rem; font-size: 0.9rem; opacity: 0.85; border-top: none;">
                 <span style="margin-right: 0.3rem; opacity: 0.5;">↳</span> ${child.name}
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </a>
@@ -562,15 +562,15 @@ async function loadDynamicCategories() {
 
       // Categorías en Footer
       dynFooter = menuCats.map(cat => `
-        <li><a href="catalogo.html?category=${cat.id}" class="footer-link">${cat.name}</a></li>
+        <li><a href="catalogo.php?category=${cat.id}" class="footer-link">${cat.name}</a></li>
       `).join('');
     }
 
     // Static Links ALWAYS append
     if (nav) {
       nav.innerHTML = dynNav + 
-        '<a href="catalogo.html?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
-        '<a href="catalogo.html?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
+        '<a href="catalogo.php?category=all_grouped" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Todos los productos</a>' +
+        '<a href="catalogo.php?category=portfolio" class="nav-item-dropdown" style="color: var(--accent); font-weight: 600; text-decoration: none;">Portafolio</a>' +
         '<a href="#" class="nav-link-ofertas">Ofertas</a>' +
         '<a href="nosotros.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Nosotros</a>' +
         '<a href="contacto.html" class="nav-item-dropdown" style="font-weight: 600; text-decoration: none;">Contacto</a>';
@@ -579,11 +579,11 @@ async function loadDynamicCategories() {
     const mobileNav = document.getElementById('mobile-categories-list');
     if (mobileNav) {
       mobileNav.innerHTML = dynMobile + `
-        <a href="catalogo.html?category=all_grouped" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
+        <a href="catalogo.php?category=all_grouped" class="mobile-cat-link" style="border-top:1px solid var(--border); margin-top:0.5rem; padding-top:0.75rem; color:var(--accent); font-weight: 600;">
           📦 Todos los productos
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
-        <a href="catalogo.html?category=portfolio" class="mobile-cat-link" style="color:var(--accent); font-weight: 600;">
+        <a href="catalogo.php?category=portfolio" class="mobile-cat-link" style="color:var(--accent); font-weight: 600;">
           📂 Portafolio de Trabajos
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -605,9 +605,9 @@ async function loadDynamicCategories() {
     const footerNav = document.getElementById('footer-categories');
     if (footerNav) {
       footerNav.innerHTML = dynFooter + 
-        `<li><a href="catalogo.html?category=all_grouped" class="footer-link" style="color:var(--accent); font-weight:600;">Todos los productos</a></li>` +
-        `<li><a href="catalogo.html?category=portfolio" class="footer-link" style="color:var(--accent); font-weight:600;">Portafolio de Trabajos</a></li>` +
-        `<li><a href="catalogo.html" class="footer-link">Ver todo el catálogo</a></li>`;
+        `<li><a href="catalogo.php?category=all_grouped" class="footer-link" style="color:var(--accent); font-weight:600;">Todos los productos</a></li>` +
+        `<li><a href="catalogo.php?category=portfolio" class="footer-link" style="color:var(--accent); font-weight:600;">Portafolio de Trabajos</a></li>` +
+        `<li><a href="catalogo.php" class="footer-link">Ver todo el catálogo</a></li>`;
     }
 
     // Categorías en Sidebar de Catálogo
@@ -950,11 +950,22 @@ function renderProducts(grid, products, append = false) {
 
   const svgProduct = `<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><rect x='2' y='7' width='20' height='14' rx='2' ry='2'/><path d='M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2'/></svg>`;
   
-  const isProductPage = window.location.pathname.includes('producto.html');
+  const isProductPage = window.location.pathname.includes('producto.html') || window.location.pathname.includes('producto.php') || window.location.pathname.includes('/producto/');
   
+  const getProductSlug = (name) => {
+    return (name || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  };
+
   const html = products.map(p => {
     const imgUrl = p.image_webp ? `assets/images/${p.image_webp}` : null;
     const cleanName = (p.name || '').replace(/"/g, '&quot;');
+    const friendlyUrl = `producto/${p.id}-${getProductSlug(p.name)}`;
     
     let titleHtml = `<div class="card-body" style="padding-bottom: 0;">
         <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1rem;">${p.name}</h3>
@@ -962,7 +973,7 @@ function renderProducts(grid, products, append = false) {
       </div>`;
       
     return `
-    <article class="card reveal visible" onclick="window.location.href='producto.html?id=${p.id}&v=${VERSION}'" style="cursor: pointer;" data-gallery="${p.images_gallery || ''}" data-main-img="${imgUrl || ''}">
+    <article class="card reveal visible" onclick="window.location.href='${friendlyUrl}'" style="cursor: pointer;" data-gallery="${p.images_gallery || ''}" data-main-img="${imgUrl || ''}">
       ${isProductPage ? titleHtml : ''}
       <div class="card-img-wrapper" style="aspect-ratio: 1/1; background: #1a1d21; position: relative; overflow: hidden;">
         ${parseInt(p.on_sale) ? `<div class="discount-floating-badge">-${p.sale_discount}%</div>` : ''}
@@ -1053,7 +1064,16 @@ window.quickAddToCart = async function(event, productId, name, sku, price, image
 
   if (typeof CartManager === 'undefined') {
     // Fallback: redirect to product page
-    window.location.href = `producto.html?id=${productId}&v=2.8`;
+    const getProductSlug = (n) => {
+      return (n || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+    };
+    window.location.href = `producto/${productId}-${getProductSlug(name)}`;
     return;
   }
 
