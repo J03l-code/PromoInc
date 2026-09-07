@@ -64,4 +64,36 @@ DirectoryIndex index.php index.html
         Header set Pragma "no-cache"
         Header set Expires 0
     </FilesMatch>
+
+    # Cabeceras de Seguridad
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# Bloquear acceso web a archivos de configuración, entorno, bases de datos y scripts sensibles
+<FilesMatch "(^\.env|\.sql$|\.log$|\.ini$|\.sh$|\.py$|composer\.(json|lock)|package(-lock)?\.json)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Bloquear scripts de mantenimiento y diagnóstico en producción
+<FilesMatch "^(check|debug_session|db_init|db_full_init|db_upgrade.*)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+

@@ -31,11 +31,71 @@ if (session_status() === PHP_SESSION_NONE) {
     session_write_close();
 }
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'u434851126_promoincec');
-define('DB_USER', 'u434851126_promoinc_u');
-define('DB_PASS', 'Promoink2026!');
-define('DB_CHARSET', 'utf8mb4');
+// ── Carga de Variables de Entorno (.env) ──────────────────────
+if (!function_exists('loadEnv')) {
+    function loadEnv(string $filePath): array
+    {
+        $env = [];
+        if (file_exists($filePath) && is_readable($filePath)) {
+            $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if ($line === '' || (isset($line[0]) && $line[0] === '#')) continue;
+                $parts = explode('=', $line, 2);
+                if (count($parts) === 2) {
+                    $key = trim($parts[0]);
+                    $val = trim($parts[1]);
+                    $val = trim($val, "\"'");
+                    $env[$key] = $val;
+                    if (getenv($key) === false) {
+                        putenv("{$key}={$val}");
+                    }
+                    $_ENV[$key] = $val;
+                    $_SERVER[$key] = $val;
+                }
+            }
+        }
+        return $env;
+    }
+}
+
+$envPath = dirname(__DIR__) . '/.env';
+
+// Si .env no existe en el servidor, autogenerarlo con los valores seguros para mantener la web activa sin interrupción
+if (!file_exists($envPath)) {
+    $bootstrapEnv = "# PromoInk — Entorno de Configuración Local (Generado automáticamente)\n"
+        . "DB_HOST=localhost\n"
+        . "DB_NAME=u434851126_promoincec\n"
+        . "DB_USER=u434851126_promoinc_u\n"
+        . "DB_PASS=Promoink2026!\n"
+        . "DB_CHARSET=utf8mb4\n\n"
+        . "SMTP_HOST=smtp.hostinger.com\n"
+        . "SMTP_PORT=465\n"
+        . "SMTP_USER=info@promocionalespromoink.com\n"
+        . "SMTP_PASS=26072023Dyv!\n";
+    @file_put_contents($envPath, $bootstrapEnv);
+    @chmod($envPath, 0600);
+}
+
+$loadedEnv = loadEnv($envPath);
+
+if (!function_exists('env')) {
+    function env(string $key, string $default = ''): string
+    {
+        $val = getenv($key);
+        if ($val !== false && $val !== '') return $val;
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
+        global $loadedEnv;
+        return $loadedEnv[$key] ?? $default;
+    }
+}
+
+define('DB_HOST', env('DB_HOST', 'localhost'));
+define('DB_NAME', env('DB_NAME', 'u434851126_promoincec'));
+define('DB_USER', env('DB_USER', 'u434851126_promoinc_u'));
+define('DB_PASS', env('DB_PASS', 'Promoink2026!'));
+define('DB_CHARSET', env('DB_CHARSET', 'utf8mb4'));
 
 define('UPLOAD_DIR', __DIR__ . '/../assets/images/');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5 MB
@@ -112,7 +172,8 @@ function getDB(): PDO
                 $pdo->exec("ALTER TABLE products ADD COLUMN specifications TEXT NULL DEFAULT NULL AFTER customization_area");
             } catch (\Exception $ex) {}
         } catch (PDOException $e) {
-            jsonError(500, 'Error de conexión a la BD: ' . $e->getMessage());
+            error_log('Error de conexión a la BD: ' . $e->getMessage());
+            jsonError(500, 'Error de conexión con el servicio. Por favor, intenta de nuevo más tarde.');
         }
     }
     return $pdo;
@@ -144,10 +205,10 @@ function sanitize(string $input): string
  */
 function sendSMTP(string $to, string $subject, string $htmlContent, string $replyTo = ''): bool
 {
-    $smtpHost = 'smtp.hostinger.com';
-    $smtpPort = 465;
-    $smtpUser = 'info@promocionalespromoink.com';
-    $smtpPass = '26072023Dyv!'; // Actualizada con la contraseña correcta (Promoink2026!)
+    $smtpHost = env('SMTP_HOST', 'smtp.hostinger.com');
+    $smtpPort = (int) env('SMTP_PORT', '465');
+    $smtpUser = env('SMTP_USER', 'info@promocionalespromoink.com');
+    $smtpPass = env('SMTP_PASS', '26072023Dyv!');
 
     // Cabeceras MIME para HTML en UTF-8
     $headers = "MIME-Version: 1.0\r\n";

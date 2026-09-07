@@ -1,2 +1,9 @@
 assets/images/*
 !.gitkeep
+
+# Secretos y entorno local
+.env
+.env.*
+!.env.example
+*.log
+
