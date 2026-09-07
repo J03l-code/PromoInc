@@ -60,23 +60,6 @@ if (!function_exists('loadEnv')) {
 }
 
 $envPath = dirname(__DIR__) . '/.env';
-
-// Si .env no existe en el servidor, autogenerarlo con los valores seguros para mantener la web activa sin interrupción
-if (!file_exists($envPath)) {
-    $bootstrapEnv = "# PromoInk — Entorno de Configuración Local (Generado automáticamente)\n"
-        . "DB_HOST=localhost\n"
-        . "DB_NAME=u434851126_promoincec\n"
-        . "DB_USER=u434851126_promoinc_u\n"
-        . "DB_PASS=Promoink2026!\n"
-        . "DB_CHARSET=utf8mb4\n\n"
-        . "SMTP_HOST=smtp.hostinger.com\n"
-        . "SMTP_PORT=465\n"
-        . "SMTP_USER=info@promocionalespromoink.com\n"
-        . "SMTP_PASS=26072023Dyv!\n";
-    @file_put_contents($envPath, $bootstrapEnv);
-    @chmod($envPath, 0600);
-}
-
 $loadedEnv = loadEnv($envPath);
 
 if (!function_exists('env')) {
@@ -92,9 +75,9 @@ if (!function_exists('env')) {
 }
 
 define('DB_HOST', env('DB_HOST', 'localhost'));
-define('DB_NAME', env('DB_NAME', 'u434851126_promoincec'));
-define('DB_USER', env('DB_USER', 'u434851126_promoinc_u'));
-define('DB_PASS', env('DB_PASS', 'Promoink2026!'));
+define('DB_NAME', env('DB_NAME', ''));
+define('DB_USER', env('DB_USER', ''));
+define('DB_PASS', env('DB_PASS', ''));
 define('DB_CHARSET', env('DB_CHARSET', 'utf8mb4'));
 
 define('UPLOAD_DIR', __DIR__ . '/../assets/images/');
@@ -207,8 +190,8 @@ function sendSMTP(string $to, string $subject, string $htmlContent, string $repl
 {
     $smtpHost = env('SMTP_HOST', 'smtp.hostinger.com');
     $smtpPort = (int) env('SMTP_PORT', '465');
-    $smtpUser = env('SMTP_USER', 'info@promocionalespromoink.com');
-    $smtpPass = env('SMTP_PASS', '26072023Dyv!');
+    $smtpUser = env('SMTP_USER', '');
+    $smtpPass = env('SMTP_PASS', '');
 
     // Cabeceras MIME para HTML en UTF-8
     $headers = "MIME-Version: 1.0\r\n";
