@@ -11,16 +11,19 @@ $newHash     = password_hash($newPassword, PASSWORD_BCRYPT);
 
 $db = getDB();
 
-// Verificar si ya existe un admin
-$stmt = $db->query("SELECT id, email, role FROM users WHERE role = 'admin' LIMIT 1");
-$admin = $stmt->fetch();
+// Verificar si ya existe un admin o superadmin
+$stmt = $db->query("SELECT id, email, role FROM users WHERE role IN ('admin', 'superadmin') OR email LIKE 'admin@%' ORDER BY id ASC");
+$admins = $stmt->fetchAll();
 
-if ($admin) {
-    // Actualizar admin existente
-    $upd = $db->prepare("UPDATE users SET email = ?, password_hash = ?, name = 'Administrador' WHERE id = ?");
-    $upd->execute([$newEmail, $newHash, $admin['id']]);
-    echo "<h2 style='color:green;font-family:monospace;'>✅ Credenciales actualizadas correctamente.</h2>";
-    echo "<p>Email anterior: <code>{$admin['email']}</code></p>";
+if (!empty($admins)) {
+    // Actualizar administradores existentes
+    foreach ($admins as $admin) {
+        $upd = $db->prepare("UPDATE users SET email = ?, password_hash = ?, active = 1 WHERE id = ?");
+        $upd->execute([$newEmail, $newHash, $admin['id']]);
+        echo "<h2 style='color:green;font-family:monospace;'>✅ Credenciales actualizadas correctamente (ID: {$admin['id']}).</h2>";
+        echo "<p>Email anterior: <code>{$admin['email']}</code></p>";
+        echo "<p>Rol: <code>{$admin['role']}</code></p>";
+    }
     echo "<p>Email nuevo: <code>{$newEmail}</code></p>";
     echo "<p>Contraseña: <code>{$newPassword}</code></p>";
 } else {
