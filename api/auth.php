@@ -52,9 +52,13 @@ if ($method === 'POST') {
             jsonError(422, 'Email y contraseña son requeridos');
         }
 
+        $altEmail = (strpos($email, '@promoinc.com') !== false)
+            ? str_replace('@promoinc.com', '@promoink.com', $email)
+            : ((strpos($email, '@promoink.com') !== false) ? str_replace('@promoink.com', '@promoinc.com', $email) : $email);
+
         $db   = getDB();
-        $stmt = $db->prepare("SELECT id, name, email, password_hash, role, active FROM users WHERE email = ? LIMIT 1");
-        $stmt->execute([$email]);
+        $stmt = $db->prepare("SELECT id, name, email, password_hash, role, active FROM users WHERE email = ? OR email = ? LIMIT 1");
+        $stmt->execute([$email, $altEmail]);
         $user = $stmt->fetch();
 
         if (!$user || !$user['active']) {

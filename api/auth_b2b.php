@@ -39,9 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             jsonError(400, 'Correo y contraseña requeridos');
         }
 
+        $altEmail = (strpos($data['email'], '@promoinc.com') !== false)
+            ? str_replace('@promoinc.com', '@promoink.com', $data['email'])
+            : ((strpos($data['email'], '@promoink.com') !== false) ? str_replace('@promoink.com', '@promoinc.com', $data['email']) : $data['email']);
+
         $db = getDB();
-        $stmt = $db->prepare("SELECT id, name, password_hash, role FROM users WHERE email = ? AND active = 1");
-        $stmt->execute([$data['email']]);
+        $stmt = $db->prepare("SELECT id, name, password_hash, role FROM users WHERE (email = ? OR email = ?) AND active = 1");
+        $stmt->execute([$data['email'], $altEmail]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($data['password'], $user['password_hash'])) {
