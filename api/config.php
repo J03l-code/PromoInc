@@ -32,8 +32,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'u434851126_promoink');
-define('DB_USER', 'u434851126_promoink_usr');
+define('DB_NAME', 'u434851126_promoincec');
+define('DB_USER', 'u434851126_promoinc_u');
 define('DB_PASS', 'Promoink2026!');
 define('DB_CHARSET', 'utf8mb4');
 
